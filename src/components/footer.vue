@@ -12,21 +12,21 @@
         <div class="footer-header-right">
           <ul class="footer-header-share-box">
             <li class="weChat">
-              <a href="javascript:;" class="footer-header-share-weChat" @click="weChatClose">
+              <a href="javascript:" class="footer-header-share-weChat" @click="weChatClose">
                 <i class="iconfont font-size-16">&#xe69f;</i>
               </a>
               <span class="weChatCode">
                                 <img src="../assets/img/footer/WXcode.jpg" alt="关注微信"/>
                             </span>
             </li>
-            <li><a href="javascript:;" class="footer-header-share-sina"><i class="iconfont font-size-16">&#xe677;</i></a></li>
-            <li><a href="javascript:;" class="footer-header-share-tencent"><i class="iconfont font-size-16">&#xe64f;</i></a></li>
-            <li><a href="javascript:;" class="footer-header-share-facebook"><i class="iconfont font-size-16">&#xe6a8;</i></a></li>
-            <li><a href="javascript:;" class="footer-header-share-twitter"><i class="iconfont font-size-16">&#xe6a2;</i></a></li>
+            <li><a href="javascript:" class="footer-header-share-sina"><i class="iconfont font-size-16">&#xe677;</i></a></li>
+            <li><a href="javascript:" class="footer-header-share-tencent"><i class="iconfont font-size-16">&#xe64f;</i></a></li>
+            <li><a href="javascript:" class="footer-header-share-facebook"><i class="iconfont font-size-16">&#xe6a8;</i></a></li>
+            <li><a href="javascript:" class="footer-header-share-twitter"><i class="iconfont font-size-16">&#xe6a2;</i></a></li>
           </ul>
           <div class="footer-header-right-sub">
             <input type="email" placeholder="输入邮箱，免费订阅！" class="footer-header-right-sub-text"/>
-            <a href="javascript:;" class="footer-height-right-sub-btn">订阅</a>
+            <a href="javascript:" class="footer-height-right-sub-btn">订阅</a>
           </div>
         </div>
       </div>
@@ -36,30 +36,31 @@
             <p class="text-phone">400-960-0212</p>
             <p class="text-time">全年24小时</p>
             <p class="text-dit">(重大节日除外，仅收市话费)</p>
-            <a href="javascript:;" class="online-chat">在线客服</a>
+            <a href="javascript:" class="online-chat">在线客服</a>
           </div>
         </div>
         <div class="footer-center-right">
           <dl class="footer-center-right-item">
             <dt class="footer-center-right-item-title">关于我们</dt>
-            <dd><a href="javascript:;">公司介绍</a></dd>
-            <dd><a href="javascript:;">联系我们</a></dd>
-            <dd><a href="javascript:;">加入我们</a></dd>
-            <dd><a href="javascript:;">公告</a></dd>
+            <router-link to="/introduction" tag="dd"><a href="javascript:">公司介绍</a></router-link>
+            <!--<dd><a href="javascript:;">公司介绍</a></dd>-->
+            <dd><a href="javascript:">联系我们</a></dd>
+            <dd><a href="javascript:">加入我们</a></dd>
+            <dd><a href="javascript:">公告</a></dd>
           </dl>
           <dl class="footer-center-right-item">
             <dt class="footer-center-right-item-title">法律声明</dt>
-            <dd><a href="javascript:;">用户协议</a></dd>
-            <dd><a href="javascript:;">反洗钱声明</a></dd>
-            <dd><a href="javascript:;">费率声明</a></dd>
+            <dd><a href="javascript:">用户协议</a></dd>
+            <dd><a href="javascript:">反洗钱声明</a></dd>
+            <dd><a href="javascript:">费率声明</a></dd>
           </dl>
           <dl class="footer-center-right-item">
             <dt class="footer-center-right-item-title">下载</dt>
-            <dd><a href="javascript:;">APP</a></dd>
+            <dd><a href="javascript:">APP</a></dd>
           </dl>
           <dl class="footer-center-right-item">
             <dt class="footer-center-right-item-title">新手</dt>
-            <dd><a href="javascript:;">常见问题</a></dd>
+            <dd><a href="javascript:">常见问题</a></dd>
           </dl>
         </div>
       </div>

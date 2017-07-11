@@ -3,21 +3,23 @@
     <header>
       <div class="header layout">
         <div class="header_left">
-          <img src="../../src/assets/img/header/fw_logo.png"/>
+          <img src="../../src/assets/img/header/fw_logo.png" alt=""/>
           <div class="header-data-box">
             <p>BTC/CNY<span class="header-span-ratio">-0.14%</span></p>
             <p><span class="header-span-price">8560.2</span>CNY</p>
           </div>
         </div>
         <div class="header-right">
-          <div class="header-btn-box" v-show="userId">
-            <el-button type="primary">登录</el-button>
-            <el-button type="primary">注册</el-button>
+          <div class="header-btn-box" v-show="!userId">
+            <router-link to="/login" tag="el-button">登录</router-link>
+            <router-link to="/login" tag="el-button">注册</router-link>
+            <!--<el-button type="primary">登录</el-button>-->
+            <!--<el-button type="primary">注册</el-button>-->
           </div>
-          <div class="header-user-show" v-show="!userId">
-            <img src="../../src/assets/img/header/freeQuan.png" class="user-free" v-if="free"/>
-            <a href="javascript:;" class="user-box">
-              <img src="../../src/assets/img/header/fw_header_user.png" class="user-img"/>
+          <div class="header-user-show" v-show="userId">
+            <img src="../../src/assets/img/header/freeQuan.png" class="user-free" v-if="free" alt=""/>
+            <a href="javascript:" class="user-box">
+              <img src="../../src/assets/img/header/fw_header_user.png" class="user-img" alt=""/>
               <span class="user-phone">17602103949</span>
               <i class="el-icon-arrow-down"></i>
             </a>
@@ -27,29 +29,44 @@
     </header>
     <div class="nav layout">
       <div class="nav-left">
-        <a href="javascript:;" class="nav-notice-close"><i class="iconfont nav-notice-bell">&#xe6cc;</i></a>
-        <span class="nav-notice">123456455</span>
-        <a href="javascript:;" class="nav-notice-close"><i class="iconfont nav-notice-close-icon">&#xe650;</i></a>
+        <a href="javascript:" class="nav-notice-close"><i class="iconfont nav-notice-bell"
+                                                          @click="notice_show_close()">&#xe6cc;</i></a>
+        <span class="nav-notice" v-show="notice">123456455</span>
+        <a href="javascript:" class="nav-notice-close nav-notice-close2" v-show="notice"><i
+          class="iconfont nav-notice-close-icon" @click="notice_close()">&#xe650;</i></a>
       </div>
       <div class="nav-right">
         <ul class="nav-link-box">
-          <li class="nav-link-item"><a href="javascript:;">首页</a></li>
-          <li class="nav-link-item"><a href="javascript:;">行情</a></li>
-          <li class="nav-link-item"><a href="javascript:;">买/卖</a></li>
+          <router-link to="/" tag="li" class="nav-link-item"><a href="javascript:">首页</a></router-link>
+          <!--<li class="nav-link-item"><a href="javascript:;">首页</a></li>-->
+          <li class="nav-link-item"><a href="javascript:">行情</a></li>
+          <li class="nav-link-item"><a href="javascript:">买/卖</a></li>
           <!--<li class="nav-link-item"><a href="javascript:;">活动</a></li>-->
           <!--<li class="nav-link-item"><a href="javascript:;">资讯</a></li>-->
-          <li class="nav-link-item"><a href="javascript:;">账户</a></li>
+          <li class="nav-link-item"><a href="javascript:">账户</a></li>
         </ul>
       </div>
     </div>
   </div>
 </template>
 <script>
+  import $ from  'jquery';
   export default {
     data(){
       return {
         userId: false,
-        free: true
+        free: false,
+        notice: true
+      }
+    },
+    methods: {
+      notice_close() {
+        this.notice = false;
+      },
+      notice_show_close() {
+        $('.nav-notice').toggle();
+        $('.nav-notice-close2').toggle();
+        this.notice = true;
       }
     }
   }
