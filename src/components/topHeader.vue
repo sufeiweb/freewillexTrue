@@ -12,7 +12,7 @@
         <div class="header-right">
           <div class="header-btn-box" v-show="!userId">
             <router-link to="/login" tag="el-button">登录</router-link>
-            <router-link to="/login" tag="el-button">注册</router-link>
+            <router-link to="/register" tag="el-button">注册</router-link>
             <!--<el-button type="primary">登录</el-button>-->
             <!--<el-button type="primary">注册</el-button>-->
           </div>
@@ -40,7 +40,8 @@
           <router-link to="/" tag="li" class="nav-link-item"><a href="javascript:">首页</a></router-link>
           <!--<li class="nav-link-item"><a href="javascript:;">首页</a></li>-->
           <li class="nav-link-item"><a href="javascript:">行情</a></li>
-          <li class="nav-link-item"><a href="javascript:">买/卖</a></li>
+          <router-link to="/business" tag="li" class="nav-link-item"><a href="javascript:">买/卖</a></router-link>
+          <!--<li class="nav-link-item"><a href="javascript:">买/卖</a></li>-->
           <!--<li class="nav-link-item"><a href="javascript:;">活动</a></li>-->
           <!--<li class="nav-link-item"><a href="javascript:;">资讯</a></li>-->
           <li class="nav-link-item"><a href="javascript:">账户</a></li>
