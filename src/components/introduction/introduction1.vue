@@ -70,7 +70,7 @@
         </div>
       </div>
       <div class="introduction-content-flow">
-        <img src="../../assets/img/introduction/about_flow.png">
+        <img src="../../assets/img/introduction/about_flow.png"  alt="">
       </div>
       <div class="introduction-content-bottom">
         <p>为了用户，FreeWillex自由意志一直在努力。</p>

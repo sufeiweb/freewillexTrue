@@ -14,8 +14,8 @@
           <img src="../../assets/img/introduction/prove2.jpg" alt="" v-show="!phoneer"/>
         </div>
         <div class="introduction-content-move-view2">
-          <a href="javascript:;"><img src="../../assets/img/introduction/prove1.jpg" alt=""/></a>
-          <a href="javascript:;"><img src="../../assets/img/introduction/prove2.jpg" alt=""/></a>
+          <a href="javascript:" @click="phoneerStatus1()"><img src="../../assets/img/introduction/prove1.jpg" alt=""/></a>
+          <a href="javascript:" @click="phoneerStatus2()"><img src="../../assets/img/introduction/prove2.jpg" alt=""/></a>
         </div>
       </div>
     </div>
@@ -28,6 +28,14 @@
         phoneer: true
       }
     },
+    methods:{
+      phoneerStatus1(){
+          this.phoneer = true;
+      },
+      phoneerStatus2(){
+        this.phoneer = false;
+      }
+    }
   }
 </script>
 <style>

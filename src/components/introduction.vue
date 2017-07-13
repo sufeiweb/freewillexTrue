@@ -11,10 +11,10 @@
         <introduction3></introduction3>
       </el-tab-pane>
       <el-tab-pane label="发展历程" name="fourth">
-
+        <introduction4></introduction4>
       </el-tab-pane>
       <el-tab-pane label="团队文化" name="fifth">
-
+        <introduction5></introduction5>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -23,6 +23,8 @@
   import introduction1 from './introduction/introduction1.vue';
   import introduction2 from './introduction/introduction2.vue';
   import introduction3 from './introduction/introduction3.vue';
+  import introduction4 from './introduction/introduction4.vue';
+  import introduction5 from './introduction/introduction5.vue';
   export default {
     data() {
       return {
@@ -35,7 +37,7 @@
       }
     },
     components: {
-      introduction1, introduction2, introduction3
+      introduction1, introduction2, introduction3, introduction4, introduction5
     }
   };
 </script>
