@@ -34,10 +34,11 @@
           </div>
           <div class="login-footer">
             <div class="password-retrieval">
-              <a href="javascript:;">找回密码</a>
+              <router-link to="/passwordRetrieval">找回密码</router-link>
+              <!--<a href="javascript:;">找回密码</a>-->
             </div>
             <div class="register">
-              <a href="javascript:;">注册</a>
+              <router-link to="/register">注册</router-link>
             </div>
           </div>
         </form>
@@ -48,7 +49,7 @@
                 <img src="../../src/assets/img/login/login_fcex.png" alt="">
               </span>
             </div>
-            <p class="qr-code-footer"><a href="javascript:;" class="qr-code-footer-mobile">下载FreeWillex APP</a></p>
+            <p class="qr-code-footer"><a href="javascript:" class="qr-code-footer-mobile">下载FreeWillex APP</a></p>
           </div>
         </form>
 
