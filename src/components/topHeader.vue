@@ -44,7 +44,8 @@
           <!--<li class="nav-link-item"><a href="javascript:">买/卖</a></li>-->
           <!--<li class="nav-link-item"><a href="javascript:;">活动</a></li>-->
           <!--<li class="nav-link-item"><a href="javascript:;">资讯</a></li>-->
-          <li class="nav-link-item"><a href="javascript:">账户</a></li>
+          <router-link to="/user" class="nav-link-item"><a href="javascript:">账户</a></router-link>
+          <!--<li class="nav-link-item"><a href="javascript:">账户</a></li>-->
         </ul>
       </div>
     </div>

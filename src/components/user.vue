@@ -1,11 +1,11 @@
 <template>
-  <div class="business">
-    <div class="business-box layout">
-      <div class="business-box-left">
+  <div class="user">
+    <div class="user-box layout">
+      <div class="user-box-left">
         <realName></realName>
-        <btcTransaction></btcTransaction>
+        <userBtnLink></userBtnLink>
       </div>
-      <div class="business-box-right">
+      <div class="user-box-right">
         <router-view></router-view>
       </div>
     </div>
@@ -13,24 +13,29 @@
 </template>
 <script>
   import realName from './lettle_components/realName.vue';
-  import btcTransaction from './lettle_components/btcTransaction.vue';
+  import userBtnLink from './lettle_components/userBtnLink.vue';
 
   import $ from 'jquery';
   export default {
-      components: {
-          realName, btcTransaction
-      }
+    components: {
+      realName, userBtnLink
+    }
   }
 </script>
 <style>
-  .business-box{
+  .user .user-box{
+    color: #333;
+  }
+  .user-box{
     margin: 2rem auto;
     background: #fff;
     display: flex;
+    align-items: flex-start;
   }
-  .business-box-right{
+  .user-box-right{
     width: 100%;
     padding: 1rem 1.667rem 1.25rem 1.667rem;
     box-sizing: border-box;
   }
 </style>
+

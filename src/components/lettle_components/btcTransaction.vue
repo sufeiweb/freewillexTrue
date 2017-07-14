@@ -6,10 +6,14 @@
         <span>比特币交易</span>
       </p>
       <ul class="btcTransaction-content-btn">
-        <li class="li-active"><a href="javascript:"><i class="iconfont">&#xe668;</i>买/卖</a></li>
-        <li><a href="javascript:"><i class="iconfont">&#xe668;</i>委托管理</a></li>
-        <li><a href="javascript:"><i class="iconfont">&#xe668;</i>交易记录</a></li>
-        <li><a href="javascript:"><i class="iconfont">&#xe668;</i>杠杆</a></li>
+        <router-link to="/business" tag="li" class="li-active"><a href="javascript:"><i class="iconfont">&#xe668;</i>买/卖</a></router-link>
+        <!--<li class="li-active"><a href="javascript:"><i class="iconfont">&#xe668;</i>买/卖</a></li>-->
+        <!--<li><a href="javascript:"><i class="iconfont">&#xe668;</i>委托管理</a></li>-->
+        <router-link to="/entrust" tag="li"><a href="javascript:"><i class="iconfont">&#xe668;</i>委托管理</a></router-link>
+        <!--<li><a href="javascript:"><i class="iconfont">&#xe668;</i>交易记录</a></li>-->
+        <router-link to="/transactionRecord" tag="li"><a href="javascript:"><i class="iconfont">&#xe668;</i>交易记录</a></router-link>
+        <!--<li><a href="javascript:"><i class="iconfont">&#xe668;</i>杠杆</a></li>-->
+        <!--<router-link to="/lever" tag="li"><a href="javascript:"><i class="iconfont">&#xe668;</i>杠杆</a></router-link>-->
       </ul>
       <div class="app-download">
         <img src="../../assets/img/download/APPcode.jpg"/>
@@ -78,7 +82,7 @@
     opacity: 0;
     color: gray
   }
-  .btcTransaction-content-btn li:last-child i{
+  .btcTransaction-content-btn li:nth-of-type(4) i{
     opacity: 1;
   }
   .app-download{
