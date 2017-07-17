@@ -39,7 +39,8 @@
         <ul class="nav-link-box">
           <router-link to="/" tag="li" class="nav-link-item"><a href="javascript:">首页</a></router-link>
           <!--<li class="nav-link-item"><a href="javascript:;">首页</a></li>-->
-          <li class="nav-link-item"><a href="javascript:">行情</a></li>
+          <router-link to="quotation" tag="li" class="nav-link-item"><a href="javascript:">行情</a></router-link>
+          <!--<li class="nav-link-item"><a href="javascript:">行情</a></li>-->
           <router-link to="/business" tag="li" class="nav-link-item"><a href="javascript:">买/卖</a></router-link>
           <!--<li class="nav-link-item"><a href="javascript:">买/卖</a></li>-->
           <!--<li class="nav-link-item"><a href="javascript:;">活动</a></li>-->

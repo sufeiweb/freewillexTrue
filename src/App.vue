@@ -1,8 +1,8 @@
 <template>
   <div class="app">
-    <topHeader></topHeader>
+    <topHeader v-show="TopHeaderStyle"></topHeader>
     <router-view></router-view>
-    <footers></footers>
+    <footers v-show="FooterStyle"></footers>
   </div>
 </template>
 
@@ -12,9 +12,31 @@
   import home from './components/home.vue';
   import business from './components/business.vue';
   import introduction from './components/introduction.vue';
+  import {mapGetters} from 'vuex';
   export default {
     components: {
       topHeader, footers, home, business, introduction
-    }
+    },
+    computed: mapGetters(
+      ['TopHeaderStyle', 'FooterStyle']
+    ),
+    watch: {
+      $route(to) {
+        this.routeChange(to.path);
+      }
+    },
+    methods: {
+      routeChange(path) {
+        path = path.substring(1);
+        console.log(path);
+        if (path === 'quotation') {
+          this.$store.dispatch('hideHeader');
+          this.$store.dispatch('hideFooter');
+        } else {
+          this.$store.dispatch('showHeader');
+          this.$store.dispatch('showFooter');
+        }
+      }
+    },
   }
 </script>

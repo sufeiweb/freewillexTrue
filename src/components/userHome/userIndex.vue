@@ -1,84 +1,121 @@
 <template>
   <div class="userIndex">
-    <div class="index-title">
-      <span>账户概要</span>
-      <a href="javascript:"><i class="iconfont">&#xe6c1;</i></a>
+    <div class="userIndex-header">
+      <div class="index-title">
+        <span>账户概要</span>
+        <a href="javascript:"><i class="iconfont">&#xe6c1;</i></a>
+      </div>
+      <div class="money-tabs-box">
+        <div class="money-tabs-left">
+          <p class="money-tab-btn">
+            <span class="bg-color">CNY</span>
+            <span>BTC</span>
+          </p>
+          <i class="iconfont" v-show="!money_hide">&#xe6c6;</i>
+          <i class="iconfont" v-show="money_hide">&#xe6c7;</i>
+        </div>
+        <div class="money-tabs-right">
+          <i class="iconfont">&#xe6c5;</i>
+          <a href="javascript:">我的推荐人信息</a>
+        </div>
+      </div>
+      <div class="total-assets">
+        <h1 class="assets-title">总资产</h1>
+        <span class="assets-money">{{1212121}} {{money_style}}</span>
+        <div class="assets_CNY">
+          <span></span><span>CNY {{122111.00}}</span>
+        </div>
+        <div class="assets_BTC">
+          <span></span><span>BTC {{122111.0000}}</span>
+        </div>
+        <div class="assets-proportion">
+          <span></span><span></span>
+        </div>
+      </div>
+      <div class="net-assets">
+        <h1 class="assets-title">净资产</h1>
+        <span class="assets-money">{{1212121}} {{money_style}}</span>
+        <div class="assets_CNY">
+          <span></span><span>CNY {{122111.00}}</span>
+        </div>
+        <div class="assets_BTC">
+          <span ></span><span>BTC {{122111.0000}}</span>
+        </div>
+        <div class="assets-proportion">
+          <span></span><span></span>
+        </div>
+      </div>
+      <div class="available-assets" v-show="!more_style">
+        <h1 class="assets-title">可用</h1>
+        <span class="assets-money">{{1212121}} {{money_style}}</span>
+        <div class="assets_CNY">
+          <span></span><span>CNY {{122111.00}}</span>
+        </div>
+        <div class="assets_BTC">
+          <span></span><span>BTC {{122111.0000}}</span>
+        </div>
+        <div class="assets-proportion">
+          <span></span><span></span>
+        </div>
+      </div>
+      <div class="blocked-assets" v-show="!more_style">
+        <h1 class="assets-title">冻结</h1>
+        <span class="assets-money">{{1212121}} {{money_style}}</span>
+        <div class="assets_CNY">
+          <span></span><span>CNY {{122111.00}}</span>
+        </div>
+        <div class="assets_BTC">
+          <span></span><span>BTC {{122111.0000}}</span>
+        </div>
+        <div class="assets-proportion">
+          <span></span><span></span>
+        </div>
+      </div>
+      <div class="more">
+        <a href="javascript:" v-show="more_style" @click="open_more()">更多</a>
+        <a href="javascript:" v-show="!more_style" @click="close_more()">收起</a>
+      </div>
     </div>
-    <div class="money-tabs-box">
-      <div class="money-tabs-left">
-        <p class="money-tab-btn">
-          <span class="bg-color">CNY</span>
-          <span>BTC</span>
-        </p>
-        <i class="iconfont" v-show="!money_hide">&#xe6c6;</i>
-        <i class="iconfont" v-show="money_hide">&#xe6c7;</i>
-      </div>
-      <div class="money-tabs-right">
-        <i class="iconfont">&#xe6c5;</i>
-        <a href="javascript:">我的推荐人信息</a>
-      </div>
-    </div>
-    <div class="total-assets">
-      <h1 class="assets-title">总资产</h1>
-      <span class="assets-money">{{1212121}} {{money_style}}</span>
-      <div class="assets_CNY">
-        <span></span><span>CNY {{122111.00}}</span>
-      </div>
-      <div class="assets_BTC">
-        <span></span><span>BTC {{122111.0000}}</span>
-      </div>
-      <div class="assets-proportion">
-        <span></span><span></span>
-      </div>
-    </div>
-    <div class="net-assets">
-      <h1 class="assets-title">净资产</h1>
-      <span class="assets-money">{{1212121}} {{money_style}}</span>
-      <div class="assets_CNY">
-        <span></span><span>CNY {{122111.00}}</span>
-      </div>
-      <div class="assets_BTC">
-        <span ></span><span>BTC {{122111.0000}}</span>
-      </div>
-      <div class="assets-proportion">
-        <span></span><span></span>
-      </div>
-    </div>
-    <div class="available-assets">
-      <h1 class="assets-title">可用</h1>
-      <span class="assets-money">{{1212121}} {{money_style}}</span>
-      <div class="assets_CNY">
-        <span></span><span>CNY {{122111.00}}</span>
-      </div>
-      <div class="assets_BTC">
-        <span></span><span>BTC {{122111.0000}}</span>
-      </div>
-      <div class="assets-proportion">
-        <span></span><span></span>
-      </div>
-    </div>
-    <div class="blocked-assets">
-      <h1 class="assets-title">冻结</h1>
-      <span class="assets-money">{{1212121}} {{money_style}}</span>
-      <div class="assets_CNY">
-        <span></span><span>CNY {{122111.00}}</span>
-      </div>
-      <div class="assets_BTC">
-        <span></span><span>BTC {{122111.0000}}</span>
-      </div>
-      <div class="assets-proportion">
-        <span></span><span></span>
-      </div>
+    <dottedLine></dottedLine>
+    <div class="userIndex-footer">
+      <p class="userIndex-footer-title">账户明细</p>
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+        <el-tab-pane label="全部" name="first">
+          <userTable></userTable>
+        </el-tab-pane>
+        <el-tab-pane label="人民币" name="second">
+          <userTable></userTable>
+        </el-tab-pane>
+        <el-tab-pane label="比特币" name="third">
+          <userTable></userTable>
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
 <script>
   import $ from 'jquery';
+
+  import dottedLine from '../lettle_components/dottedLine.vue';
+  import userTable from '../lettle_components/userTable.vue';
   export default {
     data() {
       return {
         money_hide: false,
-        money_style: 'CNY'
+        money_style: 'CNY',
+        more_style: true,
+        activeName: 'first'
+      }
+    },
+    components: {
+      dottedLine, userTable
+    },
+    methods: {
+        open_more() {
+            this.more_style = false;
+        },
+        close_more() {
+            this.more_style = true;
       }
     }
   }
@@ -192,5 +229,17 @@ font-size: 1.333rem;
   .assets-proportion span:nth-of-type(2){
     width: 70%;
     background:#38c4e9 ;
+  }
+  .more a{
+    color: #01aaef;
+    font-size: 1.167rem;
+    margin-bottom: 0.833rem;
+    text-align: center;
+  }
+  .userIndex-footer-title{
+    font-weight: 400;
+    font-size: 1.667rem;
+    padding: 0.833rem 0;
+    margin: 1.667rem 0 0.833rem 0;
   }
 </style>

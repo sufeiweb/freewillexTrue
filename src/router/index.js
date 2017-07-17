@@ -21,6 +21,7 @@ import recharge from '@/components/userHome/recharge'
 import reward from '@/components/userHome/reward'
 import settings from '@/components/userHome/settings'
 import userIndex from '@/components/userHome/userIndex'
+import quotation from '@/components/quotation'
 
 Vue.use(Router);
 
@@ -31,14 +32,18 @@ export default new Router({
     {path: '/register', name: 'register', component: register},
     {path: '/passwordRetrieval', name: 'passwordRetrieval', component: passwordRetrieval},
     {path: '/introduction', name: 'introduction', component: introduction},
+    {path: '/quotation', name: 'quotation', component: quotation},
     {path: '/userAgreement', name: 'userAgreement', component: userAgreement},
-    {path: '/business', name: 'business', component: business, children: [
-      {path: '/', name: 'businessHome', component:businessHome},
-      {path: '/entrust', name: 'entrust', component:entrust},
-      {path: '/transactionRecord', name: 'transactionRecord', component:transactionRecord},
-      {path: '/lever', name: 'lever', component:lever}
-    ]},
-    {path: '/user', name: 'user', component: user, children: [
+    {
+      path: '/business', name: 'business', component: business, children: [
+      {path: '/', name: 'businessHome', component: businessHome},
+      {path: '/entrust', name: 'entrust', component: entrust},
+      {path: '/transactionRecord', name: 'transactionRecord', component: transactionRecord},
+      {path: '/lever', name: 'lever', component: lever}
+    ]
+    },
+    {
+      path: '/user', name: 'user', component: user, children: [
       {path: '/', name: 'userIndex', component: userIndex},
       {path: '/accountDetails', name: 'accountDetails', component: accountDetails},
       {path: '/accountManagement', name: 'accountManagement', component: accountManagement},
@@ -48,6 +53,7 @@ export default new Router({
       {path: '/recharge', name: 'recharge', component: recharge},
       {path: '/reward', name: 'reward', component: reward},
       {path: '/settings', name: 'settings', component: settings}
-    ]}
+    ]
+    }
   ]
 })

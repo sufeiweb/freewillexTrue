@@ -13,7 +13,8 @@ body, html, header, nav, aside, article, section, footer, div, p, span, a, img, 
 }
 
 .layout {
-  width: 65%;
+  min-width: 80rem;
+  max-width: 65%;
   margin: 0 auto;
 }
 
