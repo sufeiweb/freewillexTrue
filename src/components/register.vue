@@ -3,8 +3,8 @@
     <div class="register-box">
       <div class="register-header">
         <span>注册</span>
-        <a href="javascript:;" v-if="register_text" @click="register_style()">使用邮箱注册</a>
-        <a href="javascript:;" v-if="!register_text" @click="register_style()">使用手机注册</a>
+        <a href="javascript:" v-if="register_text" @click="register_style()">使用邮箱注册</a>
+        <a href="javascript:" v-if="!register_text" @click="register_style()">使用手机注册</a>
       </div>
       <div class="register-from" v-if="register_text">
         <form name="register1">
@@ -51,7 +51,7 @@
             <div class="form-group1-box">
               <div class="form-group-content">
                 <input type="text" placeholder="手机验证码"/>
-                <a href="javascript:;">获取验证码</a>
+                <a href="javascript:">获取验证码</a>
               </div>
               <div class="help-tips"></div>
             </div>
@@ -108,7 +108,7 @@
           <div class="form-group1-box">
             <div class="form-group-content">
               <input type="text" placeholder="邮箱验证码"/>
-              <a href="javascript:;">获取验证码</a>
+              <a href="javascript:">获取验证码</a>
             </div>
             <div class="help-tips"></div>
           </div>
@@ -139,7 +139,7 @@
     </div>
   </div>
 </template>
-<script>
+<script scoped>
   import $ from "jquery";
   export default{
       data() {

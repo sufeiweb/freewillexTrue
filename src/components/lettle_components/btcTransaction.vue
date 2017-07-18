@@ -48,7 +48,7 @@
       }
   }
 </script>
-<style>
+<style scoped>
   .btcTransaction{
     width: 16.667rem;
     background: #fff;

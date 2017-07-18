@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div>
     <div class="real-name">
       <div class="user-welcome"><span>您好,176****3949</span><span class="real-hide"><img src="../../assets/img/other/dropup_b.png"/><span>176****3949</span></span></div>
@@ -37,7 +37,7 @@
       }
   }
 </script>
-<style>
+<style scoped>
   .real-name-footer-split{
     width: 16.667rem;
     height: 1.25rem;

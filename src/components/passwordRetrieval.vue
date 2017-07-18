@@ -142,7 +142,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .country-name>p{
     display: flex;
     align-items: center;

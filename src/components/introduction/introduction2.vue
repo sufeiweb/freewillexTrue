@@ -38,7 +38,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .top2 {
     background: url('../../assets/img/introduction/about2.jpg') no-repeat center;
     background-size: 100%;

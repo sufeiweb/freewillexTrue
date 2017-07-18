@@ -119,7 +119,7 @@
     }
   };
 </script>
-<style>
+<style scoped>
   .el-tab-pane{
     padding: 0.833rem;
     border: 1px solid #d1dbe5;

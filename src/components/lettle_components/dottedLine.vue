@@ -1,7 +1,7 @@
 <template>
   <div class="dottedLine"></div>
 </template>
-<style>
+<style scoped>
   .dottedLine{
     width: 100%;
     height: 0.3rem;

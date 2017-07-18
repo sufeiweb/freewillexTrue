@@ -66,7 +66,7 @@
     </div>
   </div>
 </template>
-<style>
+<style scoped>
   .home-banner {
     margin-top: .15rem;
     width: 100%;

@@ -1,8 +1,8 @@
-var path = require('path')
-var utils = require('./utils')
-var config = require('../config')
-var vueLoaderConfig = require('./vue-loader.conf')
-var webpack = require('webpack')
+var path = require('path');
+var utils = require('./utils');
+var config = require('../config');
+var vueLoaderConfig = require('./vue-loader.conf');
+var webpack = require('webpack');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -45,6 +45,11 @@ module.exports = {
         include: [resolve('src'), resolve('test')]
       },
       {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader',
+        include: [resolve('src'), resolve('test')]
+      },
+      {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
@@ -62,4 +67,4 @@ module.exports = {
       }
     ]
   }
-}
+};

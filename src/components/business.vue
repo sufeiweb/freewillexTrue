@@ -22,7 +22,7 @@
       }
   }
 </script>
-<style>
+<style scoped>
   .business-box{
     margin: 2rem auto;
     background: #fff;

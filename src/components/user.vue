@@ -22,7 +22,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .user .user-box{
     color: #333;
   }

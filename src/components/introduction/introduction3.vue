@@ -44,7 +44,7 @@
 <script>
   export default{}
 </script>
-<style>
+<style scoped>
   .top3 {
     background: url('../../assets/img/introduction/about3.jpg') no-repeat center;
     background-size: 100%;

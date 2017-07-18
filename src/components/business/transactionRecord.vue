@@ -64,13 +64,23 @@
       },
   }
 </script>
-<style>
+<style scoped>
   .transactionRecord-title{
     font-size: 1.333rem;
     height: 4rem;
     line-height: 4rem;
     border-bottom: 1px solid #eee;
     margin-bottom: 0.833rem;
+  }
+  .table-select-time {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding:1rem 3rem 2rem 0;
+  }
+  .table-select-time >span{
+    margin-right: 2rem ;
+    font-size: 1.167rem ;
   }
   .el-tab-pane{
     padding: 0.833rem;

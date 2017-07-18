@@ -72,7 +72,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .top5 {
     background: url('../../assets/img/introduction/about5.jpg') no-repeat center;
     background-size: 100%;

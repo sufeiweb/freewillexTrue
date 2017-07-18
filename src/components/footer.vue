@@ -108,7 +108,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   footer {
     background: #2b3643;
     color: #cfd0d2;

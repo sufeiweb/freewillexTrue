@@ -240,7 +240,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .business-box-right-header{
     width: 99%;
     display: flex;

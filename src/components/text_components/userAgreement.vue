@@ -112,7 +112,7 @@
     </div>
   </div>
 </template>
-<style>
+<style scoped>
   .foot-link-page{
     background-color: #fff;
     margin:1.667rem auto;

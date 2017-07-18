@@ -7,7 +7,7 @@ body, html {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 
-body, html, header, nav, aside, article, section, footer, div, p, span, a, img, figure, figcaption, table, tr, th, td, ul, li, dl, dt, dd, i, label, caption, select, option, input, button, textarea, h1, h2, h3, h4, h5, h6 ,em,table,tr,td,thead,tbody,tfoot,th{
+body, html, header, nav, aside, article, section, footer, div, p, span, a, img, figure, figcaption, table, tr, th, td, ul, li, dl, dt, dd, i, label, caption, select, option, input, button, textarea, h1, h2, h3, h4, h5, h6 ,em,table,tr,td,thead,tbody,tfoot,th,button{
   padding: 0;
   margin: 0;
 }
@@ -39,4 +39,12 @@ ul li {
 
 .font-size-18{
   font-size:1.5rem;
+}
+.el-tabs__header{
+  margin-bottom: 0 !important;
+}
+
+canvas {
+  width: 29.583rem !important;
+  height: 16.667rem !important;
 }

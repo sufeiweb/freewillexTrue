@@ -142,7 +142,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .userIndex-recharge-header {
     width: 99%;
     border-bottom: 1px solid #eee;

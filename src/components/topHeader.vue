@@ -74,7 +74,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .topHeader {
     background: #fff;
   }

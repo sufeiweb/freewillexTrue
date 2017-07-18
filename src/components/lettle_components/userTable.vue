@@ -59,7 +59,7 @@
       }
   }
 </script>
-<style>
+<style scoped>
   .el-tabs__header{
     margin-bottom: 0;
   }

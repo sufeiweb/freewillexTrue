@@ -73,7 +73,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .login {
     width: 100%;
     height: 51.667rem;

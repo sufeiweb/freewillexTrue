@@ -79,7 +79,7 @@
     <dottedLine></dottedLine>
     <div class="userIndex-footer">
       <p class="userIndex-footer-title">账户明细</p>
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+      <el-tabs v-model="activeName" type="card">
         <el-tab-pane label="全部" name="first">
           <userTable></userTable>
         </el-tab-pane>
@@ -120,7 +120,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .index-title {
     display: flex;
     height: 4rem;

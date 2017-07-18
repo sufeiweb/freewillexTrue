@@ -78,7 +78,7 @@
     </div>
   </div>
 </template>
-<style>
+<style scoped>
   .introduction-content-header-item {
     width: 100%;
     padding: 2.5rem 0;

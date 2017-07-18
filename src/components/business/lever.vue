@@ -46,7 +46,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .leaver-header {
     display: flex;
     justify-content: space-between;
