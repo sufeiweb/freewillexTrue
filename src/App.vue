@@ -1,7 +1,9 @@
 <template>
   <div class="app">
     <topHeader v-show="TopHeaderStyle"></topHeader>
-    <router-view></router-view>
+    <transition enter-active-class="animated fadeIn">
+      <router-view></router-view>
+    </transition>
     <footers v-show="FooterStyle"></footers>
   </div>
 </template>

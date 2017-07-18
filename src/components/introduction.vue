@@ -41,7 +41,7 @@
     }
   };
 </script>
-<style scoped>
+<style>
   .introduction {
     background: #fff;
     margin-top: 1.8rem;

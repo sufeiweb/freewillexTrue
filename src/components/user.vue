@@ -6,7 +6,9 @@
         <userBtnLink></userBtnLink>
       </div>
       <div class="user-box-right">
-        <router-view></router-view>
+        <transition enter-active-class="animated fadeIn">
+          <router-view></router-view>
+        </transition>
       </div>
     </div>
   </div>

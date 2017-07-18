@@ -1,5 +1,6 @@
 <template>
   <div class="quotation">
+    <transition enter-active-class="animated zoomInLeft">
       <div class="screenShot">
         <div class="zhe-zhao"></div>
         <div class="screenShot-content">
@@ -21,6 +22,7 @@
           </div>
         </div>
       </div>
+    </transition>
     <div class="quotation-header">
       <router-link to="/"><img src="../assets/img/quotation/quotation_logo.png"/></router-link>
       <div class="transaction-variety">
@@ -30,8 +32,7 @@
           <i class="iconfont" @click="closeOPenTradingClass()">&#xe673;</i>
         </div>
         <transition
-          enterActiveClass="fadeIn"
-          leaveActiveClass="fadeOut"
+          enter-active-class="animated zoomInLeft"
         >
           <div class="select-trading-class">
             <div class="select-trading-coin">
@@ -519,10 +520,10 @@
         });
       }
       {
-          $('.closeWaring').click(function () {
-            $('.header-warning').hide();
-            return false;
-          })
+        $('.closeWaring').click(function () {
+          $('.header-warning').hide();
+          return false;
+        })
       }
     },
     methods: {
@@ -1089,8 +1090,6 @@
     width: 29.583rem;
     height: 16.667rem;
   }
-
-
 
   .screenShot-content-share {
     display: flex;

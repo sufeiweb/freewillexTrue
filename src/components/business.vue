@@ -6,7 +6,9 @@
         <btcTransaction></btcTransaction>
       </div>
       <div class="business-box-right">
-        <router-view></router-view>
+        <transition enter-active-class="animated fadeIn">
+          <router-view></router-view>
+        </transition>
       </div>
     </div>
   </div>
