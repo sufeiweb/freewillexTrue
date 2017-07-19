@@ -11,13 +11,11 @@
 <script>
   import topHeader from './components/topHeader.vue';
   import footers from './components/footer.vue';
-  import home from './components/home.vue';
-  import business from './components/business.vue';
-  import introduction from './components/introduction.vue';
+
   import {mapGetters} from 'vuex';
   export default {
     components: {
-      topHeader, footers, home, business, introduction
+      topHeader, footers
     },
     computed: mapGetters(
       ['TopHeaderStyle', 'FooterStyle']
