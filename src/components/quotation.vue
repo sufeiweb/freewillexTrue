@@ -494,6 +494,12 @@
       }
     },
     mounted() {
+        //阻止行情面板页面刷新时，头部和尾部组件出来
+      {
+        this.$store.dispatch('hideHeader');
+        this.$store.dispatch('hideFooter');
+      }
+
       {
         let oHeight = $(window).height();
         $('.quotation').css({height: oHeight, maxHeight: oHeight})
