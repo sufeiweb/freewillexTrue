@@ -199,7 +199,7 @@
         <div class="quotation-center-title">行情图表</div>
         <!--行情K线图-->
         <div class="quotation-chart-line">
-          <div id="myChart_k" :style="{'100%',height:'540px'}"></div>
+          <div id="myChart_k"></div>
         </div>
         <div class="delegate-panel">
           <div class="delegate-panel-title">委托面板</div>
@@ -1450,5 +1450,6 @@
 
   #myChart_k {
     width: 100%;
+    height: 540px;
   }
 </style>
