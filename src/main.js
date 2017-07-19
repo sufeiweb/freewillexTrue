@@ -6,7 +6,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import 'animate.css'
 import router from './router'
-import  store from './store';
+import  store from './store'
+import  echarts from 'echarts'
+
+Vue.prototype.$echarts = echarts;
 
 Vue.use(ElementUI);
 

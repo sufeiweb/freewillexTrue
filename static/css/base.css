@@ -44,7 +44,7 @@ ul li {
   margin-bottom: 0 !important;
 }
 
-canvas {
+.screenShot canvas {
   width: 29.583rem !important;
   height: 16.667rem !important;
 }
