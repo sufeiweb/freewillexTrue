@@ -27,7 +27,8 @@ Vue.use(Router);
 
 export default new Router({
   routes: [
-    {path: '/', name: 'home', component: home},
+    {path: '/', redirect:'/home'},
+    {path: '/home', name: 'home', component: home},
     {path: '/login', name: 'login', component: login},
     {path: '/register', name: 'register', component: register},
     {path: '/passwordRetrieval', name: 'passwordRetrieval', component: passwordRetrieval},
@@ -36,7 +37,8 @@ export default new Router({
     {path: '/userAgreement', name: 'userAgreement', component: userAgreement},
     {
       path: '/business', name: 'business', component: business, children: [
-      {path: '/', name: 'businessHome', component: businessHome},
+      {path: '/businessHome', name: 'businessHome', component: businessHome},
+      {path: '/', redirect:'/businessHome'},
       {path: '/entrust', name: 'entrust', component: entrust},
       {path: '/transactionRecord', name: 'transactionRecord', component: transactionRecord},
       {path: '/lever', name: 'lever', component: lever}
@@ -44,7 +46,8 @@ export default new Router({
     },
     {
       path: '/user', name: 'user', component: user, children: [
-      {path: '/', name: 'userIndex', component: userIndex},
+      {path: '/userIndex', name: 'userIndex', component: userIndex},
+      {path: '/', redirect:'/userIndex'},
       {path: '/accountDetails', name: 'accountDetails', component: accountDetails},
       {path: '/accountManagement', name: 'accountManagement', component: accountManagement},
       {path: '/cash', name: 'cash', component: cash},
