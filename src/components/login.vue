@@ -14,7 +14,7 @@
             <div class="input-icon">
               <i class="iconfont">&#xe639;</i>
               <input class="form-control" type="text" autocomplete="off" placeholder="手机号码 / 邮箱" name="userName"
-                     id="userName" maxlength="32"/>
+                     id="userName" maxlength="32" v-model="userName"/>
             </div>
             <div class="help-tips"></div>
           </div>
@@ -22,7 +22,7 @@
             <div class="input-icon">
               <i class="iconfont">&#xe631;</i>
               <input class="form-control" type="password" autocomplete="off" placeholder="密码" name="userPassword"
-                     id="userPassword" maxlength="32"/>
+                     id="userPassword" maxlength="32" v-model="userPassword"/>
             </div>
             <div class="help-tips"></div>
           </div>
@@ -30,7 +30,7 @@
             <input type="checkbox" id="remember"/><label for="remember">记住用户名</label>
           </div>
           <div class="form-group">
-            <input type="button" value="登录" class="login-btn"/>
+            <input type="button" value="登录" class="login-btn" @click="userLogin()"/>
           </div>
           <div class="login-footer">
             <div class="password-retrieval">
@@ -62,13 +62,23 @@
   export default {
     data() {
       return {
-        login_style1: true
+        login_style1: true,
+        userName: '',
+        userPassword: ''
       }
     },
     methods: {
       login_style() {
         this.login_style1 = !this.login_style1;
         return false;
+      },
+      userLogin() {
+          let url = 'http://192.168.1.48:8089/fwex/web/auth/login';
+          this.$http.post(url,{loginUser:this.userName,loginPwd:this.userPassword}).then(function (data) {
+            console.log(data);
+          }).catch(function () {
+
+          })
       }
     }
   }

@@ -77,27 +77,14 @@
       </div>
     </div>
     <dottedLine></dottedLine>
-    <div class="userIndex-footer">
-      <p class="userIndex-footer-title">账户明细</p>
-      <el-tabs v-model="activeName" type="card">
-        <el-tab-pane label="全部" name="first">
-          <userTable></userTable>
-        </el-tab-pane>
-        <el-tab-pane label="人民币" name="second">
-          <userTable></userTable>
-        </el-tab-pane>
-        <el-tab-pane label="比特币" name="third">
-          <userTable></userTable>
-        </el-tab-pane>
-      </el-tabs>
-    </div>
-  </div>
+    <userFooter></userFooter>
+      </div>
 </template>
 <script>
   import $ from 'jquery';
 
   import dottedLine from '../lettle_components/dottedLine.vue';
-  import userTable from '../lettle_components/userTable.vue';
+ import userFooter from '../lettle_components/userFooter.vue';
   export default {
     data() {
       return {
@@ -108,7 +95,7 @@
       }
     },
     components: {
-      dottedLine, userTable
+      dottedLine, userFooter
     },
     methods: {
         open_more() {
@@ -236,10 +223,5 @@ font-size: 1.333rem;
     margin-bottom: 0.833rem;
     text-align: center;
   }
-  .userIndex-footer-title{
-    font-weight: 400;
-    font-size: 1.667rem;
-    padding: 0.833rem 0;
-    margin: 1.667rem 0 0.833rem 0;
-  }
+
 </style>

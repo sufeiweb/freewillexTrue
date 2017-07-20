@@ -8,8 +8,10 @@ import 'animate.css'
 import router from './router'
 import  store from './store'
 import  echarts from 'echarts'
+import axios from 'axios';
 
 Vue.prototype.$echarts = echarts;
+Vue.prototype.$http = axios;
 
 Vue.use(ElementUI);
 

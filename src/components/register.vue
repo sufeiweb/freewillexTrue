@@ -28,13 +28,13 @@
             <span>手机号码</span>
             <div class="form-group-content">
               <span class="area-code">+1</span>
-              <input type="text" placeholder="手机"/>
+              <input type="text" placeholder="手机" v-model="userNameM"/>
             </div>
           </div>
           <div class="form-group1">
             <span>密码</span>
               <div class="form-group-content de">
-                <input type="password" placeholder="密码"/>
+                <input type="password" placeholder="密码" v-model="userPasswordM"/>
                 <div class="help-tips"></div>
               </div>
             <p class="password-strength"><span></span><span></span><span></span><em class="password-strength-view">低</em></p>
@@ -42,7 +42,7 @@
           <div class="form-group1">
             <span>确认密码</span>
               <div class="form-group-content de">
-                <input type="password" placeholder="确认密码"/>
+                <input type="password" placeholder="确认密码" v-model="userPasswordsM"/>
                 <div class="help-tips"></div>
               </div>
           </div>
@@ -68,7 +68,7 @@
           <div class="form-group1 dd margin-bottom-0">
             <span> </span>
             <div class="form-group-content1">
-                <input type="button" value="注册" class="register-submit"/>
+                <input type="button" value="注册" class="register-submit" @click="userRegisterM()"/>
             </div>
           </div>
           <div class="form-group1 margin-bottom-0">
@@ -84,14 +84,14 @@
         <div class="form-group1">
           <span>邮箱</span>
           <div class="form-group-content de">
-            <input type="email" placeholder="邮箱"/>
+            <input type="email" placeholder="邮箱" v-model="userNameE"/>
             <div class="help-tips"></div>
           </div>
         </div>
         <div class="form-group1">
           <span>密码</span>
           <div class="form-group-content de">
-            <input type="password" placeholder="密码"/>
+            <input type="password" placeholder="密码" v-model="userPasswordE"/>
             <div class="help-tips"></div>
           </div>
           <p class="password-strength"><span></span><span></span><span></span><em class="password-strength-view">低</em></p>
@@ -99,7 +99,7 @@
         <div class="form-group1">
           <span>确认密码</span>
           <div class="form-group-content de">
-            <input type="password" placeholder="确认密码"/>
+            <input type="password" placeholder="确认密码" v-model="userPasswordsE"/>
             <div class="help-tips"></div>
           </div>
         </div>
@@ -125,7 +125,7 @@
         <div class="form-group1 dd margin-bottom-0">
           <span> </span>
           <div class="form-group-content1">
-            <input type="button" value="注册" class="register-submit"/>
+            <input type="button" value="注册" class="register-submit" @click="userRegisterE()"/>
           </div>
         </div>
         <div class="form-group1 margin-bottom-0">
@@ -161,12 +161,29 @@
             value: '5',
             label: '香港'
           }],
-          value8: ''
+          value8: '',
+          userPasswordE:'',
+          userPasswordsE:'',
+          userNameE:'',
+          userPasswordM:'',
+          userPasswordsM:'',
+          userNameM:''
         }
       },
     methods: {
       register_style() {
           this.register_text = !this.register_text;
+      },
+      userRegisterE() {
+
+      },
+      userRegisterM() {
+            let url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile/17602103949';
+            this.$http.get(url).then(function (data) {
+              console.log(data)
+            }).catch(function (error) {
+              console.log(error)
+            })
       }
     }
   }

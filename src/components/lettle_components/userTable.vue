@@ -91,6 +91,8 @@
     height: 3.083rem;
     line-height: 3.083rem;
     text-align: left;
+    padding-left: 1rem;
+    box-sizing: border-box;
   }
   .user-table table td:nth-of-type(2){
     width: 20.75rem;
