@@ -1,0 +1,67 @@
+{{#if User}}
+<div class="tab-pane" id="priceInfo">
+    <div class="market-trade-info">
+        <h3 class="num-${price[2]==price[1]?'white':(price[2]>=price[1]?config.red:config.green)}">
+            <span v-text="price[2]|ms config.currency"></span>
+            <i v-show="price[2]!=price[1]" class="iconfont icon-long-${price[2]>=price[1]?'up':'down'}"></i>
+        </h3>
+
+        <div class="market-info">
+            <p>
+                <span>
+                    {{{__ "最高价"}}}
+                    <b class="num-${ticker[2]==ticker[7]?'white':(ticker[2]>ticker[7]?config.red:config.green)}" v-text="ticker[2]|ms config.currency"></b>
+                </span>
+                <span>
+                    {{{__ "涨跌幅"}}}
+                    <b class="num-${price[4]==0?'white':(price[4]>0?config.red:config.green)}" v-text="price[4]+'%'"></b>
+                </span>
+            </p>
+
+            <p>
+                <span>
+                    {{{__ "最低价"}}}
+                    <b class="num-${ticker[3]==ticker[7]?'white':(ticker[3]>ticker[7]?config.red:config.green)}" v-text="ticker[3]|ms config.currency"></b>
+                </span>
+                <span>
+                    {{{__ "成交量买卖"}}}
+                    <b class="num-white" v-text="ticker[5]|ms 'BTC'"></b>
+                </span>
+            </p>
+        </div>
+    </div>
+</div>
+{{else}}
+<div class="tab-pane active" id="priceInfo">
+    <div class="market-trade-info">
+        <h3 class="num-${price[2]==price[1]?'white':(price[2]>=price[1]?config.red:config.green)}">
+            <span v-text="price[2]|ms config.currency"></span>
+            <i v-show="price[2]!=price[1]" class="iconfont icon-long-${price[2]>=price[1]?'up':'down'}"></i>
+        </h3>
+
+        <div class="market-info">
+            <p>
+                <span>
+                    {{{__ "最高价"}}}
+                    <b class="num-${ticker[2]==ticker[7]?'white':(ticker[2]>ticker[7]?config.red:config.green)}" v-text="ticker[2]|ms config.currency"></b>
+                </span>
+                <span>
+                    {{{__ "涨跌幅"}}}
+                    <b class="num-${price[4]==0?'white':(price[4]>0?config.red:config.green)}" v-text="price[4]+'%'"></b>
+                </span>
+            </p>
+
+            <p>
+                <span>
+                    {{{__ "最低价"}}}
+                    <b class="num-${ticker[3]==ticker[7]?'white':(ticker[3]>ticker[7]?config.red:config.green)}" v-text="ticker[3]|ms config.currency"></b>
+                </span>
+                <span>
+                    {{{__ "成交量买卖"}}}
+                    <b class="num-white" v-text="ticker[5]|ms 'BTC'"></b>
+                </span>
+            </p>
+        </div>
+    </div>
+</div>
+{{/if}}

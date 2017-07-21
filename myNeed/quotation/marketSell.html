@@ -1,0 +1,42 @@
+<form name="marketSellForm" class="form-horizontal form-bordered" method="post" onsubmit="return false;">
+    <p class="quotation-trade-first-p">
+        <span  class="avl-margin">{{{__ "可用杠杆额度"}}}<span class="num-green font-size-13" v-text="assets.can_financing.btc|ms 'BTC'"></span></span>
+        <span class="switch-style">
+            <input id="financing" name="financing" type="checkbox" class="make-switch" data-size="mini" data-on-text="{{{__ '开'}}}" data-off-text="{{{__ '关'}}}"
+                   data-on-color="info" data-on-color="default" data-animate="true" data-handle-width="22" readonly disabled/>
+        </span>
+    </p>
+
+    <div class="form-group" style="margin-bottom: 2px;">
+        <div id="spinner2">
+            <div class="input-icon left" data-toggle="tooltip" data-placement="top" title="{{{__ '使用市价卖_温馨提示'}}}">
+                <i class="word-hint" style="width: 75px;cursor: not-allowed">{{{__ "市价"}}}</i>
+                <span class="market-tips">[?]</span>
+                <input type="text" class="spinner-input form-control input-sm market-input-trade" readonly/>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" style="margin-bottom: 10px">
+        <input id="percent" name="percent" class="irs-hidden-input hidden"/>
+    </div>
+    <div class="form-group" style="margin-bottom: 5px">
+        <div class="input-icon left">
+            <i class="word-hint">{{{__ "卖出量买卖"}}}</i>
+            <input type="text" name="volume" id="volume" maxlength="12" autocomplete="off" class="form-control input-sm market-input-trade"/>
+        </div>
+    </div>
+    <p class="trade-line1 ${ms.finance?'':'invisible'}" style="padding-bottom: 18px;">
+        {{{__ "已用杠杆额度"}}}
+        <span class="pull-right">
+            <em class="changePrice" v-text="ms.financeVolume|m 'BTC'"></em>
+        </span>
+    </p>
+
+    <p class="text-center trade-panel-error2">
+        <span class="error" v-text="ms.error"></span>
+    </p>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success btn-corner btn-block" data-loading-text="{{{__ 'handling'}}}" autocomplete="off">{{{__ "卖出"}}}</button>
+    </div>
+</form>

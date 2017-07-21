@@ -1,0 +1,44 @@
+<div id="view_info" style="padding-bottom: 30px;">
+    <div class="market-trade-box">
+        {{#if User}}
+        <a href="#priceInfo" data-toggle="tab" class="panel-change-arrow">
+        </a>
+        <ul class="nav clear_fix">
+            <li class="active">
+                <a href="#limitTrade" data-toggle="tab">{{{__ "限价交易"}}}</a>
+            </li>
+            <li>
+                <a href="#marketTrade" data-toggle="tab">{{{__ "市价交易"}}}</a>
+            </li>
+        </ul>
+        {{/if}}
+        <div class="market-trade-box-body">
+            {{#if User}}
+            <div id="balance_box" class="balance close-balance-panel">
+                <div class="balance-bar">
+                    <div class="market-trade-usable">
+                    <span>
+                        {{{__ "可用"}}}
+                        <span class="ml15 font-size-14">{{symbol data.config.currency}}</span><b v-text="assets.available.cny|m config.currency"></b>
+                    </span>
+                    </div>
+                    <div class="market-trade-usable">
+                    <span>
+                        <span class="ml15 font-size-14">{{symbol "BTC"}}</span><b v-text="assets.available.btc|m 'BTC'"></b>
+                    </span>
+                    </div>
+                    <a href="#assetsInfo" data-toggle="tab"><i>{{{__ "资产详情"}}}</i></a>
+                </div>
+            </div>
+            {{/if}}
+            <div class="tab-content ms">
+                {{#if User}}
+                <link rel="import" href="limit.html?__inline">
+                <link rel="import" href="market.html?__inline">
+                <link rel="import" href="assets.html?__inline">
+                {{/if}}
+                <link rel="import" href="price.html?__inline">
+            </div>
+        </div>
+    </div>
+</div>

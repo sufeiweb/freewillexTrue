@@ -1,0 +1,345 @@
+<div class="market_col market_trade_info" id="sell-buy-box">
+    <div class="trade-head">
+        <span>&nbsp;</span>
+        <span>{{{__ "价格"}}}({{symbol data.config.currency}})</span>
+        <span>{{{__ "数量"}}}({{{__ "btc"}}})</span>
+    </div>
+    <div class="trade-body clear_fix">
+        <div class="sell-body clear_fix">
+            <div class="tr" onclick="_T.buy('${depths.sell[19][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}20</span>
+                <span>
+                    <b v-text="depths.sell[19][0].split('.')[0]|e" :class="depths.sell[19][0].split('.')[0]==depths.sell[18][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[19][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[19][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[18][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}19</span>
+                <span>
+                    <b v-text="depths.sell[18][0].split('.')[0]|e" :class="depths.sell[18][0].split('.')[0]==depths.sell[17][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[18][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[18][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[17][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}18</span>
+                <span>
+                    <b v-text="depths.sell[17][0].split('.')[0]|e" :class="depths.sell[17][0].split('.')[0]==depths.sell[16][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[17][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[17][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[16][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}17</span>
+                <span>
+                    <b v-text="depths.sell[16][0].split('.')[0]|e" :class="depths.sell[16][0].split('.')[0]==depths.sell[15][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[16][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[16][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[15][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}16</span>
+                <span>
+                    <b v-text="depths.sell[15][0].split('.')[0]|e" :class="depths.sell[15][0].split('.')[0]==depths.sell[14][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[15][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[15][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[14][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}15</span>
+                <span>
+                    <b v-text="depths.sell[14][0].split('.')[0]|e" :class="depths.sell[14][0].split('.')[0]==depths.sell[13][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[14][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[14][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[13][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}14</span>
+                <span>
+                    <b v-text="depths.sell[13][0].split('.')[0]|e" :class="depths.sell[13][0].split('.')[0]==depths.sell[12][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[13][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[13][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[12][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}13</span>
+                <span>
+                    <b v-text="depths.sell[12][0].split('.')[0]|e" :class="depths.sell[12][0].split('.')[0]==depths.sell[11][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[12][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[12][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[11][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}12</span>
+                <span>
+                    <b v-text="depths.sell[11][0].split('.')[0]|e" :class="depths.sell[11][0].split('.')[0]==depths.sell[10][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[11][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[11][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[10][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}11</span>
+                <span>
+                    <b v-text="depths.sell[10][0].split('.')[0]|e" :class="depths.sell[10][0].split('.')[0]==depths.sell[9][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[10][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[10][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[9][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}10</span>
+                <span>
+                    <b v-text="depths.sell[9][0].split('.')[0]|e" :class="depths.sell[9][0].split('.')[0]==depths.sell[8][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[9][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[9][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[8][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}9</span>
+                <span>
+                    <b v-text="depths.sell[8][0].split('.')[0]|e" :class="depths.sell[8][0].split('.')[0]==depths.sell[7][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[8][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[8][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[7][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}8</span>
+                <span>
+                    <b v-text="depths.sell[7][0].split('.')[0]|e" :class="depths.sell[7][0].split('.')[0]==depths.sell[6][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[7][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[7][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[6][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}7</span>
+                <span>
+                    <b v-text="depths.sell[6][0].split('.')[0]|e" :class="depths.sell[6][0].split('.')[0]==depths.sell[5][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[6][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[6][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[5][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}6</span>
+                <span>
+                    <b v-text="depths.sell[5][0].split('.')[0]|e" :class="depths.sell[5][0].split('.')[0]==depths.sell[4][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[5][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[5][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[4][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}5</span>
+                <span>
+                    <b v-text="depths.sell[4][0].split('.')[0]|e" :class="depths.sell[4][0].split('.')[0]==depths.sell[3][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[4][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[4][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[3][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}4</span>
+                <span>
+                    <b v-text="depths.sell[3][0].split('.')[0]|e" :class="depths.sell[3][0].split('.')[0]==depths.sell[2][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[3][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[3][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[2][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}3</span>
+                <span>
+                    <b v-text="depths.sell[2][0].split('.')[0]|e" :class="depths.sell[2][0].split('.')[0]==depths.sell[1][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[2][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[2][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[1][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}2</span>
+                <span>
+                    <b v-text="depths.sell[1][0].split('.')[0]|e" :class="depths.sell[1][0].split('.')[0]==depths.sell[0][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.sell[1][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[1][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.buy('${depths.sell[0][0]}')">
+                <span class="num-${config.green}">{{{__ "卖"}}}1</span>
+                <span>
+                    ${depths.sell[0][0].split('.')[0]|e}
+                    ${depths.sell[0][0].split('.')[1]}
+                </span>
+                <span v-text="depths.sell[0][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+        </div>
+        <div class="new_price">
+            <span class="pull-right">
+               {{{__ "涨跌幅"}}} <b class="num-${price[4]==0?'white':(price[4]>0?config.red:config.green)}" v-text="price[4]+'%'"></b>
+            </span>
+            <span>
+               {{{__ "最新价"}}}
+                <b class="num-${price[2]==price[1]?'white':(price[2]>price[1]?config.red:config.green)}">
+                    <span v-text="price[2]|ms config.currency"></span>
+                    <i v-show="price[2]!=price[1]" class="iconfont font-size-12 icon-long-${price[2]>price[1]?'up':'down'}"></i>
+                </b>
+            </span>
+        </div>
+        <div class="buy-body clear_fix">
+            <div class="tr" onclick="_T.sell('${depths.buy[0][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}1</span>
+                <span>
+                    ${depths.buy[0][0].split('.')[0]|e}
+                    ${depths.buy[0][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[0][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[1][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}2</span>
+                <span>
+                    <b v-text="depths.buy[1][0].split('.')[0]|e" :class="depths.buy[1][0].split('.')[0]==depths.buy[0][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[1][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[1][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[2][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}3</span>
+                <span>
+                    <b v-text="depths.buy[2][0].split('.')[0]|e" :class="depths.buy[2][0].split('.')[0]==depths.buy[1][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[2][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[2][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[3][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}4</span>
+                <span>
+                    <b v-text="depths.buy[3][0].split('.')[0]|e" :class="depths.buy[3][0].split('.')[0]==depths.buy[2][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[3][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[3][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[4][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}5</span>
+                <span>
+                    <b v-text="depths.buy[4][0].split('.')[0]|e" :class="depths.buy[4][0].split('.')[0]==depths.buy[3][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[4][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[4][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[5][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}6</span>
+                <span>
+                    <b v-text="depths.buy[5][0].split('.')[0]|e" :class="depths.buy[5][0].split('.')[0]==depths.buy[4][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[5][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[5][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[6][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}7</span>
+                <span>
+                    <b v-text="depths.buy[6][0].split('.')[0]|e" :class="depths.buy[6][0].split('.')[0]==depths.buy[5][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[6][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[6][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[7][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}8</span>
+                <span>
+                    <b v-text="depths.buy[7][0].split('.')[0]|e" :class="depths.buy[7][0].split('.')[0]==depths.buy[6][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[7][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[7][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[8][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}9</span>
+                <span>
+                    <b v-text="depths.buy[8][0].split('.')[0]|e" :class="depths.buy[8][0].split('.')[0]==depths.buy[7][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[8][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[8][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[9][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}10</span>
+                <span>
+                    <b v-text="depths.buy[9][0].split('.')[0]|e" :class="depths.buy[9][0].split('.')[0]==depths.buy[8][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[9][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[9][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[10][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}11</span>
+                <span>
+                    <b v-text="depths.buy[10][0].split('.')[0]|e" :class="depths.buy[10][0].split('.')[0]==depths.buy[9][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[10][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[10][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[11][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}12</span>
+                <span>
+                    <b v-text="depths.buy[11][0].split('.')[0]|e" :class="depths.buy[11][0].split('.')[0]==depths.buy[10][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[11][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[11][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[12][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}13</span>
+                <span>
+                    <b v-text="depths.buy[12][0].split('.')[0]|e" :class="depths.buy[12][0].split('.')[0]==depths.buy[11][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[12][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[12][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[13][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}14</span>
+                <span>
+                    <b v-text="depths.buy[13][0].split('.')[0]|e" :class="depths.buy[13][0].split('.')[0]==depths.buy[12][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[13][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[13][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[14][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}15</span>
+                <span>
+                    <b v-text="depths.buy[14][0].split('.')[0]|e" :class="depths.buy[14][0].split('.')[0]==depths.buy[13][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[14][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[14][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[15][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}16</span>
+                <span>
+                    <b v-text="depths.buy[15][0].split('.')[0]|e" :class="depths.buy[15][0].split('.')[0]==depths.buy[14][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[15][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[15][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[16][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}17</span>
+                <span>
+                    <b v-text="depths.buy[16][0].split('.')[0]|e" :class="depths.buy[16][0].split('.')[0]==depths.buy[15][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[16][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[16][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[17][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}18</span>
+                <span>
+                    <b v-text="depths.buy[17][0].split('.')[0]|e" :class="depths.buy[17][0].split('.')[0]==depths.buy[16][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[17][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[17][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[18][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}19</span>
+                <span>
+                    <b v-text="depths.buy[18][0].split('.')[0]|e" :class="depths.buy[18][0].split('.')[0]==depths.buy[17][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[18][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[18][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+            <div class="tr" onclick="_T.sell('${depths.buy[19][0]}')">
+                <span class="num-${config.red}">{{{__ "买"}}}20</span>
+                <span>
+                    <b v-text="depths.buy[19][0].split('.')[0]|e" :class="depths.buy[19][0].split('.')[0]==depths.buy[18][0].split('.')[0]?'num-gray':''"></b>
+                    ${depths.buy[19][0].split('.')[1]}
+                </span>
+                <span v-text="depths.buy[19][1]|empty '--' 'm' 'BTC'"></span>
+            </div>
+        </div>
+    </div>
+</div>

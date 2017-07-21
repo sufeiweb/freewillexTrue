@@ -1,0 +1,42 @@
+<div class="tab-pane" id="assetsInfo">
+    <div id="balance_box" class="balance">
+        <div class="info">
+            <p class="assets-show clear_fix">
+            <span>
+                <span>{{{__ "总资产"}}}</span>
+                <span class="ml15">{{symbol data.config.currency}}</span>
+                <span v-text="assets.total|m config.currency" class="price"></span>
+            </span>
+            <span>
+                <span>{{{__ "净资产"}}}</span>
+                <span class="ml15">{{symbol data.config.currency}}</span>
+                <span v-text="assets.net|m config.currency" class="price"></span>
+            </span>
+            </p>
+
+            <p class="assets-account odd">
+                <span>{{{__ "可用"}}}</span>
+                <span>{{symbol data.config.currency}}<span v-text="assets.available.cny|m config.currency" class="price"></span></span>
+                <span>{{symbol 'BTC'}}<span v-text="assets.available.btc|m 'BTC'" class="price"></span></span>
+            </p>
+
+            <p class="assets-account">
+                <span>{{{__ "冻结"}}}</span>
+                <span>{{symbol data.config.currency}}<span v-text="assets.frozen.cny|m config.currency" class="price"></span></span>
+                <span>{{symbol 'BTC'}}<span v-text="assets.frozen.btc|m 'BTC'" class="price"></span></span>
+            </p>
+
+            <p class="assets-account odd">
+                <span>{{{__ "可融_行情"}}}</span>
+                <span>{{symbol data.config.currency}}<span v-text="assets.can_financing.cny|m config.currency" class="price"></span></span>
+                <span>{{symbol 'BTC'}}<span v-text="assets.can_financing.btc|m 'BTC'" class="price"></span></span>
+            </p>
+
+            <p class="assets-account">
+                <span>{{{__ "已融"}}}</span>
+                <span>{{symbol data.config.currency}}<span v-text="assets.financing.cny|m config.currency" class="price"></span></span>
+                <span>{{symbol 'BTC'}}<span v-text="assets.financing.btc|m 'BTC'" class="price"></span></span>
+            </p>
+        </div>
+    </div>
+</div>
