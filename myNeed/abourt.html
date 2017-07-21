@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>网站接口</title>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.js"></script>
+</head>
+<body onload="disconnect()">
+	success
+<div>
+    <div>
+        <button id="connect" onclick="connect();">连接</button>
+        <button id="disconnect" disabled="disabled" onclick="disconnect();">断开连接</button>
+    </div>
+
+    <div>
+        <p id="response1"></p>
+    </div>
+    <div>
+        <p id="response2"></p>
+    </div>
+    <div>
+        <p id="response3"></p>
+    </div>
+    <div>
+        <p id="response4"></p>
+    </div>
+    <div>
+        <p id="response5"></p>
+    </div>
+    <div>
+        <p id="response6"></p>
+    </div>
+    <div>
+        <p id="response7"></p>
+    </div>
+    <div>
+        <p id="response8"></p>
+    </div>
+    <div>
+        <p id="response9"></p>
+    </div>
+</div>
+	<script type="text/javascript">
+		
+		var stompClient = null;
+		function connect() {
+			var socket = new SockJS('http://192.168.1.120:8189/fwex/endpointSang');
+			stompClient = Stomp.over(socket);
+			
+			stompClient.connect({}, function(frame) {
+				stompClient.subscribe('/market/test', function(response) {
+					$("#response1").html(JSON.stringify(JSON.parse(response.body)));
+				})
+				/* stompClient.subscribe('/market/depth', function(response) {
+					$("#response2").html(JSON.stringify(JSON.parse(response.body).data));
+				}),
+				stompClient.subscribe('/market/trades', function(response) {
+					$("#response3").html(JSON.stringify(JSON.parse(response.body).data));
+				}),
+				stompClient.subscribe('/market/kline/min1', function(response) {
+					$("#response4").html(JSON.stringify(JSON.parse(response.body).data));
+				}),
+				stompClient.subscribe('/market/kline/min5', function(response) {
+					$("#response5").html(JSON.stringify(JSON.parse(response.body).data));
+				}),
+				stompClient.subscribe('/market/kline/min15', function(response) {
+					$("#response6").html(JSON.stringify(JSON.parse(response.body).data));
+				}),
+				stompClient.subscribe('/market/kline/min30', function(response) {
+					$("#response7").html(JSON.stringify(JSON.parse(response.body).data));
+				}) */
+			});
+		}
+		function disconnect() {
+			if (stompClient != null) {
+				stompClient.disconnect();
+			}
+		}
+	</script>
+</body>
+</html>
