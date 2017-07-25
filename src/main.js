@@ -10,6 +10,8 @@ import  store from './store'
 import  echarts from 'echarts'
 import axios from 'axios';
 
+// import VueResource from 'vue-resource'
+// Vue.use(VueResource);
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$http = axios;
 

@@ -48,3 +48,8 @@ ul li {
   width: 29.583rem !important;
   height: 16.667rem !important;
 }
+
+.el-input__inner{
+  border: none !important;
+  border-radius: 0 !important;
+}

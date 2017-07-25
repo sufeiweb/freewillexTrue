@@ -19,7 +19,7 @@
         <div>
           <span>提现金额</span>
           <p>
-            <input type="number" :placeholder="'本次最多可提现金额'+user_num+'CNY'" v-model="cash_num_CNY"/>
+            <input type="number" :placeholder="'本次最多可提现金额'+user_cny_num+'CNY'" v-model="cash_num_CNY"/>
             <span class="cash-tishi display-none-tishi">最小提现金额为100</span>
           </p>
           <p class="display-flex-p"><span>手续费:</span><span class="cash-tishi">￥{{2.00}}</span></p>
@@ -35,12 +35,12 @@
           <span>验证方式</span>
           <p class="display-flex-p">
             <span>
-              <input name="yanzheng" type="radio" id="yanzheng1" checked/>
-              <label for="yanzheng1">邮箱验证</label>
+              <input name="yanzheng" type="radio" id="yanzheng3" checked/>
+              <label for="yanzheng3">邮箱验证</label>
             </span>
             <span>
-              <input name="yanzheng" type="radio" id="yanzheng2"/>
-              <label for="yanzheng2">短信验证</label>
+              <input name="yanzheng" type="radio" id="yanzheng4"/>
+              <label for="yanzheng4">短信验证</label>
             </span>
           </p>
         </div>
@@ -145,7 +145,121 @@
       </div>
     </div>
     <div class="cash-BTC" v-show="!cash_style">
-
+      <div class="from-box">
+        <section>
+          <span>比特币地址</span>
+          <p>
+            <select>
+              <option>请选择比特币地址</option>
+            </select>
+          </p>
+          <a href="javascript:;">添加比特币地址</a>
+        </section>
+        <section>
+          <span>比特币网络转账费用</span>
+          <p>
+            <select>
+              <option value="">请选择比特币网络转账费用</option>
+              <option value="0.0005" selected>0.0005BTC</option>
+              <option value="0.0010">0.0010BTC</option>
+              <option value="0.0015">0.0015BTC</option>
+              <option value="0.0020">0.0020BTC</option>
+              <option value="0.0050">0.0050BTC</option>
+              <option value="0.0100">0.0100BTC</option>
+            </select>
+          </p>
+          <p class="display-flex-p"><span class="cash-tishi">比特币网络转账费用最低 0.0005 BTC，提高手续费可以在一定程度上提高比特币网络的确认速度</span></p>
+        </section>
+        <div style="margin: 0"></div>
+        <div>
+          <span>提币数量</span>
+          <p>
+            <input type="number" :placeholder="'本次最多可提币数量为'+user_btc_num+'CNY'" v-model="cash_num_CNY"/>
+            <span class="cash-tishi display-none-tishi">最小提现金额为100</span>
+          </p>
+        </div>
+        <div>
+          <span>资金密码</span>
+          <p>
+            <input type="password"/>
+            <span class="cash-tishi display-none-tishi">资金密码格式输入错误</span>
+          </p>
+        </div>
+        <div>
+          <span>验证方式</span>
+          <p class="display-flex-p">
+            <span>
+              <input name="yanzheng" type="radio" id="yanzheng1" checked/>
+              <label for="yanzheng1">邮箱验证</label>
+            </span>
+            <span>
+              <input name="yanzheng" type="radio" id="yanzheng2"/>
+              <label for="yanzheng2">短信验证</label>
+            </span>
+          </p>
+        </div>
+        <div>
+          <span>验证码</span>
+          <p>
+            <span>
+              <input type="text" placeholder="验证码"/>
+              <button>获取验证码</button>
+            </span>
+            <span class="cash-tishi display-none-tishi">验证码格式输入错误</span>
+          </p>
+        </div>
+        <div>
+          <span>&nbsp;</span>
+          <p>
+            <button>提交</button>
+            <button>取消</button>
+          </p>
+        </div>
+        <dottedLine></dottedLine>
+        <div class="cash-record">
+          <el-tabs v-model="activeName" type="card">
+            <el-tab-pane label="提现记录" name="first">
+              <div class="user-table1">
+                <table>
+                  <thead class="user-table-thead">
+                  <tr>
+                    <td>提现时间</td>
+                    <td>提现账户</td>
+                    <td>提现金额</td>
+                    <td>手续费</td>
+                    <td>状态</td>
+                  </tr>
+                  </thead>
+                  <tbody class="user-table-tbody" v-show="noData">
+                  <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                  </tr>
+                  </tbody>
+                  <tbody class="user-table-tbody de-body" v-show="!noData">
+                  <tr>
+                    <td colspan="5">
+                      <i class="iconfont">&#xe661;</i>
+                      <span>暂无记录</span>
+                    </td>
+                  </tr>
+                  </tbody>
+                  <tfoot class="user-table-footer-page">
+                  <tr>
+                    <td colspan="5">
+                      <el-pagination layout="prev, pager, next" :total="10" class="page-right"></el-pagination>
+                    </td>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -157,7 +271,8 @@
       return {
         cash_style: true,
         cash_num_CNY: '',
-        user_num: 1231.2,
+        user_cny_num: 1231.2,
+        user_btc_num: 11.2854,
         noData: false,
         activeName: 'first'
       }
@@ -213,13 +328,13 @@
     padding: 4rem 0;
   }
 
-  .from-box > div {
+  .from-box > div, .from-box >section{
     display: flex;
     align-items: center;
     margin-bottom: 2.25rem;
   }
 
-  .from-box > div > span {
+  .from-box > div > span,.from-box >section>span{
     width: 28%;
     text-align: right;
     margin-right: 4rem;
@@ -265,17 +380,25 @@
     border-color: #01aaef;
   }
 
-  .from-box > div:nth-of-type(2) > p:nth-of-type(1), .from-box > div:nth-of-type(3) > p, .from-box > div:nth-of-type(5) > p {
+  .from-box > div:nth-of-type(2) > p:nth-of-type(1), .from-box > div:nth-of-type(3) > p, .from-box > div:nth-of-type(5) > p,  .from-box > section >p:nth-of-type(1) {
     width: 30rem;
     height: 5rem;
     margin-bottom: -1.5rem;
   }
-
+  .from-box > section >p:nth-of-type(2){
+    width: 25rem;
+  }
   .from-box > div:nth-of-type(2) > p > input, .from-box > div:nth-of-type(3) > p > input {
     width: 90%;
     padding: 0.667rem 1rem;
   }
-
+  .from-box>section>p>select{
+    width: 97.5%;
+    padding: 0.667rem 1rem;
+  }
+  .from-box>section>p:nth-of-type(2)>span,.from-box>section>a{
+    margin-left: 2rem;
+  }
   .from-box > div:nth-of-type(4) > p > span {
     margin-right: 2rem;
     font-size: 1.167rem;

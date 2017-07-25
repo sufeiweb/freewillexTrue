@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login-box">
     <div class="home">
       <el-carousel trigger="click" height="44.67rem" class="home-banner">
         <el-carousel-item>
@@ -64,9 +64,19 @@
         </div>
       </div>
     </div>
+      <loginCenter class="home-login"></loginCenter>
   </div>
 </template>
+<script>
+  import loginCenter from './lettle_components/loginCenter.vue';
+  export default {
+      components: {loginCenter}
+  }
+</script>
 <style scoped>
+  .home-login{
+    margin-right: 18%;
+  }
   .home-banner {
     margin-top: .15rem;
     width: 100%;
