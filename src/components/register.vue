@@ -248,17 +248,7 @@
 //      邮箱注册逻辑
       userRegisterE() {
         let that = this;
-        console.log(that.$store.state.registerE.checkStyleE, 'checkStyleE');
-        console.log(that.$store.state.registerE.username, 'username');
-        console.log(that.$store.state.registerE.userpsd, 'userpsd');
-        console.log(that.$store.state.registerE.userpsds, 'userpsds');
-        console.log(that.$store.state.registerE.YZCode, 'YZCode');
         if (that.$store.state.registerE.checkStyleE && that.$store.state.registerE.username && that.$store.state.registerE.userpsd && that.$store.state.registerE.userpsds && that.$store.state.registerE.YZCode) {
-          console.log(that.userNameE);
-          console.log(that.userPasswordE);
-          console.log(that.userPasswordsE);
-          console.log(that.$store.state.registerE.checkStyleE);
-          console.log(that.captchE);
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/register',
             method: 'POST',
@@ -270,13 +260,16 @@
               registerDevice: 'WEB',
               registerIp: '192.168.1.110',
               captch: that.captchE
+            },
+            headers:{
+              "X-Requested-With":"XMLHttpRequest"
             }
           }).then((data) => {
             //          push路由
-            console.log(data)
+            console.log(data);
             localStorage.setItem('username', that.userNameE);
             setTimeout(function () {
-//              that.$router.push('/login')
+              that.$router.push('/login')
             }, 1500)
           }).catch((error) => {
             console.log("邮箱注册出错了");
@@ -292,7 +285,7 @@
         let that = this;
         if (that.$store.state.registerM.checkStyleM && that.$store.state.registerM.username && that.$store.state.registerM.userpsd && that.$store.state.registerM.userpsds && that.$store.state.registerM.YZCode) {
           that.$http({
-            url: 'http://192.168.1.120:8089/fwex/web/register',
+            url: 'http://192.168.1.48:8089/fwex/web/register',
             method: 'POST',
             params: {
               loginUser: that.userNameM,
@@ -302,13 +295,16 @@
               registerDevice: 'WEB',
               registerIp: '120.0.0.1',
               captch: that.captchM
+            },
+            headers:{
+              "X-Requested-With":"XMLHttpRequest"
             }
           }).then((data) => {
             //          push路由
             console.log(data);
             localStorage.setItem('username', that.userNameM);
             setTimeout(function () {
-//              that.$router.push('/login')
+              that.$router.push('/login')
             }, 1500)
 
           }).catch((error) => {

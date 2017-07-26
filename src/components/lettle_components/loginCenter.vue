@@ -63,23 +63,20 @@
       }
     },
     mounted() {
-
-
       let that = this;
       {
         if (localStorage.getItem('username')) {
           that.userName = localStorage.getItem('username');
-          setTimeout(function () {
-            localStorage.removeItem('username');
-          },0)
+          $('#remember').attr('checked', true);
+          that.$store.state.login.remember = true;
         }
       }//获取localStorage
       {
         $('#remember').click(function () {
           that.$store.state.login.remember = $(this).is(':checked');
-          if(that.$store.state.login.remember){
-           localStorage.setItem('username',that.userName);
-          }else {
+          if (that.$store.state.login.remember) {
+            localStorage.setItem('username', that.userName);
+          } else {
             localStorage.removeItem('username');
           }
         });
@@ -89,15 +86,46 @@
       login_style() {
         this.login_style1 = !this.login_style1;
         return false;
-      },
+      },//登录方式
       userLogin() {
-        let url = 'http://192.168.1.48:8089/fwex/web/auth/login';
-        this.$http.post(url, {loginUser: this.userName, loginPwd: this.userPassword}).then(function (data) {
+        let that = this;
+        console.log(that.userName);
+        console.log(that.userPassword);
+        that.$http({
+          url: 'http://192.168.1.48:8089/fwex/web/auth/login',
+          method: 'POST',
+          data: {
+            "loginUser": that.userName,
+            "loginPwd": that.userPassword
+          },
+          headers:{
+              "X-Requested-With":"XMLHttpRequest"
+          }
+        }).then(function (data) {
           console.log(data);
+          that.$store.dispatch('loginStateTrue');
+          localStorage.setItem('token',data.data.data);
+//          that.$http({
+//            url: 'http://192.168.1.48:8089/api/user/register',
+//            method: 'POST',
+//            data:{
+//              "loginUser": that.userName,
+//              "loginPwd": that.userPassword
+//            },
+//            headers:{
+//              "X-Requested-With":"XMLHttpRequest",
+//              "X-Authorization":localStorage.getItem('token')
+//            }
+//          }).then((data)=>{
+//              console.log(data,"token")
+//          }).catch((error)=>{
+//              console.log(error,"111wwwwww")
+//          })
         }).catch(function () {
-
+          that.$store.dispatch('loginStateFalse');
+          localStorage.removeItem('token');
         })
-      }
+      },//帐号登录
     }
   }
 </script>

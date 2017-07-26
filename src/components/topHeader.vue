@@ -57,7 +57,7 @@
   export default {
     data(){
       return {
-        userId: false,
+//        userId: false,
         free: false,
         notice: true
       }
@@ -71,6 +71,22 @@
         $('.nav-notice-close2').toggle();
         this.notice = true;
       }
+    },
+    computed: {
+      userId() {
+          return this.$store.state.loginState;
+      }
+    },
+    mounted() {
+        let that =this;
+      {
+          if(localStorage.getItem('token')){
+            that.$store.state.loginState =true
+          }
+      }
+    },
+    watch :{
+
     }
   }
 </script>

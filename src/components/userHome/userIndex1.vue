@@ -7,17 +7,17 @@
       </div>
       <div class="money-tabs-box">
         <div class="money-tabs-left">
-          <select class="viewStyle">
+          <select class="viewStyle1">
             <option value="1">详情模式</option>
             <option value="2" selected>简洁模式</option>
             <option value="3">饼图模式</option>
           </select>
-          <select class="coinStyle">
+          <select class="coinStyle1">
             <option value="4">CNY 人民币</option>
-            <option value="4">BTC 比特币</option>
-            <option value="4">LTC 莱特币</option>
-            <option value="4">ETH 以太坊</option>
-            <option value="4">ETC 以太经典</option>
+            <option value="5" selected>BTC 比特币</option>
+            <option value="6">LTC 莱特币</option>
+            <option value="7">ETH 以太坊</option>
+            <option value="8">ETC 以太经典</option>
           </select>
         </div>
         <div class="money-tabs-right">
@@ -48,9 +48,9 @@
               <span></span><span>ETC {{122111.0000}}</span>
             </div>
           </div>
-          <div id="ZEcharts" class="echarts-show"></div>
+          <div id="ZEcharts1" class="echarts-show1"></div>
         </div>
-        <div class="assets-proportion">
+        <div class="assets-proportion1">
           <span></span>
           <span></span>
           <span></span>
@@ -85,9 +85,9 @@
               <span></span><span>ETC {{122111.0000}}</span>
             </div>
           </div>
-          <div id="JEcharts" class="echarts-show"></div>
+          <div id="JEcharts1" class="echarts-show1"></div>
         </div>
-        <div class="assets-proportion">
+        <div class="assets-proportion1">
           <span></span>
           <span></span>
           <span></span>
@@ -116,9 +116,9 @@
               <span></span><span>ETC {{122111.0000}}</span>
             </div>
           </div>
-          <div id="KEcharts" class="echarts-show"></div>
+          <div id="KEcharts1" class="echarts-show1"></div>
         </div>
-        <div class="assets-proportion">
+        <div class="assets-proportion1">
           <span></span>
           <span></span>
           <span></span>
@@ -147,9 +147,9 @@
               <span></span><span>ETC {{122111.0000}}</span>
             </div>
           </div>
-          <div id="DEcharts" class="echarts-show"></div>
+          <div id="DEcharts1" class="echarts-show1"></div>
         </div>
-        <div class="assets-proportion">
+        <div class="assets-proportion1">
           <span></span>
           <span></span>
           <span></span>
@@ -158,8 +158,8 @@
         </div>
       </div>
       <div class="more">
-        <a href="javascript:" v-show="more_style" @click="open_more()">更多</a>
-        <a href="javascript:" v-show="!more_style" @click="close_more()">收起</a>
+        <a href="javascript:" v-show="more_style" @click="open_more1()">更多</a>
+        <a href="javascript:" v-show="!more_style" @click="close_more1()">收起</a>
       </div>
     </div>
     <dottedLine></dottedLine>
@@ -185,30 +185,30 @@
     },
     mounted() {
       let that =this;
-      that.drawing();//画饼图
+      that.drawing1();//画饼图
       {
-          that.showStyle($('.viewStyle').val());
-          $('.viewStyle').change(function () {
-            that.showStyle($(this).val());
+          that.showStyle1($('.viewStyle1').val());
+          $('.viewStyle1').change(function () {
+            that.showStyle1($(this).val());
           })
       }//控制显示的模式
     },
     methods: {
 
-      open_more() {
+      open_more1() {
         this.more_style = false;
-        $('.viewStyle').val(1)
+        $('.viewStyle1').val(1)
       },
-      close_more() {
+      close_more1() {
         this.more_style = true;
-        $('.viewStyle').val(2)
+        $('.viewStyle1').val(2)
       },
-      drawing() {
-        let ZEcharts = this.$echarts.init(document.getElementById('ZEcharts'));
-        let JEcharts = this.$echarts.init(document.getElementById('JEcharts'));
-        let KEcharts = this.$echarts.init(document.getElementById('KEcharts'));
-        let DEcharts = this.$echarts.init(document.getElementById('DEcharts'));
-          ZEcharts.setOption({
+      drawing1() {
+        let ZEcharts1 = this.$echarts.init(document.getElementById('ZEcharts1'));
+        let JEcharts1 = this.$echarts.init(document.getElementById('JEcharts1'));
+        let KEcharts1 = this.$echarts.init(document.getElementById('KEcharts1'));
+        let DEcharts1 = this.$echarts.init(document.getElementById('DEcharts1'));
+          ZEcharts1.setOption({
             color:['#f54648','#fead22','#38c1e8','#9c5ff9','#2dd1a5'],
             tooltip: {
               trigger: 'item',
@@ -237,7 +237,7 @@
               }
             ]
           }, true);
-          JEcharts.setOption({
+          JEcharts1.setOption({
             color:['#f54648','#fead22','#38c1e8','#9c5ff9','#2dd1a5'],
             tooltip: {
               trigger: 'item',
@@ -266,7 +266,7 @@
               }
             ]
           }, true);
-          KEcharts.setOption({
+          KEcharts1.setOption({
             color:['#f54648','#fead22','#38c1e8','#9c5ff9','#2dd1a5'],
             tooltip: {
               trigger: 'item',
@@ -295,7 +295,7 @@
               }
             ]
           }, true);
-          DEcharts.setOption({
+          DEcharts1.setOption({
             color:['#f54648','#fead22','#38c1e8','#9c5ff9','#2dd1a5'],
             tooltip: {
               trigger: 'item',
@@ -326,27 +326,27 @@
           }, true)
       },
       //控制显示模式函数
-      showStyle(num) {
+      showStyle1(num) {
           let that=this;
         switch (num) {
           case '1':
-            $('.echarts-show').css({display:'none'});
-            $('.assets-proportion').css({display:"flex"});
+            $('.echarts-show1').css({display:'none'});
+            $('.assets-proportion1').css({display:"flex"});
             that.more_style = false;
             break;
           case '2':
-            $('.echarts-show').css({display:'none'});
-            $('.assets-proportion').css({display:"flex"});
+            $('.echarts-show1').css({display:'none'});
+            $('.assets-proportion1').css({display:"flex"});
             that.more_style = true;
             break;
           case '3':
-            $('.echarts-show').css({display:'block'});
+            $('.echarts-show1').css({display:'block'});
             this.more_style = false;
-            $('.assets-proportion').css({display:"none"});
+            $('.assets-proportion1').css({display:"none"});
             break;
         }
       },
-      refresh() {
+      refresh1() {
         this.$router.push('/userIndex')
 //          this.$router.push('/userIndex')
       },//刷新当前页面
@@ -370,7 +370,7 @@
   .Q-C-T a:nth-of-type(1){
     margin-left:6rem;
   }
-  #DEcharts,#ZEcharts,#KEcharts,#JEcharts{
+  #DEcharts1,#ZEcharts1,#KEcharts1,#JEcharts1{
     width: 25rem;
     height: 18rem;
     margin-right: 13rem;
@@ -408,7 +408,15 @@
     display: flex;
     align-items: center;
   }
-
+  .money-tabs-right-dian{
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background: red;
+    top:0;
+    right: -.7rem;
+    position: absolute;
+  }
   .money-tabs-left select {
     outline: none;
     padding: .2rem .5rem;
@@ -424,15 +432,7 @@
     align-items: center;
     position: relative;
   }
-.money-tabs-right-dian{
-  width: .5rem;
-  height: .5rem;
-  border-radius: 50%;
-  background: red;
-  top:0;
-  right: -.7rem;
-  position: absolute;
-}
+
   .money-tabs-right i {
     color: #01aaef;
     margin-right: 0.4167rem;
@@ -445,7 +445,7 @@
     font-size: 1.333rem;
   }
 
-  .assets-title, .assets-money, .assets_CNY, .assets_BTC,.assets_LTC,.assets_ETC,.assets_ETH, .assets-proportion{
+  .assets-title, .assets-money, .assets_CNY, .assets_BTC,.assets_LTC,.assets_ETC,.assets_ETH, .assets-proportion1 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
   }
@@ -479,38 +479,38 @@
   .assets_ETH span:nth-of-type(1){
     background: #9c5ff9;
   }
-  .assets-proportion {
+  .assets-proportion1 {
     width: 100%;
     display: flex;
     align-items: center;
   }
 
-  .assets-proportion span {
+  .assets-proportion1 span {
     height: 1.667rem;
     width: 1px;
   }
 
-  .assets-proportion span:nth-of-type(1) {
+  .assets-proportion1 span:nth-of-type(1) {
     width: 20%;
     margin-right: 2px;
     background: #f54648;
   }
-  .assets-proportion span:nth-of-type(2) {
+  .assets-proportion1 span:nth-of-type(2) {
     width: 20%;
     margin-right: 2px;
     background: #fead22;
   }
-  .assets-proportion span:nth-of-type(3) {
+  .assets-proportion1 span:nth-of-type(3) {
     width: 20%;
     margin-right: 2px;
     background: #38c4e9;
   }
-  .assets-proportion span:nth-of-type(4) {
+  .assets-proportion1 span:nth-of-type(4) {
     width: 20%;
     margin-right: 2px;
     background: #9c5ff9;
   }
-  .assets-proportion span:nth-of-type(5) {
+  .assets-proportion1 span:nth-of-type(5) {
     width: 20%;
     background: #2dd1a5;
   }

@@ -1,10 +1,7 @@
 <template>
   <div class="user">
     <div class="user-box layout">
-      <div class="user-box-left">
-        <realName></realName>
         <userBtnLink></userBtnLink>
-      </div>
       <div class="user-box-right">
         <transition enter-active-class="animated fadeIn">
           <router-view></router-view>
@@ -27,6 +24,7 @@
 <style scoped>
   .user .user-box{
     color: #333;
+    height: 100%;
   }
   .user-box{
     margin: 2rem auto;

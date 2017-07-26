@@ -23,4 +23,18 @@ export default {
     userpsd: false,
     remember: false
   },//登录逻辑控制
+  loginState: false, //登录状态
+  phoneR: {
+    username: false,
+    usercord: true,
+    userpsd: false,
+    userpsds: false
+  },//手机找回密码逻辑控制
+  emailR: {
+    username: false,
+    usercord: true,
+    userpsd: false,
+    userpsds: false
+  },//邮箱找回密码逻辑控制
+
 }

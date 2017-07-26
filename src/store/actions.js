@@ -22,5 +22,15 @@ export default {
                  commit, state
                }) => {
     commit(types.FOOTER_HIDE);
+  },
+  loginStateTrue: ({
+                     commit, state
+                   }) => {
+    commit(types.LOGINSTATE_TRUE);
+  },
+  loginStateFalse: ({
+                      commit, state
+                    }) => {
+    commit(types.LOGINSTATE_FALSE);
   }
 }

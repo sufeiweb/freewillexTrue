@@ -21,7 +21,9 @@ import recharge from '@/components/userHome/recharge'
 import reward from '@/components/userHome/reward'
 import settings from '@/components/userHome/settings'
 import userIndex from '@/components/userHome/userIndex'
+import userIndex1 from '@/components/userHome/userIndex1'
 import quotation from '@/components/quotation'
+import broker from '@/components/broker'
 
 Vue.use(Router);
 
@@ -34,6 +36,7 @@ export default new Router({
     {path: '/passwordRetrieval', name: 'passwordRetrieval', component: passwordRetrieval},
     {path: '/introduction', name: 'introduction', component: introduction},
     {path: '/quotation', name: 'quotation', component: quotation},
+    {path: '/broker', name: 'quotation', component: broker},
     {path: '/userAgreement', name: 'userAgreement', component: userAgreement},
     {
       path: '/business', name: 'business', component: business, children: [
@@ -47,6 +50,7 @@ export default new Router({
     {
       path: '/user', name: 'user', component: user, children: [
       {path: '/userIndex', name: 'userIndex', component: userIndex},
+      {path: '/userIndex1', name: 'userIndex1', component: userIndex1},
       {path: '/', redirect:'/userIndex'},
       {path: '/accountDetails', name: 'accountDetails', component: accountDetails},
       {path: '/accountManagement', name: 'accountManagement', component: accountManagement},
