@@ -25,11 +25,15 @@ import userIndex1 from '@/components/userHome/userIndex1'
 import quotation from '@/components/quotation'
 import broker from '@/components/broker'
 
+import realNameAuthentication from '@/components/real/realNameAuthentication'
+import bindEmail from '@/components/lettle_components/bindEmail'
+
+
 Vue.use(Router);
 
 export default new Router({
   routes: [
-    {path: '/', redirect:'/home'},
+    {path: '/', redirect: '/home'},
     {path: '/home', name: 'home', component: home},
     {path: '/login', name: 'login', component: login},
     {path: '/register', name: 'register', component: register},
@@ -41,7 +45,7 @@ export default new Router({
     {
       path: '/business', name: 'business', component: business, children: [
       {path: '/businessHome', name: 'businessHome', component: businessHome},
-      {path: '/', redirect:'/businessHome'},
+      {path: '/', redirect: '/businessHome'},
       {path: '/entrust', name: 'entrust', component: entrust},
       {path: '/transactionRecord', name: 'transactionRecord', component: transactionRecord},
       {path: '/lever', name: 'lever', component: lever}
@@ -51,7 +55,7 @@ export default new Router({
       path: '/user', name: 'user', component: user, children: [
       {path: '/userIndex', name: 'userIndex', component: userIndex},
       {path: '/userIndex1', name: 'userIndex1', component: userIndex1},
-      {path: '/', redirect:'/userIndex'},
+      {path: '/', redirect: '/userIndex'},
       {path: '/accountDetails', name: 'accountDetails', component: accountDetails},
       {path: '/accountManagement', name: 'accountManagement', component: accountManagement},
       {path: '/cash', name: 'cash', component: cash},
@@ -59,7 +63,9 @@ export default new Router({
       {path: '/message', name: 'message', component: message},
       {path: '/recharge', name: 'recharge', component: recharge},
       {path: '/reward', name: 'reward', component: reward},
-      {path: '/settings', name: 'settings', component: settings}
+      {path: '/settings', name: 'settings', component: settings},
+      {path: '/settings/user', name: 'realNameAuthentication', component: realNameAuthentication},
+      {path: '/settings/bindEmail', name: 'bindEmail', component: bindEmail}
     ]
     }
   ]

@@ -33,7 +33,7 @@
       </dl>
       <dl class="btcTransaction-content-btn">
         <dt class="btcTransaction-content-title">安全中心</dt>
-        <router-link to="/settings" tag="dd"><a href="javascript:"><i class="iconfont">&#xe631;</i>个人设置</a></router-link>
+        <router-link to="/settings" tag="dd"><a href="javascript:"><i class="iconfont">&#xe631;</i>安全设置</a></router-link>
         <router-link to="/loginLog" tag="dd"><a href="javascript:"><i class="iconfont">&#xe6a0;</i>登录日志</a></router-link>
       </dl>
     </div>

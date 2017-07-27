@@ -19,6 +19,9 @@ Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
 
+//全局过滤器的注册
+import filters from './filters'
+Object.keys(filters).forEach(key=>Vue.filter(key,filters[key]));
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

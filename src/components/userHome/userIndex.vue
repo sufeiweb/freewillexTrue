@@ -32,20 +32,22 @@
           <div class="assets-content">
             <h1 class="assets-title">总资产</h1>
             <span class="assets-money">{{1212121}} {{money_style}}</span>
-            <div class="assets_CNY">
-              <span></span><span>CNY {{122111.00}}</span>
-            </div>
-            <div class="assets_BTC">
-              <span></span><span>BTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_LTC">
-              <span></span><span>LTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETH">
-              <span></span><span>ETH {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETC">
-              <span></span><span>ETC {{122111.0000}}</span>
+            <div v-show="money_hide">
+              <div class="assets_CNY">
+                <span></span><span>CNY {{122111.00}}</span>
+              </div>
+              <div class="assets_BTC">
+                <span></span><span>BTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_LTC">
+                <span></span><span>LTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETH">
+                <span></span><span>ETH {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETC">
+                <span></span><span>ETC {{122111.0000}}</span>
+              </div>
             </div>
           </div>
           <div id="ZEcharts" class="echarts-show"></div>
@@ -69,20 +71,22 @@
               <!--<a href="javascript:;">提现</a>-->
             </div>
             <span class="assets-money">{{1212121}} {{money_style}}</span>
-            <div class="assets_CNY">
-              <span></span><span>CNY {{122111.00}}</span>
-            </div>
-            <div class="assets_BTC">
-              <span></span><span>BTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_LTC">
-              <span></span><span>LTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETH">
-              <span></span><span>ETH {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETC">
-              <span></span><span>ETC {{122111.0000}}</span>
+            <div v-show="money_hide">
+              <div class="assets_CNY">
+                <span></span><span>CNY {{122111.00}}</span>
+              </div>
+              <div class="assets_BTC">
+                <span></span><span>BTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_LTC">
+                <span></span><span>LTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETH">
+                <span></span><span>ETH {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETC">
+                <span></span><span>ETC {{122111.0000}}</span>
+              </div>
             </div>
           </div>
           <div id="JEcharts" class="echarts-show"></div>
@@ -100,20 +104,22 @@
           <div class="assets-content">
             <h1 class="assets-title">可用</h1>
             <span class="assets-money">{{1212121}} {{money_style}}</span>
-            <div class="assets_CNY">
-              <span></span><span>CNY {{122111.00}}</span>
-            </div>
-            <div class="assets_BTC">
-              <span></span><span>BTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_LTC">
-              <span></span><span>LTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETH">
-              <span></span><span>ETH {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETC">
-              <span></span><span>ETC {{122111.0000}}</span>
+            <div v-show="money_hide">
+              <div class="assets_CNY">
+                <span></span><span>CNY {{122111.00}}</span>
+              </div>
+              <div class="assets_BTC">
+                <span></span><span>BTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_LTC">
+                <span></span><span>LTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETH">
+                <span></span><span>ETH {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETC">
+                <span></span><span>ETC {{122111.0000}}</span>
+              </div>
             </div>
           </div>
           <div id="KEcharts" class="echarts-show"></div>
@@ -131,20 +137,22 @@
           <div class="assets-content">
             <h1 class="assets-title">冻结</h1>
             <span class="assets-money">{{1212121}} {{money_style}}</span>
-            <div class="assets_CNY">
-              <span></span><span>CNY {{122111.00}}</span>
-            </div>
-            <div class="assets_BTC">
-              <span></span><span>BTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_LTC">
-              <span></span><span>LTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETH">
-              <span></span><span>ETH {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETC">
-              <span></span><span>ETC {{122111.0000}}</span>
+            <div v-show="money_hide">
+              <div class="assets_CNY">
+                <span></span><span>CNY {{122111.00}}</span>
+              </div>
+              <div class="assets_BTC">
+                <span></span><span>BTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_LTC">
+                <span></span><span>LTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETH">
+                <span></span><span>ETH {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETC">
+                <span></span><span>ETC {{122111.0000}}</span>
+              </div>
             </div>
           </div>
           <div id="DEcharts" class="echarts-show"></div>
@@ -194,14 +202,11 @@
       }//控制显示的模式
     },
     methods: {
-
       open_more() {
         this.more_style = false;
-        $('.viewStyle').val(1)
       },
       close_more() {
         this.more_style = true;
-        $('.viewStyle').val(2)
       },
       drawing() {
         let ZEcharts = this.$echarts.init(document.getElementById('ZEcharts'));
@@ -327,22 +332,22 @@
       },
       //控制显示模式函数
       showStyle(num) {
-          let that=this;
+          let that =this;
         switch (num) {
           case '1':
             $('.echarts-show').css({display:'none'});
             $('.assets-proportion').css({display:"flex"});
-            that.more_style = false;
+            that.money_hide = true;
             break;
           case '2':
             $('.echarts-show').css({display:'none'});
             $('.assets-proportion').css({display:"flex"});
-            that.more_style = true;
+            that.money_hide = false;
             break;
           case '3':
             $('.echarts-show').css({display:'block'});
-            this.more_style = false;
             $('.assets-proportion').css({display:"none"});
+            that.money_hide = true;
             break;
         }
       },
@@ -480,7 +485,7 @@
     background: #9c5ff9;
   }
   .assets-proportion {
-    width: 100%;
+    width: 80%;
     display: flex;
     align-items: center;
   }

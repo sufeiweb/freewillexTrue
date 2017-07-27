@@ -98,13 +98,24 @@
             "loginUser": that.userName,
             "loginPwd": that.userPassword
           },
-          headers:{
-              "X-Requested-With":"XMLHttpRequest"
+          headers: {
+            "X-Requested-With": "XMLHttpRequest"
           }
         }).then(function (data) {
           console.log(data);
           that.$store.dispatch('loginStateTrue');
-          localStorage.setItem('token',data.data.data);
+          sessionStorage.setItem('token', data.data.data);
+          that.$store.state.realName.userPsd = true;
+          that.$store.state.token = data.data.data;
+          let loginPattern = /0?^(13|14|15|18|17)[0-9]{9}/;
+          if(loginPattern.test(that.userName)){
+            that.$store.state.realName.userPhone = true;
+            that.$store.state.realName.userPhoneNum = that.userName;
+          }else {
+            that.$store.state.realName.userEmail = true;
+            that.$store.state.realName.userEmailNum = that.userName;
+          }
+          that.$router.push('/user');
 //          that.$http({
 //            url: 'http://192.168.1.48:8089/api/user/register',
 //            method: 'POST',
@@ -123,7 +134,7 @@
 //          })
         }).catch(function () {
           that.$store.dispatch('loginStateFalse');
-          localStorage.removeItem('token');
+          sessionStorage.removeItem('token');
         })
       },//帐号登录
     }

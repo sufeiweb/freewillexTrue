@@ -32,20 +32,22 @@
           <div class="assets-content">
             <h1 class="assets-title">总资产</h1>
             <span class="assets-money">{{1212121}} {{money_style}}</span>
-            <div class="assets_CNY">
-              <span></span><span>CNY {{122111.00}}</span>
-            </div>
-            <div class="assets_BTC">
-              <span></span><span>BTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_LTC">
-              <span></span><span>LTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETH">
-              <span></span><span>ETH {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETC">
-              <span></span><span>ETC {{122111.0000}}</span>
+            <div v-show="money_hide1">
+              <div class="assets_CNY">
+                <span></span><span>CNY {{122111.00}}</span>
+              </div>
+              <div class="assets_BTC">
+                <span></span><span>BTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_LTC">
+                <span></span><span>LTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETH">
+                <span></span><span>ETH {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETC">
+                <span></span><span>ETC {{122111.0000}}</span>
+              </div>
             </div>
           </div>
           <div id="ZEcharts1" class="echarts-show1"></div>
@@ -69,20 +71,22 @@
               <!--<a href="javascript:;">提现</a>-->
             </div>
             <span class="assets-money">{{1212121}} {{money_style}}</span>
-            <div class="assets_CNY">
-              <span></span><span>CNY {{122111.00}}</span>
-            </div>
-            <div class="assets_BTC">
-              <span></span><span>BTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_LTC">
-              <span></span><span>LTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETH">
-              <span></span><span>ETH {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETC">
-              <span></span><span>ETC {{122111.0000}}</span>
+            <div v-show="money_hide1">
+              <div class="assets_CNY">
+                <span></span><span>CNY {{122111.00}}</span>
+              </div>
+              <div class="assets_BTC">
+                <span></span><span>BTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_LTC">
+                <span></span><span>LTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETH">
+                <span></span><span>ETH {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETC">
+                <span></span><span>ETC {{122111.0000}}</span>
+              </div>
             </div>
           </div>
           <div id="JEcharts1" class="echarts-show1"></div>
@@ -100,20 +104,22 @@
           <div class="assets-content">
             <h1 class="assets-title">可用</h1>
             <span class="assets-money">{{1212121}} {{money_style}}</span>
-            <div class="assets_CNY">
-              <span></span><span>CNY {{122111.00}}</span>
-            </div>
-            <div class="assets_BTC">
-              <span></span><span>BTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_LTC">
-              <span></span><span>LTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETH">
-              <span></span><span>ETH {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETC">
-              <span></span><span>ETC {{122111.0000}}</span>
+            <div v-show="money_hide1">
+              <div class="assets_CNY">
+                <span></span><span>CNY {{122111.00}}</span>
+              </div>
+              <div class="assets_BTC">
+                <span></span><span>BTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_LTC">
+                <span></span><span>LTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETH">
+                <span></span><span>ETH {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETC">
+                <span></span><span>ETC {{122111.0000}}</span>
+              </div>
             </div>
           </div>
           <div id="KEcharts1" class="echarts-show1"></div>
@@ -131,20 +137,22 @@
           <div class="assets-content">
             <h1 class="assets-title">冻结</h1>
             <span class="assets-money">{{1212121}} {{money_style}}</span>
-            <div class="assets_CNY">
-              <span></span><span>CNY {{122111.00}}</span>
-            </div>
-            <div class="assets_BTC">
-              <span></span><span>BTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_LTC">
-              <span></span><span>LTC {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETH">
-              <span></span><span>ETH {{122111.0000}}</span>
-            </div>
-            <div class="assets_ETC">
-              <span></span><span>ETC {{122111.0000}}</span>
+            <div v-show="money_hide1">
+              <div class="assets_CNY">
+                <span></span><span>CNY {{122111.00}}</span>
+              </div>
+              <div class="assets_BTC">
+                <span></span><span>BTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_LTC">
+                <span></span><span>LTC {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETH">
+                <span></span><span>ETH {{122111.0000}}</span>
+              </div>
+              <div class="assets_ETC">
+                <span></span><span>ETC {{122111.0000}}</span>
+              </div>
             </div>
           </div>
           <div id="DEcharts1" class="echarts-show1"></div>
@@ -174,7 +182,7 @@
   export default {
     data() {
       return {
-        money_hide: false,
+        money_hide1: false,
         money_style: 'CNY',
         more_style: true,
         activeName: 'first'
@@ -197,11 +205,9 @@
 
       open_more1() {
         this.more_style = false;
-        $('.viewStyle1').val(1)
       },
       close_more1() {
         this.more_style = true;
-        $('.viewStyle1').val(2)
       },
       drawing1() {
         let ZEcharts1 = this.$echarts.init(document.getElementById('ZEcharts1'));
@@ -332,16 +338,16 @@
           case '1':
             $('.echarts-show1').css({display:'none'});
             $('.assets-proportion1').css({display:"flex"});
-            that.more_style = false;
+            that.money_hide1 = true;
             break;
           case '2':
             $('.echarts-show1').css({display:'none'});
             $('.assets-proportion1').css({display:"flex"});
-            that.more_style = true;
+            that.money_hide1 = false;
             break;
           case '3':
             $('.echarts-show1').css({display:'block'});
-            this.more_style = false;
+            that.money_hide1 = true;
             $('.assets-proportion1').css({display:"none"});
             break;
         }
@@ -480,7 +486,7 @@
     background: #9c5ff9;
   }
   .assets-proportion1 {
-    width: 100%;
+    width: 80%;
     display: flex;
     align-items: center;
   }

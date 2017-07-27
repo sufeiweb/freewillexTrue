@@ -36,5 +36,34 @@ export default {
     userpsd: false,
     userpsds: false
   },//邮箱找回密码逻辑控制
+  realName: {
+    userName: false,
+    userEmail: false,
+    userEmailNum: '',
+    userPhone: false,
+    userPhoneNum: '',
+    userPsd: false,
+    userMoneyPsd: false
+  },//实名四要素
+  realNeed:{
+    city:true,
+    name:false,
+    IdCard:false,
+    bankId:false,
+    bankNum:false,
+    bankAdr:false,
+    phone:false,
+    Yz:false,
+    phoneY:true,
+    checkbox:false
+  },//逻辑控制
+  token:'',//存放token
+  bankId:{
+    alipay:'',
+    BOC:'',
+    ICBC:'',
+    CCB:'',
+    ABC:''
+  },//存放银行id
 
 }
