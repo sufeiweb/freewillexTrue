@@ -36,6 +36,7 @@
         <span>开户银行</span>
         <div>
           <select class="bankStyle">
+            <option>请选择银行</option>
             <option v-for="item in CBank" :value="item.abbreviation">{{item.bankName}}</option>
           </select>
           <span class="BankVal-tips"></span>
@@ -79,7 +80,7 @@
         <div>
           <div class="input-box">
             <input type="text" placeholder="手机验证码" v-model="RCaptcha"/>
-            <span>获取验证码</span>
+            <button @click="REgetCord()" class="REgetCorde">获取验证码</button>
           </div>
           <span class="phoneyz-tips"></span>
         </div>
@@ -125,13 +126,8 @@
         CBank: []
       }
     },
-    mounted() {
-      let that = this;
-      that.RgetCord();//获取验证码
-      that.bankStyles($('.bankStyle').val());
-      $('.bankStyle').change(function () {
-        that.bankStyles($(this).val());
-      });
+    created(){
+        let that =this;
       {
         console.log(that.$store.state.token, 'token');
         this.$http({
@@ -161,10 +157,20 @@
               that.$store.state.bankId.ABC = res.data.data[i].id;
             }
           }
+          console.log(that.$store.state.bankId,676786768766678678)
         }).catch((req) => {
           console.log("出错了")
         })
       }//获取支持银行
+    },
+    mounted() {
+      let that = this;
+      that.RgetCord();//获取验证码
+        that.bankStyles($('.bankStyle').val());
+        $('.bankStyle').change(function () {
+          that.bankStyles($(this).val());
+        });
+      //获取bankid
       {
           $('.RBankName-input').keyup(function () {
             if(that.RBankNum){
@@ -294,9 +300,9 @@
           that.$store.state.realNeed.phoneY &&
           that.$store.state.realNeed.checkbox) {
           that.$http({
-            url: 'http://192.168.1.48:8089/web/authentication/realNameAuth',
+            url: 'http://192.168.1.48:8089/fwex/web/authentication/realNameAuth',
             method: 'POST',
-            data: {
+            params: {
               country: that.country,
               userName: that.RUserName,
               idCard: that.RIDCard,
@@ -313,6 +319,7 @@
               'X-Authorization': 'Bearer ' + that.$store.state.token
             }
           }).then((res)=>{
+              that.$router.push('/settings');
               console.log(res,'立即认证')
           }).catch((req)=>{
               console.log(req,'认证失败')
@@ -320,6 +327,7 @@
         }
       },
       bankStyles(num){
+          let that =this;
         switch (num) {
           case 'alipay':
             that.RBankVal = that.$store.state.bankId.alipay;
@@ -336,6 +344,40 @@
           case 'ABC':
             that.RBankVal = that.$store.state.bankId.ABC;
             break;
+        }
+      },
+      REgetCord() {
+        let that = this;
+        let second = 60;
+        let pattern = /0?^(13|14|15|18|17)[0-9]{9}/;
+        let url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile/' + that.RUserPhone;
+        if (that.RUserPhone.length !== 0 && pattern.test(that.RUserPhone)) {
+          that.$http.get(url).then((data) => {
+            console.log(data);
+            $('.REgetCorde').attr("disabled", true).css("cursor", "default");
+            that.timer = setInterval(function () {
+              $('.REgetCorde').html((--second) + 's');
+              if (second === 0) {
+                $('.REgetCorde').removeAttr("disabled").css("cursor", "pointer");
+                clearInterval(that.timer);
+                $('.REgetCorde').html('获取验证码');
+              }
+            }, 1000);
+            $('.phoneyz-tips').html('请输入验证码').css({
+              alignSelf: 'flex-start',
+              color: 'red',
+              marginLeft: '1.5rem'
+            })
+          }).catch((error) => {
+            console.log(131313);
+            console.log(error);
+          })
+        } else {
+          $('.phoneyz-tips').html('请核对手机号').css({
+            alignSelf: 'flex-start',
+            color: 'red',
+            marginLeft: '1.5rem'
+          })
         }
       }
     }
@@ -394,7 +436,7 @@
     width: 70% !important;
   }
 
-  .input-box > span {
+  .input-box > span,.input-box > button{
     background: #01aaef;
     color: #fff;
     text-align: center;
@@ -402,6 +444,7 @@
     height: 2.75rem !important;
     line-height: 2.75rem !important;
     cursor: pointer;
+    border: none;
   }
 
   .real-from-group:nth-of-type(1) > div > input {
@@ -416,7 +459,7 @@
     border: 1px solid #ddd;
   }
 
-  .real-from-group > div > span, .input-box > span {
+  .real-from-group > div > span, .input-box > span,.input-box > button {
     height: 1.5rem;
   }
 

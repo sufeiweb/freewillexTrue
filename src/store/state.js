@@ -65,5 +65,32 @@ export default {
     CCB:'',
     ABC:''
   },//存放银行id
+  bindEmailNum:{
+    email:false,
+    YZ:false,
+    EYZ:true
+  },//邮箱绑定
+  bindPhoneNum:{
+    phone:false,
+    YZ:false,
+    EYZ:true
+  },//邮箱绑定
+  bindFullPsd:{
+    fullPsd:false,
+    fullPsds:false,
+    YZCord: true
+  },//设置资金密码
+  modifyPsd:{
+    oldPsd:false,
+    newPsd:false,
+    newPsds:false,
+    YZCord: true
+  },//修改密码
+  modifyFullPsd:{
+    oldPsd:false,
+    newPsd:false,
+    newPsds:false,
+    YZCord: true
+  },//修改密码
 
 }

@@ -26,7 +26,11 @@ import quotation from '@/components/quotation'
 import broker from '@/components/broker'
 
 import realNameAuthentication from '@/components/real/realNameAuthentication'
+import bindPhone from '@/components/lettle_components/bindPhone'
 import bindEmail from '@/components/lettle_components/bindEmail'
+import bindFullPsd from '@/components/lettle_components/bindFullPsd'
+import modifyPsd from '@/components/lettle_components/modifyPsd'
+import modifyFullPsd from '@/components/lettle_components/modifyFullPsd'
 
 
 Vue.use(Router);
@@ -65,7 +69,11 @@ export default new Router({
       {path: '/reward', name: 'reward', component: reward},
       {path: '/settings', name: 'settings', component: settings},
       {path: '/settings/user', name: 'realNameAuthentication', component: realNameAuthentication},
-      {path: '/settings/bindEmail', name: 'bindEmail', component: bindEmail}
+      {path: '/settings/bindPhone', name: 'bindPhone', component: bindPhone},
+      {path: '/settings/bindEmail', name: 'bindEmail', component: bindEmail},
+      {path: '/settings/bindFullPsd', name: 'bindFullPsd', component: bindFullPsd},
+      {path: '/settings/modifyPsd', name: 'modifyPsd', component: modifyPsd},
+      {path: '/settings/modifyFullPsd', name: 'modifyFullPsd', component: modifyFullPsd},
     ]
     }
   ]

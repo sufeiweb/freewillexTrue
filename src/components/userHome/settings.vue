@@ -67,7 +67,8 @@
             <td>手机绑定</td>
             <td>保障资金安全，是您在FreeWillex重要的身份凭证</td>
             <td>
-              <a href="javascript:;" v-show="!realPhone">立即绑定</a>
+              <router-link to="/settings/bindPhone"  v-show="!realPhone">立即绑定</router-link>
+              <!--<a href="javascript:;" v-show="!realPhone">立即绑定</a>-->
               <span v-show="realPhone">{{iponeNum}}</span>
             </td>
           </tr>
@@ -83,10 +84,10 @@
                   </span>
             </td>
             <td>登录密码</td>
-            <td>上次登陆时间：<span class="login-timer">2017-07-27 13:31:58</span></td>
+            <td>上次登陆时间：<span class="login-timer">{{loginTime|dateYMDHIS}}</span></td>
             <td>
               <a href="javascript:;" v-show="!realPsd">立即设置</a>
-              <a href="javascript:;" v-show="realPsd">修改</a>
+              <router-link to="/settings/modifyPsd" v-show="realPsd">修改</router-link>
             </td>
           </tr>
           <tr>
@@ -103,8 +104,8 @@
             <td>资金密码</td>
             <td>资金安全，提现等资金相关操作时使用</td>
             <td>
-              <a href="javascript:;" v-show="!realMoneyPsd">立即设置</a>
-              <a href="javascript:;" v-show="realMoneyPsd">修改</a>
+              <router-link to="/settings/bindFullPsd" v-show="!realMoneyPsd">立即设置</router-link>
+              <router-link to="/settings/modifyFullPsd" v-show="realMoneyPsd">修改</router-link>
             </td>
           </tr>
           </tbody>
@@ -120,7 +121,8 @@
         iponeNum: '',
         emailNum: '',
         Xiang: 5,
-        EXP:'低'
+        EXP:'低',
+        loginTime:''
       }
     },
     mounted() {
@@ -133,7 +135,7 @@
           'X-Authorization': 'Bearer ' + this.$store.state.token
         }
       }).then((res) => {
-        console.log(res.data.data);
+          console.log(res.data,23131313);
         that.Xiang = 5 - res.data.data.length;
         if(res.data.data.length<=2){
             that.EXP='低';
@@ -148,6 +150,8 @@
         for (let i = 0; i < res.data.data.length; i++) {
           if (res.data.data[i].authsEnum === 'PASSWORD') {
             that.$store.state.realName.userPsd = true;
+            that.loginTime=res.data.data[i].createDate;
+
           }//密码
           if (res.data.data[i].authsEnum === 'ORDINARY_REAL_NAME') {
             that.$store.state.realName.userName = true;
@@ -184,7 +188,7 @@
       realMoneyPsd() {
         return this.$store.state.realName.userMoneyPsd;
       },//资金密码
-      bindEmail(){},//绑定邮箱
+      bindPhone(){},//绑定邮箱
     }
   }
 </script>

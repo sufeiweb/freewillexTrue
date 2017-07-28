@@ -76,25 +76,6 @@
               <input type="checkbox" id="agree"/>
               <label for="agree">
                 我已阅读并同意
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <router-link to="/userAgreement">《FreeWillex用户协议》</router-link>
               </label>
             </div>

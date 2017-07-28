@@ -1,8 +1,8 @@
 <template>
   <div class="bindEmail">
     <div class="bindEmail-title">
-  <p>邮箱绑定</p>
-</div>
+      <p>邮箱绑定</p>
+    </div>
     <div class="bindEmail-from">
       <div class="bindEmail-from-group">
         <span>邮箱</span>
@@ -16,7 +16,7 @@
         <div>
           <div class="bindEmail-input-box">
             <input type="text" placeholder="验证码" v-model="bindEmailRYZ" class="bindEmailRYZ-input"/>
-            <span @click="bindEmailRgetCord()">{{bindEmailRGetCord}}</span>
+            <a @click="bindEmailRgetCord()">{{bindEmailRGetCord}}</a>
           </div>
           <span class="bindEmailRYZ-tips"></span>
         </div>
@@ -26,7 +26,7 @@
         <div>
           <div class="bindEmail-input-box">
             <input type="text" placeholder="邮箱验证码" v-model="bindEmailRCaptcha"/>
-            <span>获取验证码</span>
+            <button class="bindGetEmailCord">获取验证码</button>
           </div>
           <span class="bindEmailRCaptcha-tips"></span>
         </div>
@@ -43,37 +43,125 @@
 </template>
 <script>
   export default {
-      data(){
-          return {
-            bindEmailRCaptcha:'',
-            bindEmailRYZ:'',
-            bindEmailRGetCord:''
-          }
-      },
-      mounted() {
-          let that=this;
-        {
-          $('.bindEmailRYZ-input').keyup(function () {
-            console.log(that.bindEmailRYZ);
-            if (that.bindEmailRYZ == that.bindEmailRGetCord) {
-              $('.bindEmailRYZ-tips').html('');
-              that.$store.state.realNeed.Yz = true;
-            } else {
-              $('.yz-tips').html('请核对验证码').css({
-                alignSelf: 'flex-start',
-                color: 'red'
-              });
-              that.$store.state.realNeed.Yz = false;
-            }
-          })
-        }//验证码校验
+    data(){
+      return {
+        bindEmailNum: '',
+        bindEmailRCaptcha: '',
+        bindEmailRYZ: '',
+        bindEmailRGetCord: ''
       }
+    },
+    mounted() {
+      let that = this;
+      that.bindEmailRgetCord();
+      {
+        $('.bindEmailRYZ-input').keyup(function () {
+          if (that.bindEmailRYZ == that.bindEmailRGetCord) {
+            $('.bindEmailRYZ-tips').html('');
+            that.$store.state.bindEmailNum.YZ = true;
+          } else {
+            $('.bindEmailRYZ-tips').html('请核对验证码').css({
+              alignSelf: 'flex-start',
+              color: 'red'
+            });
+            that.$store.state.bindEmailNum.YZ = false;
+          }
+        })
+      }//验证码校验
+      {
+        $('.bindEmailNum-input').keyup(function () {
+          let pattern = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+(com|cn)$/;
+          if (pattern.test(that.bindEmailNum)) {
+            $('.bindEmailNum-tips').html('');
+            that.$store.state.bindEmailNum.email = true;
+          } else {
+            that.$store.state.bindEmailNum.email = false;
+            $('.bindEmailNum-tips').html('您输入的邮箱格式不正确').css({
+              alignSelf: 'flex-start',
+              color: 'red'
+            });
+          }
+        });
+      } //邮箱正则验证
+      {
+        $('.bindGetEmailCord').click(function () {
+          let second = 60;
+          let pattern = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+(com|cn)$/;
+          let url = 'http://192.168.1.48:8089/fwex/web/captcha/email/' + that.bindEmailNum;
+          if (that.bindEmailNum.length !== 0 && pattern.test(that.bindEmailNum)) {
+            that.$http.get(url).then((data) => {
+              console.log(data);
+              $('.bindGetEmailCord').attr("disabled", true).css("cursor", "default");
+              that.timer = setInterval(function () {
+                $('.bindGetEmailCord').html((--second) + 's');
+                if (second === 0) {
+                  $('.bindGetEmailCord').removeAttr("disabled").css("cursor", "pointer");
+                  clearInterval(that.timer);
+                  $('.bindGetEmailCord').html('获取验证码');
+                }
+              }, 1000);
+              $('.bindEmailRCaptcha-tips').html('请输入验证码').css({
+                alignSelf: 'flex-start',
+                color: 'red',
+                marginLeft: '1.5rem'
+              })
+            }).catch((error) => {
+              console.log(131313);
+              console.log(error);
+            })
+          } else {
+            $('.bindEmailRCaptcha-tips').html('请核对邮箱').css({
+              alignSelf: 'flex-start',
+              color: 'red',
+              marginLeft: '1.5rem'
+            })
+          }
+        });
+      }
+    },
+    methods: {
+      bindEmailRgetCord() {
+        let num = parseInt(Math.random() * 10000);//0~9999
+        if (num < 10) {
+          num = '000' + num;
+        } else if (num < 100) {
+          num = '00' + num;
+        } else if (num < 1000) {
+          num = '0' + num;
+        }
+        this.bindEmailRGetCord = num;
+      },
+      QbindEmail() {
+          let that=this;
+          console.log(that.$store.state.bindEmailNum.email,that.$store.state.bindEmailNum.YZ);
+        if(that.$store.state.bindEmailNum.email && that.$store.state.bindEmailNum.YZ){
+            that.$http({
+              url:'http://192.168.1.48:8089/fwex/web/authentication/emailAuth',
+              method: 'POST',
+              params: {
+                email:that.bindEmailNum,
+                captcha:that.bindEmailRGetCord
+              },
+              headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                'X-Authorization': 'Bearer ' + this.$store.state.token
+              }
+            }).then((res)=>{
+                console.log(res,'绑定成功');
+                that.$router.push('/settings');
+            }).catch((req)=>{
+                console.log(req,'绑定失败')
+            })
+        }
+      }
+    }
   }
 </script>
 <style scoped>
-  .bindEmail{
+  .bindEmail {
     font-size: 1.167rem;
   }
+
   .bindEmail .bindEmail-title {
     border-bottom: 1px solid #ddd;
   }
@@ -83,9 +171,11 @@
     padding: 1.3rem 0;
     font-size: 1.333rem;
   }
-.bindEmail-from{
-  padding: 4rem 0;
-}
+
+  .bindEmail-from {
+    padding: 4rem 0;
+  }
+
   .bindEmail-from-group {
     display: flex;
     align-items: center;
@@ -93,6 +183,7 @@
     margin-bottom: 1.2rem;
     height: 5rem;
   }
+
   .bindEmail-from-group > span:nth-of-type(1) {
     padding-top: 0.583rem;
     width: 20rem;
@@ -100,6 +191,7 @@
     text-align: right;
     margin-right: 2rem;
   }
+
   .bindEmail-from-group > div {
     width: 28.8rem;
     margin-bottom: -1.6rem;
@@ -116,7 +208,7 @@
     width: 70% !important;
   }
 
-  .bindEmail-input-box > span {
+  .bindEmail-input-box > a, .bindEmail-input-box > button {
     background: #01aaef;
     color: #fff;
     text-align: center;
@@ -124,6 +216,7 @@
     height: 2.75rem !important;
     line-height: 2.75rem !important;
     cursor: pointer;
+    border: none;
   }
 
   .bindEmail-from-group > div > input, .bindEmail-from-group > div > select, .bindEmail-input-box > input {
@@ -134,9 +227,10 @@
     border: 1px solid #ddd;
   }
 
-  .bindEmail-from-group > div > span, .bindEmail-input-box > span {
+  .bindEmail-from-group > div > span, .bindEmail-input-box > a, .bindEmail-input-box > button {
     height: 1.5rem;
   }
+
   .QbindEmail {
     width: 10.833rem;
     text-align: center;

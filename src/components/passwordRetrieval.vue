@@ -506,7 +506,7 @@
           console.log(that.$store.state.phoneR.userpsds,"userPsds");
           if(that.$store.state.phoneR.username && that.$store.state.phoneR.usercord && that.$store.state.phoneR.userpsd && that.$store.state.phoneR.userpsds){
               that.$http({
-                url:'http://192.168.1.120:8189/fwex/web/account/forget/password',
+                url:'http://192.168.1.48:8089/fwex/web/account/forget/password',
                 method: 'POST',
                 params: {
                   moe:that.userNameM,
