@@ -147,8 +147,9 @@
           </transition>
         </div>
         <div class="recharge-group-radio-select-bank" v-show="bank1">
-          <div v-for="(item,index) in ZCBank">
-            <input name="select-bank" type="radio" :id="'recharge-mode-cny'+index" :value="item.abbreviation" :checked="index===0?'checked':''" class="select-bank" />
+          <div v-for="(item,index) in ZCBank" class="ddddddddd">
+            <input name="select-bank" type="radio" :id="'recharge-mode-cny'+index" :value="item.abbreviation"
+                   :checked="index===0?'checked':''"/>
             <label :for="'recharge-mode-cny'+index" :class="index===0?'recharge-group-radio-checked':''">
               <span><span></span></span>
               <img :src='bankImgUrl[item.abbreviation]'/>
@@ -222,6 +223,12 @@
           </transition>
         </div>
         <router-link to="/recharge/rechargeList" v-show="!bank3" tag="button" class="recharge-group-button">生成汇款单
+
+
+
+
+
+
         </router-link>
         <!--<button class="recharge-group-button" v-show="!bank3">生成汇款单</button>-->
         <button class="recharge-group-button" v-show="bank3" @click="erCord=true">生成充值码</button>
@@ -243,21 +250,21 @@
         arNum: 0,
         erCord: false,
         ZCBank: [],
-        bankImgUrl:{
-            "ABC":require('../../assets/img/banklogo/ABC.png'),
-            "BCM":require('../../assets/img/banklogo/BCM.png'),
-            "BOB":require('../../assets/img/banklogo/BOB.png'),
-            "BOC":require('../../assets/img/banklogo/BOC.png'),
-            "CCB":require('../../assets/img/banklogo/CCB.png'),
-            "CEB":require('../../assets/img/banklogo/CEB.png'),
-            "CIB":require('../../assets/img/banklogo/CIB.png'),
-            "CMB":require('../../assets/img/banklogo/CMB.png'),
-            "CMBC":require('../../assets/img/banklogo/CMBC.png'),
-            "CNCB":require('../../assets/img/banklogo/CNCB.png'),
-            "HSBC":require('../../assets/img/banklogo/HSBC.png'),
-            "ICBC":require('../../assets/img/banklogo/ICBC.png'),
-            "PBC":require('../../assets/img/banklogo/PBC.png'),
-            "PSBC":require('../../assets/img/banklogo/PSBC.png'),
+        bankImgUrl: {
+          "ABC": require('../../assets/img/banklogo/ABC.png'),
+          "BCM": require('../../assets/img/banklogo/BCM.png'),
+          "BOB": require('../../assets/img/banklogo/BOB.png'),
+          "BOC": require('../../assets/img/banklogo/BOC.png'),
+          "CCB": require('../../assets/img/banklogo/CCB.png'),
+          "CEB": require('../../assets/img/banklogo/CEB.png'),
+          "CIB": require('../../assets/img/banklogo/CIB.png'),
+          "CMB": require('../../assets/img/banklogo/CMB.png'),
+          "CMBC": require('../../assets/img/banklogo/CMBC.png'),
+          "CNCB": require('../../assets/img/banklogo/CNCB.png'),
+          "HSBC": require('../../assets/img/banklogo/HSBC.png'),
+          "ICBC": require('../../assets/img/banklogo/ICBC.png'),
+          "PBC": require('../../assets/img/banklogo/PBC.png'),
+          "PSBC": require('../../assets/img/banklogo/PSBC.png'),
         }
 
       }
@@ -265,26 +272,7 @@
     created() {
       this.arNum = parseInt(Math.random() * 90 + 10)//10~99
     },
-//    created() {
-//      let that = this;
-//      {
-//        this.$http({
-//          url: 'http://192.168.1.48:8089/fwex/web/bank/all',
-//          method: 'GET',
-//          headers: {
-//            "X-Requested-With": "XMLHttpRequest",
-//            'X-Authorization': 'Bearer ' + this.$store.state.token
-//          }
-//        }).then((res) => {
-//          that.ZCBank = res.data.data;
-//          console.log(res.data.data, 111)
-//          console.log(typeof res.data.data[0].abbreviation)
-//        }).catch((req) => {
-//          console.log(req, '请求错误')
-//        })
-//      }//获取支持银行nag
-//    },
-    mounted() {
+    created() {
       let that = this;
       {
         this.$http({
@@ -302,6 +290,9 @@
           console.log(req, '请求错误')
         })
       }//获取支持银行nag
+    },
+    mounted() {
+      let that = this;
       {
         $("input[name='select-account']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
@@ -348,14 +339,12 @@
         })
       }//选择充值方式
       {
-          console.log($("select-bank"),11121212);
-        $("input[name='select-bank']").bind('onclick',function () {
-          console.log(1111)
-        })
-        $("input[name='select-bank']").change(function () {
-          $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account')
-        })
+        setTimeout(function () {
+          $("input[name='select-bank']").change(function () {
+            $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
+            console.log($(this).val(), 'account')
+          })
+        }, 500)
         $("input[name='select-bank2']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
           console.log($(this).val(), 'account')
