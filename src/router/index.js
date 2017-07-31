@@ -31,6 +31,11 @@ import bindEmail from '@/components/lettle_components/bindEmail'
 import bindFullPsd from '@/components/lettle_components/bindFullPsd'
 import modifyPsd from '@/components/lettle_components/modifyPsd'
 import modifyFullPsd from '@/components/lettle_components/modifyFullPsd'
+import rechargeLog from '@/components/lettle_components/rechargeLog'
+import rechargeList from '@/components/lettle_components/rechargeList'
+import addBankCard from '@/components/lettle_components/addBankCard'
+import addBTCAdr from '@/components/lettle_components/addBTCAdr'
+import cashLog from '@/components/lettle_components/cashLog'
 
 
 Vue.use(Router);
@@ -62,10 +67,15 @@ export default new Router({
       {path: '/', redirect: '/userIndex'},
       {path: '/accountDetails', name: 'accountDetails', component: accountDetails},
       {path: '/accountManagement', name: 'accountManagement', component: accountManagement},
+      {path: '/accountManagement/addBTCAdr', name: 'addBTCAdr', component: addBTCAdr},
+      {path: '/accountManagement/addBankCard', name: 'addBankCard', component: addBankCard},
       {path: '/cash', name: 'cash', component: cash},
+      {path: '/cash/cashLog', name: 'cashLog', component: cashLog},
       {path: '/loginLog', name: 'loginLog', component: loginLog},
       {path: '/message', name: 'message', component: message},
       {path: '/recharge', name: 'recharge', component: recharge},
+      {path: '/recharge/rechargeLog', name: 'rechargeLog', component: rechargeLog},
+      {path: '/recharge/rechargeList', name: 'rechargeList', component: rechargeList},
       {path: '/reward', name: 'reward', component: reward},
       {path: '/settings', name: 'settings', component: settings},
       {path: '/settings/user', name: 'realNameAuthentication', component: realNameAuthentication},

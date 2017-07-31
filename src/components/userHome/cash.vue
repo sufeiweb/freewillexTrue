@@ -1,556 +1,560 @@
 <template>
-  <div class="cash">
-    <div class="userIndex-cash-header">
-      <div class="header-nav">
-        <a href="javascript:" class="header-nav-active" @click="cash_style1()">人名币提现</a>
-        <a href="javascript:" @click="cash_style2()">比特币提现</a>
+  <div class="userIndex-cash">
+    <div class="recharge-group">
+      <div class="recharge-group-title">
+        <p>选择账户</p>
+        <router-link to="/cash/cashLog">提现记录</router-link>
+      </div>
+      <div class="recharge-group-radio">
+        <input name="select-account-cash" type="radio" id="account-cny-cash" value="1" checked/>
+        <label for="account-cny-cash" class="recharge-group-radio-checked">
+          <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+          <i class="iconfont">&#xe650;</i>
+          <span>CNY账户</span>
+        </label>
+        <input name="select-account-cash" type="radio" id="account-btc-cash" value="2"/>
+        <label for="account-btc-cash">
+          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <i class="iconfont">&#xe650;</i>
+          <span>BTC账户</span>
+        </label>
       </div>
     </div>
-    <div class="cash-CNY" v-show="cash_style">
-      <div class="from-box">
-        <div>
-          <span>提现银行</span>
-          <p class="display-flex-p">
-            <a href="javascript:"><img src="../../assets/img/banklogo/CMB.png"/><span class="bank-tishi">尾号：1221</span><i
-              class="el-icon-caret-bottom bank-tishi"></i></a>
-            <a href="javascript:">+ 添加银行卡</a>
-          </p>
-        </div>
-        <div>
-          <span>提现金额</span>
-          <p>
-            <input type="number" :placeholder="'本次最多可提现金额'+user_cny_num+'CNY'" v-model="cash_num_CNY"/>
-            <span class="cash-tishi display-none-tishi">最小提现金额为100</span>
-          </p>
-          <p class="display-flex-p"><span>手续费:</span><span class="cash-tishi">￥{{2.00}}</span></p>
-        </div>
-        <div>
-          <span>资金密码</span>
-          <p>
-            <input type="password"/>
-            <span class="cash-tishi display-none-tishi">资金密码格式输入错误</span>
-          </p>
-        </div>
-        <div>
-          <span>验证方式</span>
-          <p class="display-flex-p">
-            <span>
-              <input name="yanzheng" type="radio" id="yanzheng3" checked/>
-              <label for="yanzheng3">邮箱验证</label>
-            </span>
-            <span>
-              <input name="yanzheng" type="radio" id="yanzheng4"/>
-              <label for="yanzheng4">短信验证</label>
-            </span>
-          </p>
-        </div>
-        <div>
-          <span>验证码</span>
-          <p>
-            <span>
-              <input type="text" placeholder="验证码"/>
-              <button>获取验证码</button>
-            </span>
-            <span class="cash-tishi display-none-tishi">验证码格式输入错误</span>
-          </p>
-        </div>
-        <div>
-          <span>&nbsp;</span>
-          <p>
-            <button>提交</button>
-            <button>取消</button>
-          </p>
-        </div>
-        <dottedLine></dottedLine>
-        <div class="cash-record">
-          <el-tabs v-model="activeName" type="card">
-            <el-tab-pane label="提现记录" name="first">
-              <div class="user-table1">
-                <table>
-                  <thead class="user-table-thead">
-                  <tr>
-                    <td>提现时间</td>
-                    <td>提现账户</td>
-                    <td>提现金额</td>
-                    <td>手续费</td>
-                    <td>状态</td>
-                  </tr>
-                  </thead>
-                  <tbody class="user-table-tbody" v-show="noData">
-                  <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                  </tr>
-                  </tbody>
-                  <tbody class="user-table-tbody de-body" v-show="!noData">
-                  <tr>
-                    <td colspan="5">
-                      <i class="iconfont">&#xe661;</i>
-                      <span>暂无记录</span>
-                    </td>
-                  </tr>
-                  </tbody>
-                  <tfoot class="user-table-footer-page">
-                  <tr>
-                    <td colspan="5">
-                      <el-pagination layout="prev, pager, next" :total="10" class="page-right"></el-pagination>
-                    </td>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="发票申请记录" name="second">
-              <div class="user-table2">
-                <table>
-                  <thead class="user-table-thead">
-                  <tr>
-                    <td>申请时间</td>
-                    <td>发票类型</td>
-                    <td>发票金额</td>
-                    <td>联系电话</td>
-                  </tr>
-                  </thead>
-                  <tbody class="user-table-tbody" v-show="noData">
-                  <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                  </tr>
-                  </tbody>
-                  <tbody class="user-table-tbody de-body" v-show="!noData">
-                  <tr>
-                    <td colspan="4">
-                      <i class="iconfont">&#xe661;</i>
-                      <span>暂无记录</span>
-                    </td>
-                  </tr>
-                  </tbody>
-                  <tfoot class="user-table-footer-page">
-                  <tr>
-                    <td colspan="5">
-                      <el-pagination layout="prev, pager, next" :total="10" class="page-right"></el-pagination>
-                    </td>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </el-tab-pane>
-          </el-tabs>
-        </div>
+    <div class="recharge-group">
+      <div class="recharge-group-title">
+        <p>提现币种</p>
       </div>
+      <transition enter-active-class="animated fadeIn">
+        <div class="recharge-group-radio" v-show="!account">
+          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-cash" value="1" checked/>
+          <label for="recharge-currency-cny-cash" class="recharge-group-radio-checked">
+            <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>CNY</span>
+          </label>
+          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-btc-cash" value="2"/>
+          <label for="recharge-currency-cny-btc-cash">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>BTC</span>
+          </label>
+          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-ltc-cash" value="3"/>
+          <label for="recharge-currency-cny-ltc-cash">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>LTC</span>
+          </label>
+          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-eth-cash" value="4"/>
+          <label for="recharge-currency-cny-eth-cash">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>ETH</span>
+          </label>
+          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-etc-cash" value="5"/>
+          <label for="recharge-currency-cny-etc-cash">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>ETC</span>
+          </label>
+        </div>
+      </transition>
+      <transition enter-active-class="animated fadeIn">
+        <div class="recharge-group-radio" v-show="account">
+          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-btc1-cash" value="1"/>
+          <label for="recharge-currency-cny-btc1-cash" class="recharge-group-radio-checked">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>BTC</span>
+          </label>
+          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-ltc1-cash" value="2"/>
+          <label for="recharge-currency-cny-ltc1-cash">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>LTC</span>
+          </label>
+          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-eth1-cash" value="3"/>
+          <label for="recharge-currency-cny-eth1-cash">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>ETH</span>
+          </label>
+          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-etc1-cash" value="4"/>
+          <label for="recharge-currency-cny-etc1-cash">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>ETC</span>
+          </label>
+        </div>
+      </transition>
     </div>
-    <div class="cash-BTC" v-show="!cash_style">
-      <div class="from-box">
-        <section>
-          <span>比特币地址</span>
-          <p>
-            <select>
-              <option>请选择比特币地址</option>
-            </select>
-          </p>
-          <a href="javascript:;">添加比特币地址</a>
-        </section>
-        <section>
-          <span>比特币网络转账费用</span>
-          <p>
-            <select>
-              <option value="">请选择比特币网络转账费用</option>
-              <option value="0.0005" selected>0.0005BTC</option>
-              <option value="0.0010">0.0010BTC</option>
-              <option value="0.0015">0.0015BTC</option>
-              <option value="0.0020">0.0020BTC</option>
-              <option value="0.0050">0.0050BTC</option>
-              <option value="0.0100">0.0100BTC</option>
-            </select>
-          </p>
-          <p class="display-flex-p"><span class="cash-tishi">比特币网络转账费用最低 0.0005 BTC，提高手续费可以在一定程度上提高比特币网络的确认速度</span></p>
-        </section>
-        <div style="margin: 0"></div>
-        <div>
-          <span>提币数量</span>
-          <p>
-            <input type="number" :placeholder="'本次最多可提币数量为'+user_btc_num+'CNY'" v-model="cash_num_CNY"/>
-            <span class="cash-tishi display-none-tishi">最小提现金额为100</span>
-          </p>
+    <transition enter-active-class="animated fadeIn">
+      <div class="recharge-group">
+        <div class="recharge-group-title">
+          <p>提现到</p>
         </div>
-        <div>
-          <span>资金密码</span>
-          <p>
+        <transition enter-active-class="animated fadeIn">
+          <div class="recharge-group-radio-select-bank" v-show="!account">
+            <input name="select-bank-cash" type="radio" id="recharge-mode-cny20-cash" value="ABC" checked/>
+            <label for="recharge-mode-cny20-cash" class="recharge-group-radio-checked">
+              <span class=""><span></span></span>
+              <img src="../../assets/img/banklogo/ABC.png"/>
+              <em>尾号 1234</em>
+            </label>
+            <input name="select-bank-cash" type="radio" id="recharge-mode-cny21-cash" value="CMB" checked/>
+            <label for="recharge-mode-cny21-cash">
+              <span class=""><span></span></span>
+              <img src="../../assets/img/banklogo/CMB.png"/>
+              <em>尾号 1234</em>
+            </label>
+            <input name="select-bank-cash" type="radio" id="recharge-mode-cny22-cash" value="3" checked/>
+            <router-link to="/accountManagement/addBankCard" tag="label" for="recharge-mode-cny22" class="add-bank-select-bank">
+              <i class="iconfont">&#xe689;</i>
+              <em>添加新银行卡</em>
+            </router-link>
+          </div>
+        </transition>
+        <transition enter-active-class="animated fadeIn">
+          <div class="recharge-group-radio-select-bank btcAdr" v-show="account">
+            <input name="select-bank-cash1" type="radio" id="recharge-mode-cny20-cash1" value="1" checked/>
+            <label for="recharge-mode-cny20-cash" class="recharge-group-radio-checked">
+              <p>比特币地址一</p>
+              <p>1Mc9pzwzjFbzJkc14SbpzSDSs3g8d5n5A1</p>
+            </label>
+            <input name="select-bank-cash1" type="radio" id="recharge-mode-cny21-cash1" value="2" checked/>
+            <label for="recharge-mode-cny21-cash">
+              <p>比特币地址一</p>
+              <p>1Mc9pzwzjFbzJkc14SbpzSDSs3g8d5n5A1</p>
+            </label>
+            <input name="select-bank-cash1" type="radio" id="recharge-mode-cny22-cash1" value="0" checked/>
+            <router-link to="/accountManagement/addBTCAdr" tag="label" for="recharge-mode-cny22"
+                         class="add-bank-select-bank-btcAdr">
+              <i class="iconfont">&#xe689;</i>
+              <em>添加新地址</em>
+            </router-link>
+          </div>
+        </transition>
+      </div>
+    </transition>
+    <div class="recharge-group">
+      <div class="recharge-group-title">
+        <p>金额</p>
+      </div>
+      <div class="cash-cny" v-show="!account">
+        <section>
+          <div>
+            <span>输入金额</span>
+            <input :placeholder="'本次最多可提'+11111+'CNY'"/>
+          </div>
+          <span>手续费<span class="color-blue">{{5.00}}CNY</span></span>
+          <span><i class="iconfont tishi-span">&#xe69d;</i><span class="tishi-span-hide">单笔提现最低手续费2.00</span></span>
+        </section>
+        <section>
+          <div>
+            <span>资金密码</span>
             <input type="password"/>
-            <span class="cash-tishi display-none-tishi">资金密码格式输入错误</span>
-          </p>
-        </div>
-        <div>
-          <span>验证方式</span>
-          <p class="display-flex-p">
-            <span>
-              <input name="yanzheng" type="radio" id="yanzheng1" checked/>
-              <label for="yanzheng1">邮箱验证</label>
-            </span>
-            <span>
-              <input name="yanzheng" type="radio" id="yanzheng2"/>
-              <label for="yanzheng2">短信验证</label>
-            </span>
-          </p>
-        </div>
-        <div>
-          <span>验证码</span>
-          <p>
-            <span>
-              <input type="text" placeholder="验证码"/>
-              <button>获取验证码</button>
-            </span>
-            <span class="cash-tishi display-none-tishi">验证码格式输入错误</span>
-          </p>
-        </div>
-        <div>
-          <span>&nbsp;</span>
-          <p>
-            <button>提交</button>
-            <button>取消</button>
-          </p>
-        </div>
-        <dottedLine></dottedLine>
-        <div class="cash-record">
-          <el-tabs v-model="activeName" type="card">
-            <el-tab-pane label="提现记录" name="first">
-              <div class="user-table1">
-                <table>
-                  <thead class="user-table-thead">
-                  <tr>
-                    <td>提现时间</td>
-                    <td>提现账户</td>
-                    <td>提现金额</td>
-                    <td>手续费</td>
-                    <td>状态</td>
-                  </tr>
-                  </thead>
-                  <tbody class="user-table-tbody" v-show="noData">
-                  <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                  </tr>
-                  </tbody>
-                  <tbody class="user-table-tbody de-body" v-show="!noData">
-                  <tr>
-                    <td colspan="5">
-                      <i class="iconfont">&#xe661;</i>
-                      <span>暂无记录</span>
-                    </td>
-                  </tr>
-                  </tbody>
-                  <tfoot class="user-table-footer-page">
-                  <tr>
-                    <td colspan="5">
-                      <el-pagination layout="prev, pager, next" :total="10" class="page-right"></el-pagination>
-                    </td>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </el-tab-pane>
-          </el-tabs>
-        </div>
+          </div>
+          <router-link to="/settings/modifyFullPsd">忘记资金密码？</router-link>
+        </section>
+        <section>
+          <div class="section-div-label">
+            <input type="radio" name="cash-btc-style-yz1" id="cash-btc-style-yz-emai11" value="1" checked/>
+            <label for="cash-btc-style-yz-emai11" class="cash-btc-select-color">邮箱验证</label>
+            <input type="radio" name="cash-btc-style-yz1" id="cash-btc-style-yz-phone11" value="2"/>
+            <label for="cash-btc-style-yz-phone11">手机验证</label>
+          </div>
+        </section>
+        <section>
+          <div>
+            <input type="text" placeholder="验证码"/>
+            <button>发送验证码</button>
+          </div>
+        </section>
+        <section>
+          <button>确认提现</button>
+        </section>
+      </div>
+      <div class="cash-btc" v-show="account">
+        <section>
+          <div class="btc-num-input">
+            <input placeholder="输入提币数量"/>
+          </div>
+        </section>
+        <section class="select-shouxufei">
+          <p>选择手续费</p>
+          <div class="section-div-label">
+            <input type="radio" name="select-Service-Charge" id="Service-Charge-1" value="0.0005" checked/>
+            <label for="Service-Charge-1" class="cash-btc-select-color">0.0005 BTC</label>
+            <input type="radio" name="select-Service-Charge" id="Service-Charge-2" value="0.0010"/>
+            <label for="Service-Charge-2">0.0010 BTC</label>
+            <input type="radio" name="select-Service-Charge" id="Service-Charge-3" value="0.0015"/>
+            <label for="Service-Charge-3">0.0015 BTC</label>
+            <input type="radio" name="select-Service-Charge" id="Service-Charge-4" value="0.0020"/>
+            <label for="Service-Charge-4">0.0020 BTC</label>
+            <input type="radio" name="select-Service-Charge" id="Service-Charge-5" value="0.0050"/>
+            <label for="Service-Charge-5">0.0050 BTC</label>
+            <input type="radio" name="select-Service-Charge" id="Service-Charge-6" value="0.0100"/>
+            <label for="Service-Charge-6">0.0100 BTC</label>
+          </div>
+          <p>比特币网络转账费用最低0.0005BTC,提高手续费可以在一定程度上提高比特币网络的确认速度</p>
+        </section>
+        <section>
+          <div>
+            <span>资金密码</span>
+            <input type="password"/>
+          </div>
+          <router-link to="/settings/modifyFullPsd">忘记资金密码？</router-link>
+        </section>
+        <section>
+          <div class="section-div-label">
+            <input type="radio" name="cash-btc-style-yz" id="cash-btc-style-yz-email" value="1" checked/>
+            <label for="cash-btc-style-yz-email" class="cash-btc-select-color">邮箱验证</label>
+            <input type="radio" name="cash-btc-style-yz" id="cash-btc-style-yz-phone" value="2"/>
+            <label for="cash-btc-style-yz-phone">手机验证</label>
+          </div>
+        </section>
+        <section>
+          <div>
+            <input type="text" placeholder="验证码"/>
+            <button>发送验证码</button>
+          </div>
+        </section>
+        <section>
+          <button>确认提现</button>
+        </section>
       </div>
     </div>
   </div>
 </template>
 <script>
   import $ from 'jquery';
-  import dottedLine from '../lettle_components/dottedLine.vue';
   export default {
     data() {
       return {
-        cash_style: true,
-        cash_num_CNY: '',
-        user_cny_num: 1231.2,
-        user_btc_num: 11.2854,
-        noData: false,
-        activeName: 'first'
+        account: false,
+
       }
     },
-    components: {
-      dottedLine
+    created() {
     },
     mounted() {
+      let that = this;
       {
-        $('.header-nav a').click(function () {
-          $(this).addClass('header-nav-active').siblings().removeClass('header-nav-active');
-        });
-      }
+        $("input[name='select-account-cash']").change(function () {
+          $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
+          console.log($(this).val(), 'account');
+          if ($(this).val() == '1') {
+            that.account = false;
+          }
+          else {
+            that.account = true;
+          }
+        })
+      }//选择账户
+      {
+        $("input[name='select-currency-cash']").change(function () {
+          $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
+          console.log($(this).val(), 'account')
+        })
+        $("input[name='select-currency1-cash']").change(function () {
+          $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
+          console.log($(this).val(), 'account')
+        })
+      }//选择充值币种
+      {
+        $("input[name='select-bank-cash']").change(function () {
+          $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
+          console.log($(this).val(), 'account')
+        })
+      }//选择充值银行
 
-    },
-    methods: {
-      cash_style1() {
-        this.cash_style = true;
-      },
-      cash_style2() {
-        this.cash_style = false;
-      },
-    },
+    }
   }
 </script>
 <style scoped>
-  .userIndex-cash-header {
-    width: 99%;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 0.833rem;
+  .userIndex-cash {
+    padding: 0 1.667rem 0 3.333rem;
+    font-size: 1.167rem;
   }
 
-  .header-nav {
+  .recharge-group-title {
     display: flex;
-  }
-
-  .header-nav a {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
     font-size: 1.333rem;
-    padding: 0.667rem 0 1.25rem 0;
-    margin-right: 2.083rem;
-    border-bottom: 2px solid #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 1.5rem 0;
+    margin-bottom: 1.25rem;
   }
 
-  .header-nav a:hover {
-    border-bottom: 2px solid #01aaef;
-  }
-
-  .header-nav .header-nav-active {
-    border-bottom-color: #337ab7 !important;
-  }
-
-  .from-box {
-    padding: 4rem 0;
-  }
-
-  .from-box > div, .from-box >section{
-    display: flex;
-    align-items: center;
-    margin-bottom: 2.25rem;
-  }
-
-  .from-box > div > span,.from-box >section>span{
-    width: 28%;
-    text-align: right;
-    margin-right: 4rem;
-    font-size: 1.167rem;
-  }
-
-  .from-box > div:nth-of-type(1) > p > a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .recharge-group-title > a {
     color: #01aaef;
-    border: 1px solid #01aaef;
-    width: 11.667rem;
-    height: 4rem;
-    margin-right: 2rem;
-  }
-
-  .from-box > div:nth-of-type(1) > p > a:nth-of-type(1) {
-    position: relative;
-  }
-
-  .from-box > div:nth-of-type(1) > p > a:nth-of-type(1) > span {
-    position: absolute;
-    color: #333;
-    top: -3rem;
-    left: 0;
-    border: 1px solid #01aaef;
-    padding: .2rem .3rem;
-  }
-
-  .from-box > div:nth-of-type(1) > p > a:nth-of-type(1) > i {
-    position: absolute;
-    color: #01aaef;
-    top: -1.23rem;
-    left: 20%
-  }
-
-  .from-box > div:nth-of-type(1) > p > a:nth-of-type(2) {
-    border-color: #ddd;
-  }
-
-  .from-box > div:nth-of-type(1) > p > a:hover {
-    border-color: #01aaef;
-  }
-
-  .from-box > div:nth-of-type(2) > p:nth-of-type(1), .from-box > div:nth-of-type(3) > p, .from-box > div:nth-of-type(5) > p,  .from-box > section >p:nth-of-type(1) {
-    width: 30rem;
-    height: 5rem;
-    margin-bottom: -1.5rem;
-  }
-  .from-box > section >p:nth-of-type(2){
-    width: 25rem;
-  }
-  .from-box > div:nth-of-type(2) > p > input, .from-box > div:nth-of-type(3) > p > input {
-    width: 90%;
-    padding: 0.667rem 1rem;
-  }
-  .from-box>section>p>select{
-    width: 97.5%;
-    padding: 0.667rem 1rem;
-  }
-  .from-box>section>p:nth-of-type(2)>span,.from-box>section>a{
-    margin-left: 2rem;
-  }
-  .from-box > div:nth-of-type(4) > p > span {
-    margin-right: 2rem;
     font-size: 1.167rem;
-    align-items: center;
+    font-weight: bold;
   }
 
-  .from-box > div:nth-of-type(4) > p > span label {
-    margin-left: .5rem;
-  }
-
-  .from-box > div:nth-of-type(5) > p > span:nth-of-type(1) {
-    height: 3.167rem;
-    border: 1px solid #aaa;
-    width: 97.2%;
-  }
-
-  .from-box > div:nth-of-type(5) > p > span > input {
-    width: 71%;
-    outline: none;
-    border: none;
-    padding-left: 1rem;
-  }
-
-  .from-box > div:nth-of-type(5) > p > span > button {
-    width: 26%;
-    border: none;
-    height: 100%;
-    outline: none;
-    cursor: pointer;
-    color: #fff;
-    background: #01aaef;
-  }
-
-  .from-box > div:nth-of-type(6) > p > button {
-    width: 10rem;
-    padding: 0.75rem 1.167rem;
-    font-size: 1.167rem;
-    border: none;
-    cursor: pointer;
-  }
-
-  .from-box > div:nth-of-type(6) > p > button:nth-of-type(1) {
-    background: #01aaef;
-    margin-right: 2rem;
-    color: #fff
-  }
-
-  .from-box > div:nth-of-type(6) > p > button:nth-of-type(2) {
-    color: #333333;
-    background: #E5E5E5;
-  }
-
-  .from-box > div:nth-of-type(6) > p > button:nth-of-type(1):hover {
-    background: #0186bc;
-  }
-
-  .from-box > div:nth-of-type(6) > p > button:nth-of-type(2):hover {
-    background: #cccccc;
-  }
-
-  .from-box > div > p > span {
+  .recharge-group-radio, .recharge-group-radio-select-bank {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
   }
 
-  .cash-tishi {
-    color: red !important;
-  }
-
-  .display-flex-p {
-    display: flex;
-    align-items: center;
-  }
-
-  .bank-tishi {
+  .recharge-group-radio > input, .recharge-group-radio-select-bank > input {
     display: none;
   }
 
-  .display-none-tishi {
-    display: none !important;
+  .recharge-group-radio > label, .recharge-group-radio-select-bank > label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 2.2rem 3rem;
+    margin-right: 1.667rem;
+    margin-bottom: 1.667rem;
+    position: relative;
+    cursor: pointer;
   }
 
-  .el-tabs__header {
-    margin-bottom: 0;
+  .recharge-group-radio-select-bank > label > em {
+    font-style: normal;
+    font-size: 1rem;
+    margin-left: 1rem;
   }
 
-  .user-table1,.user-table2 {
-    border: 1px solid #d1dbe5;
-    border-top: none;
-    padding: 0.833rem;
+  .recharge-group:nth-of-type(1) label {
+    flex-direction: column;
+  }
+
+  .recharge-group:nth-of-type(1) label > i {
+    flex-direction: column;
+    margin-right: 0;
+  }
+
+  .recharge-group-radio label > i {
+    margin-right: 1rem;
+  }
+
+  .recharge-group-radio > label > span:nth-of-type(1) {
+    display: none;
+    position: absolute;
+    right: -0.8rem;
+    top: -0.8rem;
+    background: #fff;
+    padding: .3rem;
+    border-radius: 50%;
+  }
+
+  .recharge-group-radio > label > span:nth-of-type(1) > span {
+    border-radius: 50%;
+    background: #01aaef;
+    color: #fff;
+    padding: 0.1rem;
+  }
+
+  .recharge-group-radio-select-bank > label {
+    padding: 1.5rem 3rem;
+    margin-bottom: 1.667rem;
+  }
+
+  .recharge-group-radio-select-bank > label > span:nth-of-type(1) {
+    border: 1px solid #999;
+    padding: 5px;
+    border-radius: 50%;
+    margin-right: 1.5rem;
+  }
+
+  .recharge-group-radio-select-bank > label > span:nth-of-type(1) > span {
+    border-radius: 50%;
+    background: #fff;
+    width: 4px;
+    height: 4px;
+  }
+
+  .recharge-group-radio-checked {
+    border-color: #01aaef !important;
+  }
+
+  .recharge-group-radio-checked > span {
+    display: block !important;
+    border-color: #01aaef !important;
+  }
+
+  .recharge-group-radio-select-bank .recharge-group-radio-checked > span {
+    background: #01aaef;
+    border: none !important;
+  }
+
+  .recharge-group-input > input {
+    border: none;
+    width: 90%;
+    outline: none;
+    padding: 0 1rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .recharge-group-input2 > input {
+    border: none;
+    width: 70%;
+    outline: none;
+    padding: 0 1rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .recharge-group-input2 > span {
+    background: #e0e0e0;
+    width: 30%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+  }
+
+  .add-bank-select-bank {
+    border: none !important;
     font-size: 1.167rem;
+    color: #01aaef;
   }
 
-  .user-table1 table,.user-table2 table{
-    border: 1px solid #d1dbe5;
-    border-spacing: 0;
-    border-collapse: collapse;
+  .add-bank-select-bank em {
+    margin-left: 0.5rem !important;
   }
 
-  .user-table1 table td,.user-table2 table td{
-    padding: 0.667rem;
+  .add-charge-btc i {
+    font-size: 22px;
+    margin-left: 2rem;
   }
 
-  .user-table-thead {
-    border: 1px solid #d1dbe5;
+  .recharge-group-radio > a {
+    color: #01aaef;
+    font-weight: bold;
   }
 
-  .user-table-tbody {
-    border: 1px solid #d1dbe5;
-    background: #f7f7f7;
+  .btcAdr label {
+    padding: .83rem 1rem !important;
+    display: block !important;
   }
 
-  .de-body td {
-    padding: 6.667rem !important;
-    text-align: center !important;
+  .btcAdr .add-bank-select-bank-btcAdr {
+    display: flex !important;
+    border: none;
+    color: #01aaef;
+    align-items: center;
   }
 
-  .de-body td i {
-    font-size: 3rem;
+  .btcAdr .add-bank-select-bank-btcAdr > em {
+    margin-left: 0.5rem !important;
   }
 
-  .de-body td i, .de-body td span {
-    display: inline !important;
-
+  .recharge-group section {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
   }
 
-  .user-table-footer-page td {
-    padding-top: 1.5rem;
-    text-align: right !important;
+  .recharge-group section > div {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
   }
 
-  .user-table1 table td:nth-of-type(1) {
-    width: 25rem;
+  .recharge-group section > span {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
   }
 
-  .user-table1 table td:nth-of-type(2) {
-    width: 13.333rem;
+  .recharge-group section > div > input {
+    outline: none;
+    padding: 0.6rem .9rem;
+    border: none;
   }
 
-  .user-table1 table td:nth-of-type(3) {
-    width: 13.333rem;
+  .recharge-group section > div {
+    border: 1px solid #ddd;
+    color: #999;
+    padding: 0 1.5rem;
+    margin-right: 1rem;
+    box-sizing: border-box;
   }
 
-  .user-table1 table td:nth-of-type(4) {
-    width: 10.833rem;
+  .recharge-group section span {
+    margin: 0 .3rem;
   }
 
-  .user-table1 table td:nth-of-type(5) {
-    width: 10.333rem;
-  }
-  .user-table2 table td{
-    width: 18.33rem;
+  .recharge-group section > a {
+    color: #01aaef;
+    text-decoration: underline;
   }
 
+  .color-blue {
+    color: #01aaef;
+  }
+
+  .tishi-span-hide {
+    display: none;
+  }
+
+  .tishi-span {
+    cursor: pointer;
+  }
+
+  .section-div-label {
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  .section-div-label > input {
+    display: none;
+  }
+
+  .section-div-label > label {
+    padding: .8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    margin: 0 1rem 1rem 0;
+    cursor: pointer;
+  }
+
+  .cash-btc-select-color {
+    border-color: #01aaef !important;
+    color: #333 !important;
+  }
+
+  .recharge-group section > div > button {
+    border: none;
+    background: #01aaef;
+    color: #fff;
+    padding: .6rem 1rem;
+    outline: none;
+    cursor: pointer;
+  }
+  .recharge-group section:nth-last-child(2) > div {
+    padding-right: 0;
+    padding-left: 0.7rem;
+  }
+  .recharge-group section:nth-last-child(1) button{
+    border:none;
+    padding: 1rem 2rem;
+    background: #01aaef;
+    color:#fff;
+    font-size: 1.167rem;
+    border-radius: 3px;
+  }
+  .btc-num-input input{
+    width: 19.42rem;
+  }
+  .select-shouxufei {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  .select-shouxufei p{
+    color: #01aaef;
+    margin-bottom: .7rem;
+  }
 </style>
+
+
