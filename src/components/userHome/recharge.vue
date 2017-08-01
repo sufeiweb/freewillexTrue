@@ -147,7 +147,7 @@
           </transition>
         </div>
         <div class="recharge-group-radio-select-bank" v-show="bank1">
-          <div v-for="(item,index) in ZCBank" class="ddddddddd">
+          <div v-for="(item,index) in ZCBank">
             <input name="select-bank" type="radio" :id="'recharge-mode-cny'+index" :value="item.abbreviation"
                    :checked="index===0?'checked':''"/>
             <label :for="'recharge-mode-cny'+index" :class="index===0?'recharge-group-radio-checked':''">
@@ -157,25 +157,15 @@
           </div>
         </div>
         <transition enter-active-class="animated fadeIn">
-          <div class="recharge-group-radio-select-bank" v-show="bank2">
+          <div class="recharge-group-radio-select-bank" v-show="bank2" v-for="(item,index) in userBank">
             <div>
-              <input name="select-bank2" type="radio" id="recharge-mode-cny20" value="ABC" checked/>
-              <label for="recharge-mode-cny20" class="recharge-group-radio-checked">
+              <input name="select-bank2" type="radio" :id='"recharge-mode-cny20"+index' :value="item.abbreviation" checked/>
+              <label :for='"recharge-mode-cny20"+index' :class="index===0?'recharge-group-radio-checked':''">
                 <span class=""><span></span></span>
-                <img src="../../assets/img/banklogo/ABC.png"/>
-                <em>尾号 1234</em>
+                <img :src='bankImgUrl[item.abbreviation]'/>
+                <em>尾号 {{item.accountNo.substring(item.accountNo.length-4)}}</em>
               </label>
             </div>
-
-            <div>
-              <input name="select-bank2" type="radio" id="recharge-mode-cny21" value="CMB" checked/>
-              <label for="recharge-mode-cny21">
-                <span class=""><span></span></span>
-                <img src="../../assets/img/banklogo/CMB.png"/>
-                <em>尾号 1234</em>
-              </label>
-            </div>
-
             <div>
               <input name="select-bank2" type="radio" id="recharge-mode-cny22" value="3" checked/>
               <router-link to="/accountManagement/addBankCard" tag="label" for="recharge-mode-cny22"
@@ -188,13 +178,16 @@
           </div>
         </transition>
         <transition enter-active-class="animated fadeIn">
-          <div class="recharge-group-radio-select-bank" v-show="bank3">
-            <input name="select-bank3" type="radio" id="recharge-mode-zfb12" value="FUND"/>
-            <label for="recharge-mode-zfb12" class="recharge-group-radio-checked">
-              <span><span></span></span>
-              <img src="../../assets/img/banklogo/FUND_IO_TYPE_1.png"/>
-            </label>
-          </div>
+          <div class="recharge-group-radio-select-bank" v-show="bank3" >
+            <div>
+              <input name="select-bank3" type="radio" id="recharge-mode-zfb12" value="FUND"/>
+              <label for="recharge-mode-zfb12" class="recharge-group-radio-checked">
+                <span><span></span></span>
+                <img src="../../assets/img/banklogo/FUND_IO_TYPE_1.png"/>
+              </label>
+            </div>
+            </div>
+
         </transition>
       </div>
     </transition>
@@ -204,15 +197,15 @@
           <p>金额</p>
         </div>
         <div class="recharge-group-input" v-show="bank1">
-          <input type="number" placeholder="请输入金额"/>
+          <input type="number" placeholder="请输入金额" v-model="EBank"/>
           <span>元</span>
         </div>
         <div class="recharge-group-input recharge-group-input2" v-show="bank2">
-          <input type="number" placeholder="请输入金额"/>
+          <input type="number" placeholder="请输入金额"  v-model="remittance"/>
           <span>.{{arNum}}元</span>
         </div>
         <div class="recharge-group-input" v-show="bank3">
-          <input type="number" placeholder="请输入金额"/>
+          <input type="number" placeholder="请输入金额" v-model="ZFB"/>
           <span>元</span>
         </div>
         <div style="color: red" v-show="bank2">转账时请务必包含此两位小数</div>
@@ -222,14 +215,7 @@
             <img src="../../assets/img/download/APPcode.jpg" width="150" v-show="erCord"/>
           </transition>
         </div>
-        <router-link to="/recharge/rechargeList" v-show="!bank3" tag="button" class="recharge-group-button">生成汇款单
-
-
-
-
-
-
-        </router-link>
+        <router-link :to="{ path:'/recharge/rechargeList', query: { bankNames: bankName, money:remittance+'.'+arNum} }" v-show="!bank3" tag="button" class="recharge-group-button">生成汇款单</router-link>
         <!--<button class="recharge-group-button" v-show="!bank3">生成汇款单</button>-->
         <button class="recharge-group-button" v-show="bank3" @click="erCord=true">生成充值码</button>
       </div>
@@ -265,15 +251,18 @@
           "ICBC": require('../../assets/img/banklogo/ICBC.png'),
           "PBC": require('../../assets/img/banklogo/PBC.png'),
           "PSBC": require('../../assets/img/banklogo/PSBC.png'),
-        }
+        },
+        userBank:[],
+        EBank:'',//网上银行充值数
+        remittance:'',//自助汇款
+        ZFB:'', //支付宝付款
+        bankName:'CMB',//银行名称
 
       }
     },
     created() {
-      this.arNum = parseInt(Math.random() * 90 + 10)//10~99
-    },
-    created() {
       let that = this;
+      this.arNum = parseInt(Math.random() * 90 + 10);//10~99;
       {
         this.$http({
           url: 'http://192.168.1.48:8089/fwex/web/bank/all',
@@ -290,6 +279,22 @@
           console.log(req, '请求错误')
         })
       }//获取支持银行nag
+      {
+        this.$http({
+          url: 'http://192.168.1.48:8089/fwex/web/accountBank/all',
+          method: 'GET',
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'X-Authorization': 'Bearer ' + this.$store.state.token
+          }
+        }).then((res) => {
+          that.userBank = res.data.data;
+          console.log(res.data.data, 1222211)
+          console.log(typeof res.data.data[0].abbreviation)
+        }).catch((req) => {
+          console.log(req, '请求错误')
+        })
+      }//获取用户绑定页面
     },
     mounted() {
       let that = this;
@@ -344,11 +349,11 @@
             $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
             console.log($(this).val(), 'account')
           })
-        }, 500)
-        $("input[name='select-bank2']").change(function () {
-          $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account')
-        })
+          $("input[name='select-bank2']").change(function () {
+            $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
+            console.log($(this).val(), 'account')
+          })
+        }, 500);
       }//选择充值银行
       {
         $('.erCord_bigBtn').hover(function () {

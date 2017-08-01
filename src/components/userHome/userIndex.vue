@@ -65,10 +65,8 @@
           <div class="assets-content">
             <div class="Q-C-T">
               <h1 class="assets-title">净资产</h1>
-              <!--<a href="javascript:;">充值</a>-->
               <router-link to="/recharge">充值</router-link>
               <router-link to="/cash">提现</router-link>
-              <!--<a href="javascript:;">提现</a>-->
             </div>
             <span class="assets-money">{{1212121}} {{money_style}}</span>
             <div v-show="money_hide">
@@ -370,7 +368,7 @@
     background: #01aaef;
     border-radius: .4rem;
     margin-left: 2rem;
-    margin-top: -.5rem;
+    margin-top: -1.5rem;
   }
   .Q-C-T a:nth-of-type(1){
     margin-left:6rem;
@@ -388,7 +386,9 @@
     border-bottom: 1px solid #eee;
     margin-bottom: 0.833rem;
   }
-
+.total-assets,.net-assets,.available-assets,.blocked-assets{
+  padding-bottom: 1.25rem;
+}
   .index-title span {
     margin-right: 1.25rem;
   }
@@ -452,9 +452,11 @@
 
   .assets-title, .assets-money, .assets_CNY, .assets_BTC,.assets_LTC,.assets_ETC,.assets_ETH, .assets-proportion{
     font-size: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.833rem;
   }
-
+  .assets_CNY, .assets_BTC,.assets_LTC,.assets_ETC,.assets_ETH{
+    margin-bottom: 1.25rem !important;
+  }
   .assets-money {
     color: #888888;
   }

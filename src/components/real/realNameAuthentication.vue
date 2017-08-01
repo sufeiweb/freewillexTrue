@@ -53,7 +53,7 @@
       <div class="real-from-group">
         <span>开户地址</span>
         <div>
-          <input type="text" placeholder="开户支行名称" v-model="RBankAdr" class="RBankAdr-input"/>
+          <input type="text" placeholder="开户地址" v-model="RBankAdr" class="RBankAdr-input"/>
           <span class="BankName-tips"></span>
         </div>
         <span class="tips-red">开户支行地址信息错误会导致提现失败，请仔细确认</span>
@@ -280,15 +280,6 @@
       },
       pushReal() {
         let that = this;
-        console.log(that.$store.state.realNeed.IdCard,"IdCard");
-        console.log(that.$store.state.realNeed.city,'city');
-        console.log(that.$store.state.realNeed.name,'name');
-        console.log(that.$store.state.realNeed.bankId,'bankId');
-        console.log(that.$store.state.realNeed.bankNum,'bankNum');
-        console.log(that.$store.state.realNeed.phone,'phone');
-        console.log(that.$store.state.realNeed.Yz,'Yz');
-        console.log(that.$store.state.realNeed.phoneY,'phoneY');
-        console.log(that.$store.state.realNeed.checkbox,'checkbox');
         if (that.$store.state.realNeed.IdCard &&
           that.$store.state.realNeed.city &&
           that.$store.state.realNeed.name &&

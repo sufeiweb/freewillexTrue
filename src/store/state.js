@@ -45,52 +45,59 @@ export default {
     userPsd: false,
     userMoneyPsd: false
   },//实名四要素
-  realNeed:{
-    city:true,
-    name:false,
-    IdCard:false,
-    bankId:false,
-    bankNum:false,
-    bankAdr:false,
-    phone:false,
-    Yz:false,
-    phoneY:true,
-    checkbox:false
+  realNeed: {
+    city: true,
+    name: false,
+    IdCard: false,
+    bankId: false,
+    bankNum: false,
+    bankAdr: false,
+    phone: false,
+    Yz: false,
+    phoneY: true,
+    checkbox: false
   },//逻辑控制
-  token:'',//存放token
-  bankId:{
-    alipay:'',
-    BOC:'',
-    ICBC:'',
-    CCB:'',
-    ABC:''
+  token: '',//存放token
+  bankId: {
+    alipay: '',
+    BOC: '',
+    ICBC: '',
+    CCB: '',
+    ABC: ''
   },//存放银行id
-  bindEmailNum:{
-    email:false,
-    YZ:false,
-    EYZ:true
+  bindEmailNum: {
+    email: false,
+    YZ: false,
+    EYZ: true
   },//邮箱绑定
-  bindPhoneNum:{
-    phone:false,
-    YZ:false,
-    EYZ:true
+  bindPhoneNum: {
+    phone: false,
+    YZ: false,
+    EYZ: true
   },//邮箱绑定
-  bindFullPsd:{
-    fullPsd:false,
-    fullPsds:false,
+  bindFullPsd: {
+    fullPsd: false,
+    fullPsds: false,
     YZCord: true
   },//设置资金密码
-  modifyPsd:{
-    oldPsd:false,
-    newPsd:false,
-    newPsds:false,
+  modifyPsd: {
+    oldPsd: false,
+    newPsd: false,
+    newPsds: false,
     YZCord: true
   },//修改密码
-  modifyFullPsd:{
-    oldPsd:false,
-    newPsd:false,
-    newPsds:false,
+  modifyFullPsd: {
+    oldPsd: false,
+    newPsd: false,
+    newPsds: false,
     YZCord: true
   },//修改密码
+  addBankCard: {
+    bankNo: false,
+    bankNum: false,
+    phone:false,
+    YZ: false,
+    serverYZ: true
+  },//绑定银行卡控制
 
 }

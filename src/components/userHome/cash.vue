@@ -235,6 +235,7 @@
       }
     },
     created() {
+        console.log(sessionStorage.getItem('token'),'token')
     },
     mounted() {
       let that = this;

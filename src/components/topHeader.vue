@@ -39,7 +39,7 @@
         <ul class="nav-link-box">
           <router-link to="/" tag="li" class="nav-link-item"><a href="javascript:">首页</a></router-link>
           <!--<li class="nav-link-item"><a href="javascript:;">首页</a></li>-->
-          <router-link to="quotation" tag="li" class="nav-link-item"><a href="javascript:">行情</a></router-link>
+          <router-link to="/quotation" tag="li" class="nav-link-item"><a href="javascript:" target="_blank">行情</a></router-link>
           <!--<li class="nav-link-item"><a href="javascript:">行情</a></li>-->
           <router-link to="/business" tag="li" class="nav-link-item"><a href="javascript:">买/卖</a></router-link>
           <!--<li class="nav-link-item"><a href="javascript:">买/卖</a></li>-->
@@ -82,6 +82,15 @@
       {
           if(localStorage.getItem('token')){
             that.$store.state.loginState =true
+          }
+      }
+      {
+          if(sessionStorage.getItem('token')){
+            that.$store.dispatch('loginStateTrue');
+            that.$store.state.token=sessionStorage.getItem('token');
+          }else {
+            that.$store.dispatch('loginStateFalse');
+            that.$store.state.token='';
           }
       }
     },

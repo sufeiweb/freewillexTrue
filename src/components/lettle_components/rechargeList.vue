@@ -8,7 +8,7 @@
       <p><span>开户银行</span><span>招商银行上海陆家嘴支行</span></p>
       <p><span>银行卡</span><span>121921984810401</span></p>
       <p><span>开户姓名</span><span>上海倍瀚财务咨询有限公司</span></p>
-      <p><span>待支付金额</span><span class="color-blue">￥100.52</span></p>
+      <p><span>待支付金额</span><span class="color-blue">￥{{ this.$route.query.money}}</span></p>
       <p><span>备注/附言</span><span>3815</span></p>
       <p><span>到账时间</span><span>转扎完成后40分钟内</span></p>
       <p><a href="http://www.cmbchina.com" target="_blank">进入招商银行</a></p>
@@ -20,6 +20,14 @@
     </div>
   </div>
 </template>
+<script>
+  export default {
+      data() {
+          return {}
+      },
+
+  }
+</script>
 <style scoped>
   .rechargeList{
     padding: 0 2rem 0 3rem;

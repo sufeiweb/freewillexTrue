@@ -4,16 +4,16 @@
       <dl class="btcTransaction-content-btn">
         <dt class="btcTransaction-content-title">我的账户</dt>
         <router-link to="/userIndex" tag="dd">
-          <a href="javascript:">
+          <a href="javascript:" style="font-size: 1.167rem">
             <!--<img src="../../assets/img/shiliang/cny.png" alt=""/>-->
             <i class="iconfont">&#xe697;</i>
-            CNY账户
+            CNY专区账户
           </a>
         </router-link>
-        <router-link to="/userIndex1" tag="dd"><a href="javascript:">
+        <router-link to="/userIndex1" tag="dd"><a href="javascript:" style="font-size: 1.167rem">
           <!--<img src="../../assets/img/shiliang/btc.png"  alt=""/>-->
           <i class="iconfont">&#xe697;</i>
-          BTC账户
+          BTC专区账户
 </a>
         </router-link>
       </dl>
@@ -33,7 +33,7 @@
         </router-link>
         <router-link to="/accountDetails" tag="dd"><a href="javascript:"><i class="iconfont">&#xe697;</i>账户明细</a>
         </router-link>
-        <router-link to="/accountManagement" tag="dd"><a href="javascript:"><i class="iconfont">&#xe69b;</i>账户管理</a>
+        <router-link to="/accountManagement" tag="dd"><a href="javascript:" style="font-size: 1rem"><i class="iconfont">&#xe69b;</i>地址/银行卡管理</a>
         </router-link>
       </dl>
       <dl class="btcTransaction-content-btn">
@@ -90,7 +90,7 @@
 
   .btcTransaction-content-title {
     color: #8e8e8e;
-    font-size: 1.167rem;
+    font-size: 1rem;
     font-weight: 400;
     padding: 1.583rem 1.25rem 1.583rem 1.5rem;
   }

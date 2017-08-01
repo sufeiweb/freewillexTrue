@@ -371,7 +371,7 @@
     background: #01aaef;
     border-radius: .4rem;
     margin-left: 2rem;
-    margin-top: -.5rem;
+    margin-top: -1.5rem;
   }
   .Q-C-T a:nth-of-type(1){
     margin-left:6rem;
@@ -453,9 +453,14 @@
 
   .assets-title, .assets-money, .assets_CNY, .assets_BTC,.assets_LTC,.assets_ETC,.assets_ETH, .assets-proportion1 {
     font-size: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.833rem;
   }
-
+  .assets_CNY, .assets_BTC,.assets_LTC,.assets_ETC,.assets_ETH{
+    margin-bottom: 1.25rem !important;
+  }
+  .total-assets,.net-assets,.available-assets,.blocked-assets{
+    padding-bottom: 1.25rem;
+  }
   .assets-money {
     color: #888888;
   }

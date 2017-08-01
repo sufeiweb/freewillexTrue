@@ -180,7 +180,11 @@
     border-radius: 3px;
   }
   .addBankCard-content section:nth-of-type(1) input, .addBankCard-content section:nth-of-type(2) input, .addBankCard-content section:nth-of-type(3) input{
-   background: #f0f0f0;
+    background: #f0f0f0;
     cursor: no-drop;
   }
 </style>
+
+
+
+
