@@ -95,6 +95,7 @@ export default {
   addBankCard: {
     bankNo: false,
     bankNum: false,
+    bankAdr: false,
     phone:false,
     YZ: false,
     serverYZ: true

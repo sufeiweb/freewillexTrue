@@ -1,28 +1,25 @@
 <template>
   <div class="addBTCAdr">
     <div class="addBTCAdr-title">
-      <p>绑定银行卡</p>
+      <p>绑定数字货币地址</p>
     </div>
     <div class="from-box">
       <div>
-        <span>比特币地址</span>
+        <span>数字货币地址</span>
         <p>
-          <input type="text" placeholder="比特比地址"/>
-          <span class="cash-tishi display-none-tishi">最小提现金额为100</span>
+          <input type="text" placeholder="数字货币地址" v-model="currencyAdr"/>
         </p>
       </div>
       <div>
         <span>备注</span>
         <p>
-          <input type="text" placeholder="备注"/>
-          <span class="cash-tishi display-none-tishi">最小提现金额为100</span>
+          <input type="text" placeholder="备注" v-model="tags"/>
         </p>
       </div>
       <div>
-        <span>资金密码</span>
+        <span>数字货币币种</span>
         <p>
-          <input type="password"/>
-          <span class="cash-tishi display-none-tishi">资金密码格式输入错误</span>
+          <input type="text" placeholder="数字货币币种" v-model="currencyStyle"/>
         </p>
       </div>
       <div>
@@ -42,7 +39,7 @@
         <span>验证码</span>
         <p>
             <span>
-              <input type="text" placeholder="验证码"/>
+              <input type="text" placeholder="验证码" v-model="serverYz"/>
               <button>获取验证码</button>
             </span>
           <span class="cash-tishi display-none-tishi">验证码格式输入错误</span>
@@ -51,13 +48,56 @@
       <div>
         <span>&nbsp;</span>
         <p>
-          <button>提交</button>
-          <button>取消</button>
+          <button @click="bindGet()">提交</button>
+          <button @click="bindClose()">取消</button>
         </p>
       </div>
     </div>
   </div>
 </template>
+<script>
+  import $ from 'jquery';
+  export default {
+      data() {
+          return{
+            currencyAdr:'',
+            tags:'',
+            currencyStyle:'',
+            serverYz:''
+          }
+      },
+    mounted() {},
+    methods: {
+      bindGet() {
+          let that=this;
+          that.$http({
+            url:'http://192.168.1.48:8089/fwex/web/digital/bind',
+            method:'POST',
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              'X-Authorization': 'Bearer ' + that.$store.state.token
+            },
+            params: {
+              currency: that.currencyStyle,
+              address: that.currencyAdr,
+              tags: that.tags,
+            }
+          }).then((res)=>{
+              console.log(res,'请求成功')
+          }).catch((req)=>{
+              console.log(req,'请求失败')
+          })
+      },
+      bindClose() {
+        this.currencyAdr='';
+        this.tags='';
+        this.currencyStyle='';
+        this.serverYz='';
+      }
+    },
+
+  }
+</script>
 <style scoped>
   .addBTCAdr-title {
     padding: 2rem 0;
