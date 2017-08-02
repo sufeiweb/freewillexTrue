@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <div class="login-box layout">
+    <div class="login-box">
       <img src="../assets/img/login/login_bg.jpg"/>
       <loginCenter></loginCenter>
     </div>

@@ -26,6 +26,7 @@ import quotation from '@/components/quotation'
 import broker from '@/components/broker'
 
 import realNameAuthentication from '@/components/real/realNameAuthentication'
+import userDetail from '@/components/real/realDetail'
 import bindPhone from '@/components/lettle_components/bindPhone'
 import bindEmail from '@/components/lettle_components/bindEmail'
 import bindFullPsd from '@/components/lettle_components/bindFullPsd'
@@ -49,41 +50,42 @@ export default new Router({
     {path: '/passwordRetrieval', name: 'passwordRetrieval', component: passwordRetrieval},
     {path: '/introduction', name: 'introduction', component: introduction},
     {path: '/quotation', name: 'quotation', component: quotation},
-    {path: '/broker', name: 'quotation', component: broker},
-    {path: '/userAgreement', name: 'userAgreement', component: userAgreement},
+    {path: '/broker', name: 'quotation', component: broker, meta: {auth: true}},
+    {path: '/userAgreement', name: 'userAgreement', component: userAgreement, meta: {auth: true}},
     {
-      path: '/business', name: 'business', component: business, children: [
-      {path: '/businessHome', name: 'businessHome', component: businessHome},
+      path: '/business', name: 'business', component: business, meta: {auth: true}, children: [
+      {path: '/businessHome', name: 'businessHome', component: businessHome, meta: {auth: true}},
       {path: '/', redirect: '/businessHome'},
-      {path: '/entrust', name: 'entrust', component: entrust},
-      {path: '/transactionRecord', name: 'transactionRecord', component: transactionRecord},
-      {path: '/lever', name: 'lever', component: lever}
+      {path: '/entrust', name: 'entrust', component: entrust, meta: {auth: true}},
+      {path: '/transactionRecord', name: 'transactionRecord', component: transactionRecord, meta: {auth: true}},
+      {path: '/lever', name: 'lever', component: lever, meta: {auth: true}}
     ]
     },
     {
       path: '/user', name: 'user', component: user, children: [
-      {path: '/userIndex', name: 'userIndex', component: userIndex},
-      {path: '/userIndex1', name: 'userIndex1', component: userIndex1},
+      {path: '/userIndex', name: 'userIndex', component: userIndex, meta: {auth: true}},
+      {path: '/userIndex1', name: 'userIndex1', component: userIndex1, meta: {auth: true}},
       {path: '/', redirect: '/userIndex'},
-      {path: '/accountDetails', name: 'accountDetails', component: accountDetails},
-      {path: '/accountManagement', name: 'accountManagement', component: accountManagement},
-      {path: '/accountManagement/addBTCAdr', name: 'addBTCAdr', component: addBTCAdr},
-      {path: '/accountManagement/addBankCard', name: 'addBankCard', component: addBankCard},
-      {path: '/cash', name: 'cash', component: cash},
-      {path: '/cash/cashLog', name: 'cashLog', component: cashLog},
-      {path: '/loginLog', name: 'loginLog', component: loginLog},
-      {path: '/message', name: 'message', component: message},
-      {path: '/recharge', name: 'recharge', component: recharge},
-      {path: '/recharge/rechargeLog', name: 'rechargeLog', component: rechargeLog},
-      {path: '/recharge/rechargeList', name: 'rechargeList', component: rechargeList},
-      {path: '/reward', name: 'reward', component: reward},
-      {path: '/settings', name: 'settings', component: settings},
-      {path: '/settings/user', name: 'realNameAuthentication', component: realNameAuthentication},
-      {path: '/settings/bindPhone', name: 'bindPhone', component: bindPhone},
-      {path: '/settings/bindEmail', name: 'bindEmail', component: bindEmail},
-      {path: '/settings/bindFullPsd', name: 'bindFullPsd', component: bindFullPsd},
-      {path: '/settings/modifyPsd', name: 'modifyPsd', component: modifyPsd},
-      {path: '/settings/modifyFullPsd', name: 'modifyFullPsd', component: modifyFullPsd},
+      {path: '/accountDetails', name: 'accountDetails', component: accountDetails, meta: {auth: true}},
+      {path: '/accountManagement', name: 'accountManagement', component: accountManagement, meta: {auth: true}},
+      {path: '/accountManagement/addBTCAdr', name: 'addBTCAdr', component: addBTCAdr, meta: {auth: true}},
+      {path: '/accountManagement/addBankCard', name: 'addBankCard', component: addBankCard, meta: {auth: true}},
+      {path: '/cash', name: 'cash', component: cash, meta: {auth: true}},
+      {path: '/cash/cashLog', name: 'cashLog', component: cashLog, meta: {auth: true}},
+      {path: '/loginLog', name: 'loginLog', component: loginLog, meta: {auth: true}},
+      {path: '/message', name: 'message', component: message, meta: {auth: true}},
+      {path: '/recharge', name: 'recharge', component: recharge, meta: {auth: true}},
+      {path: '/recharge/rechargeLog', name: 'rechargeLog', component: rechargeLog, meta: {auth: true}},
+      {path: '/recharge/rechargeList', name: 'rechargeList', component: rechargeList, meta: {auth: true}},
+      {path: '/reward', name: 'reward', component: reward, meta: {auth: true}},
+      {path: '/settings', name: 'settings', component: settings, meta: {auth: true}},
+      {path: '/settings/user', name: 'realNameAuthentication', component: realNameAuthentication, meta: {auth: true}},
+      {path: '/settings/user/userDetail', name: 'userDetail', component: userDetail, meta: {auth: true}},
+      {path: '/settings/bindPhone', name: 'bindPhone', component: bindPhone, meta: {auth: true}},
+      {path: '/settings/bindEmail', name: 'bindEmail', component: bindEmail, meta: {auth: true}},
+      {path: '/settings/bindFullPsd', name: 'bindFullPsd', component: bindFullPsd, meta: {auth: true}},
+      {path: '/settings/modifyPsd', name: 'modifyPsd', component: modifyPsd, meta: {auth: true}},
+      {path: '/settings/modifyFullPsd', name: 'modifyFullPsd', component: modifyFullPsd, meta: {auth: true}},
     ]
     }
   ]

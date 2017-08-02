@@ -31,7 +31,8 @@
             <td>
               <router-link to="/settings/user" v-show="!realName">立即认证</router-link>
               <!--<a href="javascript:;" v-show="!realName">立即认证</a>-->
-              <a href="javascript:;" v-show="realName">详情</a>
+              <!--<a href="javascript:;" v-show="realName">详情</a>-->
+              <router-link to="/settings/user/userDetail" v-show="realName">详情</router-link>
             </td>
           </tr>
           <tr>

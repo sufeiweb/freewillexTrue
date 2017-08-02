@@ -26,6 +26,16 @@
       }
     },
     methods: {
+        swted(num){
+          $('.nav-link-box li').find('a').css({
+            borderBottom: 'none',
+            color: '#333'
+          });
+          $('.nav-link-box li').eq(num).find('a').css({
+            borderBottom: '2px solid #01aaef',
+            color: '#01aaef'
+          });
+        },
       routeChange(path) {
         path = path.substring(1);
         console.log(path);
@@ -35,6 +45,21 @@
         } else {
           this.$store.dispatch('showHeader');
           this.$store.dispatch('showFooter');
+        }
+        if (path === 'quotation') {
+          this.swted(1);
+        }
+        if (path === 'home') {
+          this.swted(0)
+        }
+        if (path === 'businessHome') {
+          this.swted(2)
+        }
+        if (path === 'userIndex') {
+          this.swted(3)
+        }
+        if (path === 'userIndex1') {
+          this.swted(3)
         }
       }
     },

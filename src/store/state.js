@@ -100,5 +100,6 @@ export default {
     YZ: false,
     serverYZ: true
   },//绑定银行卡控制
+  loginTrue:false,//登录状态
 
 }

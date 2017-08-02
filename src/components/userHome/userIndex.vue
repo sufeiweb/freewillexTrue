@@ -198,6 +198,23 @@
             that.showStyle($(this).val());
           })
       }//控制显示的模式
+      {
+          that.$http({
+            url:'http://192.168.1.48:8089/fwex/web/capital/info',
+            method: 'GET',
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              'X-Authorization': 'Bearer ' + that.$store.state.token
+            }
+          }).then((res)=>{
+              if(res.data.code===200){
+                  console.log(res.data.message);
+              }
+              console.log(res,'资金信息')
+          }).catch((req)=>{
+              console.log(req,'获取失败')
+          })
+      }//获取资金信息
     },
     methods: {
       open_more() {

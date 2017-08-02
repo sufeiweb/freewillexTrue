@@ -29,3 +29,14 @@ new Vue({
   template: '<App/>',
   components: {App}
 });
+router.beforeEach((to,from,next)=>{
+  if(to.matched.some( m => m.meta.auth)){
+    if(store.state.loginState){
+      next()
+    }else{
+      next({path:'/login',query:{Rurl:to.fullPath}})
+    }
+  }else{
+    next()
+  }
+});

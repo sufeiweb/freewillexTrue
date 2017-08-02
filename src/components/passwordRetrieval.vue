@@ -513,6 +513,9 @@
                   captcha:that.userCordM,
                   password:that.userPsdM,
                   cfpassword:that.userPsdsM
+                },
+                headers:{
+'X-Requested-With':'XMLHttpRequest'
                 }
               }).then((res)=>{
                   console.log(res,11111)
@@ -522,7 +525,26 @@
           }
       },//手机找回密码js
       emailRE() {
-
+        let that =this;
+        if(that.$store.state.emailR.username && that.$store.state.emailR.usercord && that.$store.state.emailR.userpsd && that.$store.state.emailR.userpsds){
+          that.$http({
+            url:'http://192.168.1.48:8089/fwex/web/account/forget/password',
+            method: 'POST',
+            params: {
+              moe:that.userNameE,
+              captcha:that.userCordE,
+              password:that.userPsdE,
+              cfpassword:that.userPsdsE
+            },
+            headers:{
+              'X-Requested-With':'XMLHttpRequest'
+            }
+          }).then((res)=>{
+            console.log(res,11111)
+          }).catch((req)=>{
+            console.log(req,22222)
+          })
+        }
       },//邮箱找回密码js
     }
   }

@@ -404,6 +404,23 @@
             $('.phone-tishi').html('');
           }
         });
+  //用户名检测
+//        $('.userNameIpt').blur(function () {
+//            that.$http({
+//              url: 'http://192.168.1.48:8089/fwex/web/register/check',
+//              method:'GET',
+//              params:{
+//                loginUser:that.userNameM
+//              },
+//              headers:{
+//                  'X-Requested-With':'XMLHttpRequest'
+//              }
+//            }).then((res)=>{
+//                console.log(res,'用户名不存在')
+//            }).catch((req)=>{
+//                console.log(req,'请求失败')
+//            })
+//        });
 
       }
       //邮箱正则验证

@@ -74,8 +74,8 @@
   }
 </script>
 <style scoped>
-  .home-login{
-    margin-right: 18%;
+  .home-login  .login-box-content{
+    right: 18%;
   }
   .home-banner {
     margin-top: .15rem;
