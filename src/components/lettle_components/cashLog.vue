@@ -1,59 +1,279 @@
 <template>
-  <div class="cash-record">
-    <el-tabs v-model="activeName" type="card">
-      <el-tab-pane label="提现记录" name="first">
-        <div class="user-table1">
-          <table>
-            <thead class="user-table-thead">
-            <tr>
-              <td>提现时间</td>
-              <td>提现账户</td>
-              <td>提现金额</td>
-              <td>手续费</td>
-              <td>状态</td>
-            </tr>
-            </thead>
-            <tbody class="user-table-tbody" v-show="noData">
-            <tr>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td>4</td>
-              <td>5</td>
-            </tr>
-            </tbody>
-            <tbody class="user-table-tbody de-body" v-show="!noData">
-            <tr>
-              <td colspan="5">
-                <i class="iconfont">&#xe661;</i>
-                <span>暂无记录</span>
-              </td>
-            </tr>
-            </tbody>
-            <tfoot class="user-table-footer-page">
-            <tr>
-              <td colspan="5">
-                <el-pagination layout="prev, pager, next" :total="10" class="page-right"></el-pagination>
-              </td>
-            </tr>
-            </tfoot>
-          </table>
+  <div class="cashLog">
+    <div class="recharge-group">
+      <div class="recharge-group-title">
+        <p>选择账户</p>
+      </div>
+      <div class="recharge-group-radio">
+        <input name="select-account434" type="radio" id="account-cny434" value="1" checked/>
+        <label for="account-cny434" class="recharge-group-radio-checked">
+          <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+          <i class="iconfont">&#xe650;</i>
+          <span>CNY账户</span>
+        </label>
+        <input name="select-account434" type="radio" id="account-btc434" value="2"/>
+        <label for="account-btc434">
+          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <i class="iconfont">&#xe650;</i>
+          <span>BTC账户</span>
+        </label>
+      </div>
+    </div>
+    <div class="recharge-group">
+      <div class="recharge-group-title">
+        <p>选择币种</p>
+      </div>
+      <transition enter-active-class="animated fadeIn">
+        <div class="recharge-group-radio" v-show="!account">
+          <input name="select-currency444" type="radio" id="recharge-currency-cny1444" value="0" checked/>
+          <label for="recharge-currency-cny1444" class="recharge-group-radio-checked">
+            <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>全部</span>
+          </label>
+          <input name="select-currency444" type="radio" id="recharge-currency-cny444" value="1"/>
+          <label for="recharge-currency-cny444">
+            <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>CNY</span>
+          </label>
+          <input name="select-currency444" type="radio" id="recharge-currency-cny-btc444" value="2"/>
+          <label for="recharge-currency-cny-btc444">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>BTC</span>
+          </label>
+          <input name="select-currency444" type="radio" id="recharge-currency-cny-ltc444" value="3"/>
+          <label for="recharge-currency-cny-ltc444">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>LTC</span>
+          </label>
+          <input name="select-currency444" type="radio" id="recharge-currency-cny-eth444" value="4"/>
+          <label for="recharge-currency-cny-eth444">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>ETH</span>
+          </label>
+          <input name="select-currency444" type="radio" id="recharge-currency-cny-etc444" value="5"/>
+          <label for="recharge-currency-cny-etc444">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>ETC</span>
+          </label>
         </div>
-      </el-tab-pane>
-    </el-tabs>
-  </div>
+      </transition>
+      <transition enter-active-class="animated fadeIn">
+        <div class="recharge-group-radio" v-show="account">
+          <input name="select-currency454" type="radio" id="recharge-currency-cny-btc1454" value="0"/>
+          <label for="recharge-currency-cny-btc1454" class="recharge-group-radio-checked">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>全部</span>
+          </label>
+          <input name="select-currency454" type="radio" id="recharge-currency-cny-btc454" value="1"/>
+          <label for="recharge-currency-cny-btc454">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>BTC</span>
+          </label>
+          <input name="select-currency454" type="radio" id="recharge-currency-cny-ltc454" value="2"/>
+          <label for="recharge-currency-cny-ltc454">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>LTC</span>
+          </label>
+          <input name="select-currency454" type="radio" id="recharge-currency-cny-eth454" value="3"/>
+          <label for="recharge-currency-cny-eth454">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>ETH</span>
+          </label>
+          <input name="select-currency454" type="radio" id="recharge-currency-cny-etc454" value="4"/>
+          <label for="recharge-currency-cny-etc454">
+            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <i class="iconfont">&#xe650;</i>
+            <span>ETC</span>
+          </label>
+        </div>
+      </transition>
+    </div>
+    <div class="cash-record">
+      <div class="cash-group-title">
+        <p>提现记录</p>
+      </div>
+      <el-tabs v-model="activeName" type="card">
+        <el-tab-pane label="提现记录" name="first">
+          <div class="user-table1">
+            <table>
+              <thead class="user-table-thead">
+              <tr>
+                <td>提现时间</td>
+                <td>提现账户</td>
+                <td>提现金额</td>
+                <td>手续费</td>
+                <td>状态</td>
+              </tr>
+              </thead>
+              <tbody class="user-table-tbody" v-show="noData">
+              <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+              </tr>
+              </tbody>
+              <tbody class="user-table-tbody de-body" v-show="!noData">
+              <tr>
+                <td colspan="5">
+                  <i class="iconfont">&#xe661;</i>
+                  <span>暂无记录</span>
+                </td>
+              </tr>
+              </tbody>
+              <tfoot class="user-table-footer-page">
+              <tr>
+                <td colspan="5">
+                  <el-pagination layout="prev, pager, next" :total="10" class="page-right"></el-pagination>
+                </td>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+</div>
+
 </template>
 <script>
   export default {
       data() {
           return {
             activeName:'first',
-            noData:false
+            noData:false,
+            account:false
           }
-      }
+      },
+    mounted() {
+          let that=this;
+      {
+        $("input[name='select-account434']").change(function () {
+          $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
+          console.log($(this).val(), 'account');
+          if ($(this).val() == '1') {
+            that.account = false;
+          }
+          else {
+            that.account = true;
+          }
+        })
+      }//选择账户
+      {
+        $("input[name='select-currency444']").change(function () {
+          $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
+          console.log($(this).val(), 'account')
+        })
+        $("input[name='select-currency454']").change(function () {
+          $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
+          console.log($(this).val(), 'account')
+        })
+      }//选择充值币种
+    }
   }
 </script>
 <style scoped>
+  .rechargeLog {
+    font-size: 1.167rem;
+  }
+
+  .recharge-group-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.333rem;
+    border-bottom: 1px solid #ddd;
+    padding: 1.5rem 0;
+    margin-bottom: 1.25rem;
+  }
+
+  .recharge-group-title > a {
+    color: #01aaef;
+    font-size: 1.167rem;
+    font-weight: bold;
+  }
+
+  .recharge-group-radio{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .recharge-group-radio > input {
+    display: none;
+  }
+
+  .recharge-group-radio > label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 2.2rem 3rem;
+    margin-right: 1.667rem;
+    margin-bottom: 1.667rem;
+    position: relative;
+    cursor: pointer;
+  }
+  .recharge-group:nth-of-type(1) label {
+    flex-direction: column;
+  }
+
+  .recharge-group:nth-of-type(1) label > i {
+    flex-direction: column;
+    margin-right: 0;
+  }
+
+  .recharge-group-radio label > i {
+    margin-right: 1rem;
+  }
+
+  .recharge-group-radio > label > span:nth-of-type(1) {
+    display: none;
+    position: absolute;
+    right: -0.8rem;
+    top: -0.8rem;
+    background: #fff;
+    padding: .3rem;
+    border-radius: 50%;
+  }
+
+  .recharge-group-radio > label > span:nth-of-type(1) > span {
+    border-radius: 50%;
+    background: #01aaef;
+    color: #fff;
+    padding: 0.1rem;
+  }
+  .recharge-group-radio-checked {
+    border-color: #01aaef !important;
+  }
+
+  .recharge-group-radio-checked > span {
+    display: block !important;
+    border-color: #01aaef !important;
+  }
+
+  .recharge-group-radio-select-bank .recharge-group-radio-checked > span {
+    background: #01aaef;
+    border: none !important;
+  }
+  .cash-group-title{
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.333rem;
+    margin-bottom: 2rem;
+  }
   .el-tabs__header {
     margin-bottom: 0;
   }

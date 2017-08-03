@@ -2,13 +2,7 @@
   <div class="userIndex-footer">
     <p class="userIndex-footer-title">账户明细</p>
     <el-tabs v-model="activeName" type="card">
-      <el-tab-pane label="全部" name="first">
-        <userTable></userTable>
-      </el-tab-pane>
-      <el-tab-pane label="人民币" name="second">
-        <userTable></userTable>
-      </el-tab-pane>
-      <el-tab-pane label="比特币" name="third">
+      <el-tab-pane label="账户明细" name="first">
         <userTable></userTable>
       </el-tab-pane>
     </el-tabs>

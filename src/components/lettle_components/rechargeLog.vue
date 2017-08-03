@@ -31,7 +31,7 @@
             <i class="iconfont">&#xe650;</i>
             <span>全部</span>
           </label>
-          <input name="select-currency44" type="radio" id="recharge-currency-cny44" value="1" checked/>
+          <input name="select-currency44" type="radio" id="recharge-currency-cny44" value="1"/>
           <label for="recharge-currency-cny44">
             <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
             <i class="iconfont">&#xe650;</i>

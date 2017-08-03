@@ -147,7 +147,17 @@
           </transition>
         </div>
         <div class="recharge-group-radio-select-bank" v-show="bank1">
-          <div v-for="(item,index) in ZCBank">
+          <div v-for="(item,index) in ZCBank" v-show="index<=7">
+            <input name="select-bank" type="radio" :id="'recharge-mode-cny'+index" :value="item.abbreviation"
+                   :checked="index===0?'checked':''"/>
+            <label :for="'recharge-mode-cny'+index" :class="index===0?'recharge-group-radio-checked':''">
+              <span><span></span></span>
+              <img :src='bankImgUrl[item.abbreviation]'/>
+            </label>
+          </div>
+        </div>
+        <div class="recharge-group-radio-select-bank" v-show="bank11">
+          <div v-for="(item,index) in ZCBank" v-show="index>7">
             <input name="select-bank" type="radio" :id="'recharge-mode-cny'+index" :value="item.abbreviation"
                    :checked="index===0?'checked':''"/>
             <label :for="'recharge-mode-cny'+index" :class="index===0?'recharge-group-radio-checked':''">
@@ -294,7 +304,7 @@
         }).catch((req) => {
           console.log(req, '请求错误')
         })
-      }//获取用户绑定页面
+      }//获取用户绑定银行
     },
     mounted() {
       let that = this;

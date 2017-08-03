@@ -50,6 +50,5 @@ ul li {
 }
 
 .el-input__inner{
-  border: none !important;
   border-radius: 0 !important;
 }

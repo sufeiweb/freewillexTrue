@@ -102,9 +102,12 @@
           <div class="header-warning" style="z-index: 9">
             <el-tabs>
               <el-tab-pane label="价格预警">
-                <p><span> </span><select>
-                  <option>BTC/CNY</option>
-                </select></p>
+                <p>
+                  <span> </span>
+                  <select>
+                    <option>BTC/CNY</option>
+                  </select>
+                </p>
                 <p>
                   <span><input id="dd1" type="checkbox" name="dd1" checked/><label for="dd1">价格涨破</label></span>
                   <input type="number"/>
@@ -132,6 +135,13 @@
           </div>
         </a>
       </div>
+      <transition enter-active-class="animated fadeIn" leaveActiveClass="animated fadeOut">
+        <div class="login-show-box-k" v-show="trading_login">
+          <img src="../assets/img/header/fw_header_user.png" alt=""/>
+          <span class="user-phone">{{userNumM | phoneStar}}</span>
+          <a href="javascript:;" @click="KTClose()">退出</a>
+        </div>
+      </transition>
     </div>
     <div class="quotation-center">
       <div class="past-transaction">
@@ -246,10 +256,48 @@
       </div>
       <div class="assets" style="z-index: 9">
         <div class="quotation-center-title">资产</div>
-        <div class="assets-login">
-          <button class="login">登录</button>
-          <button class="register">注册</button>
-        </div>
+        <transition enter-active-class="animated fadeIn">
+          <div class="assets-login" v-show="!trading_login">
+            <button class="login" @click="TKShowTrue()">登录</button>
+            <router-link to="/register" tag="button">注册</router-link>
+          </div>
+        </transition>
+        <transition  enter-active-class="animated fadeIn">
+          <div class="keYongMoney" v-show="trading_login">
+            <div class="tab-header">
+              <a href="javascript:;" class='active-tab-btn'>CNY账户</a>
+              <a href="javascript:;">BTC账户</a>
+            </div>
+            <div class="tab-content">
+              <div class="cny-content" v-show="cnyAccount">
+                <p><a href="javascript:;" @click="RouterGo()"><i class="iconfont">&#xe6c1;</i></a>
+                  <router-link to="/userIndex">详情</router-link>
+                </p>
+                <div class="numBGColor">
+                  <p><span>CNY</span><span class="em1">566.12<em></em></span></p>
+                  <p><span>BTC</span><span class="em1">16.12<em></em></span></p>
+                  <p><span>ETH</span><span class="em1">1246.12<em></em></span></p>
+                  <p><span>ETC</span><span class="em1">436.12<em></em></span></p>
+                  <p><span>Qtum</span><span class="em1">56.12<em></em></span></p>
+                  <p><span>LTC</span><span class="em1">1456.12<em></em></span></p>
+                </div>
+              </div>
+              <div class="cny-content" v-show="!cnyAccount">
+                <p><a href="javascript:;" @click="RouterGo()"><i class="iconfont">&#xe6c1;</i></a>
+                  <router-link to="/userIndex1">详情</router-link>
+                </p>
+                <div class="numBGColor1">
+                  <p><span>BTC</span><span class="em2">12226.12<em></em></span></p>
+                  <p><span>ETH</span><span class="em2">123456.12<em></em></span></p>
+                  <p><span>ETC</span><span class="em2">1236.12<em></em></span></p>
+                  <p><span>Qtum</span><span class="em2">1256.12<em></em></span></p>
+                  <p><span>LTC</span><span class="em2">1.12<em></em></span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
+
         <div class="quotation-center-title">资产</div>
         <div class="business-box">
           <div class="business-tab-btn-classStyle">
@@ -288,10 +336,14 @@
         </div>
       </div>
     </div>
+    <transition enter-active-class="animated fadeIn" leaveActiveClass="animated fadeOut">
+      <TKLogin v-show="TKLoginShow"></TKLogin>
+    </transition>
   </div>
 </template>
 <script>
   import $ from 'jquery';
+  import TKLogin from '../components/lettle_components/TKLogin.vue';
   export default {
     data() {
       return {
@@ -486,14 +538,16 @@
           {coinStyle: 'BTC/USD', price: '$2336.71', range: '1.14%', trend: false}
         ],
         warningData: [],
-        noRecord: false,
+        noRecord: true,
         business_price: 0.00,
         business_num: 0.00,
         trading_style: true,
-        trading_login: false
+        cnyAccount: true,
+        userNumM:''
       }
     },
-    created() {
+    components: {
+      TKLogin
     },
     mounted() {
       //阻止行情面板页面刷新时，头部和尾部组件出来
@@ -501,7 +555,17 @@
         this.$store.dispatch('hideHeader');
         this.$store.dispatch('hideFooter');
       }
-
+      {
+        let that = this;
+        $('.tab-header a').click(function () {
+          $(this).addClass('active-tab-btn').siblings().removeClass('active-tab-btn');
+          if ($(this).index() === 0) {
+            that.cnyAccount = true;
+          } else {
+            that.cnyAccount = false;
+          }
+        })
+      }//切换账户active样式
       {
         let oHeight = $(window).height();
         $('.quotation').css({height: oHeight, maxHeight: oHeight})
@@ -534,6 +598,45 @@
           return false;
         })
       }
+      {
+        let max=[];
+        for (let i = 0; i < $('.em1').length; i++) {
+          max.push(Number($('.em1').eq(i).text()));
+      }//算血条长度
+        for (let i = 0; i < $('.em1').length; i++) {
+            $('.em1').eq(i).find('em').css({
+              width: Number($('.em1').eq(i).text()) * 100 / Math.max.apply(null, max) + '%'
+            })
+          }
+      }
+      {
+        let max=[];
+        for (let i = 0; i < $('.em2').length; i++) {
+          max.push(Number($('.em2').eq(i).text()));
+        }//算血条长度
+        for (let i = 0; i < $('.em2').length; i++) {
+          $('.em2').eq(i).find('em').css({
+            width: Number($('.em2').eq(i).text()) * 100 / Math.max.apply(null, max) + '%'
+          })
+        }
+      }
+      {
+        let that = this;
+        that.$http({
+          url: 'http://192.168.1.48:8089/fwex/web/account/info',
+          method: 'GET',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + that.$store.state.token
+          }
+        }).then((res) => {
+          that.userNumM = res.data.data.loginUser;
+          console.log(res, '请求成功')
+        }).catch((req) => {
+          that.quitLogin();
+          console.log(req, '请求失败')
+        })//获取用户信息
+      }
 //      k线启动
       this.drawLineK();
     },
@@ -543,6 +646,9 @@
       },
       businessSell() {
         return true;
+      },
+      TKShowTrue(){
+        this.$store.state.TKShow = true
       },
       businessBuy_tab() {
         this.trading_style = true;
@@ -878,12 +984,126 @@
           ]
         })
       },
+      RouterGo() {
+          this.$router.go(0)
+      },
+      KTClose() {
+        sessionStorage.removeItem('token');
+        this.$store.state.token = '';
+        this.$store.state.loginTrue = false;
+        this.$store.dispatch('loginStateFalse');
+      }
+    },
+    computed: {
+      TKLoginShow() {
+        return this.$store.state.TKShow;
+      },
+      trading_login() {
+        return this.$store.state.loginState;
+      }
     }
   }
 </script>
-
 <style scoped>
+  .quotation {
+    width: 100%;
+    height: 100%;
+  }
+.login-show-box-k{
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
+  margin-right: 5rem;
+  color: #000;
+}
+.login-show-box-k img{
+  width:35px;
+}
+.login-show-box-k>span{
+  margin: 0 1rem;
+  font-size: 1.167rem;
+}
+  .keYongMoney .tab-header {
+    display: flex;
+    font-size: 1.367rem;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid grey;
+    width: 80%;
+    margin: 0 auto;
+  }
+  .login-show-box-k>a{
+    color: #01aaef;
+  }
+  .login-show-box-k>a:hover{
+    text-decoration: underline;
+  }
+  .keYongMoney .tab-header > a {
+    color: grey;
+    font-weight: bold;
+    padding: 1rem;
+    margin-bottom: -2px;
+    border-bottom: 3px solid grey;
+  }
 
+  .active-tab-btn {
+    border-color: #fff !important;
+    color: #fff !important;
+  }
+
+  .keYongMoney .tab-content .cny-content {
+    padding: 1.25rem;
+    color: #fff;
+    font-size: 1.167rem;
+  }
+
+  .keYongMoney .tab-content .cny-content a {
+    color: #fff;
+  }
+
+  .keYongMoney .tab-content .cny-content > div {
+    height: 200px;
+    overflow: auto;
+  }
+
+  .keYongMoney .tab-content .cny-content > p {
+    padding: 0 !important;
+  }
+
+  .keYongMoney .tab-content .cny-content > p, .keYongMoney .tab-content .cny-content > div p {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    padding-right: 1rem;
+  }
+
+  .keYongMoney .tab-content .cny-content > div p span:nth-of-type(2) {
+    width: 150px;
+    text-align: right;
+    position: relative;
+  }
+
+  .keYongMoney .tab-content .cny-content > div p span:nth-of-type(2) em {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #00ff00;
+    width: 20%;
+    height: 100%;
+    opacity: .5;
+    z-index: -1;
+  }
+
+  .keYongMoney .tab-content .cny-content:nth-of-type(2) > div p span:nth-of-type(2) em {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #f00;
+    width: 20%;
+    height: 100%;
+  }
 
   .business-box {
     color: #fff;
@@ -1336,6 +1556,7 @@
 
   .header-warning p > select {
     width: 6.85rem;
+    margin-top: 1rem;
   }
 
   .header-warning p > input {

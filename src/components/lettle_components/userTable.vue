@@ -15,11 +15,9 @@
       </caption>
       <thead class="user-table-thead">
         <tr>
-          <td>时间</td>
-          <td>操作类型</td>
-          <td>币种</td>
-          <td>数量</td>
-          <td>手续费</td>
+          <td>日期</td>
+          <td>说明</td>
+          <td>产生金额</td>
         </tr>
       </thead>
       <tbody class="user-table-tbody" v-show="noData">
@@ -27,13 +25,11 @@
           <td>1</td>
           <td>2</td>
           <td>3</td>
-          <td>4</td>
-          <td>5</td>
         </tr>
       </tbody>
       <tbody class="user-table-tbody de-body" v-show="!noData">
         <tr>
-          <td colspan="5">
+          <td colspan="3">
             <i class="iconfont">&#xe661;</i>
             <span>暂无记录</span>
           </td>
@@ -41,7 +37,7 @@
       </tbody>
       <tfoot class="user-table-footer-page">
         <tr>
-          <td colspan="5">
+          <td colspan="3">
             <el-pagination layout="prev, pager, next" :total="10" class="page-right"></el-pagination>
           </td>
         </tr>
@@ -87,18 +83,11 @@
     margin-right: 2rem;
   }
   .user-table table td{
-    width: 12.667rem;
     height: 3.083rem;
     line-height: 3.083rem;
-    text-align: left;
+    text-align: center;
     padding-left: 1rem;
     box-sizing: border-box;
-  }
-  .user-table table td:nth-of-type(2){
-    width: 20.75rem;
-  }
-  .user-table table td:nth-of-type(5){
-    width: 16.75rem;
   }
   .user-table-thead{
     border:1px solid #d1dbe5;
