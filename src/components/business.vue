@@ -1,10 +1,6 @@
 <template>
   <div class="business">
     <div class="business-box layout">
-      <div class="business-box-left">
-        <realName></realName>
-        <btcTransaction></btcTransaction>
-      </div>
       <div class="business-box-right">
         <transition enter-active-class="animated fadeIn">
           <router-view></router-view>
@@ -14,20 +10,15 @@
   </div>
 </template>
 <script>
-  import realName from './lettle_components/realName.vue';
-  import btcTransaction from './lettle_components/btcTransaction.vue';
 
   import $ from 'jquery';
   export default {
-      components: {
-          realName, btcTransaction
-      }
+
   }
 </script>
 <style scoped>
   .business-box{
     margin: 2rem auto;
-    background: #fff;
     display: flex;
   }
   .business-box-right{

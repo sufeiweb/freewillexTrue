@@ -235,7 +235,7 @@
           }).then((res)=>{
             console.log(res,'绑定')
           }).catch((req)=>{
-            console.log(req,'认证失败')
+            console.log(req,'绑定失败')
           })
         }
       },

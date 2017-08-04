@@ -7,10 +7,11 @@ import register from '@/components/register'
 import userAgreement from '@/components/text_components/userAgreement'
 import business from '@/components/business'
 import passwordRetrieval from '@/components/passwordRetrieval'
-import businessHome from '@/components/business/businessHome'
-import entrust from '@/components/business/entrust'
-import transactionRecord from '@/components/business/transactionRecord'
-import lever from '@/components/business/lever'
+import businessCNYAccount from '@/components/business/businessCNYAccount'
+import businessBTCAccount from '@/components/business/businessBTCAccount'
+// import entrust from '@/components/business/entrust'
+// import transactionRecord from '@/components/business/transactionRecord'
+// import lever from '@/components/business/lever'
 import user from '@/components/user'
 import accountDetails from '@/components/userHome/accountDetails'
 import accountManagement from '@/components/userHome/accountManagement'
@@ -54,11 +55,12 @@ export default new Router({
     {path: '/userAgreement', name: 'userAgreement', component: userAgreement, meta: {auth: true}},
     {
       path: '/business', name: 'business', component: business, meta: {auth: true}, children: [
-      {path: '/businessHome', name: 'businessHome', component: businessHome, meta: {auth: true}},
-      {path: '/', redirect: '/businessHome'},
-      {path: '/entrust', name: 'entrust', component: entrust, meta: {auth: true}},
-      {path: '/transactionRecord', name: 'transactionRecord', component: transactionRecord, meta: {auth: true}},
-      {path: '/lever', name: 'lever', component: lever, meta: {auth: true}}
+      {path: '/businessCNYAccount', name: 'businessCNYAccount', component: businessCNYAccount, meta: {auth: true}},
+      {path: '/businessBTCAccount', name: 'businessBTCAccount', component: businessBTCAccount, meta: {auth: true}},
+      {path: '/', redirect: '/businessCNYAccount'},
+      // {path: '/entrust', name: 'entrust', component: entrust, meta: {auth: true}},
+      // {path: '/transactionRecord', name: 'transactionRecord', component: transactionRecord, meta: {auth: true}},
+      // {path: '/lever', name: 'lever', component: lever, meta: {auth: true}}
     ]
     },
     {

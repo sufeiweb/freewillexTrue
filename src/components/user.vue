@@ -11,13 +11,12 @@
   </div>
 </template>
 <script>
-  import realName from './lettle_components/realName.vue';
   import userBtnLink from './lettle_components/userBtnLink.vue';
 
   import $ from 'jquery';
   export default {
     components: {
-      realName, userBtnLink
+      userBtnLink
     }
   }
 </script>

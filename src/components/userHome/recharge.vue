@@ -92,7 +92,7 @@
       </transition>
     </div>
     <transition enter-active-class="animated fadeIn">
-      <div class="recharge-group" v-show="account">
+      <div class="recharge-group" v-show="moneyStyle">
         <div class="recharge-group-title">
           <p>充值地址</p>
         </div>
@@ -109,7 +109,7 @@
       </div>
     </transition>
     <transition enter-active-class="animated fadeIn">
-      <div class="recharge-group" v-show="!account">
+      <div class="recharge-group" v-show="!moneyStyle">
         <div class="recharge-group-title">
           <p>充值方式</p>
         </div>
@@ -136,7 +136,7 @@
       </div>
     </transition>
     <transition enter-active-class="animated fadeIn">
-      <div class="recharge-group" v-show="!account">
+      <div class="recharge-group" v-show="!moneyStyle">
         <div class="recharge-group-title">
           <p>选择银行</p>
           <transition enter-active-class="animated fadeIn">
@@ -202,7 +202,7 @@
       </div>
     </transition>
     <transition enter-active-class="animated fadeIn">
-      <div class="recharge-group" v-show="!account">
+      <div class="recharge-group" v-show="!moneyStyle">
         <div class="recharge-group-title">
           <p>金额</p>
         </div>
@@ -266,7 +266,8 @@
         EBank:'',//网上银行充值数
         remittance:'',//自助汇款
         ZFB:'', //支付宝付款
-        bankName:'CMB',//银行名称
+        bankName:'CMB',//银行名称,
+        moneyStyle:false
 
       }
     },
@@ -314,9 +315,15 @@
           console.log($(this).val(), 'account');
           if ($(this).val() == '1') {
             that.account = false;
+            if($("input[name='select-currency']:checked").val() == '1'){
+              that.moneyStyle = false;
+            }else {
+              that.moneyStyle = true;
+            }
           }
           else {
             that.account = true;
+            that.moneyStyle = true;
           }
         })
       }//选择账户
@@ -324,6 +331,11 @@
         $("input[name='select-currency']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
           console.log($(this).val(), 'account')
+          if($(this).val()=='1'){
+            that.moneyStyle = false;
+          }else {
+            that.moneyStyle =true;
+          }
         })
         $("input[name='select-currency1']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');

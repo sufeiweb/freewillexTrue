@@ -11,8 +11,8 @@
         </div>
         <div class="header-right">
           <div class="header-btn-box" v-show="!userId">
-            <router-link to="/login" tag="el-button">登录</router-link>
-            <router-link to="/register" tag="el-button">注册</router-link>
+            <router-link to="/login" tag="button">登录</router-link>
+            <router-link to="/register" tag="button">注册</router-link>
           </div>
           <div class="header-user-show" v-if="userId">
             <img src="../../src/assets/img/header/freeQuan.png" class="user-free" v-show="free" alt=""/>
@@ -104,22 +104,24 @@
       },
       dd() {
         let that = this;
-        that.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/account/info',
-          method: 'GET',
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-Authorization': 'Bearer ' + that.$store.state.token
-          }
-        }).then((res) => {
-          that.userNameM = res.data.data.userName;
-          that.userNumM = res.data.data.loginUser;
-          console.log(res, '请求成功')
-        }).catch((req) => {
-          that.quitLogin();
-          console.log(req, '请求失败')
-        })//获取用户信息
-      }
+        if(this.$store.state.loginState){
+          that.$http({
+            url: 'http://192.168.1.48:8089/fwex/web/account/info',
+            method: 'GET',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'X-Authorization': 'Bearer ' + that.$store.state.token
+            }
+          }).then((res) => {
+            that.userNameM = res.data.data.userName;
+            that.userNumM = res.data.data.loginUser;
+            console.log(res, '请求成功')
+          }).catch((req) => {
+            that.quitLogin();
+            console.log(req, '请求失败')
+          })//获取用户信息
+        }
+        }
     },
     mounted() {
       let that = this;
@@ -370,7 +372,7 @@
     display: flex;
     box-sizing: border-box;
     align-items: center;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #eee;
     font-size: 12px;
     color: #01aaef;
     font-weight: normal;
@@ -389,5 +391,24 @@
 
   .user-m-ul li:hover {
     background: #f0f0f0;
+  }
+  .header-btn-box{
+    padding-right: 2rem;
+  }
+  .header-btn-box button{
+    background: none;
+    color: #fff;
+    border:none;
+    margin-left: 1rem;
+    cursor: pointer;
+    outline: none;
+    padding: 0.5rem 1rem;
+  }
+  .header-btn-box button:nth-of-type(2){
+    border:1px solid #01aaef;
+
+  }
+  .header-btn-box button:nth-of-type(2):hover{
+    background: #01aaef;
   }
 </style>

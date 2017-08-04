@@ -196,4 +196,11 @@
     display: flex;
     align-items: center;
   }
+  .display-flex-p{
+    display: flex;
+    align-items: center;
+  }
+ .from-box .cash-tishi{
+    display: none;
+  }
 </style>

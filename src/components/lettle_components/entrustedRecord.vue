@@ -120,6 +120,10 @@
   };
 </script>
 <style scoped>
+  .entrustedRecord{
+    background: #fff;
+    padding: 2rem;
+  }
   .el-tab-pane{
     padding: 0.833rem;
     border: 1px solid #d1dbe5;

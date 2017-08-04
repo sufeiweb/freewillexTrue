@@ -52,7 +52,10 @@
         if (path === 'home') {
           this.swted(0)
         }
-        if (path === 'businessHome') {
+        if (path === 'businessCNYAccount') {
+          this.swted(2)
+        }
+        if (path === 'businessBTCAccount') {
           this.swted(2)
         }
         if (path === 'userIndex') {
