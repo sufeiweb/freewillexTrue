@@ -19,7 +19,8 @@
         </label>
       </div>
     </div>
-    <div class="recharge-group">
+    <div class="recharge-group"
+    >
       <div class="recharge-group-title">
         <p>选择币种</p>
       </div>
@@ -31,31 +32,31 @@
             <i class="iconfont">&#xe650;</i>
             <span>全部</span>
           </label>
-          <input name="select-currency44" type="radio" id="recharge-currency-cny44" value="1"/>
+          <input name="select-currency44" type="radio" id="recharge-currency-cny44" value="CNY"/>
           <label for="recharge-currency-cny44">
             <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
             <i class="iconfont">&#xe650;</i>
             <span>CNY</span>
           </label>
-          <input name="select-currency44" type="radio" id="recharge-currency-cny-btc44" value="2"/>
+          <input name="select-currency44" type="radio" id="recharge-currency-cny-btc44" value="BTC"/>
           <label for="recharge-currency-cny-btc44">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <i class="iconfont">&#xe650;</i>
             <span>BTC</span>
           </label>
-          <input name="select-currency44" type="radio" id="recharge-currency-cny-ltc44" value="3"/>
+          <input name="select-currency44" type="radio" id="recharge-currency-cny-ltc44" value="LTC"/>
           <label for="recharge-currency-cny-ltc44">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <i class="iconfont">&#xe650;</i>
             <span>LTC</span>
           </label>
-          <input name="select-currency44" type="radio" id="recharge-currency-cny-eth44" value="4"/>
+          <input name="select-currency44" type="radio" id="recharge-currency-cny-eth44" value="ETH"/>
           <label for="recharge-currency-cny-eth44">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <i class="iconfont">&#xe650;</i>
             <span>ETH</span>
           </label>
-          <input name="select-currency44" type="radio" id="recharge-currency-cny-etc44" value="5"/>
+          <input name="select-currency44" type="radio" id="recharge-currency-cny-etc44" value="ETC"/>
           <label for="recharge-currency-cny-etc44">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <i class="iconfont">&#xe650;</i>
@@ -71,25 +72,25 @@
             <i class="iconfont">&#xe650;</i>
             <span>全部</span>
           </label>
-          <input name="select-currency45" type="radio" id="recharge-currency-cny-btc45" value="1"/>
+          <input name="select-currency45" type="radio" id="recharge-currency-cny-btc45" value="BTC"/>
           <label for="recharge-currency-cny-btc45">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <i class="iconfont">&#xe650;</i>
             <span>BTC</span>
           </label>
-          <input name="select-currency45" type="radio" id="recharge-currency-cny-ltc45" value="2"/>
+          <input name="select-currency45" type="radio" id="recharge-currency-cny-ltc45" value="LTC"/>
           <label for="recharge-currency-cny-ltc45">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <i class="iconfont">&#xe650;</i>
             <span>LTC</span>
           </label>
-          <input name="select-currency45" type="radio" id="recharge-currency-cny-eth45" value="3"/>
+          <input name="select-currency45" type="radio" id="recharge-currency-cny-eth45" value="ETH"/>
           <label for="recharge-currency-cny-eth45">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <i class="iconfont">&#xe650;</i>
             <span>ETH</span>
           </label>
-          <input name="select-currency45" type="radio" id="recharge-currency-cny-etc45" value="4"/>
+          <input name="select-currency45" type="radio" id="recharge-currency-cny-etc45" value="ETC"/>
           <label for="recharge-currency-cny-etc45">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <i class="iconfont">&#xe650;</i>
@@ -115,13 +116,13 @@
                 <td>状态</td>
               </tr>
               </thead>
-              <tbody class="recharge-record-data" v-show="!noRecord">
-              <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
+              <tbody class="recharge-record-data getTrSelect" v-show="!noRecord">
+              <tr v-for="item in items" :currency="item.currency">
+                <td>{{item.createDate|dateYMDHIS}}</td>
+                <td>{{'银行卡'}}</td>
+                <td>{{item.applyBalance |return_}} {{item.currency}}</td>
+                <td>{{item.balance|return_}} {{item.currency}}</td>
+                <td>{{item.step}}</td>
               </tr>
               </tbody>
               <tbody class="recharge-record-data noRecode" v-show="noRecord">
@@ -135,7 +136,12 @@
               <tfoot class="recharge-record-data-page">
               <tr>
                 <td colspan="5">
-                  <el-pagination layout="prev, pager, next" :total="10" class="page-right"></el-pagination>
+                  <el-pagination layout="prev, pager, next"
+                                 @current-change="handleCurrentChangeRechargeLog"
+                                 :current-page="currentPage"
+                                 :total="totals"
+                                 class="page-right"
+                  ></el-pagination>
                 </td>
               </tr>
               </tfoot>
@@ -153,6 +159,10 @@
             activeName:'first',
             noRecord:true,
             account: false,
+            currentPage:1,
+            totals:0,
+            items:[]
+
           }
       },
     mounted() {
@@ -172,13 +182,45 @@
       {
         $("input[name='select-currency44']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account')
+          console.log($(this).val(), 'account');
+
+          console.log($('.getTrSelect tr').eq(0).attr('currency'));
         })
         $("input[name='select-currency45']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
           console.log($(this).val(), 'account')
         })
-      }//选择充值币种
+      }//选择充值币
+      this.getRechargeLog(1)
+    },
+    methods:{
+      handleCurrentChangeRechargeLog(currentPage){
+          this.currentPage(currentPage);
+      },
+      getRechargeLog(currentPage) {
+        this.$http({
+          url:'http://192.168.1.48:8089/fwex/web/capital/payments/list',
+          method:'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token
+          },
+          params:{
+            pageNo:currentPage-1,
+            pageSize:10
+          }
+        }).then((res)=>{
+          console.log(res);
+          if(res.data.code===200){
+            this.noRecord=false;
+              this.totals=res.data.data.totalElements;
+              this.items=res.data.data.content
+          }
+
+        }).catch((req)=>{
+          console.log(req)
+        })
+      }
     }
   }
 </script>

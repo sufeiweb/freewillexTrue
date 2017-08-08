@@ -22,7 +22,7 @@
             <td>{{item.orderType |translate}}</td>
             <td>{{item.cammand |translate}}</td>
             <td>{{item.source}}</td>
-            <td>{{item.price}}</td>
+            <td>{{item.price|return_}}</td>
             <td>{{item.amount}}</td>
             <td>{{item.amount-item.dealVolume}}</td>
             <td style="color:#01aaef">{{item.orderStatus | translate}}</td>
@@ -85,7 +85,7 @@
             <td>{{item.orderType|translate}}</td>
             <td>{{item.cammand|translate}}</td>
             <td>{{item.source}}</td>
-            <td>{{item.price}}</td>
+            <td>{{item.price | return_ }}</td>
             <td>{{item.amount}}</td>
             <td>{{item.dealPrice}}</td>
             <td>{{item.dealVolume}}</td>

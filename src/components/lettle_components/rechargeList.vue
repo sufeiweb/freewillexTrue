@@ -2,19 +2,20 @@
   <div class="rechargeList">
     <div class="rechargeList-title">
       <p>待充值订单</p>
-      <p> 请使用<a :href="'http://'+this.$route.query.bankUrl" target="_blank">{{this.$route.query.bankName|bankName}}</a>向以下账户转账</p>
+      <p> 请使用<a :href="'http://'+this.$route.query.bankUrl" target="_blank">{{this.$route.query.bankName}}</a>向以下账户转账</p>
     </div>
     <div class="rechargeList-content">
-      <p><span>开户银行</span><span>招商银行上海陆家嘴支行</span></p>
-      <p><span>银行卡</span><span>121921984810401</span></p>
-      <p><span>开户姓名</span><span>上海倍瀚财务咨询有限公司</span></p>
-      <p><span>待支付金额</span><span class="color-blue">￥{{ this.$route.query.money}}</span></p>
-      <p><span>备注/附言</span><span>3815</span></p>
+      <p><span>开户银行</span><span>{{this.$route.query.bankName}}</span></p>
+      <p><span>支行地址</span><span>{{this.$route.query.bankAddr}}</span></p>
+      <p><span>银行卡</span><span>{{this.$route.query.accountNo}}</span></p>
+      <p><span>开户姓名</span><span>{{this.$route.query.userName}}</span></p>
+      <p><span>待支付金额</span><span class="color-blue">￥{{ this.$route.query.balance}}</span></p>
+      <p><span>备注/附言</span><span>{{this.$route.query.postScript}}</span></p>
       <p><span>到账时间</span><span>转账完成后40分钟内</span></p>
-      <p><a :href="'http://'+this.$route.query.bankUrl" target="_blank">进入{{this.$route.query.bankName|bankName}}</a></p>
+      <p><a :href="'http://'+this.$route.query.bankUrl" target="_blank">进入{{this.$route.query.bankName}}</a></p>
     </div>
     <div class="rechargeList-footer">
-      <p>请在汇款备注/附言中严格按要求填写充值ID：<span>3815</span></p>
+      <p>请在汇款备注/附言中严格按要求填写充值ID：<span>{{this.$route.query.postScript}}</span></p>
       <p>不要填写除了数字以外的其它字符（比特币等），否则不能正确到账！</p>
       <p>FreeWillex会在收到汇款后40分钟内为您入账，在此期间无需联系客服，如有问题我们会主动联系您</p>
     </div>

@@ -159,22 +159,24 @@
         },
       getUserM() {
         let that = this;
-        that.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/account/info',
-          method: 'GET',
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-Authorization': 'Bearer ' + that.$store.state.token
-          }
-        }).then((res) => {
-          console.log(res, '请求成功')
+        if(this.$store.state.token){
+          that.$http({
+            url: 'http://192.168.1.48:8089/fwex/web/account/info',
+            method: 'GET',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'X-Authorization': 'Bearer ' + that.$store.state.token
+            }
+          }).then((res) => {
+            console.log(res, '请求成功')
             if(res.data.code==200){
               that.userLoginName = res.data.data.loginUser;
               console.log(res.data.data, '请求成功')
             }
-        }).catch((req) => {
-          console.log(req, '请求失败')
-        })//获取用户信息
+          }).catch((req) => {
+            console.log(req, '请求失败')
+          })//获取用户信息
+        }
       },
     }
   }

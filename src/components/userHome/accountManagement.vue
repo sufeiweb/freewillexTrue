@@ -95,7 +95,7 @@
         {{getBindBankCard}}
 
         <div class="backItem" v-for="item in items">
-          <div class="imgLogo"><img :src="bankImgUrl[item.bankType]" alt=""/><span>储蓄卡</span></div>
+          <div class="imgLogo"><img :src="bankImgUrl[item.abbreviation]" alt=""/><span>储蓄卡</span></div>
           <p>{{item.accountNo | bankNo}}</p>
           <a href="javascript:;" @click="delBankCard($event)" :bankid="item.bankId">删除该卡</a>
         </div>

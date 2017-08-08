@@ -391,6 +391,7 @@
     methods: {
       rechargeBtn() {
         this.getAccount();
+        console.log(this.accountBankId);
         this.$http({
           url:'http://192.168.1.48:8089/fwex/web/capital/payments',
           method:'POST',
@@ -411,11 +412,7 @@
                 console.log(res.data.message);
                 this.$router.push({
                   name:'rechargeList',
-                  query:{
-                      bankName:$("input[name='select-bank2']:checked").attr('value'),
-                    bankUrl:$("input[name='select-bank2']:checked").attr('bankUrl'),
-                    money:this.remittance+'.'+this.arNum
-                  }
+                  query:res.data.data
                 })
             }
         }).catch((req)=>{

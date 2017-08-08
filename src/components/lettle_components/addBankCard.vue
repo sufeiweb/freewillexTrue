@@ -15,7 +15,8 @@
         <div>
           <span>开户银行</span>
           <select class="select-bank-zc">
-            <option v-for="item in CBank" :value="item.abbreviation">{{item.bankName}}</option>
+            <option>请选择银行卡</option>
+            <option v-for="item in CBank" :value="item.id">{{item.bankName}}</option>
           </select>
         </div>
       </section>
@@ -98,24 +99,6 @@
         }).then((res) => {
           that.CBank = res.data.data;
           console.log(res.data.data)
-          for (let i = 0; i < res.data.data.length; i++) {
-            if (res.data.data[i].abbreviation === 'alipay') {
-              that.$store.state.bankId.alipay = res.data.data[i].id;
-            }
-            if (res.data.data[i].abbreviation === 'BOC') {
-              that.$store.state.bankId.BOC = res.data.data[i].id;
-            }
-            if (res.data.data[i].abbreviation === 'ICBC') {
-              that.$store.state.bankId.ICBC = res.data.data[i].id;
-            }
-            if (res.data.data[i].abbreviation === 'CCB') {
-              that.$store.state.bankId.CCB = res.data.data[i].id;
-            }
-            if (res.data.data[i].abbreviation === 'ABC') {
-              that.$store.state.bankId.ABC = res.data.data[i].id;
-            }
-          }
-          console.log(that.$store.state.bankId,676786768766678678)
         }).catch((req) => {
           console.log("出错了")
         })
@@ -124,9 +107,9 @@
     mounted() {
       let that = this;
       that.RgetCord();//获取验证码
-      that.bankStyles($('.select-bank-zc').val());
       $('.select-bank-zc').change(function () {
-        that.bankStyles($(this).val());
+          console.log($(this).val())
+        that.RBankVal=$(this).val();
         console.log(that.RBankVal);
       });
       //获取bankid
@@ -207,11 +190,6 @@
       },
       pushReal() {
         let that = this;
-        console.log(that.$store.state.addBankCard.bankNo)
-        console.log(that.$store.state.addBankCard.bankNum)
-        console.log(that.$store.state.addBankCard.bankAdr)
-        console.log(that.$store.state.addBankCard.phone)
-        console.log(that.$store.state.addBankCard.YZ)
         if (that.$store.state.addBankCard.bankNo &&
           that.$store.state.addBankCard.bankNum &&
           that.$store.state.addBankCard.bankAdr &&
@@ -219,7 +197,7 @@
           that.$store.state.addBankCard.YZ &&
           that.$store.state.addBankCard.serverYZ) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/accountBank/bind',
+            url: 'http://192.168.1.120:8089/fwex/web/accountBank/bind',
             method: 'POST',
             params: {
               bankId: that.RBankVal,
@@ -234,29 +212,12 @@
             }
           }).then((res)=>{
             console.log(res,'绑定')
+            if(res.data.code===200){
+                console.log(res.data.message)
+            }
           }).catch((req)=>{
             console.log(req,'绑定失败')
           })
-        }
-      },
-      bankStyles(num){
-        let that =this;
-        switch (num) {
-          case 'alipay':
-            that.RBankVal = that.$store.state.bankId.alipay;
-            break;
-          case 'BOC':
-            that.RBankVal = that.$store.state.bankId.BOC;
-            break;
-          case 'ICBC':
-            that.RBankVal = that.$store.state.bankId.ICBC;
-            break;
-          case 'CCB':
-            that.RBankVal = that.$store.state.bankId.CCB;
-            break;
-          case 'ABC':
-            that.RBankVal = that.$store.state.bankId.ABC;
-            break;
         }
       },
       REgetCord() {
