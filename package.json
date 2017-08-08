@@ -13,6 +13,7 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "body-parser": "^1.17.2",
     "echarts": "^3.6.2",
     "element-ui": "^1.3.7",
     "jquery": "^3.2.1",

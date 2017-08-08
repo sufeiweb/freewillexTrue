@@ -240,6 +240,7 @@
     padding: 1rem 1rem;
     border: 0;
     outline: none;
+    width: 100%;
   }
 
   .login-box-content .title {

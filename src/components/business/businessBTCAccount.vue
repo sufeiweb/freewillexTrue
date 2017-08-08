@@ -8,7 +8,7 @@
         </div>
         <div class="recharge-group">
           <div class="recharge-group-title">
-            <p>选择账户</p>
+            <p>选择方向</p>
           </div>
           <div class="recharge-group-radio fangxiang">
             <input name="select-accountsss" type="radio" id="account-cnyss11" value="1" checked/>
@@ -60,17 +60,17 @@
           <transition enter-active-class="animated fadeIn">
           <div v-show="buyOrSell && priceStyle">
             <section>
-              <input type="number" placeholder="买入价"/>
+              <input type="number" placeholder="买入价" v-model="buyPrice"/>
               <span>{{accountClass}}</span>
             </section>
             <i class="iconfont">&#xe690;</i>
             <section>
-              <input type="number" placeholder="买入量"/>
+              <input type="number" placeholder="买入量" v-model="buyNum"/>
               <span>{{buyClass}}</span>
             </section>
             <span>=</span>
             <section>
-              <input type="number" placeholder="总额"/>
+              <input type="number" placeholder="总额" v-model="buySum"/>
               <span>{{accountClass}}</span>
             </section>
           </div>
@@ -78,17 +78,17 @@
           <transition enter-active-class="animated fadeIn">
           <div v-show="!buyOrSell  && priceStyle">
             <section>
-              <input type="number" placeholder="卖出价"/>
+              <input type="number" placeholder="卖出价" v-model="sellPrice"/>
               <span>{{accountClass}}</span>
             </section>
             <i class="iconfont">&#xe690;</i>
             <section>
-              <input type="number" placeholder="卖出量"/>
+              <input type="number" placeholder="卖出量" v-model="sellNum"/>
               <span>{{buyClass}}</span>
             </section>
             <span>=</span>
             <section>
-              <input type="number" placeholder="总额"/>
+              <input type="number" placeholder="总额" v-model="sellSum"/>
               <span>{{accountClass}}</span>
             </section>
           </div>
@@ -96,7 +96,7 @@
           <transition enter-active-class="animated fadeIn">
           <div v-show="buyOrSell  && !priceStyle">
             <div class="shijia-ipt" >
-              <input type="number" placeholder="买入额"/>
+              <input type="number" placeholder="买入额" v-model="buyTotal"/>
               <span>{{accountClass}}</span>
             </div>
             <em>以市场最优价买入</em>
@@ -105,17 +105,17 @@
           <transition enter-active-class="animated fadeIn">
           <div v-show="!buyOrSell && !priceStyle">
             <div class="shijia-ipt" >
-              <input type="number" placeholder="卖出量"/>
+              <input type="number" placeholder="卖出量" v-model="sellTotal"/>
               <span>{{buyClass}}</span>
             </div>
             <em>以市场最优价卖出</em>
           </div>
           </transition>
           <transition enter-active-class="animated fadeIn">
-          <button class="business-cny-buy" v-show="buyOrSell">买入</button>
+          <button class="business-cny-buy" v-show="buyOrSell" @click="transaction1()">买入</button>
           </transition>
           <transition enter-active-class="animated fadeIn">
-          <button class="business-cny-sell" v-show="!buyOrSell">卖出</button>
+          <button class="business-cny-sell" v-show="!buyOrSell" @click="transaction1()">卖出</button>
           </transition>
         </div>
       </div>
@@ -163,6 +163,19 @@
         accountClass: 'BTC',
         buyOrSell:true,
         priceStyle:true,
+        buyPrice: '9563.22',
+        buyNum: '',
+        buySum: '',
+        buyTotal: '',
+        sellPrice: '9563.22',
+        sellNum: '',
+        sellSum: '',
+        sellTotal: '',
+        newAccount:'BTC',
+        commodity:'',//交易品种
+        types:'',//类型
+        price:'',//价格
+        amount:''//数量
       }
     },
     components: {
@@ -170,6 +183,7 @@
     },
     mounted() {
         let that=this;
+        console.log(this.newAccount,"当前BTC账户");
       {
         $("input[name='select-accountsss']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
@@ -197,8 +211,76 @@
             }
           })
       }//限价与市价的选择
+
+
     },
-    methods: {}
+    methods: {
+      transaction1() {
+        this.getTypes();
+        this.getCommodity();
+        this.$http({
+          url:'http://192.168.1.48:8089/fwex/web/trade/entrust',
+          method:'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token
+          },
+          params: {
+            commodity:this.commodity,
+            types:this.types,
+            price:this.price,
+            amount:this.amount,
+            source:'WEB'
+          }
+        }).then((res)=>{
+          console.log(res);
+          if(res.data.code===200){
+            console.log(res.data.message)
+          }
+        }).catch((req)=>{
+          console.log(req,'请求失败')
+        })
+      },
+//      获得types，price,amount;
+      getTypes() {
+        if(this.buyOrSell){
+          //买
+//            判断types
+          if(this.priceStyle){
+//            console.log('限价买');
+            this.types='B_LIMITED';
+            this.price=this.buyPrice;
+            this.amount=this.buyNum;
+          }else {
+//            console.log('市价买');
+            this.types='B_MARKET';
+            this.price='';
+            this.amount=this.buyTotal;
+          }
+        }else {
+          //卖
+          if(this.priceStyle){
+//            console.log('限价卖');
+            this.types='S_LIMITED';
+            this.price=this.sellPrice;
+            this.amount=this.sellNum;
+          }else {
+//            console.log('市价卖');
+            this.types='S_MARKET';
+            this.price='';
+            this.amount=this.sellTotal;
+          }
+        }
+        console.log(this.types,'类型');
+        console.log(this.price,'价格');
+        console.log(this.amount,'数量');
+      },
+//      获取交易品种
+      getCommodity() {
+        this.commodity=$("input[name='select-currencyaaa']:checked").val()+this.newAccount;
+        console.log(this.commodity,'品种');
+      },
+    }
   }
 </script>
 <style scoped>
@@ -432,17 +514,18 @@
     align-items: center;
     margin-top: 1.833rem;
     color: #999;
+    margin-bottom: 1.833rem;
   }
   .business-input>div section{
     display: flex;
     align-items: center;
-    width: 148px;
+    width: 200px;
     border: 1px solid #ddd;
     border-radius: 4px;
   }
   .business-input>div section input{
     border:none;
-    width: 70%;
+    width: 80%;
     padding: 8px 0;
     border-radius: 4px;
     padding-left: 1.5rem;
@@ -468,6 +551,7 @@
     border-radius: 4px;
     margin-top: 1.833rem;
     font-size: 16px;
+    outline: none;
   }
   .business-cny-sell{
     background:#63b212!important; ;
