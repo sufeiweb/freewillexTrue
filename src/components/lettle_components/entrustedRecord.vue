@@ -145,13 +145,14 @@
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'X-Authorization': 'Bearer ' + this.$store.state.token
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+            "Content-Type": "application/json;charset=UTF-8",
           },
           data: {
             pageNo: currentPage - 1,
             pageSize: 10,
             param: {
-              commodity: 'BTCCNY'
+              commodity: 'BTCCNY',
             }
           }
         }).then((res) => {
@@ -177,13 +178,14 @@
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'X-Authorization': 'Bearer ' + this.$store.state.token
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+            "Content-Type": "application/json;charset=UTF-8",
           },
           data: {
             pageNo: currentPage - 1,
             pageSize: 10,
             param: {
-              commodity: 'BTCCNY'
+              commodity: 'BTCCNY',
             }
           }
         }).then((res) => {
@@ -212,7 +214,7 @@
           }
         }).then((res)=>{
               if(res.data.code===200){
-                  this.$router.go(0);
+                ev.target.parentNode.parentNode.remove()
               }
         })
 

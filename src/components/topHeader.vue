@@ -104,10 +104,11 @@
       },
       dd() {
         let that = this;
-        if(this.$store.state.loginState){
+        if (this.$store.state.loginState) {
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/account/info',
             method: 'GET',
+            data:{},
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
               'X-Authorization': 'Bearer ' + that.$store.state.token
@@ -121,7 +122,7 @@
             console.log(req, '请求失败')
           })//获取用户信息
         }
-        }
+      }
     },
     mounted() {
       let that = this;

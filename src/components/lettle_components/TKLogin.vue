@@ -35,7 +35,8 @@
                 "loginPwd": that.userPsdTK
               },
               headers: {
-                "X-Requested-With": "XMLHttpRequest"
+                "X-Requested-With": "XMLHttpRequest",
+                "Content-Type": "application/json;charset=UTF-8",
               }
             }).then(function (data) {
               console.log(data);

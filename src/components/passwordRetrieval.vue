@@ -143,7 +143,7 @@
         userPsdE: '',
         userPsdsM: '',
         userPsdsE: '',
-        timer:''
+        timer: ''
       }
     },
     mounted() {
@@ -438,7 +438,7 @@
           let url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile/' + that.userNameM;
           if (that.userNameM.length !== 0 && pattern.test(that.userNameM)) {
             that.$http.get(url).then((data) => {
-                console.log(data);
+              console.log(data);
               $('.getCodeM').attr("disabled", true).css("cursor", "default");
               that.timer = setInterval(function () {
                 $('.getCodeMR').html((--second) + 's');
@@ -453,7 +453,8 @@
                 color: 'red',
                 marginLeft: '1.5rem'
               })
-            }).catch((error) => {})
+            }).catch((error) => {
+            })
           } else {
             $('.help-tips-getCodeMR').html('请核对手机号').css({
               alignSelf: 'flex-start',
@@ -483,7 +484,8 @@
                 color: 'red',
                 marginLeft: '1.5rem'
               });
-            }).catch((error) => {})
+            }).catch((error) => {
+            })
           } else {
             $('.help-tips-getCodeER').html('请核对邮箱').css({
               alignSelf: 'flex-start',
@@ -499,50 +501,52 @@
         this.retrieval_text = !this.retrieval_text;
       },
       phoneRE() {
-          let that =this;
-          console.log(that.$store.state.phoneR.username,"username");
-          console.log(that.$store.state.phoneR.usercord,"usercord");
-          console.log(that.$store.state.phoneR.userpsd,"userpsd");
-          console.log(that.$store.state.phoneR.userpsds,"userPsds");
-          if(that.$store.state.phoneR.username && that.$store.state.phoneR.usercord && that.$store.state.phoneR.userpsd && that.$store.state.phoneR.userpsds){
-              that.$http({
-                url:'http://192.168.1.48:8089/fwex/web/account/forget/password',
-                method: 'POST',
-                params: {
-                  moe:that.userNameM,
-                  captcha:that.userCordM,
-                  password:that.userPsdM,
-                  cfpassword:that.userPsdsM
-                },
-                headers:{
-'X-Requested-With':'XMLHttpRequest'
-                }
-              }).then((res)=>{
-                  console.log(res,11111)
-              }).catch((req)=>{
-                  console.log(req,22222)
-              })
-          }
+        let that = this;
+        console.log(that.$store.state.phoneR.username, "username");
+        console.log(that.$store.state.phoneR.usercord, "usercord");
+        console.log(that.$store.state.phoneR.userpsd, "userpsd");
+        console.log(that.$store.state.phoneR.userpsds, "userPsds");
+        if (that.$store.state.phoneR.username && that.$store.state.phoneR.usercord && that.$store.state.phoneR.userpsd && that.$store.state.phoneR.userpsds) {
+          that.$http({
+            url: 'http://192.168.1.48:8089/fwex/web/account/forget/password',
+            method: 'POST',
+            data: {
+              moe: that.userNameM,
+              captcha: that.userCordM,
+              password: that.userPsdM,
+              cfpassword: that.userPsdsM
+            },
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              "Content-Type": "application/json;charset=UTF-8",
+            }
+          }).then((res) => {
+            console.log(res, 11111)
+          }).catch((req) => {
+            console.log(req, 22222)
+          })
+        }
       },//手机找回密码js
       emailRE() {
-        let that =this;
-        if(that.$store.state.emailR.username && that.$store.state.emailR.usercord && that.$store.state.emailR.userpsd && that.$store.state.emailR.userpsds){
+        let that = this;
+        if (that.$store.state.emailR.username && that.$store.state.emailR.usercord && that.$store.state.emailR.userpsd && that.$store.state.emailR.userpsds) {
           that.$http({
-            url:'http://192.168.1.48:8089/fwex/web/account/forget/password',
+            url: 'http://192.168.1.48:8089/fwex/web/account/forget/password',
             method: 'POST',
-            params: {
-              moe:that.userNameE,
-              captcha:that.userCordE,
-              password:that.userPsdE,
-              cfpassword:that.userPsdsE
+            data: {
+              moe: that.userNameE,
+              captcha: that.userCordE,
+              password: that.userPsdE,
+              cfpassword: that.userPsdsE
             },
-            headers:{
-              'X-Requested-With':'XMLHttpRequest'
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              "Content-Type": "application/json;charset=UTF-8",
             }
-          }).then((res)=>{
-            console.log(res,11111)
-          }).catch((req)=>{
-            console.log(req,22222)
+          }).then((res) => {
+            console.log(res, 11111)
+          }).catch((req) => {
+            console.log(req, 22222)
           })
         }
       },//邮箱找回密码js

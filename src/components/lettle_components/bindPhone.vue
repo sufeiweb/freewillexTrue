@@ -146,14 +146,15 @@
             that.$http({
               url:'http://192.168.1.48:8089/fwex/web/authentication/mobileAuth',
               method: 'POST',
-              params: {
+              data: {
                 mobile:that.bindPhoneNum,
                 captcha:that.bindPhoneRGetCord,
                 mobileCountry:that.cityCord
               },
               headers: {
                 "X-Requested-With": "XMLHttpRequest",
-                'X-Authorization': 'Bearer ' + that.$store.state.token
+                'X-Authorization': 'Bearer ' + that.$store.state.token,
+                "Content-Type": "application/json;charset=UTF-8",
               }
             }).then((res)=>{
                 console.log(res,'绑定成功');

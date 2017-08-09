@@ -138,13 +138,14 @@
             that.$http({
               url:'http://192.168.1.48:8089/fwex/web/authentication/emailAuth',
               method: 'POST',
-              params: {
+              data: {
                 email:that.bindEmailNum,
                 captcha:that.bindEmailRGetCord
               },
               headers: {
                 "X-Requested-With": "XMLHttpRequest",
-                'X-Authorization': 'Bearer ' + this.$store.state.token
+                'X-Authorization': 'Bearer ' + this.$store.state.token,
+                "Content-Type": "application/json;charset=UTF-8",
               }
             }).then((res)=>{
                 console.log(res,'绑定成功');

@@ -244,7 +244,7 @@
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/authentication/capitPwd',
             method: 'POST',
-            params: {
+            data: {
               password: that.bindFullPsd,
               confirmPwd: that.bindFullPsds,
               types: that.types,
@@ -252,7 +252,8 @@
             },
             headers: {
               "X-Requested-With": "XMLHttpRequest",
-              'X-Authorization': 'Bearer ' + that.$store.state.token
+              'X-Authorization': 'Bearer ' + that.$store.state.token,
+              "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((res)=>{
               console.log(res,'设置成功');

@@ -212,10 +212,29 @@
           <div id="myChart_k"></div>
         </div>
         <div class="delegate-panel">
-          <div class="delegate-panel-title">委托面板</div>
+          <div class="quotation-center-title">委托面板</div>
           <div class="delegate-panel-btn-down">
-            <span>当前委托</span>
-            <i class="el-icon-caret-bottom"></i>
+            <el-pagination
+              small
+              @current-change="handleCurrentChange2"
+              :current-page="currentPage"
+              layout="prev, pager, next"
+              :total="totalNum1"
+              v-show="newData"
+            >
+            </el-pagination>
+            <el-pagination
+              small
+              @current-change="handleCurrentChange3"
+              :current-page="currentPage"
+              layout="prev, pager, next"
+              :total="totalNum2"
+              v-show="!newData"
+              >
+            </el-pagination>
+            <span v-show="newData">当前委托</span>
+            <span v-show="!newData">历史委托</span>
+            <a href="javascript:;" style="color: #fff;"><i class="el-icon-caret-bottom" @click="getData()"></i></a>
           </div>
           <div class="delegate-panel-data">
             <table class="delegate-panel-data-table">
@@ -228,19 +247,22 @@
                 <td>委托类型</td>
                 <td>委托价格</td>
                 <td>成交均价</td>
-                <td>操作</td>
+                <td v-show="newData">操作</td>
+                <td v-show="!newData">状态</td>
               </tr>
               </thead>
               <tbody class="delegate-panel-data-tbody" v-show="noRecord">
-              <tr v-for="item in panel_data">
-                <td>{{item.timer}}</td>
-                <td>{{item.entrust_num}}</td>
-                <td>{{item.deal_num}}</td>
-                <td>{{item.direction}}</td>
-                <td>{{item.delegate_type}}</td>
-                <td>{{item.entrust_price}}</td>
-                <td>{{item.deal_price}}</td>
-                <td><a href="javascript:">撤单</a></td>
+              <tr v-for="(item,index) in panel_data1" :index="index">
+                <td>{{item.createDate | dateYMDHIS}}</td>
+                <td>{{item.amount}}</td>
+                <td>{{item.dealVolume}}</td>
+                <td>{{item.cammand | translate}}</td>
+                <td>{{item.orderType | translate}}</td>
+                <td>{{item.price | return_}}</td>
+                <td>{{item.dealPrice}}</td>
+                <td v-show="newData"><a href="javascript:;" :code="item.code" :commodity="item.commodity" style="color:#01aaef"
+                       @click="revoke1($event)">撤销</a></td>
+                <td v-show="!newData">{{item.orderStatus|translate}}</td>
               </tr>
               </tbody>
               <tbody class="delegate-panel-data-tbody noRecord" v-show="!noRecord">
@@ -262,7 +284,7 @@
             <router-link to="/register" tag="button">注册</router-link>
           </div>
         </transition>
-        <transition  enter-active-class="animated fadeIn">
+        <transition enter-active-class="animated fadeIn">
           <div class="keYongMoney" v-show="trading_login">
             <div class="tab-header">
               <a href="javascript:;" class='active-tab-btn'>CNY账户</a>
@@ -271,15 +293,15 @@
             <div class="tab-content">
               <div class="cny-content" v-show="cnyAccount">
                 <p><a href="javascript:;" @click="RouterGo()"><i class="iconfont">&#xe6c1;</i></a>
-                  <router-link to="/userIndex">详情</router-link>
+                  <router-link to="/userIndex">详情{{getCNYMoney}}</router-link>
                 </p>
                 <div class="numBGColor">
-                  <p><span>CNY</span><span class="em1">566.12<em></em></span></p>
-                  <p><span>BTC</span><span class="em1">16.12<em></em></span></p>
-                  <p><span>ETH</span><span class="em1">1246.12<em></em></span></p>
-                  <p><span>ETC</span><span class="em1">436.12<em></em></span></p>
-                  <p><span>Qtum</span><span class="em1">56.12<em></em></span></p>
-                  <p><span>LTC</span><span class="em1">1456.12<em></em></span></p>
+                  <p><span>CNY</span><span class="em1">{{CNYCNYNum}}<em></em></span></p>
+                  <p><span>BTC</span><span class="em1">{{BTCCNYNum}}<em></em></span></p>
+                  <p><span>ETH</span><span class="em1">{{ETHCNYNum}}<em></em></span></p>
+                  <p><span>ETC</span><span class="em1">{{ETCCNYNum}}<em></em></span></p>
+                  <!--<p><span>Qtum</span><span class="em1">56.12<em></em></span></p>-->
+                  <p><span>LTC</span><span class="em1">{{LTCCNYNum}}<em></em></span></p>
                 </div>
               </div>
               <div class="cny-content" v-show="!cnyAccount">
@@ -287,39 +309,41 @@
                   <router-link to="/userIndex1">详情</router-link>
                 </p>
                 <div class="numBGColor1">
-                  <p><span>BTC</span><span class="em2">12226.12<em></em></span></p>
-                  <p><span>ETH</span><span class="em2">123456.12<em></em></span></p>
-                  <p><span>ETC</span><span class="em2">1236.12<em></em></span></p>
-                  <p><span>Qtum</span><span class="em2">1256.12<em></em></span></p>
-                  <p><span>LTC</span><span class="em2">1.12<em></em></span></p>
+                  <p><span>BTC</span><span class="em2">{{BTCBTCNum}}<em></em></span></p>
+                  <p><span>ETH</span><span class="em2">{{ETHBTCNum}}<em></em></span></p>
+                  <p><span>ETH</span><span class="em2">{{ETHBTCNum}}<em></em></span></p>
+                  <p><span>ETC</span><span class="em2">{{ETCBTCNum}}<em></em></span></p>
+                  <!--<p><span>Qtum</span><span class="em2">1256.12<em></em></span></p>-->
+                  <p><span>LTC</span><span class="em2">{{LTCBTCNum}}<em></em></span></p>
                 </div>
               </div>
             </div>
           </div>
         </transition>
 
-        <div class="quotation-center-title">资产</div>
+        <div class="quotation-center-title">买 / 卖</div>
         <div class="business-box">
           <div class="business-tab-btn-classStyle">
             <a href="javascript:" class="border-bottom-color-w" @click="businessBuy_tab()">买入</a>
             <a href="javascript:" @click="businessSell_tab()">卖出</a>
           </div>
           <div class="business-btn-priceStyle">
-            <a href="javascript:" :class="trading_style? 'background-green':'background-red'">现价</a>
-            <a href="javascript:">市价</a>
+            <a href="javascript:" :class="trading_style? 'background-green':'background-red'"
+               @click="businessStyle1_tab()">现价</a>
+            <a href="javascript:" @click="businessStyle2_tab()">市价</a>
           </div>
-          <div class="business-input-box">
+          <div class="business-input-box" v-show="businessStyle1">
             <span>价格</span>
             <div class="business-input-price">
               <input v-model="business_price"/>
-              <span>CNY</span>
+              <span>{{account}}</span>
             </div>
           </div>
-          <div class="business-input-box">
+          <div class="business-input-box" v-show="businessStyle2">
             <span>数量</span>
             <div class="business-input-num">
               <input v-model="business_num"/>
-              <span>BTC</span>
+              <span>{{cunency}}</span>
             </div>
           </div>
           <div class="business-input-line"></div>
@@ -328,9 +352,9 @@
             <span>1234567.78</span>
           </div>
           <div class="business-submit-box">
-            <button class="background-green" @click="businessBuy()" v-show="trading_style && trading_login">买入</button>
+            <button class="background-green" @click="businessTran()" v-show="trading_style && trading_login">买入</button>
             <button class="gray" v-show="trading_style && !trading_login">买入</button>
-            <button class="background-red" @click="businessSell()" v-show="!trading_style && trading_login">卖出</button>
+            <button class="background-red" @click="businessTran()" v-show="!trading_style && trading_login">卖出</button>
             <button class="gray" v-show="!trading_style && !trading_login">卖出</button>
           </div>
         </div>
@@ -343,6 +367,7 @@
 </template>
 <script>
   import $ from 'jquery';
+  import Qs from 'qs'
   import TKLogin from '../components/lettle_components/TKLogin.vue';
   export default {
     data() {
@@ -440,110 +465,40 @@
           {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
           {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true}
         ],
-        panel_data: [
-          {
-            timer: '02-02 13:12:12',
-            entrust_num: 123.12345678,
-            deal_num: 123.12345678,
-            direction: '买入',
-            delegate_type: '市价买入',
-            entrust_price: 1234.12,
-            deal_price: 1234.12
-          },
-          {
-            timer: '02-02 13:12:12',
-            entrust_num: 123.12345678,
-            deal_num: 123.12345678,
-            direction: '买入',
-            delegate_type: '市价买入',
-            entrust_price: 1234.12,
-            deal_price: 1234.12
-          },
-          {
-            timer: '02-02 13:12:12',
-            entrust_num: 123.12345678,
-            deal_num: 123.12345678,
-            direction: '买入',
-            delegate_type: '市价买入',
-            entrust_price: 1234.12,
-            deal_price: 1234.12
-          },
-          {
-            timer: '02-02 13:12:12',
-            entrust_num: 123.12345678,
-            deal_num: 123.12345678,
-            direction: '买入',
-            delegate_type: '市价买入',
-            entrust_price: 1234.12,
-            deal_price: 1234.12
-          },
-          {
-            timer: '02-02 13:12:12',
-            entrust_num: 123.12345678,
-            deal_num: 123.12345678,
-            direction: '买入',
-            delegate_type: '市价买入',
-            entrust_price: 1234.12,
-            deal_price: 1234.12
-          },
-          {
-            timer: '02-02 13:12:12',
-            entrust_num: 123.12345678,
-            deal_num: 123.12345678,
-            direction: '买入',
-            delegate_type: '市价买入',
-            entrust_price: 1234.12,
-            deal_price: 1234.12
-          },
-          {
-            timer: '02-02 13:12:12',
-            entrust_num: 123.12345678,
-            deal_num: 123.12345678,
-            direction: '买入',
-            delegate_type: '市价买入',
-            entrust_price: 1234.12,
-            deal_price: 1234.12
-          },
-          {
-            timer: '02-02 13:12:12',
-            entrust_num: 123.12345678,
-            deal_num: 123.12345678,
-            direction: '买入',
-            delegate_type: '市价买入',
-            entrust_price: 1234.12,
-            deal_price: 1234.12
-          },
-          {
-            timer: '02-02 13:12:12',
-            entrust_num: 123.12345678,
-            deal_num: 123.12345678,
-            direction: '买入',
-            delegate_type: '市价买入',
-            entrust_price: 1234.12,
-            deal_price: 1234.12
-          },
-          {
-            timer: '02-02 13:12:12',
-            entrust_num: 123.12345678,
-            deal_num: 123.12345678,
-            direction: '买入',
-            delegate_type: '市价买入',
-            entrust_price: 1234.12,
-            deal_price: 1234.12
-          }
-        ],
         coinStyle: [
           {coinStyle: 'BTC/USD', price: '$2336.71', range: '1.14%', trend: true},
           {coinStyle: 'BTC/USD', price: '$2336.71', range: '1.14%', trend: true},
           {coinStyle: 'BTC/USD', price: '$2336.71', range: '1.14%', trend: false}
         ],
         warningData: [],
-        noRecord: true,
-        business_price: 0.00,
-        business_num: 0.00,
+        panel_data1: [],
+        noRecord: false,
+        business_price: '',
+        business_num: '',
         trading_style: true,
         cnyAccount: true,
-        userNumM:''
+        userNumM: '',
+        CNYCNYNum: 0,
+        BTCCNYNum: 0,
+        LTCCNYNum: 0,
+        ETHCNYNum: 0,
+        ETCCNYNum: 0,
+        BTCBTCNum: 0,
+        LTCBTCNum: 0,
+        ETCBTCNum: 0,
+        ETHBTCNum: 0,
+        businessStyle1: true,
+        businessStyle2: true,
+        commodity: '',
+        types: '',
+        price: '',
+        amount: '',
+        account: 'CNY',
+        cunency: 'BTC',
+        newData: true,
+        currentPage:1,
+        totalNum1:0,
+        totalNum2:0,
       }
     },
     components: {
@@ -599,28 +554,6 @@
         })
       }
       {
-        let max=[];
-        for (let i = 0; i < $('.em1').length; i++) {
-          max.push(Number($('.em1').eq(i).text()));
-      }//算血条长度
-        for (let i = 0; i < $('.em1').length; i++) {
-            $('.em1').eq(i).find('em').css({
-              width: Number($('.em1').eq(i).text()) * 100 / Math.max.apply(null, max) + '%'
-            })
-          }
-      }
-      {
-        let max=[];
-        for (let i = 0; i < $('.em2').length; i++) {
-          max.push(Number($('.em2').eq(i).text()));
-        }//算血条长度
-        for (let i = 0; i < $('.em2').length; i++) {
-          $('.em2').eq(i).find('em').css({
-            width: Number($('.em2').eq(i).text()) * 100 / Math.max.apply(null, max) + '%'
-          })
-        }
-      }
-      {
         let that = this;
         that.$http({
           url: 'http://192.168.1.48:8089/fwex/web/account/info',
@@ -639,22 +572,63 @@
       }
 //      k线启动
       this.drawLineK();
+      this.panel_data(1);
+
     },
     methods: {
-      businessBuy() {
-        return true;
-      },
-      businessSell() {
-        return true;
-      },
+      businessTran() {
+        this.getTypes();
+        this.getCommodity();
+        this.$http({
+          url: 'http://192.168.1.48:8089/fwex/web/trade/entrust',
+          method: 'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          data: {
+            commodity: this.commodity,
+            types: this.types,
+            price: this.business_price,
+            amount: this.amount,
+            source: 'WEB'
+          }
+        }).then((res) => {
+          console.log(res);
+          if (res.data.code === 200) {
+            this.newData=true;
+            this.panel_data(1);
+            console.log(res.data.message)
+          }
+        }).catch((req) => {
+          console.log(req, '请求失败')
+        })
+      },//交易
+      getData() {
+        this.newData = !this.newData;
+        if(this.newData){
+            this.panel_data(1);
+        }else {
+            this.pane1_oldData(1)
+        }
+      },//获取委托
       TKShowTrue(){
         this.$store.state.TKShow = true
       },
       businessBuy_tab() {
+        this.business_price = '';
+        this.business_num = '';
         this.trading_style = true;
+        this.businessStyle1 = true;
+        this.businessStyle2 = true;
       },
       businessSell_tab() {
+        this.business_price = '';
+        this.business_num = '';
         this.trading_style = false;
+        this.businessStyle1 = true;
+        this.businessStyle2 = true;
       },
 //      截屏
       screenshot() {
@@ -985,13 +959,174 @@
         })
       },
       RouterGo() {
-          this.$router.go(0)
+        this.$router.go(0)
       },
       KTClose() {
         sessionStorage.removeItem('token');
         this.$store.state.token = '';
         this.$store.state.loginTrue = false;
         this.$store.dispatch('loginStateFalse');
+      },
+      //计算血条em1
+      computedLang1() {
+        let max = [];
+        for (let i = 0; i < $('.em1').length; i++) {
+          max.push(Number($('.em1').eq(i).text()));
+        }//算血条长度
+        for (let i = 0; i < $('.em1').length; i++) {
+          $('.em1').eq(i).find('em').css({
+            width: Number($('.em1').eq(i).text()) * 100 / Math.max.apply(null, max) + '%'
+          })
+        }
+      },
+      computedLang2(){
+        let max = [];
+        for (let i = 0; i < $('.em2').length; i++) {
+          max.push(Number($('.em2').eq(i).text()));
+        }//算血条长度
+        for (let i = 0; i < $('.em2').length; i++) {
+          $('.em2').eq(i).find('em').css({
+            width: Number($('.em2').eq(i).text()) * 100 / Math.max.apply(null, max) + '%'
+          })
+        }
+      },
+      businessStyle1_tab(){
+        this.business_price = '';
+        this.business_num = '';
+        if (this.trading_style) {
+          this.businessStyle1 = true;
+          this.businessStyle2 = true;
+        } else {
+          this.businessStyle1 = true;
+          this.businessStyle2 = true;
+        }
+      },
+      businessStyle2_tab(){
+        this.business_price = '';
+        this.business_num = '';
+        if (this.trading_style) {
+          this.businessStyle1 = true;
+          this.businessStyle2 = false;
+        } else {
+          this.businessStyle1 = false;
+          this.businessStyle2 = true;
+        }
+      },
+      getTypes() {
+        if (this.trading_style) {
+          //买
+          console.log("买");
+          if (this.businessStyle2) {
+            console.log('限价买');
+            this.amount = this.business_num;
+            this.types = 'B_LIMITED';
+          } else {
+            console.log('市价买');
+            this.amount = this.business_price;
+            this.types = 'B_MARKET';
+          }
+        } else {
+          //卖
+          console.log("卖");
+          if (this.businessStyle1) {
+            console.log('限价卖');
+            this.amount = this.business_num;
+            this.types = 'S_LIMITED';
+          } else {
+            console.log('市价卖');
+            this.types = 'S_MARKET';
+            this.amount = this.business_num;
+          }
+        }
+      },//获取买卖方式
+      getCommodity(){
+        this.commodity = this.cunency + this.account;
+        console.log(this.commodity);
+      },//获取交易品种
+      revoke1(ev) {
+        this.$http({
+          url: 'http://192.168.1.48:8089/fwex/web/trade/cancels/' + ev.target.getAttribute('commodity') + '/' + ev.target.getAttribute('code'),
+          method: 'GET',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token
+          }
+        }).then((res) => {
+          if (res.data.code === 200) {
+            ev.target.parentNode.parentNode.remove()
+          }
+        })
+
+      },
+      panel_data(currentPage) {
+        this.$http({
+          transformRequest: [data => Qs.stringify(data)],
+          url: 'http://192.168.1.48:8089/fwex/web/trade/unsettled',
+          method: 'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          data: {
+            pageNo: currentPage-1,
+            pageSize: 10,
+            param: {
+              commodity: 'BTCCNY'
+            }
+          }
+        }).then((res) => {
+          if (res.data.code === 200) {
+            this.totalNum1 = res.data.data.totalElements;
+            if (res.data.data.totalElements) {
+              this.noRecord = true;
+            }
+            this.panel_data1 = res.data.data.content;
+          } else {
+            console.log(res.data.message)
+          }
+        }).catch((req) => {
+          console.log(req)
+        })
+      },//当前委托
+      pane1_oldData(currentPage) {
+        this.$http({
+          transformRequest: [data => Qs.stringify(data)],
+          url:'http://192.168.1.48:8089/fwex/web/trade/history',
+          method: 'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          data: {
+            pageNo: currentPage-1,
+            pageSize: 10,
+            param: {
+              commodity: 'BTCCNY',
+            }
+          }
+        }).then((res) => {
+          console.log(res)
+          if (res.data.code === 200) {
+            this.totalNum2 = res.data.data.totalElements;
+            if(res.data.data.totalElements){
+              this.noRecord=true;
+            }
+            this.panel_data1=res.data.data.content;
+            console.log(res.data.data)
+          } else {
+            console.log(res.data.message)
+          }
+        }).catch((req) => {
+          console.log(req)
+        })
+      },
+      handleCurrentChange2(currentPage){
+        this.panel_data(currentPage)
+      },
+      handleCurrentChange3(currentPage){
+        this.pane1_oldData(currentPage)
       }
     },
     computed: {
@@ -1000,7 +1135,61 @@
       },
       trading_login() {
         return this.$store.state.loginState;
-      }
+      },
+      getCNYMoney() {
+        this.$http({
+          url: 'http://192.168.1.48:8089/fwex/web/capital/info',
+          method: 'GET',
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'X-Authorization': 'Bearer ' + this.$store.state.token
+          }
+        }).then((res) => {
+          if (res.data.code === 200) {
+            for (let i = 0; i < res.data.data.length; i++) {
+              if (res.data.data[i].legalMoney === 'CNY') {
+                if (res.data.data[i].currency === 'CNY') {
+                  this.CNYCNYNum = res.data.data[i].balance;
+                }
+                if (res.data.data[i].currency === 'BTC') {
+                  this.BTCCNYNum = res.data.data[i].balance;
+                }
+                if (res.data.data[i].currency === 'LTC') {
+                  this.LTCCNYNum = res.data.data[i].balance;
+                }
+                if (res.data.data[i].currency === 'ETH') {
+                  this.ETHCNYNum = res.data.data[i].balance;
+                }
+                if (res.data.data[i].currency === 'ETC') {
+                  this.ETCCNYNum = res.data.data[i].balance;
+                }
+              }
+              if (res.data.data[i].legalMoney === 'BTC') {
+                if (res.data.data[i].currency === 'BTC') {
+                  this.BTCBTCNum = res.data.data[i].balance;
+                }
+                if (res.data.data[i].currency === 'LTC') {
+                  this.LTCBTCNum = res.data.data[i].balance;
+                }
+                if (res.data.data[i].currency === 'ETH') {
+                  this.ETHBTCNum = res.data.data[i].balance;
+                }
+                if (res.data.data[i].currency === 'ETC') {
+                  this.ETCBTCNum = res.data.data[i].balance;
+                }
+              }
+            }
+
+          }
+          console.log(res, '资金信息')
+        }).then(() => {
+          this.computedLang1();
+          this.computedLang2();
+        }).catch((req) => {
+          console.log(req, '获取失败')
+        })
+      },
+
     }
   }
 </script>
@@ -1009,21 +1198,25 @@
     width: 100%;
     height: 100%;
   }
-.login-show-box-k{
-  display: flex;
-  align-items: center;
-  flex: 1;
-  justify-content: flex-end;
-  margin-right: 5rem;
-  color: #000;
-}
-.login-show-box-k img{
-  width:35px;
-}
-.login-show-box-k>span{
-  margin: 0 1rem;
-  font-size: 1.167rem;
-}
+
+  .login-show-box-k {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-end;
+    margin-right: 5rem;
+    color: #000;
+  }
+
+  .login-show-box-k img {
+    width: 35px;
+  }
+
+  .login-show-box-k > span {
+    margin: 0 1rem;
+    font-size: 1.167rem;
+  }
+
   .keYongMoney .tab-header {
     display: flex;
     font-size: 1.367rem;
@@ -1033,12 +1226,15 @@
     width: 80%;
     margin: 0 auto;
   }
-  .login-show-box-k>a{
+
+  .login-show-box-k > a {
     color: #01aaef;
   }
-  .login-show-box-k>a:hover{
+
+  .login-show-box-k > a:hover {
     text-decoration: underline;
   }
+
   .keYongMoney .tab-header > a {
     color: grey;
     font-weight: bold;

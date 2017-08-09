@@ -135,7 +135,7 @@
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
-            'X-Authorization': 'Bearer ' + that.$store.state.token
+            'X-Authorization': 'Bearer ' + that.$store.state.token,
           }
         }).then((res) => {
           that.CBank = res.data.data;
@@ -157,7 +157,6 @@
               that.$store.state.bankId.ABC = res.data.data[i].id;
             }
           }
-          console.log(that.$store.state.bankId,676786768766678678)
         }).catch((req) => {
           console.log("出错了")
         })
@@ -293,7 +292,7 @@
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/authentication/realNameAuth',
             method: 'POST',
-            params: {
+            data: {
               country: that.country,
               userName: that.RUserName,
               idCard: that.RIDCard,
@@ -307,7 +306,8 @@
             },
             headers: {
               "X-Requested-With": "XMLHttpRequest",
-              'X-Authorization': 'Bearer ' + that.$store.state.token
+              'X-Authorization': 'Bearer ' + that.$store.state.token,
+              "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((res)=>{
               that.$router.push('/settings');

@@ -196,6 +196,7 @@
         that.$http({
           url: 'http://192.168.1.48:8089/fwex/web/capital/info',
           method: 'GET',
+          data:{},
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + that.$store.state.token

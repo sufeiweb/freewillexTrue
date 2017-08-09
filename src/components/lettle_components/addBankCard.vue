@@ -199,7 +199,7 @@
           that.$http({
             url: 'http://192.168.1.120:8089/fwex/web/accountBank/bind',
             method: 'POST',
-            params: {
+            data: {
               bankId: that.RBankVal,
               bankAddr: that.bankAdr,
               bankBranch: that.bankName,
@@ -208,7 +208,8 @@
             },
             headers: {
               "X-Requested-With": "XMLHttpRequest",
-              'X-Authorization': 'Bearer ' + that.$store.state.token
+              "Content-Type": "application/json;charset=UTF-8",
+              'X-Authorization': 'Bearer ' + that.$store.state.token,
             }
           }).then((res)=>{
             console.log(res,'绑定')

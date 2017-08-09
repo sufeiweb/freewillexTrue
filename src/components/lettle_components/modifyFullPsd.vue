@@ -248,7 +248,7 @@
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/account/updatePwd',
             method: 'POST',
-            params: {
+            data: {
               password: that.modifyFullPsd,
               confirmPwd: that.modifyFullPsds,
               types: that.types,
@@ -256,7 +256,8 @@
             },
             headers: {
               "X-Requested-With": "XMLHttpRequest",
-              'X-Authorization': 'Bearer ' + that.$store.state.token
+              'X-Authorization': 'Bearer ' + that.$store.state.token,
+              "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((res) => {
             console.log(res, '设置成功');

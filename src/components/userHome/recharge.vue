@@ -397,9 +397,10 @@
           method:'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'X-Authorization': 'Bearer ' + this.$store.state.token
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+            "Content-Type": "application/json;charset=UTF-8",
           },
-          params:{
+          data:{
             accountBankId:this.accountBankId,
             commodity:this.commodity,
             currency:this.currency,

@@ -157,7 +157,7 @@
         <div class="hangqing"></div>
       </div>
     </div>
-    <entrustedRecord></entrustedRecord>
+    <entrustedRecord v-if="shuaxin"></entrustedRecord>
   </div>
 </template>
 <script>
@@ -181,7 +181,8 @@
         commodity:'',//交易品种
         types:'',//类型
         price:'',//价格
-        amount:''//数量
+        amount:'',//数量
+        shuaxin:true
       }
     },
     components: {
@@ -227,9 +228,10 @@
             method:'POST',
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
-              'X-Authorization': 'Bearer ' + this.$store.state.token
+              'X-Authorization': 'Bearer ' + this.$store.state.token,
+              "Content-Type":"application/json;charset=UTF-8"
             },
-            params: {
+            data: {
               commodity:this.commodity,
               types:this.types,
               price:this.price,
@@ -239,8 +241,11 @@
           }).then((res)=>{
               console.log(res);
               if(res.data.code===200){
+                  this.shuaxin=false;
                   console.log(res.data.message)
               }
+          }).then(()=>{
+            this.shuaxin=true;
           }).catch((req)=>{
               console.log(req,'请求失败')
           })

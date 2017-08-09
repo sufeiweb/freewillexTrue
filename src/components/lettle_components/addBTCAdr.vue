@@ -75,9 +75,10 @@
             method:'POST',
             headers: {
               "X-Requested-With": "XMLHttpRequest",
-              'X-Authorization': 'Bearer ' + that.$store.state.token
+              'X-Authorization': 'Bearer ' + that.$store.state.token,
+              "Content-Type": "application/json;charset=UTF-8",
             },
-            params: {
+            data: {
               currency: that.currencyStyle,
               address: that.currencyAdr,
               tags: that.tags,

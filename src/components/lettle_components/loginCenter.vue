@@ -54,11 +54,21 @@
     </div>
     <div class="login-box-content login-show-box-user" v-show="loginTrue">
       <p class="title">登录{{getUserM}}</p>
-      <section><span>您好，{{userLoginName | phoneStar}}</span><i class="iconfont" v-show="showMoney" @click="showMoney=!showMoney">&#xe6a6;</i><i class="iconfont" v-show="!showMoney"  @click="showMoney=!showMoney">&#xe692;</i></section>
-      <section><span>总资产</span><span>￥</span><span v-show="showMoney">{{totalAssets}}</span><span v-show="!showMoney">--</span></section>
-      <section><span>净资产</span><span>￥</span><span v-show="showMoney">{{netAssets}}</span><span v-show="!showMoney">--</span></section>
-      <section><router-link to="/business">买/卖</router-link></section>
-      <section><router-link to="/recharge">充值</router-link>|<router-link to="/cash">提现</router-link></section>
+      <section><span>您好，{{userLoginName | phoneStar}}</span><i class="iconfont" v-show="showMoney"
+                                                               @click="showMoney=!showMoney">&#xe6a6;</i><i
+        class="iconfont" v-show="!showMoney" @click="showMoney=!showMoney">&#xe692;</i></section>
+      <section><span>总资产</span><span>￥</span><span v-show="showMoney">{{totalAssets}}</span><span
+        v-show="!showMoney">--</span></section>
+      <section><span>净资产</span><span>￥</span><span v-show="showMoney">{{netAssets}}</span><span
+        v-show="!showMoney">--</span></section>
+      <section>
+        <router-link to="/business">买/卖</router-link>
+      </section>
+      <section>
+        <router-link to="/recharge">充值</router-link>
+        |
+        <router-link to="/cash">提现</router-link>
+      </section>
     </div>
   </div>
 </template>
@@ -70,10 +80,10 @@
         login_style1: true,
         userName: '',
         userPassword: '',
-        showMoney:true,
-        userLoginName:'',
-        totalAssets:'',
-        netAssets:''
+        showMoney: true,
+        userLoginName: '',
+        totalAssets: '',
+        netAssets: ''
       }
     },
     mounted() {
@@ -113,40 +123,26 @@
             "loginPwd": that.userPassword
           },
           headers: {
-            "X-Requested-With": "XMLHttpRequest"
+            "X-Requested-With": "XMLHttpRequest",
+            "Content-Type": "application/json;charset=UTF-8",
           }
         }).then(function (data) {
           console.log(data);
           that.$store.dispatch('loginStateTrue');
           sessionStorage.setItem('token', data.data.data);
-          that.$store.state.loginTrue=true;
+          that.$store.state.loginTrue = true;
           that.$store.state.realName.userPsd = true;
           that.$store.state.token = data.data.data;
           let loginPattern = /0?^(13|14|15|18|17)[0-9]{9}/;
-          if(loginPattern.test(that.userName)){
+          if (loginPattern.test(that.userName)) {
             that.$store.state.realName.userPhone = true;
             that.$store.state.realName.userPhoneNum = that.userName;
-          }else {
+          } else {
             that.$store.state.realName.userEmail = true;
             that.$store.state.realName.userEmailNum = that.userName;
           }
           that.$router.push('/user');
-//          that.$http({
-//            url: 'http://192.168.1.48:8089/api/user/register',
-//            method: 'POST',
-//            data:{
-//              "loginUser": that.userName,
-//              "loginPwd": that.userPassword
-//            },
-//            headers:{
-//              "X-Requested-With":"XMLHttpRequest",
-//              "X-Authorization":localStorage.getItem('token')
-//            }
-//          }).then((data)=>{
-//              console.log(data,"token")
-//          }).catch((error)=>{
-//              console.log(error,"111wwwwww")
-//          })
+
         }).catch(function () {
           that.$store.dispatch('loginStateFalse');
           sessionStorage.removeItem('token');
@@ -154,22 +150,23 @@
       },//帐号登录
     },
     computed: {
-        loginTrue() {
-            return  this.$store.state.loginTrue;
-        },
+      loginTrue() {
+        return this.$store.state.loginTrue;
+      },
       getUserM() {
         let that = this;
-        if(this.$store.state.token){
+        if (this.$store.state.token) {
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/account/info',
             method: 'GET',
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
-              'X-Authorization': 'Bearer ' + that.$store.state.token
+              'X-Authorization': 'Bearer ' + that.$store.state.token,
+              'Content-Type': 'application/json'
             }
           }).then((res) => {
             console.log(res, '请求成功')
-            if(res.data.code==200){
+            if (res.data.code == 200) {
               that.userLoginName = res.data.data.loginUser;
               console.log(res.data.data, '请求成功')
             }
@@ -197,9 +194,11 @@
   .login-box {
     position: relative;
   }
-.login-show-box-user{
-  color: #fff;
-}
+
+  .login-show-box-user {
+    color: #fff;
+  }
+
   .login-box-content {
     position: absolute;
     right: 18%;
@@ -318,10 +317,12 @@
   .qr-code-footer-mobile:hover {
     color: #5b9bd1;
   }
-  .login-show-box-user .title{
+
+  .login-show-box-user .title {
     margin-bottom: 1.25rem;
   }
-  .login-show-box-user section{
+
+  .login-show-box-user section {
     width: 80%;
     margin: 0 auto;
     margin-bottom: 3rem;
@@ -331,57 +332,71 @@
     color: #b3b3b3;
     min-height: 26px;
   }
-  .login-show-box-user section:last-child{
+
+  .login-show-box-user section:last-child {
     margin-bottom: 0;
     justify-content: center;
   }
-  .login-show-box-user section a{
+
+  .login-show-box-user section a {
     color: #b3b3b3;
   }
-  .login-show-box-user section i{
+
+  .login-show-box-user section i {
     cursor: pointer;
     font-size: 22px;
   }
-  .login-show-box-user section:nth-of-type(1){
+
+  .login-show-box-user section:nth-of-type(1) {
     justify-content: space-between;
   }
-  .login-show-box-user section:nth-of-type(1)>span{
+
+  .login-show-box-user section:nth-of-type(1) > span {
     margin-left: 50px;
   }
-  .login-show-box-user section:nth-of-type(2),.login-show-box-user section:nth-of-type(3){
+
+  .login-show-box-user section:nth-of-type(2), .login-show-box-user section:nth-of-type(3) {
     align-items: flex-end;
   }
-  .login-show-box-user section:nth-of-type(2)>span,.login-show-box-user section:nth-of-type(3)>span{
+
+  .login-show-box-user section:nth-of-type(2) > span, .login-show-box-user section:nth-of-type(3) > span {
     color: #fff;
   }
-  .login-show-box-user section:nth-of-type(2)>span:nth-of-type(1),.login-show-box-user section:nth-of-type(3)>span:nth-of-type(1){
+
+  .login-show-box-user section:nth-of-type(2) > span:nth-of-type(1), .login-show-box-user section:nth-of-type(3) > span:nth-of-type(1) {
     color: #b3b3b3;
     margin-left: 1.5rem;
     margin-right: 2rem;
   }
-  .login-show-box-user section:nth-of-type(2)>span:nth-of-type(3),.login-show-box-user section:nth-of-type(3)>span:nth-of-type(3){
-font-size: 22px;
+
+  .login-show-box-user section:nth-of-type(2) > span:nth-of-type(3), .login-show-box-user section:nth-of-type(3) > span:nth-of-type(3) {
+    font-size: 22px;
   }
-  .login-show-box-user section:nth-of-type(4){
+
+  .login-show-box-user section:nth-of-type(4) {
     margin-bottom: 1.5rem;
 
   }
-  .login-show-box-user section:nth-of-type(4)>a{
+
+  .login-show-box-user section:nth-of-type(4) > a {
     width: 100%;
     background: #01aaef;
     color: #fff;
     padding: 9px;
-    text-align:center;
+    text-align: center;
     font-size: 1.167rem;
   }
-  .login-show-box-user section:nth-of-type(4)>a:hover{
-    background:#0186bc;
+
+  .login-show-box-user section:nth-of-type(4) > a:hover {
+    background: #0186bc;
   }
-  .login-show-box-user section:nth-of-type(5)>a{
+
+  .login-show-box-user section:nth-of-type(5) > a {
     font-size: 1.167rem;
     margin: 0 0.5rem;
   }
-  .login-show-box-user section:nth-of-type(5)>a:hover{
+
+  .login-show-box-user section:nth-of-type(5) > a:hover {
     color: #01aaef;
     text-decoration: underline;
   }

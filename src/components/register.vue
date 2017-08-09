@@ -214,7 +214,7 @@
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/register',
             method: 'POST',
-            params: {
+            data: {
               loginUser: that.userNameE,
               loginPwd: that.userPasswordE,
               cifLoginPwd: that.userPasswordsE,
@@ -224,7 +224,8 @@
               captch: that.captchE
             },
             headers:{
-              "X-Requested-With":"XMLHttpRequest"
+              "X-Requested-With":"XMLHttpRequest",
+              "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((data) => {
             //          push路由
@@ -249,7 +250,7 @@
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/register',
             method: 'POST',
-            params: {
+            data: {
               loginUser: that.userNameM,
               loginPwd: that.userPasswordM,
               cifLoginPwd: that.userPasswordsM,
@@ -259,7 +260,8 @@
               captch: that.captchM
             },
             headers:{
-              "X-Requested-With":"XMLHttpRequest"
+              "X-Requested-With":"XMLHttpRequest",
+              "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((data) => {
             //          push路由
@@ -409,7 +411,7 @@
 //            that.$http({
 //              url: 'http://192.168.1.48:8089/fwex/web/register/check',
 //              method:'GET',
-//              params:{
+//              data:{
 //                loginUser:that.userNameM
 //              },
 //              headers:{
