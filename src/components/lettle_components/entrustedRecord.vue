@@ -140,7 +140,6 @@
     methods: {
       handleCurrentChange: function (currentPage) {
         this.$http({
-          transformRequest: [data => Qs.stringify(data)],
           url: 'http://192.168.1.48:8089/fwex/web/trade/unsettled',
           method: 'POST',
           headers: {
@@ -173,7 +172,6 @@
       handleCurrentChange1:function (currentPage) {
           console.log(currentPage);
         this.$http({
-          transformRequest: [data => Qs.stringify(data)],
           url:'http://192.168.1.48:8089/fwex/web/trade/history',
           method: 'POST',
           headers: {

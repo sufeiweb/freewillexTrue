@@ -9,13 +9,13 @@
         <input name="select-account-cash" type="radio" id="account-cny-cash" value="1" checked/>
         <label for="account-cny-cash" class="recharge-group-radio-checked">
           <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
-          <i class="iconfont">&#xe650;</i>
+         <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
         <input name="select-account-cash" type="radio" id="account-btc-cash" value="2"/>
         <label for="account-btc-cash">
           <span><span><i class="iconfont">&#xe664;</i></span></span>
-          <i class="iconfont">&#xe650;</i>
+          <span class="iconFont a2"></span>
           <span>BTC账户</span>
         </label>
       </div>
@@ -29,31 +29,31 @@
           <input name="select-currency-cash" type="radio" id="recharge-currency-cny-cash" value="1" checked/>
           <label for="recharge-currency-cny-cash" class="recharge-group-radio-checked">
             <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a1"></span>
             <span>CNY</span>
           </label>
           <input name="select-currency-cash" type="radio" id="recharge-currency-cny-btc-cash" value="2"/>
           <label for="recharge-currency-cny-btc-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a2"></span>
             <span>BTC</span>
           </label>
           <input name="select-currency-cash" type="radio" id="recharge-currency-cny-ltc-cash" value="3"/>
           <label for="recharge-currency-cny-ltc-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a3"></span>
             <span>LTC</span>
           </label>
           <input name="select-currency-cash" type="radio" id="recharge-currency-cny-eth-cash" value="4"/>
           <label for="recharge-currency-cny-eth-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a4"></span>
             <span>ETH</span>
           </label>
           <input name="select-currency-cash" type="radio" id="recharge-currency-cny-etc-cash" value="5"/>
           <label for="recharge-currency-cny-etc-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a5"></span>
             <span>ETC</span>
           </label>
         </div>
@@ -63,25 +63,25 @@
           <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-btc1-cash" value="1"/>
           <label for="recharge-currency-cny-btc1-cash" class="recharge-group-radio-checked">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a2"></span>
             <span>BTC</span>
           </label>
           <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-ltc1-cash" value="2"/>
           <label for="recharge-currency-cny-ltc1-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a3"></span>
             <span>LTC</span>
           </label>
           <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-eth1-cash" value="3"/>
           <label for="recharge-currency-cny-eth1-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a4"></span>
             <span>ETH</span>
           </label>
           <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-etc1-cash" value="4"/>
           <label for="recharge-currency-cny-etc1-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a5"></span>
             <span>ETC</span>
           </label>
         </div>
@@ -336,8 +336,6 @@
           }
         }).then((res) => {
           that.userBank = res.data.data;
-          console.log(res.data.data, 1222211)
-          console.log(typeof res.data.data[0].abbreviation)
         }).catch((req) => {
           console.log(req, '请求错误')
         })
@@ -350,7 +348,36 @@
     padding: 0 1.667rem 0 3.333rem;
     font-size: 1.167rem;
   }
+  .iconFont{
+    width: 22px;
+    height: 22px;
+    margin: .5rem;
 
+  }
+  .recharge-group-radio-checked .a1,.recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5{
+    background-position: 0;
+  }
+  .a1{
+    background: url("../../assets/img/iconPng/CNYzhanghu.png");
+    background-position: -22px;
+
+  }
+  .a2{
+    background: url("../../assets/img/iconPng/BTCzhanghu.png");
+    background-position: -22px;
+  }
+  .a3{
+    background: url("../../assets/img/iconPng/LTC.png");
+    background-position: -22px;
+  }
+  .a4{
+    background: url("../../assets/img/iconPng/ETH.png");
+    background-position: -22px;
+  }
+  .a5{
+    background: url("../../assets/img/iconPng/ETC.png");
+    background-position: -22px;
+  }
   .recharge-group-title {
     display: flex;
     flex-wrap: wrap;

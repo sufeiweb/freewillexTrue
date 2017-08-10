@@ -38,6 +38,9 @@ import rechargeList from '@/components/lettle_components/rechargeList'
 import addBankCard from '@/components/lettle_components/addBankCard'
 import addBTCAdr from '@/components/lettle_components/addBTCAdr'
 import cashLog from '@/components/lettle_components/cashLog'
+import dealRegister from '@/components/text_components/dealRegister'
+import dealAml from '@/components/text_components/dealAml'
+import dealRates from '@/components/text_components/dealRates'
 
 
 Vue.use(Router);
@@ -50,6 +53,9 @@ export default new Router({
     {path: '/register', name: 'register', component: register},
     {path: '/passwordRetrieval', name: 'passwordRetrieval', component: passwordRetrieval},
     {path: '/introduction', name: 'introduction', component: introduction},
+    {path: '/dealRegister', name: 'dealRegister', component: dealRegister},
+    {path: '/dealAml', name: 'dealAml', component: dealAml},
+    {path: '/dealRates', name: 'dealRates', component: dealRates},
     {path: '/quotation', name: 'quotation', component: quotation},
     {path: '/broker', name: 'quotation', component: broker, meta: {auth: true}},
     {path: '/userAgreement', name: 'userAgreement', component: userAgreement, meta: {auth: true}},

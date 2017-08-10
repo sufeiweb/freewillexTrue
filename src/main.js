@@ -9,6 +9,8 @@ import router from './router'
 import  store from './store'
 import  echarts from 'echarts'
 import axios from 'axios';
+import Common from './Common';
+Vue.use(Common);
 
 // import VueResource from 'vue-resource'
 // Vue.use(VueResource);

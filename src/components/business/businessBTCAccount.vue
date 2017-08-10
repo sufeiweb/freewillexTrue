@@ -34,19 +34,19 @@
               <input name="select-currencyaaa" type="radio" id="recharge-currency-cny-ltczz11" value="LTC"/>
               <label for="recharge-currency-cny-ltczz11" class="recharge-group-radio-checked">
                 <span><span><i class="iconfont">&#xe664;</i></span></span>
-                <i class="iconfont">&#xe650;</i>
+                <span class="iconFont a3"></span>
                 <span>LTC</span>
               </label>
               <input name="select-currencyaaa" type="radio" id="recharge-currency-cny-ethzz11" value="ETH"/>
               <label for="recharge-currency-cny-ethzz11">
                 <span><span><i class="iconfont">&#xe664;</i></span></span>
-                <i class="iconfont">&#xe650;</i>
+                <span class="iconFont a4"></span>
                 <span>ETH</span>
               </label>
               <input name="select-currencyaaa" type="radio" id="recharge-currency-cny-etczz11" value="ETC"/>
               <label for="recharge-currency-cny-etczz11">
                 <span><span><i class="iconfont">&#xe664;</i></span></span>
-                <i class="iconfont">&#xe650;</i>
+                <span class="iconFont a5"></span>
                 <span>ETC</span>
               </label>
             </div>
@@ -151,7 +151,7 @@
         <div class="hangqing"></div>
       </div>
     </div>
-    <entrustedRecord></entrustedRecord>
+    <entrustedRecord v-if="shuaxin1"></entrustedRecord>
   </div>
 </template>
 <script>
@@ -175,7 +175,8 @@
         commodity:'',//交易品种
         types:'',//类型
         price:'',//价格
-        amount:''//数量
+        amount:'',//数量,
+        shuaxin1:true
       }
     },
     components: {
@@ -236,8 +237,11 @@
         }).then((res)=>{
           console.log(res);
           if(res.data.code===200){
+            this.shuaxin1=false;
             console.log(res.data.message)
           }
+        }).then(()=>{
+          this.shuaxin1=true;
         }).catch((req)=>{
           console.log(req,'请求失败')
         })
@@ -291,7 +295,26 @@
     justify-content: space-between;
     margin-bottom: 1.5%;
   }
-
+  .iconFont{
+    width: 22px;
+    height: 22px;
+    margin: .5rem
+  }
+ .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5{
+    background-position: 0;
+  }
+  .a3{
+    background: url("../../assets/img/iconPng/LTC.png");
+    background-position: -22px;
+  }
+  .a4{
+    background: url("../../assets/img/iconPng/ETH.png");
+    background-position: -22px;
+  }
+  .a5{
+    background: url("../../assets/img/iconPng/ETC.png");
+    background-position: -22px;
+  }
   .content-left {
     width: 66%;
     padding: 3.333rem 5rem;

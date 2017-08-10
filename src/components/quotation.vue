@@ -367,7 +367,6 @@
 </template>
 <script>
   import $ from 'jquery';
-  import Qs from 'qs'
   import TKLogin from '../components/lettle_components/TKLogin.vue';
   export default {
     data() {
@@ -1060,7 +1059,6 @@
       },
       panel_data(currentPage) {
         this.$http({
-          transformRequest: [data => Qs.stringify(data)],
           url: 'http://192.168.1.48:8089/fwex/web/trade/unsettled',
           method: 'POST',
           headers: {
@@ -1091,7 +1089,6 @@
       },//当前委托
       pane1_oldData(currentPage) {
         this.$http({
-          transformRequest: [data => Qs.stringify(data)],
           url:'http://192.168.1.48:8089/fwex/web/trade/history',
           method: 'POST',
           headers: {

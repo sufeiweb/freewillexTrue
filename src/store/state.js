@@ -101,6 +101,6 @@ export default {
     serverYZ: true
   },//绑定银行卡控制
   loginTrue:false,//登录状态
-  TKShow:false,//登录弹窗状态
+  TKShow:false,//登录弹窗状态,
 
 }

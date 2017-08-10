@@ -8,13 +8,13 @@
         <input name="select-account-cash123" type="radio" id="account-cny-cash123" value="1" checked/>
         <label for="account-cny-cash123" class="recharge-group-radio-checked">
           <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
-          <i class="iconfont">&#xe650;</i>
+          <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
         <input name="select-account-cash123" type="radio" id="account-btc-cash124" value="2"/>
         <label for="account-btc-cash124">
           <span><span><i class="iconfont">&#xe664;</i></span></span>
-          <i class="iconfont">&#xe650;</i>
+          <span class="iconFont a2"></span>
           <span>BTC账户</span>
         </label>
       </div>
@@ -25,62 +25,62 @@
       </div>
       <transition enter-active-class="animated fadeIn">
         <div class="recharge-group-radio" v-show="!account">
-          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-cash1231" value="1" checked/>
+          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-cash1231" value="CNY" checked/>
           <label for="recharge-currency-cny-cash1231" class="recharge-group-radio-checked">
             <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a1"></span>
             <span>CNY</span>
           </label>
-          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-btc-cash1232" value="2"/>
+          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-btc-cash1232" value="BTC"/>
           <label for="recharge-currency-cny-btc-cash1232">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a2"></span>
             <span>BTC</span>
           </label>
-          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-ltc-cash1233" value="3"/>
+          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-ltc-cash1233" value="LTC"/>
           <label for="recharge-currency-cny-ltc-cash1233">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a3"></span>
             <span>LTC</span>
           </label>
-          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-eth-cash1234" value="4"/>
+          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-eth-cash1234" value="ETH"/>
           <label for="recharge-currency-cny-eth-cash1234">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a4"></span>
             <span>ETH</span>
           </label>
-          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-etc-cash1235" value="5"/>
+          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-etc-cash1235" value="ETC"/>
           <label for="recharge-currency-cny-etc-cash1235">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a5"></span>
             <span>ETC</span>
           </label>
         </div>
       </transition>
       <transition enter-active-class="animated fadeIn">
         <div class="recharge-group-radio" v-show="account">
-          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-btc1-cash12324" value="1"/>
+          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-btc1-cash12324" value="BTC"/>
           <label for="recharge-currency-cny-btc1-cash12324" class="recharge-group-radio-checked">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a2"></span>
             <span>BTC</span>
           </label>
-          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-ltc1-cash12323" value="2"/>
+          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-ltc1-cash12323" value="LTC"/>
           <label for="recharge-currency-cny-ltc1-cash12323">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a3"></span>
             <span>LTC</span>
           </label>
-          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-eth1-cash12322" value="3"/>
+          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-eth1-cash12322" value="ETH"/>
           <label for="recharge-currency-cny-eth1-cash12322">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a4"></span>
             <span>ETH</span>
           </label>
-          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-etc1-cash12321" value="4"/>
+          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-etc1-cash12321" value="ETC"/>
           <label for="recharge-currency-cny-etc1-cash12321">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a5"></span>
             <span>ETC</span>
           </label>
         </div>
@@ -94,10 +94,10 @@
       <div class="bankCard" v-show="!moneyStyle">
         {{getBindBankCard}}
 
-        <div class="backItem" v-for="item in items">
+        <div class="backItem" v-for="item in itemBanks">
           <div class="imgLogo"><img :src="bankImgUrl[item.abbreviation]" alt=""/><span>储蓄卡</span></div>
           <p>{{item.accountNo | bankNo}}</p>
-          <a href="javascript:;" @click="delBankCard($event)" :bankid="item.bankId">删除该卡</a>
+          <a href="javascript:;" @click="delBankCard($event)" :bankid="item.id">删除该卡</a>
         </div>
         <router-link to="/accountManagement/addBankCard" tag="div" class="backItem addBankCard">
           <i class="iconfont">&#xe689;</i>
@@ -106,12 +106,12 @@
       </div>
       <div class="btcAdr" v-show="moneyStyle">
         <div class="adrItem">
-          <p>QWERTYUIOP987654321ASDFVGbhgfdsaER</p>
+          <p>{{itemAddrs}}</p>
           <p><span>[比特币地址1]</span><a href="javascript:;" @click="delAdr()">删除该地址</a></p>
         </div>
         <router-link to="/accountManagement/addBTCAdr" tag="div" class="adrItem addBankCard">
           <i class="iconfont">&#xe689;</i>
-          <span>添加新银行卡</span>
+          <span>添加新地址</span>
         </router-link>
       </div>
     </div>
@@ -124,7 +124,8 @@
       return {
         account: false,
         moneyStyle: false,
-        items: [],
+        itemBanks: [],
+        itemAddrs: 'QWERTYUIOP987654321ASDFVGbhgfdsaER',
         bankImgUrl: {
           "ABC": require('../../assets/img/banklogo/ABC.png'),
           "BCM": require('../../assets/img/banklogo/BCM.png'),
@@ -167,8 +168,8 @@
       {
         $("input[name='select-currency-cash1231']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account');
-          if ($(this).val() == '1') {
+          console.log($(this).val(), '1');
+          if ($(this).val() === 'CNY') {
             that.moneyStyle = false;
           } else {
             that.moneyStyle = true;
@@ -176,13 +177,12 @@
         })
         $("input[name='select-currency1-cash1232']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account')
+          console.log($(this).val(), '2');
         })
       }//选择提现币种
     },
     methods: {
       delBankCard(ev){
-        console.log(ev.target.getAttribute('bankid'));
         let url = 'http://192.168.1.48:8089/fwex/web/accountBank/cancel/' + ev.target.getAttribute('bankid');
         this.$http({
           url: url,
@@ -192,8 +192,9 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res)=>{
-            console.log(res,'请求成功')
+            console.log(res,'请求成功');
           if(res.data.code ===200){
+              ev.target.parentNode.remove();
                 console.log(res.data.message)
           }
         })
@@ -215,15 +216,13 @@
         }).then((res) => {
           console.log(res, '请求成功');
           if (res.data.code === 200) {
-            that.items = res.data.data;
+            that.itemBanks = res.data.data;
           }
         }).catch((req) => {
           console.log(req, '请求失败')
         });
       },//获取绑定银行卡
-      getBindMoneyAdr(){
 
-      }//获取绑定数字货币地址
     }
   }
 </script>
@@ -238,7 +237,36 @@
     padding: 1.5rem 0;
     margin-bottom: 1.25rem;
   }
+  .iconFont{
+    width: 22px;
+    height: 22px;
+    margin: .5rem;
 
+  }
+  .recharge-group-radio-checked .a1,.recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5{
+    background-position: 0;
+  }
+  .a1{
+    background: url("../../assets/img/iconPng/CNYzhanghu.png");
+    background-position: -22px;
+
+  }
+  .a2{
+    background: url("../../assets/img/iconPng/BTCzhanghu.png");
+    background-position: -22px;
+  }
+  .a3{
+    background: url("../../assets/img/iconPng/LTC.png");
+    background-position: -22px;
+  }
+  .a4{
+    background: url("../../assets/img/iconPng/ETH.png");
+    background-position: -22px;
+  }
+  .a5{
+    background: url("../../assets/img/iconPng/ETC.png");
+    background-position: -22px;
+  }
   .recharge-group-title > a {
     color: #01aaef;
     font-size: 1.167rem;

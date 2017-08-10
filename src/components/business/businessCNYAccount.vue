@@ -34,25 +34,25 @@
               <input name="select-currencyaa" type="radio" id="recharge-currency-cny-btczz1" value="BTC" checked/>
               <label for="recharge-currency-cny-btczz1" class="recharge-group-radio-checked">
                 <span><span><i class="iconfont">&#xe664;</i></span></span>
-                <i class="iconfont">&#xe650;</i>
+                <span class="iconFont a2"></span>
                 <span>BTC</span>
               </label>
               <input name="select-currencyaa" type="radio" id="recharge-currency-cny-ltczz1" value="LTC"/>
               <label for="recharge-currency-cny-ltczz1">
                 <span><span><i class="iconfont">&#xe664;</i></span></span>
-                <i class="iconfont">&#xe650;</i>
+                <span class="iconFont a3"></span>
                 <span>LTC</span>
               </label>
               <input name="select-currencyaa" type="radio" id="recharge-currency-cny-ethzz1" value="ETH"/>
               <label for="recharge-currency-cny-ethzz1">
                 <span><span><i class="iconfont">&#xe664;</i></span></span>
-                <i class="iconfont">&#xe650;</i>
+                <span class="iconFont a4"></span>
                 <span>ETH</span>
               </label>
               <input name="select-currencyaa" type="radio" id="recharge-currency-cny-etczz1" value="ETC"/>
               <label for="recharge-currency-cny-etczz1">
                 <span><span><i class="iconfont">&#xe664;</i></span></span>
-                <i class="iconfont">&#xe650;</i>
+                <span class="iconFont a5"></span>
                 <span>ETC</span>
               </label>
             </div>
@@ -118,10 +118,10 @@
             </div>
           </transition>
           <transition enter-active-class="animated fadeIn">
-            <button class="business-cny-buy" v-show="buyOrSell" @click="transaction()">买入</button>
+            <button class="business-cny-buy" v-show="buyOrSell" @click="transaction($event)">买入</button>
           </transition>
           <transition enter-active-class="animated fadeIn">
-            <button class="business-cny-sell" v-show="!buyOrSell" @click="transaction()">卖出</button>
+            <button class="business-cny-sell" v-show="!buyOrSell" @click="transaction($event)">卖出</button>
           </transition>
         </div>
       </div>
@@ -220,7 +220,8 @@
       }//限价与市价的选择
     },
     methods: {
-      transaction() {
+      transaction(ev) {
+          ev.target.innerHTML='处理中...';
           this.getTypes();
           this.getCommodity();
           this.$http({
@@ -241,12 +242,22 @@
           }).then((res)=>{
               console.log(res);
               if(res.data.code===200){
+                  if(this.buyOrSell){
+                    ev.target.innerHTML='买入';
+                  }else {
+                    ev.target.innerHTML='卖出';
+                  }
                   this.shuaxin=false;
                   console.log(res.data.message)
               }
           }).then(()=>{
             this.shuaxin=true;
           }).catch((req)=>{
+            if(this.buyOrSell){
+              ev.target.innerHTML='买入';
+            }else {
+              ev.target.innerHTML='卖出';
+            }
               console.log(req,'请求失败')
           })
       },
@@ -308,7 +319,30 @@
     justify-content: space-between;
     margin-bottom: 1.5%;
   }
-
+  .iconFont{
+    width: 22px;
+    height: 22px;
+    margin: .5rem
+  }
+  .recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5{
+    background-position: 0;
+  }
+  .a2{
+    background: url("../../assets/img/iconPng/BTCzhanghu.png");
+    background-position: -22px;
+  }
+  .a3{
+    background: url("../../assets/img/iconPng/LTC.png");
+    background-position: -22px;
+  }
+  .a4{
+    background: url("../../assets/img/iconPng/ETH.png");
+    background-position: -22px;
+  }
+  .a5{
+    background: url("../../assets/img/iconPng/ETC.png");
+    background-position: -22px;
+  }
   .content-left {
     width: 66%;
     padding: 3.333rem 5rem;

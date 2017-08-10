@@ -12,17 +12,23 @@
         <div class="footer-header-right">
           <ul class="footer-header-share-box">
             <li class="weChat">
-              <a href="javascript:" class="footer-header-share-weChat" @click="weChatClose">
+              <a href="javascript:" class="footer-header-share-weChat">
                 <i class="iconfont font-size-16">&#xe69f;</i>
               </a>
-              <span class="weChatCode">
+              <transition enterActiveClass="animated zoomInRight" leaveActiveClass="animated zoomOutDown">
+                    <span class="weChatCode" v-show="weChatShow">
                                 <img src="../assets/img/footer/WXcode.jpg" alt="关注微信"/>
                             </span>
+              </transition>
             </li>
-            <li><a href="javascript:" class="footer-header-share-sina"><i class="iconfont font-size-16">&#xe677;</i></a></li>
-            <li><a href="javascript:" class="footer-header-share-tencent"><i class="iconfont font-size-16">&#xe64f;</i></a></li>
-            <li><a href="javascript:" class="footer-header-share-facebook"><i class="iconfont font-size-16">&#xe6a8;</i></a></li>
-            <li><a href="javascript:" class="footer-header-share-twitter"><i class="iconfont font-size-16">&#xe6a2;</i></a></li>
+            <li><a href="http://weibo.com/FreeWillex" class="footer-header-share-sina" target="_blank"><i
+              class="iconfont font-size-16">&#xe677;</i></a></li>
+            <li><a href="http://t.qq.com/FreeWillex" class="footer-header-share-tencent" target="_blank"><i
+              class="iconfont font-size-16">&#xe64f;</i></a></li>
+            <li><a href="https://www.facebook.com/freewillex" class="footer-header-share-facebook" target="_blank"><i
+              class="iconfont font-size-16">&#xe6a8;</i></a></li>
+            <li><a href="https://twitter.com/FreeWillex" class="footer-header-share-twitter" target="_blank"><i
+              class="iconfont font-size-16">&#xe6a2;</i></a></li>
           </ul>
           <div class="footer-header-right-sub">
             <input type="email" placeholder="输入邮箱，免费订阅！" class="footer-header-right-sub-text"/>
@@ -36,7 +42,7 @@
             <p class="text-phone">400-960-0212</p>
             <p class="text-time">全年24小时</p>
             <p class="text-dit">(重大节日除外，仅收市话费)</p>
-            <a href="javascript:" class="online-chat">在线客服</a>
+            <a href="javascript:" class="online-chat customerService">在线客服</a>
           </div>
         </div>
         <div class="footer-center-right">
@@ -50,9 +56,12 @@
           </dl>
           <dl class="footer-center-right-item">
             <dt class="footer-center-right-item-title">法律声明</dt>
-            <dd><a href="javascript:">用户协议</a></dd>
-            <dd><a href="javascript:">反洗钱声明</a></dd>
-            <dd><a href="javascript:">费率声明</a></dd>
+            <router-link to="/dealRegister" tag="dd"><a href="javascript:;">用户协议</a></router-link>
+            <!--<dd><a href="javascript:">用户协议</a></dd>-->
+            <router-link to="/dealAml" tag="dd"><a href="javascript:;">反洗钱声明</a></router-link>
+            <router-link to="/dealRates" tag="dd"><a href="javascript:;">费率声明</a></router-link>
+            <!--<dd><a href="javascript:">反洗钱声明</a></dd>-->
+            <!--<dd><a href="javascript:">费率声明</a></dd>-->
           </dl>
           <dl class="footer-center-right-item">
             <dt class="footer-center-right-item-title">下载</dt>
@@ -100,11 +109,25 @@
   </footer>
 </template>
 <script>
+  import $ from 'jquery';
   export default{
+      data(){
+          return {
+            weChatShow:false
+          }
+      },
+    mounted() {
+          let that=this;
+      {
+          $('.footer-header-share-weChat').hover(function () {
+            that.weChatShow=true;
+          },function () {
+            that.weChatShow=false;
+          })
+      }//微信二维码显示隐藏
+    },
     methods: {
-      weChatClose: () => {
-        $('.weChatCode').toggle();
-      }
+
     }
   }
 </script>
@@ -157,7 +180,7 @@
     margin: 0 .8rem;
   }
 
-  .footer-header-share-box .font-size-16{
+  .footer-header-share-box .font-size-16 {
     font-size: 2rem;
   }
 
@@ -295,7 +318,6 @@
   }
 
   .weChatCode {
-    display: none;
     position: absolute;
     width: 7.9rem;
     height: 7.9rem;

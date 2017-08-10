@@ -65,7 +65,7 @@
         </div>
       </section>
       <div class="addBankCard-Btn">
-        <button @click="pushReal()">确认绑定</button>
+        <button @click="pushReal($event)">确认绑定</button>
       </div>
     </div>
   </div>
@@ -73,60 +73,42 @@
 <script>
   import $ from 'jquery';
   export default {
-      data() {
-          return {
-            CBank:[],
-            bankNo:'',
-            bankName:'',
-            bankAdr:'',
-            RBankVal:'',
-            phoneNum:'',
-            YZ:'',
-            serverYZ:'',
-            rGetCord:''
-          }
-      },
-    created(){
-      let that =this;
-      {
-        this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/bank/all',
-          method: 'GET',
-          headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            'X-Authorization': 'Bearer ' + that.$store.state.token
-          }
-        }).then((res) => {
-          that.CBank = res.data.data;
-          console.log(res.data.data)
-        }).catch((req) => {
-          console.log("出错了")
-        })
-      }//获取支持银行
+    data() {
+      return {
+        CBank: [],
+        bankNo: '',
+        bankName: '',
+        bankAdr: '',
+        RBankVal: '',
+        phoneNum: '',
+        YZ: '',
+        serverYZ: '',
+        rGetCord: ''
+      }
     },
     mounted() {
       let that = this;
       that.RgetCord();//获取验证码
       $('.select-bank-zc').change(function () {
-          console.log($(this).val())
-        that.RBankVal=$(this).val();
+        console.log($(this).val())
+        that.RBankVal = $(this).val();
         console.log(that.RBankVal);
       });
       //获取bankid
       {
         $('.bank-name-bind').keyup(function () {
-          if(that.bankName){
+          if (that.bankName) {
             that.$store.state.addBankCard.bankNum = true;
-          }else{
+          } else {
             that.$store.state.addBankCard.bankNum = false;
           }
         })
       }
       {
         $('.bank-adr-bind').keyup(function () {
-          if(that.bankAdr){
+          if (that.bankAdr) {
             that.$store.state.addBankCard.bankAdr = true;
-          }else{
+          } else {
             that.$store.state.addBankCard.bankAdr = false;
           }
         })
@@ -175,6 +157,21 @@
           }
         })
       }//验证码校验
+      {
+        this.$http({
+          url: 'http://192.168.1.48:8089/fwex/web/bank/all',
+          method: 'GET',
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'X-Authorization': 'Bearer ' + that.$store.state.token
+          }
+        }).then((res) => {
+          that.CBank = res.data.data;
+          console.log(res.data.data)
+        }).catch((req) => {
+          console.log("出错了")
+        })
+      }//获取支持银行
     },
     methods: {
       RgetCord() {
@@ -188,7 +185,8 @@
         }
         this.rGetCord = num;
       },
-      pushReal() {
+      pushReal(ev) {
+        ev.target.innerHTML = '处理中...';
         let that = this;
         if (that.$store.state.addBankCard.bankNo &&
           that.$store.state.addBankCard.bankNum &&
@@ -197,7 +195,7 @@
           that.$store.state.addBankCard.YZ &&
           that.$store.state.addBankCard.serverYZ) {
           that.$http({
-            url: 'http://192.168.1.120:8089/fwex/web/accountBank/bind',
+            url: 'http://192.168.1.48:8089/fwex/web/accountBank/bind',
             method: 'POST',
             data: {
               bankId: that.RBankVal,
@@ -211,13 +209,16 @@
               "Content-Type": "application/json;charset=UTF-8",
               'X-Authorization': 'Bearer ' + that.$store.state.token,
             }
-          }).then((res)=>{
-            console.log(res,'绑定')
-            if(res.data.code===200){
-                console.log(res.data.message)
+          }).then((res) => {
+            console.log(res, '绑定')
+            if (res.data.code === 200) {
+              ev.target.innerHTML = '确认绑定';
+              this.$router.push('/accountManagement');
+              console.log(res.data.message)
             }
-          }).catch((req)=>{
-            console.log(req,'绑定失败')
+          }).catch((req) => {
+            ev.target.innerHTML = '确认绑定';
+            console.log(req, '绑定失败')
           })
         }
       },
@@ -338,9 +339,11 @@
     padding: 0.6rem .833rem;
     outline: none;
   }
-  .addBankCard-content section > div>div{
+
+  .addBankCard-content section > div > div {
     margin-left: 2rem
   }
+
   .addBankCard-content .section-yz > div > p > span {
     width: 22%;
     border-right: none;
@@ -348,6 +351,7 @@
     background: #01aaef;
     color: #fff;
   }
+
   .addBankCard-content .section-yz > div > p > button {
     width: 30%;
     border: none;
@@ -356,14 +360,16 @@
     color: #fff;
     cursor: pointer;
   }
+
   .addBankCard-content .section-yz > div > p > input {
     width: 70%;
   }
-  .addBankCard-Btn >button{
+
+  .addBankCard-Btn > button {
     background: #01aaef;
     color: #fff;
     padding: 0.833rem 1.5rem;
-    border:none;
+    border: none;
     border-radius: 3px;
   }
 </style>
