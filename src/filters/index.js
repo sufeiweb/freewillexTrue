@@ -11,7 +11,9 @@ import {float8} from './float8';
 import {toLocaleString} from './toLocaleString';
 import {toLocaleString8} from './toLocaleString8';
 import {return_} from './return_';
+import {AoJ} from './AoJ';
 
 export default {
-  phoneStar,emailStar,dateYMDHIS,bankNo,translate,bankName,returnZero,float2,float8,toLocaleString,toLocaleString8,return_
+  phoneStar,emailStar,dateYMDHIS,bankNo,translate,bankName,returnZero,float2,float8,toLocaleString,toLocaleString8,return_,
+  AoJ
 }

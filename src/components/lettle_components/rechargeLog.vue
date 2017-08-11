@@ -5,16 +5,16 @@
         <p>选择账户</p>
       </div>
       <div class="recharge-group-radio">
-        <input name="select-account43" type="radio" id="account-cny43" value="1" checked/>
+        <input name="select-account43" type="radio" id="account-cny43" value="CNY" checked/>
         <label for="account-cny43" class="recharge-group-radio-checked">
           <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
-          <i class="iconfont">&#xe650;</i>
+          <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
-        <input name="select-account43" type="radio" id="account-btc43" value="2"/>
+        <input name="select-account43" type="radio" id="account-btc43" value="BTC"/>
         <label for="account-btc43">
           <span><span><i class="iconfont">&#xe664;</i></span></span>
-          <i class="iconfont">&#xe650;</i>
+          <span class="iconFont a2"></span>
           <span>BTC账户</span>
         </label>
       </div>
@@ -26,74 +26,74 @@
       </div>
       <transition enter-active-class="animated fadeIn">
         <div class="recharge-group-radio" v-show="!account">
-          <input name="select-currency44" type="radio" id="recharge-currency-cny144" value="0" checked/>
-          <label for="recharge-currency-cny144" class="recharge-group-radio-checked">
+          <!--<input name="select-currency44" type="radio" id="recharge-currency-cny144" value="*" checked/>-->
+          <!--<label for="recharge-currency-cny144" class="recharge-group-radio-checked">-->
+            <!--<span class=""><span><i class="iconfont">&#xe664;</i></span></span>-->
+            <!--<span class="iconFont a9"></span>-->
+            <!--<span>全部</span>-->
+          <!--</label>-->
+          <input name="select-currency44" type="radio" id="recharge-currency-cny44" value="CNY" checked/>
+          <label for="recharge-currency-cny44" class="recharge-group-radio-checked">
             <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
-            <span>全部</span>
-          </label>
-          <input name="select-currency44" type="radio" id="recharge-currency-cny44" value="CNY"/>
-          <label for="recharge-currency-cny44">
-            <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a1"></span>
             <span>CNY</span>
           </label>
           <input name="select-currency44" type="radio" id="recharge-currency-cny-btc44" value="BTC"/>
           <label for="recharge-currency-cny-btc44">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a2"></span>
             <span>BTC</span>
           </label>
           <input name="select-currency44" type="radio" id="recharge-currency-cny-ltc44" value="LTC"/>
           <label for="recharge-currency-cny-ltc44">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a3"></span>
             <span>LTC</span>
           </label>
           <input name="select-currency44" type="radio" id="recharge-currency-cny-eth44" value="ETH"/>
           <label for="recharge-currency-cny-eth44">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a4"></span>
             <span>ETH</span>
           </label>
           <input name="select-currency44" type="radio" id="recharge-currency-cny-etc44" value="ETC"/>
           <label for="recharge-currency-cny-etc44">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a5"></span>
             <span>ETC</span>
           </label>
         </div>
       </transition>
       <transition enter-active-class="animated fadeIn">
         <div class="recharge-group-radio" v-show="account">
-          <input name="select-currency45" type="radio" id="recharge-currency-cny-btc145" value="0"/>
-          <label for="recharge-currency-cny-btc145" class="recharge-group-radio-checked">
+          <!--<input name="select-currency45" type="radio" id="recharge-currency-cny-btc145" value="*" checked/>-->
+          <!--<label for="recharge-currency-cny-btc145" class="recharge-group-radio-checked">-->
+            <!--<span><span><i class="iconfont">&#xe664;</i></span></span>-->
+            <!--<span class="iconFont a9"></span>-->
+            <!--<span>全部</span>-->
+          <!--</label>-->
+          <input name="select-currency45" type="radio" id="recharge-currency-cny-btc45" value="BTC" checked/>
+          <label for="recharge-currency-cny-btc45" class="recharge-group-radio-checked">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
-            <span>全部</span>
-          </label>
-          <input name="select-currency45" type="radio" id="recharge-currency-cny-btc45" value="BTC"/>
-          <label for="recharge-currency-cny-btc45">
-            <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a2"></span>
             <span>BTC</span>
           </label>
           <input name="select-currency45" type="radio" id="recharge-currency-cny-ltc45" value="LTC"/>
           <label for="recharge-currency-cny-ltc45">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a3"></span>
             <span>LTC</span>
           </label>
           <input name="select-currency45" type="radio" id="recharge-currency-cny-eth45" value="ETH"/>
           <label for="recharge-currency-cny-eth45">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a4"></span>
             <span>ETH</span>
           </label>
           <input name="select-currency45" type="radio" id="recharge-currency-cny-etc45" value="ETC"/>
           <label for="recharge-currency-cny-etc45">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
-            <i class="iconfont">&#xe650;</i>
+            <span class="iconFont a5"></span>
             <span>ETC</span>
           </label>
         </div>
@@ -111,8 +111,8 @@
               <tr>
                 <td>充值时间</td>
                 <td>充值机构</td>
-                <td>充值金额</td>
-                <td>实充金额</td>
+                <td>充值金额 / {{legalCurrency}}</td>
+                <td>实充金额 / {{legalCurrency}}</td>
                 <td>状态</td>
               </tr>
               </thead>
@@ -120,8 +120,8 @@
               <tr v-for="item in items" :currency="item.currency">
                 <td>{{item.createDate|dateYMDHIS}}</td>
                 <td>{{'银行卡'}}</td>
-                <td>{{item.applyBalance |return_}} {{item.currency}}</td>
-                <td>{{item.balance|return_}} {{item.currency}}</td>
+                <td>{{item.applyBalance |return_}}</td>
+                <td>{{item.balance|return_}}</td>
                 <td>{{item.step}}</td>
               </tr>
               </tbody>
@@ -161,7 +161,9 @@
             account: false,
             currentPage:1,
             totals:0,
-            items:[]
+            items:[],
+            currency:'CNY',//默认账户币种CNY
+            legalCurrency:'CNY',//默认什么都没有，就是全部
 
           }
       },
@@ -170,11 +172,12 @@
       {
         $("input[name='select-account43']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account');
-          if ($(this).val() == '1') {
+          that.currency=$(this).val();
+          if ($(this).val() === 'CNY') {
             that.account = false;
           }
           else {
+              that.legalCurrency='BTC';
             that.account = true;
           }
         })
@@ -182,20 +185,23 @@
       {
         $("input[name='select-currency44']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account');
-
-          console.log($('.getTrSelect tr').eq(0).attr('currency'));
+          that.legalCurrency=$(this).val();
         })
         $("input[name='select-currency45']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account')
+          that.legalCurrency=$(this).val();
         })
       }//选择充值币
       this.getRechargeLog(1)
     },
     methods:{
       handleCurrentChangeRechargeLog(currentPage){
-          this.currentPage(currentPage);
+          if(this.legalCurrency==="CNY"){
+            this.getRechargeLog(currentPage);
+          }else {
+            this.getRechargeLog1(currentPage);
+          }
+
       },
       getRechargeLog(currentPage) {
         this.$http({
@@ -208,12 +214,18 @@
           },
           data:{
             pageNo:currentPage-1,
-            pageSize:10
+            pageSize:10,
+            param:{
+              currency:this.currency,
+              legalCurrency:this.legalCurrency
+            }
           }
         }).then((res)=>{
-          console.log(res);
+            console.log(res,'CNY充值记录');
           if(res.data.code===200){
-            this.noRecord=false;
+            if(res.data.data.totalElements){
+                this.noRecord=false;
+            }
               this.totals=res.data.data.totalElements;
               this.items=res.data.data.content
           }
@@ -221,6 +233,53 @@
         }).catch((req)=>{
           console.log(req)
         })
+      },
+      getRechargeLog1(currentPage) {
+        this.$http({
+          url:'http://192.168.1.48:8089/fwex/web/digital/payments/list',
+          method:'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          data:{
+            pageNo:currentPage-1,
+            pageSize:10,
+            param:{
+              currency:this.currency,
+              legalCurrency:this.legalCurrency
+            }
+          }
+        }).then((res)=>{
+          console.log(res,'数字货币充值记录');
+          if(res.data.code===200){
+            if(res.data.data.totalElements){
+              this.noRecord=false;
+            }
+            this.totals=res.data.data.totalElements;
+            this.items=res.data.data.content
+          }
+        }).catch((req)=>{
+          console.log(req)
+        })
+      }
+    },
+    watch:{
+      currency(newValue,oldValue){
+          if(newValue==='CNY'){
+            this.getRechargeLog(1)
+          }else {
+            this.getRechargeLog1(1)
+          }
+
+      } ,
+      legalCurrency(newValue,oldValue){
+        if(newValue==='CNY'){
+          this.getRechargeLog(1)
+        }else {
+          this.getRechargeLog1(1)
+        }
       }
     }
   }
@@ -228,6 +287,41 @@
 <style scoped>
   .rechargeLog {
     font-size: 1.167rem;
+  }
+
+  .iconFont{
+    width: 22px;
+    height: 22px;
+    margin: .5rem;
+
+  }
+  .recharge-group-radio-checked .a1,.recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5,.recharge-group-radio-checked .a9{
+    background-position: 0;
+  }
+  .a1{
+    background: url("../../assets/img/iconPng/CNYzhanghu.png");
+    background-position: -22px;
+
+  }
+  .a2{
+    background: url("../../assets/img/iconPng/BTCzhanghu.png");
+    background-position: -22px;
+  }
+  .a3{
+    background: url("../../assets/img/iconPng/LTC.png");
+    background-position: -22px;
+  }
+  .a4{
+    background: url("../../assets/img/iconPng/ETH.png");
+    background-position: -22px;
+  }
+  .a5{
+    background: url("../../assets/img/iconPng/ETC.png");
+    background-position: -22px;
+  }
+  .a9{
+    background: url("../../assets/img/iconPng/all.png");
+    background-position: -22px;
   }
 
   .recharge-group-title {

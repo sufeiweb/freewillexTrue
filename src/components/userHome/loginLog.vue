@@ -13,25 +13,10 @@
         </tr>
         </thead>
         <tbody v-show="noCord">
-        <tr>
-          <td>2017-07-07 08:55:06</td>
-          <td>192.168.1.110</td>
-          <td>Website</td>
-        </tr>
-        <tr>
-          <td>2017-07-07 08:55:06</td>
-          <td>192.168.1.110</td>
-          <td>Website</td>
-        </tr>
-        <tr>
-          <td>2017-07-07 08:55:06</td>
-          <td>192.168.1.110</td>
-          <td>Website</td>
-        </tr>
-        <tr>
-          <td>2017-07-07 08:55:06</td>
-          <td>192.168.1.110</td>
-          <td>Website</td>
+        <tr v-for="item in items">
+          <td>{{item.createDate|dateYMDHIS}}</td>
+          <td>{{item.ip}}</td>
+          <td>{{item.source|translate}}</td>
         </tr>
         </tbody>
         <tbody class="noCord" v-show="!noCord">
@@ -47,7 +32,9 @@
           <td colspan="3">
             <el-pagination
               layout="prev, pager, next"
-              :total="10">
+              @current-change="handleCurrentChangeLoginLog"
+              :current-page="currentPage"
+              :total="totalNum">
             </el-pagination>
           </td>
         </tr>
@@ -60,9 +47,44 @@
   export default {
       data() {
           return {
-            noCord:false
+            noCord:false,
+            currentPage:1,
+            totalNum:10,
+            items:[]
           }
+      },
+    mounted() {
+      this. handleCurrentChangeLoginLog(1);
+    },
+    methods:{
+      handleCurrentChangeLoginLog(currentPage){
+          this.$http({
+            url:'http://192.168.1.48:8089/fwex/web/account/logs',
+            method:'POST',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'X-Authorization': 'Bearer ' + this.$store.state.token,
+              "Content-Type": "application/json;charset=UTF-8",
+            },
+            data:{
+              pageNo:currentPage-1,
+              pageSize:10,
+              param:{}
+            }
+          }).then((res)=>{
+              console.log(res)
+            if(res.data.code===200){
+                  if(res.data.data.totalElements){
+                    this.noCord=true;
+                  }
+                  this.totalNum=res.data.data.totalElements;
+                  this.items=res.data.data.content;
+            }
+        }).catch((req)=>{
+              console.log(req)
+          })
       }
+    }
   }
 </script>
 <style scoped>

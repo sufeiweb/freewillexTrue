@@ -5,19 +5,19 @@
         <p>选择账户</p>
       </div>
       <div class="recharge-group-radio">
-        <input name="select-account413" type="radio" id="account-cny453" value="1" checked/>
+        <input name="select-account413" type="radio" id="account-cny453" value="" checked/>
         <label for="account-cny453" class="recharge-group-radio-checked">
           <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
           <span class="iconFont a9"></span>
           <span> 全部 </span>
         </label>
-        <input name="select-account413" type="radio" id="account-cny4553" value="2" />
+        <input name="select-account413" type="radio" id="account-cny4553" value="CNY" />
         <label for="account-cny4553" >
           <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
           <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
-        <input name="select-account413" type="radio" id="account-btc433" value="3"/>
+        <input name="select-account413" type="radio" id="account-btc433" value="BTC"/>
         <label for="account-btc433">
           <span><span><i class="iconfont">&#xe664;</i></span></span>
           <span class="iconFont a2"></span>
@@ -36,11 +36,12 @@
       },
     mounted() {
           let that =this;
+          this.$store.state.Account='';
       {
         {
           $("input[name='select-account413']").change(function () {
             $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-            console.log($(this).val(), 'account');
+            that.$store.state.Account=$(this).val();
           })
         }//选择账户
       }//选择账户

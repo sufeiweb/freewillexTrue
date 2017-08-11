@@ -6,13 +6,13 @@
         <router-link to="/recharge/rechargeLog">充值记录</router-link>
       </div>
       <div class="recharge-group-radio">
-        <input name="select-account" type="radio" id="account-cny" value="1" checked/>
+        <input name="select-account" type="radio" id="account-cny" value="CNY" checked/>
         <label for="account-cny" class="recharge-group-radio-checked">
           <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
           <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
-        <input name="select-account" type="radio" id="account-btc" value="2"/>
+        <input name="select-account" type="radio" id="account-btc" value="BTC"/>
         <label for="account-btc">
           <span><span><i class="iconfont">&#xe664;</i></span></span>
           <span class="iconFont a2"></span>
@@ -61,7 +61,7 @@
         </label>
       </div>
       <div class="recharge-group-radio" v-show="account">
-        <input name="select-currency1" type="radio" id="recharge-currency-cny-btc1" value="BTC"/>
+        <input name="select-currency1" type="radio" id="recharge-currency-cny-btc1" value="BTC" checked/>
         <label for="recharge-currency-cny-btc1" class="recharge-group-radio-checked">
           <span><span><i class="iconfont">&#xe664;</i></span></span>
           <span class="iconFont a2"></span>
@@ -93,10 +93,10 @@
       </div>
       <div class="recharge-group-radio">
         <div class="add-charge-btc">
-          <span>{{itemAddrs}}</span>
+          <input type="text" id="adr" :value="itemAddrs" readonly/>
           <i class="iconfont erCord_bigBtn">&#xe635;</i>
         </div>
-        <a href="javascript:;">复制地址</a>
+        <a href="javascript:;" @click="CopyAdr($event)" text="复制成功">复制地址</a>
       </div>
       <div class="erCord_big">
         <img src="../../assets/img/download/APPcode.jpg" width="150"/>
@@ -156,7 +156,7 @@
       <div class="recharge-group-radio-select-bank" v-show="bank2">
         <div v-for="(item,index) in userBank">
           <input name="select-bank2" type="radio" :id='"recharge-mode-cny20"+index' :value="item.abbreviation"
-                 :bankid="item.id" :bankUrl="item.bankUrl" checked/>
+                 :bankid="item.id" :bankUrl="item.bankUrl" :checked="index===0?'checked':''"/>
           <label :for='"recharge-mode-cny20"+index' :class="index===0?'recharge-group-radio-checked':''">
             <span class=""><span></span></span>
             <img :src='bankImgUrl[item.abbreviation]'/>
@@ -241,7 +241,7 @@
         EBank: '',//网上银行充值数
         remittance: '',//自助汇款
         ZFB: '', //支付宝付款
-        bankName: 'CMB',//银行名称,
+        bankName: '',//银行名称,
         moneyStyle: false,
         accountBankId: '',//用户银行卡ID
         commodity: '',//品种
@@ -259,36 +259,33 @@
       {
         $("input[name='select-account']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account');
-          if ($(this).val() == '1') {
+          if ($(this).val() === 'CNY') {
             that.account = false;
-            if ($("input[name='select-currency']:checked").val() == 'CNY') {
+            if ($("input[name='select-currency']:checked").val() === 'CNY') {
               that.moneyStyle = false;
             } else {
               that.moneyStyle = true;
             }
           }
           else {
-            that.getBindMoneyAdr();
             that.account = true;
             that.moneyStyle = true;
           }
+          that.getBindMoneyAdr();
         })
       }//选择账户
       {
         $("input[name='select-currency']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account');
-          if ($(this).val() == 'CNY') {
+          if ($(this).val() === 'CNY') {
             that.moneyStyle = false;
           } else {
             that.moneyStyle = true;
-            that.getBindMoneyAdr();
-          }
+          };
+          that.getBindMoneyAdr();
         })
         $("input[name='select-currency1']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account');
           that.getBindMoneyAdr();
         })
       }//选择充值币种
@@ -369,7 +366,6 @@
     methods: {
       rechargeBtn() {
         this.getAccount();
-        console.log(this.accountBankId);
         this.$http({
           url: 'http://192.168.1.48:8089/fwex/web/capital/payments',
           method: 'POST',
@@ -388,7 +384,7 @@
         }).then((res) => {
           console.log(res)
           if (res.data.code === 200) {
-            console.log(res.data.message);
+            console.log(res.data.data);
             this.$router.push({
               name: 'rechargeList',
               query: res.data.data
@@ -402,21 +398,20 @@
       getAccount() {
         if (this.account) {
           this.Account = 'BTC';
-          console.log('当前为BTC账户')
+          this.currency = $("input[name='select-currency1']:checked").val();
         } else {
           this.Account = 'CNY';
-          console.log('当前为CNY账户');
-//      获取币种
-//获得品种
-          this.commodity = $("input[name='select-currency']:checked").val() + this.Account;
           this.currency = $("input[name='select-currency']:checked").val();
-          this.accountBankId = $("input[name='select-bank2']:checked").attr('bankid');
         }
+          this.commodity = $("input[name='select-currency']:checked").val() + this.Account;
+          this.accountBankId = $("input[name='select-bank2']:checked").attr('bankid');
+//console.log(this.Account,'ceshi');
+//console.log(this.currency,'ceshi');
       },
       getBindMoneyAdr(){
         this.getAccount();
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/digital/info/' + this.currency + '/' + this.Account,
+          url: 'http://192.168.1.48:8089/fwex/web/digital/rechargeInfo/' + this.currency + '/' + this.Account,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -431,6 +426,9 @@
           console.log(req, '')
         });
       },//获取绑定数字货币充值地址
+      CopyAdr(ev){
+          this.copy('adr',ev.target.getAttribute('text'));
+      }
     },
 
   }
@@ -659,7 +657,12 @@
     cursor: no-drop;
     margin-right: 3rem;
   }
-
+.add-charge-btc input{
+  background: #f0f0f0;
+  width: 28rem;
+  border:none;
+  outline:none;
+}
   .add-charge-btc i {
     font-size: 22px;
     margin-left: 2rem;

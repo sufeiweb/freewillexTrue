@@ -182,7 +182,7 @@
     },
     mounted() {
       let that = this;
-
+      this.$store.state.Account='CNY';
       {
         that.showStyle1($('.viewStyle1').val());
         $('.viewStyle1').change(function () {

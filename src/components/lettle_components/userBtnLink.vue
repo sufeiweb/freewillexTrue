@@ -4,14 +4,14 @@
       <dl class="btcTransaction-content-btn">
         <dt class="btcTransaction-content-title">我的账户</dt>
         <router-link to="/userIndex" tag="dd">
-          <a href="javascript:" style="font-size: 1.167rem">
+          <a href="javascript:">
             <span class="s1"></span>
-            CNY专区账户
+            CNY专区
           </a>
         </router-link>
-        <router-link to="/userIndex1" tag="dd"><a href="javascript:" style="font-size: 1.167rem">
+        <router-link to="/userIndex1" tag="dd"><a href="javascript:">
           <span class="s2"></span>
-          BTC专区账户
+          BTC专区
 </a>
         </router-link>
       </dl>
@@ -32,8 +32,8 @@
             <span class="s5"></span>
             账户明细</a>
         </router-link>
-        <router-link to="/accountManagement" tag="dd"><a href="javascript:" style="font-size: 1rem">
-          <span class="s6"></span>地址/银行卡管理</a>
+        <router-link to="/accountManagement" tag="dd"><a href="javascript:">
+          <span class="s6"></span>账户管理</a>
         </router-link>
       </dl>
       <!--<dl class="btcTransaction-content-btn">-->

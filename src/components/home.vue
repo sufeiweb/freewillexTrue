@@ -64,7 +64,6 @@
         </div>
       </div>
     </div>
-      <loginCenter class="home-login"></loginCenter>
   </div>
 </template>
 <script>
@@ -74,9 +73,6 @@
   }
 </script>
 <style scoped>
-  .home-login  .login-box-content{
-    right: 18%;
-  }
   .home-banner {
     margin-top: .15rem;
     width: 100%;

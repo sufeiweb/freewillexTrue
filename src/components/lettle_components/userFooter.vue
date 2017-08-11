@@ -29,5 +29,4 @@
     margin: 1.667rem 0 0.833rem 0;
     border-bottom: 1px solid #ddd;
   }
-
 </style>

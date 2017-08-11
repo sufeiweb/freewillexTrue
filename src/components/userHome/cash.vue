@@ -6,13 +6,13 @@
         <router-link to="/cash/cashLog">提现记录</router-link>
       </div>
       <div class="recharge-group-radio">
-        <input name="select-account-cash" type="radio" id="account-cny-cash" value="1" checked/>
+        <input name="select-account-cash" type="radio" id="account-cny-cash" value="CNY" checked/>
         <label for="account-cny-cash" class="recharge-group-radio-checked">
           <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
-         <span class="iconFont a1"></span>
+          <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
-        <input name="select-account-cash" type="radio" id="account-btc-cash" value="2"/>
+        <input name="select-account-cash" type="radio" id="account-btc-cash" value="BTC"/>
         <label for="account-btc-cash">
           <span><span><i class="iconfont">&#xe664;</i></span></span>
           <span class="iconFont a2"></span>
@@ -26,31 +26,31 @@
       </div>
       <transition enter-active-class="animated fadeIn">
         <div class="recharge-group-radio" v-show="!account">
-          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-cash" value="1" checked/>
+          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-cash" value="CNY" checked/>
           <label for="recharge-currency-cny-cash" class="recharge-group-radio-checked">
             <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
             <span class="iconFont a1"></span>
             <span>CNY</span>
           </label>
-          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-btc-cash" value="2"/>
+          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-btc-cash" value="BTC"/>
           <label for="recharge-currency-cny-btc-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <span class="iconFont a2"></span>
             <span>BTC</span>
           </label>
-          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-ltc-cash" value="3"/>
+          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-ltc-cash" value="LTC"/>
           <label for="recharge-currency-cny-ltc-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <span class="iconFont a3"></span>
             <span>LTC</span>
           </label>
-          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-eth-cash" value="4"/>
+          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-eth-cash" value="ETH"/>
           <label for="recharge-currency-cny-eth-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <span class="iconFont a4"></span>
             <span>ETH</span>
           </label>
-          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-etc-cash" value="5"/>
+          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-etc-cash" value="ETC"/>
           <label for="recharge-currency-cny-etc-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <span class="iconFont a5"></span>
@@ -60,25 +60,25 @@
       </transition>
       <transition enter-active-class="animated fadeIn">
         <div class="recharge-group-radio" v-show="account">
-          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-btc1-cash" value="1"/>
+          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-btc1-cash" value="BTC" checked/>
           <label for="recharge-currency-cny-btc1-cash" class="recharge-group-radio-checked">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <span class="iconFont a2"></span>
             <span>BTC</span>
           </label>
-          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-ltc1-cash" value="2"/>
+          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-ltc1-cash" value="LTC"/>
           <label for="recharge-currency-cny-ltc1-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <span class="iconFont a3"></span>
             <span>LTC</span>
           </label>
-          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-eth1-cash" value="3"/>
+          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-eth1-cash" value="ETH"/>
           <label for="recharge-currency-cny-eth1-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <span class="iconFont a4"></span>
             <span>ETH</span>
           </label>
-          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-etc1-cash" value="4"/>
+          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-etc1-cash" value="ETC"/>
           <label for="recharge-currency-cny-etc1-cash">
             <span><span><i class="iconfont">&#xe664;</i></span></span>
             <span class="iconFont a5"></span>
@@ -95,16 +95,18 @@
         <transition enter-active-class="animated fadeIn">
           <div class="recharge-group-radio-select-bank" v-show="!moneyStyle">
             <div v-for="(item, index) in userBank">
-              <input name="select-bank-cash" type="radio" :id="'recharge-mode-cny20-cash'+index" value="ABC" checked/>
+              <input name="select-bank-cash" type="radio" :id="'recharge-mode-cny20-cash'+index"
+                     :value="item.abbreviation" :bakkid="item.id" :checked="index==0?'checked':''"/>
               <label :for="'recharge-mode-cny20-cash'+index" :class="index===0?'recharge-group-radio-checked':''">
                 <span class=""><span></span></span>
                 <img :src='bankImgUrl[item.abbreviation]'/>
-                <em>尾号 {{item.accountNo.substring(item.accountNo.length-4)}}</em>
+                <em>尾号 {{item.accountNo.substring(item.accountNo.length - 4)}}</em>
               </label>
             </div>
             <div>
               <input name="select-bank-cash" type="radio" id="recharge-mode-cny22-cash" value="3"/>
-              <router-link to="/accountManagement/addBankCard" tag="label" for="recharge-mode-cny22" class="add-bank-select-bank">
+              <router-link to="/accountManagement/addBankCard" tag="label" for="recharge-mode-cny22"
+                           class="add-bank-select-bank">
                 <i class="iconfont">&#xe689;</i>
                 <em>添加新银行卡</em>
               </router-link>
@@ -145,91 +147,91 @@
         <p>金额</p>
       </div>
       <transition enter-active-class="animated fadeIn">
-      <div class="cash-cny" v-show="!moneyStyle">
-        <section>
-          <div>
-            <span>输入金额</span>
-            <input :placeholder="'本次最多可提'+11111+'CNY'"/>
-          </div>
-          <span>手续费<span class="color-blue">{{5.00}}CNY</span></span>
-          <span><i class="iconfont tishi-span">&#xe69d;</i><span class="tishi-span-hide">单笔提现最低手续费2.00</span></span>
-        </section>
-        <section>
-          <div>
-            <span>资金密码</span>
-            <input type="password"/>
-          </div>
-          <router-link to="/settings/modifyFullPsd">忘记资金密码？</router-link>
-        </section>
-        <section>
-          <div class="section-div-label">
-            <input type="radio" name="cash-btc-style-yz1" id="cash-btc-style-yz-emai11" value="1" checked/>
-            <label for="cash-btc-style-yz-emai11" class="cash-btc-select-color">邮箱验证</label>
-            <input type="radio" name="cash-btc-style-yz1" id="cash-btc-style-yz-phone11" value="2"/>
-            <label for="cash-btc-style-yz-phone11">手机验证</label>
-          </div>
-        </section>
-        <section>
-          <div>
-            <input type="text" placeholder="验证码"/>
-            <button>发送验证码</button>
-          </div>
-        </section>
-        <section>
-          <button>确认提现</button>
-        </section>
-      </div>
+        <div class="cash-cny" v-show="!moneyStyle">
+          <section>
+            <div>
+              <span>输入金额</span>
+              <input :placeholder="'本次最多可提'+11111+'CNY'"/>
+            </div>
+            <span>手续费<span class="color-blue">{{5.00}}CNY</span></span>
+            <span><i class="iconfont tishi-span">&#xe69d;</i><span class="tishi-span-hide">单笔提现最低手续费2.00</span></span>
+          </section>
+          <section>
+            <div>
+              <span>资金密码</span>
+              <input type="password"/>
+            </div>
+            <router-link to="/settings/modifyFullPsd">忘记资金密码？</router-link>
+          </section>
+          <section>
+            <div class="section-div-label">
+              <input type="radio" name="cash-btc-style-yz1" id="cash-btc-style-yz-emai11" value="1" checked/>
+              <label for="cash-btc-style-yz-emai11" class="cash-btc-select-color">邮箱验证</label>
+              <input type="radio" name="cash-btc-style-yz1" id="cash-btc-style-yz-phone11" value="2"/>
+              <label for="cash-btc-style-yz-phone11">手机验证</label>
+            </div>
+          </section>
+          <section>
+            <div>
+              <input type="text" placeholder="验证码"/>
+              <button>发送验证码</button>
+            </div>
+          </section>
+          <section>
+            <button>确认提现</button>
+          </section>
+        </div>
       </transition>
       <transition enter-active-class="animated fadeIn">
-      <div class="cash-btc" v-show="moneyStyle">
-        <section>
-          <div class="btc-num-input">
-            <input placeholder="输入提币数量"/>
-          </div>
-        </section>
-        <section class="select-shouxufei">
-          <p>选择手续费</p>
-          <div class="section-div-label">
-            <input type="radio" name="select-Service-Charge" id="Service-Charge-1" value="0.0005" checked/>
-            <label for="Service-Charge-1" class="cash-btc-select-color">0.0005 BTC</label>
-            <input type="radio" name="select-Service-Charge" id="Service-Charge-2" value="0.0010"/>
-            <label for="Service-Charge-2">0.0010 BTC</label>
-            <input type="radio" name="select-Service-Charge" id="Service-Charge-3" value="0.0015"/>
-            <label for="Service-Charge-3">0.0015 BTC</label>
-            <input type="radio" name="select-Service-Charge" id="Service-Charge-4" value="0.0020"/>
-            <label for="Service-Charge-4">0.0020 BTC</label>
-            <input type="radio" name="select-Service-Charge" id="Service-Charge-5" value="0.0050"/>
-            <label for="Service-Charge-5">0.0050 BTC</label>
-            <input type="radio" name="select-Service-Charge" id="Service-Charge-6" value="0.0100"/>
-            <label for="Service-Charge-6">0.0100 BTC</label>
-          </div>
-          <p>比特币网络转账费用最低0.0005BTC,提高手续费可以在一定程度上提高比特币网络的确认速度</p>
-        </section>
-        <section>
-          <div>
-            <span>资金密码</span>
-            <input type="password"/>
-          </div>
-          <router-link to="/settings/modifyFullPsd">忘记资金密码？</router-link>
-        </section>
-        <section>
-          <div class="section-div-label">
-            <input type="radio" name="cash-btc-style-yz" id="cash-btc-style-yz-email" value="1" checked/>
-            <label for="cash-btc-style-yz-email" class="cash-btc-select-color">邮箱验证</label>
-            <input type="radio" name="cash-btc-style-yz" id="cash-btc-style-yz-phone" value="2"/>
-            <label for="cash-btc-style-yz-phone">手机验证</label>
-          </div>
-        </section>
-        <section>
-          <div>
-            <input type="text" placeholder="验证码"/>
-            <button>发送验证码</button>
-          </div>
-        </section>
-        <section>
-          <button>确认提现</button>
-        </section>
-      </div>
+        <div class="cash-btc" v-show="moneyStyle">
+          <section>
+            <div class="btc-num-input">
+              <input placeholder="输入提币数量"/>
+            </div>
+          </section>
+          <section class="select-shouxufei">
+            <p>选择手续费</p>
+            <div class="section-div-label">
+              <input type="radio" name="select-Service-Charge" id="Service-Charge-1" value="0.0005" checked/>
+              <label for="Service-Charge-1" class="cash-btc-select-color">0.0005 BTC</label>
+              <input type="radio" name="select-Service-Charge" id="Service-Charge-2" value="0.0010"/>
+              <label for="Service-Charge-2">0.0010 BTC</label>
+              <input type="radio" name="select-Service-Charge" id="Service-Charge-3" value="0.0015"/>
+              <label for="Service-Charge-3">0.0015 BTC</label>
+              <input type="radio" name="select-Service-Charge" id="Service-Charge-4" value="0.0020"/>
+              <label for="Service-Charge-4">0.0020 BTC</label>
+              <input type="radio" name="select-Service-Charge" id="Service-Charge-5" value="0.0050"/>
+              <label for="Service-Charge-5">0.0050 BTC</label>
+              <input type="radio" name="select-Service-Charge" id="Service-Charge-6" value="0.0100"/>
+              <label for="Service-Charge-6">0.0100 BTC</label>
+            </div>
+            <p>比特币网络转账费用最低0.0005BTC,提高手续费可以在一定程度上提高比特币网络的确认速度</p>
+          </section>
+          <section>
+            <div>
+              <span>资金密码</span>
+              <input type="password"/>
+            </div>
+            <router-link to="/settings/modifyFullPsd">忘记资金密码？</router-link>
+          </section>
+          <section>
+            <div class="section-div-label">
+              <input type="radio" name="cash-btc-style-yz" id="cash-btc-style-yz-email" value="1" checked/>
+              <label for="cash-btc-style-yz-email" class="cash-btc-select-color">邮箱验证</label>
+              <input type="radio" name="cash-btc-style-yz" id="cash-btc-style-yz-phone" value="2"/>
+              <label for="cash-btc-style-yz-phone">手机验证</label>
+            </div>
+          </section>
+          <section>
+            <div>
+              <input type="text" placeholder="验证码"/>
+              <button>发送验证码</button>
+            </div>
+          </section>
+          <section>
+            <button>确认提现</button>
+          </section>
+        </div>
       </transition>
     </div>
   </div>
@@ -240,7 +242,7 @@
     data() {
       return {
         account: false,
-        moneyStyle:false,
+        moneyStyle: false,
         bankImgUrl: {
           "ABC": require('../../assets/img/banklogo/ABC.png'),
           "BCM": require('../../assets/img/banklogo/BCM.png'),
@@ -257,23 +259,23 @@
           "PBC": require('../../assets/img/banklogo/PBC.png'),
           "PSBC": require('../../assets/img/banklogo/PSBC.png'),
         },
-        userBank:[]
+        userBank: [],//银行
+        currencyAdr:[],//地址
+        Account: '',//当前账户
+        currency: '',//当前币种
+
       }
-    },
-    created() {
-        console.log(sessionStorage.getItem('token'),'token');
     },
     mounted() {
       let that = this;
       {
         $("input[name='select-account-cash']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account');
-          if ($(this).val() == '1') {
+          if ($(this).val() === 'CNY') {
             that.account = false;
-            if($("input[name='select-currency-cash']:checked").val() == '1'){
+            if ($("input[name='select-currency-cash']:checked").val() === 'CNY') {
               that.moneyStyle = false;
-            }else {
+            } else {
               that.moneyStyle = true;
             }
           }
@@ -281,34 +283,35 @@
             that.account = true;
             that.moneyStyle = true;
           }
+          that.getCashAdr();
         })
       }//选择账户
       {
         $("input[name='select-currency-cash']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account');
-          if($(this).val()=='1'){
+          if ($(this).val() === 'CNY') {
             that.moneyStyle = false;
-          }else {
-            that.moneyStyle =true;
+          } else {
+            that.moneyStyle = true;
           }
+          that.getCashAdr();
         })
         $("input[name='select-currency1-cash']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account')
+          that.getCashAdr();
         })
       }//选择提现币种
       {
-          setTimeout(function () {
-              $("input[name='select-bank-cash']").change(function () {
-                $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
-                console.log($(this).val(), 'account')
-              });//选择充值银行
-            $("input[name='select-bank-cash1']").change(function () {
-              $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
-              console.log($(this).val(), 'account')
-            })//btc提现地址
-          },500)
+        setTimeout(function () {
+          $("input[name='select-bank-cash']").change(function () {
+            $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
+            that.getCNYCode();
+          });//选择充值银行
+          $("input[name='select-bank-cash1']").change(function () {
+            $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
+            console.log($(this).val(), 'account')
+          })//btc提现地址
+        }, 500)
       }
       {
         $("input[name='select-Service-Charge']").change(function () {
@@ -340,7 +343,47 @@
           console.log(req, '请求错误')
         })
       }//获取用户绑定银行
-    }
+      this.getCNYCode();
+    },
+    methods: {
+      //获取当前账户
+      getAccount(){
+        if (this.account) {
+          this.Account = 'BTC';
+          this.currency = $("input[name='select-currency1-cash']:checked").val();
+        }
+        else {
+          this.Account = 'CNY';
+          this.currency = $("input[name='select-currency-cash']:checked").val()
+        }
+        console.log('当前为账户' + this.Account);
+        console.log('当前币种' + this.currency)
+      },
+      //获取提现地址
+      getCashAdr(){
+        this.getAccount();
+        this.$http({
+          url: 'http://192.168.1.48:8089/fwex/web/digital/withdrawInfo/' + this.currency,
+          method: 'GET',
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+          }
+        }).then((res) => {
+          console.log(res);
+          if(res.data.code===200){
+
+          }
+        }).catch((req) => {
+          console.log(req, '请求失败')
+        })
+      },
+      //获取人名币充提参数
+      getCNYCode(){
+        let bankId = $("input[name='select-bank-cash']:checked").attr('bankid');
+console.log(bankId)
+      }
+    },
   }
 </script>
 <style scoped>
@@ -348,36 +391,44 @@
     padding: 0 1.667rem 0 3.333rem;
     font-size: 1.167rem;
   }
-  .iconFont{
+
+  .iconFont {
     width: 22px;
     height: 22px;
     margin: .5rem;
 
   }
-  .recharge-group-radio-checked .a1,.recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5{
+
+  .recharge-group-radio-checked .a1, .recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5 {
     background-position: 0;
   }
-  .a1{
+
+  .a1 {
     background: url("../../assets/img/iconPng/CNYzhanghu.png");
     background-position: -22px;
 
   }
-  .a2{
+
+  .a2 {
     background: url("../../assets/img/iconPng/BTCzhanghu.png");
     background-position: -22px;
   }
-  .a3{
+
+  .a3 {
     background: url("../../assets/img/iconPng/LTC.png");
     background-position: -22px;
   }
-  .a4{
+
+  .a4 {
     background: url("../../assets/img/iconPng/ETH.png");
     background-position: -22px;
   }
-  .a5{
+
+  .a5 {
     background: url("../../assets/img/iconPng/ETC.png");
     background-position: -22px;
   }
+
   .recharge-group-title {
     display: flex;
     flex-wrap: wrap;
@@ -401,11 +452,11 @@
     align-items: center;
   }
 
-  .recharge-group-radio > input, .recharge-group-radio-select-bank>div > input {
+  .recharge-group-radio > input, .recharge-group-radio-select-bank > div > input {
     display: none;
   }
 
-  .recharge-group-radio > label, .recharge-group-radio-select-bank>div  > label {
+  .recharge-group-radio > label, .recharge-group-radio-select-bank > div > label {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -417,7 +468,7 @@
     cursor: pointer;
   }
 
-  .recharge-group-radio-select-bank>div  > label > em {
+  .recharge-group-radio-select-bank > div > label > em {
     font-style: normal;
     font-size: 1rem;
     margin-left: 1rem;
@@ -453,19 +504,19 @@
     padding: 0.1rem;
   }
 
-  .recharge-group-radio-select-bank >div > label {
+  .recharge-group-radio-select-bank > div > label {
     padding: 1.5rem 3rem;
     margin-bottom: 1.667rem;
   }
 
-  .recharge-group-radio-select-bank>div  > label > span:nth-of-type(1) {
+  .recharge-group-radio-select-bank > div > label > span:nth-of-type(1) {
     border: 1px solid #999;
     padding: 5px;
     border-radius: 50%;
     margin-right: 1.5rem;
   }
 
-  .recharge-group-radio-select-bank>div  > label > span:nth-of-type(1) > span {
+  .recharge-group-radio-select-bank > div > label > span:nth-of-type(1) > span {
     border-radius: 50%;
     background: #fff;
     width: 4px;
@@ -634,26 +685,31 @@
     outline: none;
     cursor: pointer;
   }
+
   .recharge-group section:nth-last-child(2) > div {
     padding-right: 0;
     padding-left: 0.7rem;
   }
-  .recharge-group section:nth-last-child(1) button{
-    border:none;
+
+  .recharge-group section:nth-last-child(1) button {
+    border: none;
     padding: 1rem 2rem;
     background: #01aaef;
-    color:#fff;
+    color: #fff;
     font-size: 1.167rem;
     border-radius: 3px;
   }
-  .btc-num-input input{
+
+  .btc-num-input input {
     width: 19.42rem;
   }
+
   .select-shouxufei {
     flex-direction: column;
     align-items: flex-start !important;
   }
-  .select-shouxufei p{
+
+  .select-shouxufei p {
     color: #01aaef;
     margin-bottom: .7rem;
   }

@@ -196,7 +196,7 @@
     },
     mounted() {
       let that = this;
-
+      this.$store.state.Account='BTC';
       {
         that.showStyle($('.viewStyle').val());
         $('.viewStyle').change(function () {
