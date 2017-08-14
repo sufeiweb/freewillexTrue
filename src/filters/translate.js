@@ -45,7 +45,24 @@ export const translate = (str) => {
     case 'SYSTEM':
       return '系统内部';
       break;
-
+    case 'BTC':
+      return '比特币';
+      break;
+    case 'LTC':
+      return '莱特币';
+      break;
+    case 'ETH':
+      return '以太坊';
+      break;
+    case 'ETC':
+      return '以太经典';
+      break;
+    case false:
+      return '未完成';
+      break;
+    case true:
+      return '已完成';
+      break;
   }
 };
 //字段翻译

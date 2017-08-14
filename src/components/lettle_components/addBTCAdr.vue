@@ -23,9 +23,12 @@
         </p>
       </div>
       <div>
-        <span>手机/邮箱</span>
-        <p>
-          <input type="text" placeholder="手机/邮箱" v-model="moe"/>
+        <span> </span>
+        <p class="addBTCAdr-yz">
+          <input name="we1" type="radio" id="we11" value="email" checked/>
+          <label for="we11" class="border-color">邮箱验证</label>
+          <input name="we1" type="radio" value="mobile" id="we12"/>
+          <label for="we12">手机验证</label>
         </p>
       </div>
       <div>
@@ -47,7 +50,7 @@
       <div>
         <span>&nbsp;</span>
         <p>
-          <button @click="bindGet()">提交</button>
+          <button @click="bindGet($event)">提交</button>
           <button @click="bindClose()">取消</button>
         </p>
       </div>
@@ -70,7 +73,9 @@
     mounted() {
     },
     methods: {
-      bindGet() {
+      bindGet(ev) {
+        ev.target.innerHTML = '处理中...';
+        let yzStyle = $("input[name='we1']:checked").val();
         this.$http({
           url: 'http://192.168.1.48:8089/fwex/web/digital/bind',
           method: 'POST',
@@ -84,12 +89,17 @@
             address: this.currencyAdr,
             remark: this.tags,
             capitalPwd: this.capitalPwd,
-            moe: this.moe,
+            types: yzStyle,
             captcha: this.serverYz
           }
         }).then((res) => {
+            if(res.data.code===200){
+              ev.target.innerHTML = '确认绑定';
+                this.$router.push('/accountManagement')
+            }
           console.log(res, '请求成功')
         }).catch((req) => {
+          ev.target.innerHTML = '确认绑定';
           console.log(req, '请求失败')
         })
       },
@@ -100,16 +110,9 @@
         this.serverYz = '';
       },
       getCode(ev){
-        let pattern1 = /0?^(13|14|15|18|17)[0-9]{9}/;
-        let pattern2 = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+(com|cn)$/;
-        let url;
-        if (pattern1.test(this.moe)) {
-          url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile/'
-        } else if (pattern2.test(this.moe)) {
-          url = 'http://192.168.1.48:8089/fwex/web/captcha/email/'
-        }
+        let yzStyle = $("input[name='we1']:checked").val();
         this.$http({
-          url: url + this.moe,
+          url: 'http://192.168.1.48:8089/fwex/web/captcha/' + yzStyle,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -234,5 +237,23 @@
 
   .from-box .cash-tishi {
     display: none;
+  }
+
+  .addBTCAdr-yz input {
+    display: none;
+  }
+
+  .addBTCAdr-yz label {
+    padding: 0.8rem 1rem;
+    border: 1px solid #999;
+    border-radius: 3px;
+    margin-right: 2rem;
+    font-size: 1.167rem;
+  }
+
+  .addBTCAdr-yz .border-color {
+    border-color: #01aaef;
+    background: #01aaef;
+    color: #fff;
   }
 </style>

@@ -177,12 +177,12 @@
         sellNum: '',
         sellSum: '',
         sellTotal: '',
-        newAccount:'CNY',
-        commodity:'',//交易品种
-        types:'',//类型
-        price:'',//价格
-        amount:'',//数量
-        shuaxin:true
+        newAccount: 'CNY',
+        commodity: '',//交易品种
+        types: '',//类型
+        price: '',//价格
+        amount: '',//数量
+        shuaxin: true
       }
     },
     components: {
@@ -206,6 +206,7 @@
         $("input[name='select-currencyaa']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
           that.buyClass = $(this).val();
+          that.getPanKou();
         })
       }//选择币种
       {
@@ -218,89 +219,103 @@
           }
         })
       }//限价与市价的选择
+      that.getPanKou()
     },
     methods: {
       transaction(ev) {
-          ev.target.innerHTML='处理中...';
-          this.getTypes();
-          this.getCommodity();
-          this.$http({
-            url:'http://192.168.1.48:8089/fwex/web/trade/entrust',
-            method:'POST',
-            headers: {
-              'X-Requested-With': 'XMLHttpRequest',
-              'X-Authorization': 'Bearer ' + this.$store.state.token,
-              "Content-Type":"application/json;charset=UTF-8"
-            },
-            data: {
-              commodity:this.commodity,
-              types:this.types,
-              price:this.price,
-              amount:this.amount,
-              source:'WEB'
+        ev.target.innerHTML = '处理中...';
+        this.getTypes();
+        this.getCommodity();
+        this.$http({
+          url: 'http://192.168.1.48:8089/fwex/web/trade/entrust',
+          method: 'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+            "Content-Type": "application/json;charset=UTF-8"
+          },
+          data: {
+            commodity: this.commodity,
+            types: this.types,
+            price: this.price,
+            amount: this.amount,
+            source: 'WEB'
+          }
+        }).then((res) => {
+          console.log(res);
+          if (res.data.code === 200) {
+            if (this.buyOrSell) {
+              ev.target.innerHTML = '买入';
+            } else {
+              ev.target.innerHTML = '卖出';
             }
-          }).then((res)=>{
-              console.log(res);
-              if(res.data.code===200){
-                  if(this.buyOrSell){
-                    ev.target.innerHTML='买入';
-                  }else {
-                    ev.target.innerHTML='卖出';
-                  }
-                  this.shuaxin=false;
-                  console.log(res.data.message)
-              }
-          }).then(()=>{
-            this.shuaxin=true;
-          }).catch((req)=>{
-            if(this.buyOrSell){
-              ev.target.innerHTML='买入';
-            }else {
-              ev.target.innerHTML='卖出';
-            }
-              console.log(req,'请求失败')
-          })
+            this.shuaxin = false;
+            console.log(res.data.message)
+          }
+        }).then(() => {
+          this.shuaxin = true;
+        }).catch((req) => {
+          if (this.buyOrSell) {
+            ev.target.innerHTML = '买入';
+          } else {
+            ev.target.innerHTML = '卖出';
+          }
+          console.log(req, '请求失败')
+        })
       },
 //      获得types，price,amount;
       getTypes() {
-        if(this.buyOrSell){
+        if (this.buyOrSell) {
           //买
 //            判断types
-          if(this.priceStyle){
+          if (this.priceStyle) {
 //            console.log('限价买');
-            this.types='B_LIMITED';
-            this.price=this.buyPrice;
-            this.amount=this.buyNum;
-          }else {
+            this.types = 'B_LIMITED';
+            this.price = this.buyPrice;
+            this.amount = this.buyNum;
+          } else {
 //            console.log('市价买');
-            this.types='B_MARKET';
-            this.price='';
-            this.amount=this.buyTotal;
+            this.types = 'B_MARKET';
+            this.price = '';
+            this.amount = this.buyTotal;
           }
-        }else {
+        } else {
           //卖
-          if(this.priceStyle){
+          if (this.priceStyle) {
 //            console.log('限价卖');
-            this.types='S_LIMITED';
-            this.price=this.sellPrice;
-            this.amount=this.sellNum;
-          }else {
+            this.types = 'S_LIMITED';
+            this.price = this.sellPrice;
+            this.amount = this.sellNum;
+          } else {
 //            console.log('市价卖');
-            this.types='S_MARKET';
-            this.price='';
-            this.amount=this.sellTotal;
+            this.types = 'S_MARKET';
+            this.price = '';
+            this.amount = this.sellTotal;
           }
         }
-        console.log(this.types,'类型');
-        console.log(this.price,'价格');
-        console.log(this.amount,'数量');
+        console.log(this.types, '类型');
+        console.log(this.price, '价格');
+        console.log(this.amount, '数量');
       },
 //      获取交易品种
       getCommodity() {
-        this.commodity=$("input[name='select-currencyaa']:checked").val()+this.newAccount;
-        console.log(this.commodity,'品种');
+        this.commodity = $("input[name='select-currencyaa']:checked").val() + this.newAccount;
+        console.log(this.commodity, '品种');
       },
-
+      getPanKou(){
+       this.getCommodity();
+        this.$http({
+          url:'http://192.168.1.48:8089/fwex/web/quotation/depth/'+this.commodity+'/'+10,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+          }
+        }).then((res)=>{
+            console.log(res.data.data,'盘口信息')
+        }).catch((req)=>{
+            console.log(req,'请求失败')
+        })
+      }
     },
     computed: {
       buyComP() {
@@ -319,30 +334,37 @@
     justify-content: space-between;
     margin-bottom: 1.5%;
   }
-  .iconFont{
+
+  .iconFont {
     width: 22px;
     height: 22px;
     margin: .5rem
   }
-  .recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5{
+
+  .recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5 {
     background-position: 0;
   }
-  .a2{
+
+  .a2 {
     background: url("../../assets/img/iconPng/BTCzhanghu.png");
     background-position: -22px;
   }
-  .a3{
+
+  .a3 {
     background: url("../../assets/img/iconPng/LTC.png");
     background-position: -22px;
   }
-  .a4{
+
+  .a4 {
     background: url("../../assets/img/iconPng/ETH.png");
     background-position: -22px;
   }
-  .a5{
+
+  .a5 {
     background: url("../../assets/img/iconPng/ETC.png");
     background-position: -22px;
   }
+
   .content-left {
     width: 66%;
     padding: 3.333rem 5rem;
