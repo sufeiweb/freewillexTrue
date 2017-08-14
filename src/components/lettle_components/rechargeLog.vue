@@ -122,7 +122,7 @@
                 <td>{{'银行卡'}}</td>
                 <td>{{item.applyBalance |return_}}</td>
                 <td>{{item.balance|return_}}</td>
-                <td>{{item.step}}</td>
+                <td>{{item.flag | translate}}</td>
               </tr>
               </tbody>
               <tbody class="recharge-record-data noRecode" v-show="noRecord">
@@ -225,6 +225,8 @@
           if(res.data.code===200){
             if(res.data.data.totalElements){
                 this.noRecord=false;
+            }else {
+              this.noRecord=true;
             }
               this.totals=res.data.data.totalElements;
               this.items=res.data.data.content
@@ -254,9 +256,7 @@
         }).then((res)=>{
           console.log(res,'数字货币充值记录');
           if(res.data.code===200){
-            if(res.data.data.totalElements){
-              this.noRecord=false;
-            }
+            this.noRecord=!res.data.data.totalElements>0;
             this.totals=res.data.data.totalElements;
             this.items=res.data.data.content
           }

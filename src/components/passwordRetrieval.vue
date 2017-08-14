@@ -30,7 +30,7 @@
             <div class="form-group1-box">
               <div class="form-group-content">
                 <input type="text" placeholder="手机验证码" v-model="userCordM"/>
-                <a href="javascript:" class="getCodeMR">获取验证码</a>
+                <button href="javascript:" class="getCodeMR">获取验证码</button>
               </div>
               <div class="help-tips-getCodeMR"></div>
             </div>
@@ -90,7 +90,7 @@
             <div class="form-group1-box">
               <div class="form-group-content">
                 <input type="text" placeholder="邮箱验证码" v-model="userCordE"/>
-                <a href="javascript:" class="getCodeER">获取验证码</a>
+                <button href="javascript:" class="getCodeER">获取验证码</button>
               </div>
               <div class="help-tips-getCodeER"></div>
             </div>
@@ -101,14 +101,14 @@
               <input type="password" placeholder="密码" v-model="userPsdE" class="userPsdER"/>
               <div class="help-tips-psdE"></div>
             </div>
-            <p class="password-strength"><span></span><span></span><span></span><em
-              class="password-strength-view"></em></p>
+            <p class="password-strengths"><span></span><span></span><span></span><em
+              class="password-strength-views"></em></p>
           </div>
           <div class="form-group1">
             <span>确认密码</span>
             <div class="form-group-content de">
               <input type="password" placeholder="确认密码" v-model="userPsdsE" class="userPsdsER"/>
-              <div class="help-tips-psdsER"></div>
+              <div class="help-tip-psdsER"></div>
             </div>
           </div>
           <div class="form-group1 dd margin-bottom-0">
@@ -439,7 +439,7 @@
           if (that.userNameM.length !== 0 && pattern.test(that.userNameM)) {
             that.$http.get(url).then((data) => {
               console.log(data);
-              $('.getCodeM').attr("disabled", true).css("cursor", "default");
+              $('.getCodeMR').attr("disabled", true).css("cursor", "default");
               that.timer = setInterval(function () {
                 $('.getCodeMR').html((--second) + 's');
                 if (second === 0) {
@@ -508,7 +508,7 @@
         console.log(that.$store.state.phoneR.userpsds, "userPsds");
         if (that.$store.state.phoneR.username && that.$store.state.phoneR.usercord && that.$store.state.phoneR.userpsd && that.$store.state.phoneR.userpsds) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/account/forget/password',
+            url: 'http://192.168.1.48:8089/fwex/web/forget/password',
             method: 'POST',
             data: {
               moe: that.userNameM,
@@ -521,7 +521,9 @@
               "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((res) => {
-            console.log(res, 11111)
+              if(res.data.code===200){
+                this.$router.push('/login');
+              }
           }).catch((req) => {
             console.log(req, 22222)
           })
@@ -531,7 +533,7 @@
         let that = this;
         if (that.$store.state.emailR.username && that.$store.state.emailR.usercord && that.$store.state.emailR.userpsd && that.$store.state.emailR.userpsds) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/account/forget/password',
+            url: 'http://192.168.1.48:8089/fwex/web/forget/password',
             method: 'POST',
             data: {
               moe: that.userNameE,
@@ -544,6 +546,9 @@
               "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((res) => {
+              if(res.data.code){
+                this.$router.push('/login');
+              }
             console.log(res, 11111)
           }).catch((req) => {
             console.log(req, 22222)
@@ -606,7 +611,7 @@
     width: 100%;
   }
 
-  .form-group1-box .form-group-content a {
+  .form-group1-box .form-group-content button {
     background: #01aaef;
     color: #fff;
     height: 3.167rem;
@@ -614,6 +619,9 @@
     text-align: center;
     line-height: 3.167rem;
     font-size: 1.167rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
   }
 
   .form-group-content {
@@ -714,21 +722,21 @@
     margin-bottom: 0;
   }
 
-  .password-strength {
+  .password-strength,.password-strengths {
     display: flex;
     margin-top: -1.5rem;
     align-items: center;
 
   }
 
-  .password-strength span {
+  .password-strength span,.password-strengths span {
     width: 3rem;
     height: 1rem;
     margin-right: .8rem;
     background: #e9ecf3;
   }
 
-  .password-strength-view {
+  .password-strength-view,.password-strength-views {
     color: red;
   }
 </style>

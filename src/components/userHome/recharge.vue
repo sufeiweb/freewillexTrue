@@ -191,18 +191,18 @@
         <span>元</span>
       </div>
       <div class="recharge-group-input recharge-group-input2" v-show="bank2">
-        <input type="number" placeholder="请输入金额" v-model="remittance"/>
+        <input type="number" placeholder="请输入金额" v-model="remittance" class="remittance-ipt"/>
         <span>.{{arNum}}元</span>
       </div>
       <div class="recharge-group-input" v-show="bank3">
         <input type="number" placeholder="请输入金额" v-model="ZFB"/>
         <span>元</span>
       </div>
-      <div style="color: red" v-show="bank2">转账时请务必包含此两位小数</div>
+      <div style="color: red" v-show="bank2"><span>转账时请务必包含此两位小数</span><span class="show-tips-show"></span></div>
       <div class="ER-cord">
         <img src="../../assets/img/download/APPcode.jpg" width="150" v-show="erCord"/>
       </div>
-      <button class="recharge-group-button" v-show="!bank3" @click="rechargeBtn()">生成汇款单</button>
+      <button class="recharge-group-button" v-show="!bank3" @click="rechargeBtn($event)">生成汇款单</button>
       <button class="recharge-group-button" v-show="bank3" @click="erCord=true">生成充值码</button>
     </div>
   </div>
@@ -248,6 +248,7 @@
         currency: '',//充值币种
         Account: '',//当前账户,
         itemAddrs: '',//数字货币地址
+        moneyControl: {},//充值限制信息
       }
     },
     created() {
@@ -281,7 +282,8 @@
             that.moneyStyle = false;
           } else {
             that.moneyStyle = true;
-          };
+          }
+          ;
           that.getBindMoneyAdr();
         })
         $("input[name='select-currency1']").change(function () {
@@ -303,6 +305,7 @@
               that.bank1 = false;
               that.bank2 = true;
               that.bank3 = false;
+              that.getCNYCode1();
               break;
             case '3':
               that.bank1 = false;
@@ -362,9 +365,29 @@
           console.log(req, '请求错误')
         })
       }//获取用户绑定银行
+      {
+        $('.remittance-ipt').keyup(function () {
+          var pattern = /^[1-9]\d*$/;
+          console.log(pattern.test($(this).val()));
+          if (!pattern.test($(this).val())) {
+            $(this).val('');
+          }
+          if (isNaN($(this).val())) {
+            $(this).val('');
+          }
+          if (parseFloat(that.remittance) < parseFloat(that.moneyControl.R_MIN)) {
+            $('.show-tips-show').html('最小金额为' + that.moneyControl.R_MIN);
+          } else if (parseFloat(that.remittance) > parseFloat(that.moneyControl.R_MAX)) {
+            $('.show-tips-show').html('最大金额为' + that.moneyControl.R_MAX);
+          } else {
+            $('.show-tips-show').html('');
+          }
+        })
+      }
     },
     methods: {
-      rechargeBtn() {
+      rechargeBtn(ev) {
+        ev.target.innerHTML = '处理中...';
         this.getAccount();
         this.$http({
           url: 'http://192.168.1.48:8089/fwex/web/capital/payments',
@@ -384,6 +407,7 @@
         }).then((res) => {
           console.log(res)
           if (res.data.code === 200) {
+            ev.target.innerHTML = '生成汇款单';
             console.log(res.data.data);
             this.$router.push({
               name: 'rechargeList',
@@ -391,6 +415,7 @@
             })
           }
         }).catch((req) => {
+          ev.target.innerHTML = '生成汇款单';
           console.log(req, '请求错误')
         })
       },
@@ -403,8 +428,8 @@
           this.Account = 'CNY';
           this.currency = $("input[name='select-currency']:checked").val();
         }
-          this.commodity = $("input[name='select-currency']:checked").val() + this.Account;
-          this.accountBankId = $("input[name='select-bank2']:checked").attr('bankid');
+        this.commodity = $("input[name='select-currency']:checked").val() + this.Account;
+        this.accountBankId = $("input[name='select-bank2']:checked").attr('bankid');
 //console.log(this.Account,'ceshi');
 //console.log(this.currency,'ceshi');
       },
@@ -427,56 +452,88 @@
         });
       },//获取绑定数字货币充值地址
       CopyAdr(ev){
-          this.copy('adr',ev.target.getAttribute('text'));
-      }
+        this.copy('adr', ev.target.getAttribute('text'));
+      },//复制
+      //获取人名币充提参数
+      getCNYCode1(){
+        let bankId = $("input[name='select-bank2']:checked").attr('bankid');
+        console.log(bankId);
+        this.$http({
+          url: 'http://192.168.1.48:8089/fwex/web/accountBank/param/' + bankId,
+          method: 'GET',
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+          }
+        }).then((res) => {
+          if (res.data.code === 200) {
+            for (let i = 0; i < res.data.data.length; i++) {
+              this.$set(this.moneyControl, res.data.data[i].paramKey, res.data.data[i].paramValue);
+            }
+            console.log(this.moneyControl);
+          }
+        }).catch((req) => {
+          console.log(req, '请求失败');
+        })
+      },
     },
 
   }
 </script>
 <style scoped>
-  .iconFont{
+  .iconFont {
     width: 22px;
     height: 22px;
     margin: .5rem;
 
   }
-  .recharge-group-radio-checked .a1,.recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5,
-  .recharge-group-radio-checked .a6, .recharge-group-radio-checked .a7, .recharge-group-radio-checked .a8{
+
+  .recharge-group-radio-checked .a1, .recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5,
+  .recharge-group-radio-checked .a6, .recharge-group-radio-checked .a7, .recharge-group-radio-checked .a8 {
     background-position: 0;
   }
-  .a1{
+
+  .a1 {
     background: url("../../assets/img/iconPng/CNYzhanghu.png");
     background-position: -22px;
 
   }
-  .a2{
+
+  .a2 {
     background: url("../../assets/img/iconPng/BTCzhanghu.png");
     background-position: -22px;
   }
-  .a3{
+
+  .a3 {
     background: url("../../assets/img/iconPng/LTC.png");
     background-position: -22px;
   }
-  .a4{
+
+  .a4 {
     background: url("../../assets/img/iconPng/ETH.png");
     background-position: -22px;
   }
-  .a5{
+
+  .a5 {
     background: url("../../assets/img/iconPng/ETC.png");
     background-position: -22px;
   }
-  .a6{
+
+  .a6 {
     background: url("../../assets/img/iconPng/BTCzhanghu.png");
     background-position: -22px;
   }
-  .a7{
+
+  .a7 {
     background: url("../../assets/img/iconPng/BTCzhanghu.png");
     background-position: -22px;
   }
-  .a8{
+
+  .a8 {
     background: url("../../assets/img/iconPng/BTCzhanghu.png");
     background-position: -22px;
   }
+
   .userIndex-recharge {
     padding: 0 1.667rem 0 3.333rem;
     font-size: 1.167rem;
@@ -657,12 +714,14 @@
     cursor: no-drop;
     margin-right: 3rem;
   }
-.add-charge-btc input{
-  background: #f0f0f0;
-  width: 28rem;
-  border:none;
-  outline:none;
-}
+
+  .add-charge-btc input {
+    background: #f0f0f0;
+    width: 28rem;
+    border: none;
+    outline: none;
+  }
+
   .add-charge-btc i {
     font-size: 22px;
     margin-left: 2rem;
