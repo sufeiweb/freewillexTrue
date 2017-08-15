@@ -67,6 +67,7 @@
       <section>
         <router-link to="/recharge">充值</router-link>
         |
+
         <router-link to="/cash">提现</router-link>
       </section>
     </div>
@@ -127,7 +128,7 @@
             "Content-Type": "application/json;charset=UTF-8",
           }
         }).then(function (data) {
-          console.log(data);
+          this.showError(data.data.code, data.data.message);
           that.$store.dispatch('loginStateTrue');
           sessionStorage.setItem('token', data.data.data);
           that.$store.state.loginTrue = true;
@@ -142,10 +143,8 @@
             that.$store.state.realName.userEmailNum = that.userName;
           }
           that.$router.push('/user');
-
-        }).catch(function () {
-          that.$store.dispatch('loginStateFalse');
-          sessionStorage.removeItem('token');
+        }).catch((req)=> {
+          this.showError('', '请求失败');
         })
       },//帐号登录
     },
@@ -162,10 +161,11 @@
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
               'X-Authorization': 'Bearer ' + that.$store.state.token,
-              'source':'WEB',
+              'source': 'WEB',
               'Content-Type': 'application/json'
             }
-          }).then((res) => {
+          }).then((res)=> {
+            this.showError(res.data.code, res.data.message);
             console.log(res, '请求成功')
             if (res.data.code == 200) {
               that.userLoginName = res.data.data.loginUser;

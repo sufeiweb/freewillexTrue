@@ -165,7 +165,8 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + that.$store.state.token
           }
-        }).then((res) => {
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
           that.CBank = res.data.data;
           console.log(res.data.data)
         }).catch((req) => {
@@ -209,7 +210,8 @@
               "Content-Type": "application/json;charset=UTF-8",
               'X-Authorization': 'Bearer ' + that.$store.state.token,
             }
-          }).then((res) => {
+          }).then((res)=> {
+            this.showError(res.data.code, res.data.message);
             console.log(res, '绑定')
             if (res.data.code === 200) {
               ev.target.innerHTML = '确认绑定';

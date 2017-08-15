@@ -59,8 +59,10 @@
         </div>
         <h1 class="home-center-content-title">战略合作伙伴</h1>
         <div class="home-center-contetn-items">
-          <a href="http://www.8btc.com" target="_blank" class="top-minus-1"><img src="../assets/img/home/foot_img2.png" width="100%"  alt=""></a>
-          <a href="https://www.sosobtc.com" target="_blank" style="margin-left: 6.67rem"><img src="../assets/img/home/foot_img1.png" width="100%;"  alt=""></a>
+          <a href="http://www.8btc.com" target="_blank" class="top-minus-1"><img src="../assets/img/home/foot_img2.png"
+                                                                                 width="100%" alt=""></a>
+          <a href="https://www.sosobtc.com" target="_blank" style="margin-left: 6.67rem"><img
+            src="../assets/img/home/foot_img1.png" width="100%;" alt=""></a>
         </div>
       </div>
     </div>
@@ -69,7 +71,7 @@
 <script>
   import loginCenter from './lettle_components/loginCenter.vue';
   export default {
-      components: {loginCenter}
+    components: {loginCenter}
   }
 </script>
 <style scoped>

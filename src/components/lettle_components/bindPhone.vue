@@ -14,7 +14,8 @@
       <div class="bindPhone-from-group">
         <span>手机号码</span>
         <div>
-          <div class="cityCord"><span>{{cityCord}}</span><input type="text" placeholder="手机号码" v-model="bindPhoneNum" class="bindPhoneNum-input"/></div>
+          <div class="cityCord"><span>{{cityCord}}</span><input type="text" placeholder="手机号码" v-model="bindPhoneNum"
+                                                                class="bindPhoneNum-input"/></div>
           <span class="bindPhoneNum-tips"></span>
         </div>
       </div>
@@ -56,7 +57,7 @@
         bindPhoneRCaptcha: '',
         bindPhoneRYZ: '',
         bindPhoneRGetCord: '',
-        cityCord:'+86'
+        cityCord: '+86'
       }
     },
     mounted() {
@@ -78,7 +79,7 @@
       }//验证码校验
       {
         $('.bindPhoneNum-input').keyup(function () {
-          let pattern =  /0?^(13|14|15|18|17)[0-9]{9}/;
+          let pattern = /0?^(13|14|15|18|17)[0-9]{9}/;
           if (pattern.test(that.bindPhoneNum)) {
             $('.bindPhoneNum-tips').html('');
             that.$store.state.bindPhoneNum.phone = true;
@@ -140,28 +141,29 @@
         this.bindPhoneRGetCord = num;
       },
       QbindPhone() {
-          let that=this;
-          console.log(that.$store.state.bindPhoneNum.phone,that.$store.state.bindPhoneNum.YZ);
-        if(that.$store.state.bindPhoneNum.phone && that.$store.state.bindPhoneNum.YZ){
-            that.$http({
-              url:'http://192.168.1.48:8089/fwex/web/authentication/mobileAuth',
-              method: 'POST',
-              data: {
-                mobile:that.bindPhoneNum,
-                captcha:that.bindPhoneRGetCord,
-                mobileCountry:that.cityCord
-              },
-              headers: {
-                "X-Requested-With": "XMLHttpRequest",
-                'X-Authorization': 'Bearer ' + that.$store.state.token,
-                "Content-Type": "application/json;charset=UTF-8",
-              }
-            }).then((res)=>{
-                console.log(res,'绑定成功');
-                that.$router.push('/settings');
-            }).catch((req)=>{
-                console.log(req,'绑定失败')
-            })
+        let that = this;
+        console.log(that.$store.state.bindPhoneNum.phone, that.$store.state.bindPhoneNum.YZ);
+        if (that.$store.state.bindPhoneNum.phone && that.$store.state.bindPhoneNum.YZ) {
+          that.$http({
+            url: 'http://192.168.1.48:8089/fwex/web/authentication/mobileAuth',
+            method: 'POST',
+            data: {
+              mobile: that.bindPhoneNum,
+              captcha: that.bindPhoneRGetCord,
+              mobileCountry: that.cityCord
+            },
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              'X-Authorization': 'Bearer ' + that.$store.state.token,
+              "Content-Type": "application/json;charset=UTF-8",
+            }
+          }).then((res)=> {
+            this.showError(res.data.code, res.data.message);
+            console.log(res, '绑定成功');
+            that.$router.push('/settings');
+          }).catch((req) => {
+            console.log(req, '绑定失败')
+          })
         }
       }
     }
@@ -212,23 +214,27 @@
     align-items: center;
     border: 1px solid #ddd;
   }
-  .cityCord{
+
+  .cityCord {
     display: flex;
     width: 28.8rem;
     align-items: center;
     border: 1px solid #ddd;
   }
-  .cityCord>span{
+
+  .cityCord > span {
     width: 15%;
     height: 2.75rem;
     line-height: 2.75rem;
     text-align: center;
     border-right: 1px solid #ddd;
   }
-  .cityCord>input{
+
+  .cityCord > input {
     border: none !important;
   }
-  .bindPhone-input-box > input{
+
+  .bindPhone-input-box > input {
     border: none !important;
     width: 70% !important;
   }
@@ -244,7 +250,7 @@
     border: none;
   }
 
-  .bindPhone-from-group > div > input, .bindPhone-from-group > div > select, .bindPhone-input-box > input,.cityCord>input {
+  .bindPhone-from-group > div > input, .bindPhone-from-group > div > select, .bindPhone-input-box > input, .cityCord > input {
     width: 100%;
     padding: 0.667rem 1rem;
     box-sizing: border-box;
@@ -264,7 +270,8 @@
     color: #fff;
     border-radius: .133rem;
   }
-  .disabled-input{
+
+  .disabled-input {
     cursor: no-drop;
   }
 </style>

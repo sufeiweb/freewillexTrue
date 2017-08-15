@@ -49,7 +49,7 @@
             <td>电子邮箱</td>
             <td>保障资金安全，获取账户资金变动通知</td>
             <td>
-              <router-link to="/settings/bindEmail"  v-show="!realEmail">立即绑定</router-link>
+              <router-link to="/settings/bindEmail" v-show="!realEmail">立即绑定</router-link>
               <!--<a href="javascript:;" v-show="!realEmail">立即绑定</a>-->
               <span v-show="realEmail">{{emailNum}}</span>
             </td>
@@ -68,7 +68,7 @@
             <td>手机绑定</td>
             <td>保障资金安全，是您在FreeWillex重要的身份凭证</td>
             <td>
-              <router-link to="/settings/bindPhone"  v-show="!realPhone">立即绑定</router-link>
+              <router-link to="/settings/bindPhone" v-show="!realPhone">立即绑定</router-link>
               <!--<a href="javascript:;" v-show="!realPhone">立即绑定</a>-->
               <span v-show="realPhone">{{iponeNum}}</span>
             </td>
@@ -85,7 +85,7 @@
                   </span>
             </td>
             <td>登录密码</td>
-            <td>上次登陆时间：<span class="login-timer">{{loginTime|dateYMDHIS}}</span></td>
+            <td>上次登陆时间：<span class="login-timer">{{loginTime | dateYMDHIS}}</span></td>
             <td>
               <a href="javascript:;" v-show="!realPsd">立即设置</a>
               <router-link to="/settings/modifyPsd" v-show="realPsd">修改</router-link>
@@ -122,8 +122,8 @@
         iponeNum: '',
         emailNum: '',
         Xiang: 5,
-        EXP:'低',
-        loginTime:''
+        EXP: '低',
+        loginTime: ''
       }
     },
     mounted() {
@@ -136,14 +136,15 @@
           'X-Authorization': 'Bearer ' + this.$store.state.token
         }
       }).then((res) => {
-          console.log(res.data,23131313);
+        this.showError(res.data.code, res.data.message);
+        console.log(res.data, 23131313);
         that.Xiang = 5 - res.data.data.length;
-        if(res.data.data.length<=2){
-            that.EXP='低';
-        }else if(res.data.data.length<=4) {
-          that.EXP='中';
-        }else {
-          that.EXP='高';
+        if (res.data.data.length <= 2) {
+          that.EXP = '低';
+        } else if (res.data.data.length <= 4) {
+          that.EXP = '中';
+        } else {
+          that.EXP = '高';
         }
         $('.setting-safe-view-box i').css({
           left: 20 * res.data.data.length + '%'
@@ -151,7 +152,7 @@
         for (let i = 0; i < res.data.data.length; i++) {
           if (res.data.data[i].authsEnum === 'PASSWORD') {
             that.$store.state.realName.userPsd = true;
-            that.loginTime=res.data.data[i].createDate;
+            that.loginTime = res.data.data[i].createDate;
 
           }//密码
           if (res.data.data[i].authsEnum === 'ORDINARY_REAL_NAME') {
@@ -189,14 +190,16 @@
       realMoneyPsd() {
         return this.$store.state.realName.userMoneyPsd;
       },//资金密码
-      bindPhone(){},//绑定邮箱
+      bindPhone(){
+      },//绑定邮箱
     }
   }
 </script>
 <style scoped>
-  .setting{
+  .setting {
     padding: 0 1.667rem 0 3.333rem;
   }
+
   .setting-header-title {
     padding: 1.5rem;
     border-bottom: 1px solid #ddd;

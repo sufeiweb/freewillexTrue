@@ -85,8 +85,8 @@
               color: 'red'
             })
           } else {
-              $('.help-tips-modifyFullPsd').html('');
-              that.$store.state.modifyFullPsd.newPsd = true;
+            $('.help-tips-modifyFullPsd').html('');
+            that.$store.state.modifyFullPsd.newPsd = true;
           }
 //          纯数字
           if (N.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6) {
@@ -259,7 +259,8 @@
               'X-Authorization': 'Bearer ' + that.$store.state.token,
               "Content-Type": "application/json;charset=UTF-8",
             }
-          }).then((res) => {
+          }).then((res)=> {
+            this.showError(res.data.code, res.data.message);
             console.log(res, '设置成功');
             that.$router.push('/settings');
           }).catch((req) => {

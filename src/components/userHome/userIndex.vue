@@ -14,7 +14,7 @@
           </select>
           <select class="coinStyle">
             <option value="CNY" selected>CNY 人民币</option>
-            <option value="BTC" >BTC 比特币</option>
+            <option value="BTC">BTC 比特币</option>
             <option value="LTC">LTC 莱特币</option>
             <option value="ETH">ETH 以太坊</option>
             <option value="ETC">ETC 以太经典</option>
@@ -31,22 +31,23 @@
         <div class="assets-box">
           <div class="assets-content">
             <h1 class="assets-title">总资产</h1>
-            <span class="assets-money">{{(Number(CNYCNY.balance)+Number(BTCtoCNY(BTCCNY.balance))+Number(this.LTCtoCNY(LTCCNY.balance))+Number(this.ETCtoCNY(ETCCNY.balance))+Number(this.ETHtoCNY(ETHCNY.balance)))|float2|returnZero |toLocaleString}} {{money_style}}</span>
+            <span
+              class="assets-money">{{(Number(CNYCNY.balance) + Number(BTCtoCNY(BTCCNY.balance)) + Number(this.LTCtoCNY(LTCCNY.balance)) + Number(this.ETCtoCNY(ETCCNY.balance)) + Number(this.ETHtoCNY(ETHCNY.balance))) | float2 | returnZero | toLocaleString}} {{money_style}}</span>
             <div v-show="money_hide">
               <div class="assets_CNY">
-                <span></span><span><em>CNY</em> {{CNYCNY.balance|returnZero|toLocaleString}}</span>
+                <span></span><span><em>CNY</em> {{CNYCNY.balance | returnZero | toLocaleString}}</span>
               </div>
               <div class="assets_BTC">
-                <span></span><span><em>BTC</em> {{BTCCNY.balance|returnZero | float8}} ≈ {{this.BTCtoCNY(BTCCNY.balance)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>BTC</em> {{BTCCNY.balance | returnZero | float8}} ≈ {{this.BTCtoCNY(BTCCNY.balance) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
               <div class="assets_LTC">
-                <span></span><span><em>LTC</em> {{LTCCNY.balance|returnZero|float8}} ≈ {{this.LTCtoCNY(LTCCNY.balance)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>LTC</em> {{LTCCNY.balance | returnZero | float8}} ≈ {{this.LTCtoCNY(LTCCNY.balance) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
               <div class="assets_ETH">
-                <span></span><span><em>ETH</em> {{ETHCNY.balance|returnZero|float8}} ≈ {{this.ETHtoCNY(ETHCNY.balance)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>ETH</em> {{ETHCNY.balance | returnZero | float8}} ≈ {{this.ETHtoCNY(ETHCNY.balance) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
               <div class="assets_ETC">
-                <span></span><span><em>ETC</em> {{ETCCNY.balance|returnZero|float8}} ≈ {{this.ETCtoCNY(ETCCNY.balance)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>ETC</em> {{ETCCNY.balance | returnZero | float8}} ≈ {{this.ETCtoCNY(ETCCNY.balance) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
             </div>
           </div>
@@ -68,22 +69,23 @@
               <router-link to="/recharge">充值</router-link>
               <router-link to="/cash">提现</router-link>
             </div>
-            <span class="assets-money">{{(Number(CNYCNY.balance)+Number(this.BTCtoCNY(BTCCNY.balance))+Number(this.LTCtoCNY(LTCCNY.balance))+Number(this.ETCtoCNY(ETCCNY.balance))+Number(this.ETHtoCNY(ETHCNY.balance)))|float2|returnZero |toLocaleString}} {{money_style}}</span>
+            <span
+              class="assets-money">{{(Number(CNYCNY.balance) + Number(this.BTCtoCNY(BTCCNY.balance)) + Number(this.LTCtoCNY(LTCCNY.balance)) + Number(this.ETCtoCNY(ETCCNY.balance)) + Number(this.ETHtoCNY(ETHCNY.balance))) | float2 | returnZero | toLocaleString}} {{money_style}}</span>
             <div v-show="money_hide">
               <div class="assets_CNY">
-                <span></span><span><em>CNY</em> {{CNYCNY.balance|returnZero |toLocaleString}}</span>
+                <span></span><span><em>CNY</em> {{CNYCNY.balance | returnZero | toLocaleString}}</span>
               </div>
               <div class="assets_BTC">
-                <span></span><span><em>BTC</em>{{BTCCNY.balance|returnZero | float8}} ≈ {{this.BTCtoCNY(BTCCNY.balance)|returnZero|toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>BTC</em>{{BTCCNY.balance | returnZero | float8}} ≈ {{this.BTCtoCNY(BTCCNY.balance) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
               <div class="assets_LTC">
-                <span></span><span><em>LTC</em> {{LTCCNY.balance|returnZero|float8}} ≈ {{this.LTCtoCNY(LTCCNY.balance)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>LTC</em> {{LTCCNY.balance | returnZero | float8}} ≈ {{this.LTCtoCNY(LTCCNY.balance) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
               <div class="assets_ETH">
-                <span></span><span><em>ETH</em> {{ETHCNY.balance|returnZero|float8}} ≈ {{this.ETHtoCNY(ETHCNY.balance)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>ETH</em> {{ETHCNY.balance | returnZero | float8}} ≈ {{this.ETHtoCNY(ETHCNY.balance) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
               <div class="assets_ETC">
-                <span></span><span><em>ETC</em> {{ETCCNY.balance|returnZero|float8}} ≈ {{this.ETCtoCNY(ETCCNY.balance)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>ETC</em> {{ETCCNY.balance | returnZero | float8}} ≈ {{this.ETCtoCNY(ETCCNY.balance) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
             </div>
           </div>
@@ -101,22 +103,23 @@
         <div class="assets-box">
           <div class="assets-content">
             <h1 class="assets-title">可用</h1>
-            <span class="assets-money">{{(Number(CNYCNY.amount)+Number(this.BTCtoCNY(BTCCNY.amount))+Number(this.LTCtoCNY(LTCCNY.amount))+Number(this.ETCtoCNY(ETCCNY.amount))+Number(this.ETHtoCNY(ETHCNY.amount)))|float2|returnZero |toLocaleString}} {{money_style}}</span>
+            <span
+              class="assets-money">{{(Number(CNYCNY.amount) + Number(this.BTCtoCNY(BTCCNY.amount)) + Number(this.LTCtoCNY(LTCCNY.amount)) + Number(this.ETCtoCNY(ETCCNY.amount)) + Number(this.ETHtoCNY(ETHCNY.amount))) | float2 | returnZero | toLocaleString}} {{money_style}}</span>
             <div v-show="money_hide">
               <div class="assets_CNY">
-                <span></span><span><em>CNY</em> {{CNYCNY.amount|returnZero|float2|toLocaleString}}</span>
+                <span></span><span><em>CNY</em> {{CNYCNY.amount | returnZero | float2 | toLocaleString}}</span>
               </div>
               <div class="assets_BTC">
-                <span></span><span><em>BTC</em> {{BTCCNY.amount|returnZero|float8}} ≈ {{this.BTCtoCNY(BTCCNY.amount)|returnZero|toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>BTC</em> {{BTCCNY.amount | returnZero | float8}} ≈ {{this.BTCtoCNY(BTCCNY.amount) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
               <div class="assets_LTC">
-                <span></span><span><em>LTC</em> {{LTCCNY.amount|returnZero|float8}} ≈ {{this.LTCtoCNY(LTCCNY.amount)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>LTC</em> {{LTCCNY.amount | returnZero | float8}} ≈ {{this.LTCtoCNY(LTCCNY.amount) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
               <div class="assets_ETH">
-                <span></span><span><em>ETH</em> {{ETHCNY.amount|returnZero|float8}} ≈ {{this.ETHtoCNY(ETHCNY.amount)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>ETH</em> {{ETHCNY.amount | returnZero | float8}} ≈ {{this.ETHtoCNY(ETHCNY.amount) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
               <div class="assets_ETC">
-                <span></span><span><em>ETC</em> {{ETCCNY.amount|returnZero|float8}} ≈ {{this.ETCtoCNY(ETCCNY.amount)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>ETC</em> {{ETCCNY.amount | returnZero | float8}} ≈ {{this.ETCtoCNY(ETCCNY.amount) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
             </div>
           </div>
@@ -134,22 +137,23 @@
         <div class="assets-box">
           <div class="assets-content">
             <h1 class="assets-title">冻结</h1>
-            <span class="assets-money">{{(Number(CNYCNY.locked)+Number(this.BTCtoCNY(BTCCNY.locked))+Number(this.LTCtoCNY(LTCCNY.locked))+Number(this.ETCtoCNY(ETCCNY.locked))+Number(this.ETHtoCNY(ETHCNY.locked)))|float2|returnZero |toLocaleString}} {{money_style}}</span>
+            <span
+              class="assets-money">{{(Number(CNYCNY.locked) + Number(this.BTCtoCNY(BTCCNY.locked)) + Number(this.LTCtoCNY(LTCCNY.locked)) + Number(this.ETCtoCNY(ETCCNY.locked)) + Number(this.ETHtoCNY(ETHCNY.locked))) | float2 | returnZero | toLocaleString}} {{money_style}}</span>
             <div v-show="money_hide">
               <div class="assets_CNY">
-                <span></span><span><em>CNY</em> {{CNYCNY.locked|returnZero|float2|toLocaleString}}</span>
+                <span></span><span><em>CNY</em> {{CNYCNY.locked | returnZero | float2 | toLocaleString}}</span>
               </div>
               <div class="assets_BTC">
-                <span></span><span><em>BTC</em> {{BTCCNY.locked|returnZero|float8}} ≈ {{this.BTCtoCNY(BTCCNY.locked)|returnZero|toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>BTC</em> {{BTCCNY.locked | returnZero | float8}} ≈ {{this.BTCtoCNY(BTCCNY.locked) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
               <div class="assets_LTC">
-                <span></span><span><em>LTC</em> {{LTCCNY.locked|returnZero|float8}} ≈ {{this.LTCtoCNY(LTCCNY.locked)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>LTC</em> {{LTCCNY.locked | returnZero | float8}} ≈ {{this.LTCtoCNY(LTCCNY.locked) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
               <div class="assets_ETH">
-                <span></span><span><em>ETH</em> {{ETHCNY.locked|returnZero|float8}} ≈ {{this.ETHtoCNY(ETHCNY.locked)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>ETH</em> {{ETHCNY.locked | returnZero | float8}} ≈ {{this.ETHtoCNY(ETHCNY.locked) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
               <div class="assets_ETC">
-                <span></span><span><em>ETC</em> {{ETCCNY.locked|returnZero|float8}} ≈ {{this.ETCtoCNY(ETCCNY.locked)|returnZero |toLocaleString}}{{money_style}}</span>
+                <span></span><span><em>ETC</em> {{ETCCNY.locked | returnZero | float8}} ≈ {{this.ETCtoCNY(ETCCNY.locked) | returnZero | toLocaleString}}{{money_style}}</span>
               </div>
             </div>
           </div>
@@ -196,12 +200,12 @@
     },
     mounted() {
       let that = this;
-      this.$store.state.Account='BTC';
+      this.$store.state.Account = 'BTC';
       {
         that.showStyle($('.viewStyle').val());
         $('.viewStyle').change(function () {
           that.showStyle($(this).val());
-          if($(this).val() ==='3'){
+          if ($(this).val() === '3') {
             that.drawing();//画饼图
           }
         })
@@ -210,42 +214,43 @@
         that.$http({
           url: 'http://192.168.1.48:8089/fwex/web/capital/info',
           method: 'GET',
-          data:{},
+          data: {},
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + that.$store.state.token
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             for (let i = 0; i < res.data.data.length; i++) {
-                if (res.data.data[i].legalMoney === 'CNY') {
-                  if (res.data.data[i].currency === 'CNY') {
-                    this.CNYCNY = res.data.data[i];
-                  }
-                  if (res.data.data[i].currency === 'BTC') {
-                    this.BTCCNY = res.data.data[i];
-                  }
-                  if (res.data.data[i].currency === 'LTC') {
-                    this.LTCCNY = res.data.data[i];
-                  }
-                  if (res.data.data[i].currency === 'ETH') {
-                    this.ETHCNY = res.data.data[i];
-                  }
-                  if (res.data.data[i].currency === 'ETC') {
-                    this.ETCCNY = res.data.data[i];
-                  }
+              if (res.data.data[i].legalMoney === 'CNY') {
+                if (res.data.data[i].currency === 'CNY') {
+                  this.CNYCNY = res.data.data[i];
                 }
+                if (res.data.data[i].currency === 'BTC') {
+                  this.BTCCNY = res.data.data[i];
+                }
+                if (res.data.data[i].currency === 'LTC') {
+                  this.LTCCNY = res.data.data[i];
+                }
+                if (res.data.data[i].currency === 'ETH') {
+                  this.ETHCNY = res.data.data[i];
+                }
+                if (res.data.data[i].currency === 'ETC') {
+                  this.ETCCNY = res.data.data[i];
+                }
+              }
             }
           }
-          console.log(res,'资金信息')
+          console.log(res, '资金信息')
         }).catch((req) => {
           console.log(req, '获取失败')
         })
       }//获取资金信息
       {
-          $('.coinStyle').change(function () {
-            that.money_style=' '+$(this).val();
-          })
+        $('.coinStyle').change(function () {
+          that.money_style = ' ' + $(this).val();
+        })
       }
     },
     methods: {
@@ -403,47 +408,47 @@
 //          this.$router.push('/userIndex')
       },//刷新当前页面
       BTCtoCNY(str) {
-          return (str*1864.12).toFixed(2);
+        return (str * 1864.12).toFixed(2);
       },
       LTCtoCNY(str) {
-          return (str*564.12).toFixed(2);
+        return (str * 564.12).toFixed(2);
       },
       ETCtoCNY(str) {
-          return (str*464.12).toFixed(2);
+        return (str * 464.12).toFixed(2);
       },
       ETHtoCNY(str) {
-          return (str*664.12).toFixed(2);
+        return (str * 664.12).toFixed(2);
       },
       //血条长度计算
       computedLangZ(num){
-          if(num){
-            return num*100/(Number(this.CNYCNY.balance)+Number(this.BTCtoCNY(this.BTCCNY.balance))+Number(this.LTCtoCNY(this.LTCCNY.balance))+Number(this.ETCtoCNY(this.ETCCNY.balance))+Number(this.ETHtoCNY(this.ETHCNY.balance)))+"%"
-          }
+        if (num) {
+          return num * 100 / (Number(this.CNYCNY.balance) + Number(this.BTCtoCNY(this.BTCCNY.balance)) + Number(this.LTCtoCNY(this.LTCCNY.balance)) + Number(this.ETCtoCNY(this.ETCCNY.balance)) + Number(this.ETHtoCNY(this.ETHCNY.balance))) + "%"
+        }
       },
       computedLangJ(num){
-          if(num){
-            return num*100/(Number(this.CNYCNY.balance)+Number(this.BTCtoCNY(this.BTCCNY.balance))+Number(this.LTCtoCNY(this.LTCCNY.balance))+Number(this.ETCtoCNY(this.ETCCNY.balance))+Number(this.ETHtoCNY(this.ETHCNY.balance)))+"%"
-          }
+        if (num) {
+          return num * 100 / (Number(this.CNYCNY.balance) + Number(this.BTCtoCNY(this.BTCCNY.balance)) + Number(this.LTCtoCNY(this.LTCCNY.balance)) + Number(this.ETCtoCNY(this.ETCCNY.balance)) + Number(this.ETHtoCNY(this.ETHCNY.balance))) + "%"
+        }
       },
       computedLangK(num){
-          if(num){
-            return num*100/(Number(this.CNYCNY.amount)+Number(this.BTCtoCNY(this.BTCCNY.amount))+Number(this.LTCtoCNY(this.LTCCNY.amount))+Number(this.ETCtoCNY(this.ETCCNY.amount))+Number(this.ETHtoCNY(this.ETHCNY.amount)))+"%"
-          }
+        if (num) {
+          return num * 100 / (Number(this.CNYCNY.amount) + Number(this.BTCtoCNY(this.BTCCNY.amount)) + Number(this.LTCtoCNY(this.LTCCNY.amount)) + Number(this.ETCtoCNY(this.ETCCNY.amount)) + Number(this.ETHtoCNY(this.ETHCNY.amount))) + "%"
+        }
       },
       computedLangD(num){
-          if(num){
-            return num*100/(Number(this.CNYCNY.locked)+Number(this.BTCtoCNY(this.BTCCNY.locked))+Number(this.LTCtoCNY(this.LTCCNY.locked))+Number(this.ETCtoCNY(this.ETCCNY.locked))+Number(this.ETHtoCNY(this.ETHCNY.locked)))+"%"
-          }
+        if (num) {
+          return num * 100 / (Number(this.CNYCNY.locked) + Number(this.BTCtoCNY(this.BTCCNY.locked)) + Number(this.LTCtoCNY(this.LTCCNY.locked)) + Number(this.ETCtoCNY(this.ETCCNY.locked)) + Number(this.ETHtoCNY(this.ETHCNY.locked))) + "%"
+        }
       },
     },
-    computed: {
-    }
+    computed: {}
   }
 </script>
 <style scoped>
-  .userIndex{
+  .userIndex {
     padding: 0 1.667rem 2rem 3.333rem;
   }
+
   .Q-C-T {
     display: flex;
     align-items: center;
@@ -564,11 +569,13 @@
     font-size: 1.333rem;
     color: #333;
   }
-  .assets_CNY em, .assets_BTC em, .assets_LTC em, .assets_ETC em, .assets_ETH em{
+
+  .assets_CNY em, .assets_BTC em, .assets_LTC em, .assets_ETC em, .assets_ETH em {
     width: 3rem;
     display: inline-block;
     font-style: normal;
   }
+
   .assets_CNY span:nth-of-type(1), .assets_BTC span:nth-of-type(1), .assets_LTC span:nth-of-type(1), .assets_ETC span:nth-of-type(1), .assets_ETH span:nth-of-type(1) {
     width: 0.667rem;
     height: 0.667rem;

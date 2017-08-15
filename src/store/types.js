@@ -9,5 +9,8 @@ export const FOOTER_HIDE = "FOOTER_HIDE";
 export const LOGINSTATE_TRUE = "LOGINSTATE_TRUE"; //登录
 export const LOGINSTATE_FALSE = "LOGINSTATE_FALSE";//未登录
 
-export const ERROR_CHULI='ERROR_CHULI';//错误处理
+export const ERROR_SHOW='ERROR_SHOW';//错误处理
+export const ERROR_HIDE='ERROR_HIDE';//错误处理
+export const ERROR_SHOW1='ERROR_SHOW1';//错误处理
+export const ERROR_HIDE1='ERROR_HIDE1';//错误处理
 

@@ -21,7 +21,16 @@ export default {
   [types.LOGINSTATE_FALSE]: (state) => {
     state.loginState = false;
   },
-  [types.ERROR_CHULI]: (state) => {
+  [types.ERROR_SHOW]: (state) => {
     state.ErrorState = true;
+  },
+  [types.ERROR_HIDE]: (state) => {
+    state.ErrorState = false;
+  },
+  [types.ERROR_SHOW1]: (state) => {
+    state.ErrorState1 = true;
+  },
+  [types.ERROR_HIDE1]: (state) => {
+    state.ErrorState1 = false;
   }
 }

@@ -111,24 +111,22 @@
 <script>
   import $ from 'jquery';
   export default{
-      data(){
-          return {
-            weChatShow:false
-          }
-      },
+    data(){
+      return {
+        weChatShow: false
+      }
+    },
     mounted() {
-          let that=this;
+      let that = this;
       {
-          $('.footer-header-share-weChat').hover(function () {
-            that.weChatShow=true;
-          },function () {
-            that.weChatShow=false;
-          })
+        $('.footer-header-share-weChat').hover(function () {
+          that.weChatShow = true;
+        }, function () {
+          that.weChatShow = false;
+        })
       }//微信二维码显示隐藏
     },
-    methods: {
-
-    }
+    methods: {}
   }
 </script>
 <style scoped>

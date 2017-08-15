@@ -72,6 +72,7 @@
             param: {}
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           console.log(res)
           if (res.data.code === 200) {
             this.noCord = res.data.data.totalElements > 0;
@@ -86,9 +87,10 @@
   }
 </script>
 <style scoped>
-  .loginLog{
+  .loginLog {
     padding: 0 1.667rem 0 3.333rem;
   }
+
   .loginLog-title {
     font-size: 1.33rem;
     padding: 2rem 0;

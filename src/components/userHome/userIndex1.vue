@@ -31,7 +31,7 @@
           <div class="assets-content">
             <h1 class="assets-title">总资产</h1>
             <span
-              class="assets-money">{{(Number(this.BTCBTC.balance) + Number(this.LTCtoBTC1(this.LTCBTC.balance)) + Number(this.ETCtoBTC1(this.ETCBTC.balance)) + Number(this.ETHtoBTC1(this.ETHBTC.balance)))| float8|toLocaleString8}} {{money_style}}</span>
+              class="assets-money">{{(Number(this.BTCBTC.balance) + Number(this.LTCtoBTC1(this.LTCBTC.balance)) + Number(this.ETCtoBTC1(this.ETCBTC.balance)) + Number(this.ETHtoBTC1(this.ETHBTC.balance))) | float8 | toLocaleString8}} {{money_style}}</span>
             <div v-show="money_hide1">
               <div class="assets_BTC">
                 <span></span><span><em>BTC</em> {{BTCBTC.balance | toLocaleString8}}</span>
@@ -65,7 +65,7 @@
               <router-link to="/cash">提现</router-link>
             </div>
             <span
-              class="assets-money">{{(Number(this.BTCBTC.balance) + Number(this.LTCtoBTC1(this.LTCBTC.balance)) + Number(this.ETCtoBTC1(this.ETCBTC.balance)) + Number(this.ETHtoBTC1(this.ETHBTC.balance)))| float8|toLocaleString8}} {{money_style}}</span>
+              class="assets-money">{{(Number(this.BTCBTC.balance) + Number(this.LTCtoBTC1(this.LTCBTC.balance)) + Number(this.ETCtoBTC1(this.ETCBTC.balance)) + Number(this.ETHtoBTC1(this.ETHBTC.balance))) | float8 | toLocaleString8}} {{money_style}}</span>
             <div v-show="money_hide1">
               <div class="assets_BTC">
                 <span></span><span><em>BTC</em> {{BTCBTC.balance | toLocaleString8}}</span>
@@ -95,7 +95,7 @@
           <div class="assets-content">
             <h1 class="assets-title">可用</h1>
             <span
-              class="assets-money">{{(Number(this.BTCBTC.amount) + Number(this.LTCtoBTC1(this.LTCBTC.amount)) + Number(this.ETCtoBTC1(this.ETCBTC.amount)) + Number(this.ETHtoBTC1(this.ETHBTC.amount)))| float8|toLocaleString8}} {{money_style}}</span>
+              class="assets-money">{{(Number(this.BTCBTC.amount) + Number(this.LTCtoBTC1(this.LTCBTC.amount)) + Number(this.ETCtoBTC1(this.ETCBTC.amount)) + Number(this.ETHtoBTC1(this.ETHBTC.amount))) | float8 | toLocaleString8}} {{money_style}}</span>
             <div v-show="money_hide1">
               <div class="assets_BTC">
                 <span></span><span><em>BTC</em> {{BTCBTC.amount | toLocaleString8}}</span>
@@ -125,7 +125,7 @@
           <div class="assets-content">
             <h1 class="assets-title">冻结</h1>
             <span
-              class="assets-money">{{(Number(this.BTCBTC.locked) + Number(this.LTCtoBTC1(this.LTCBTC.locked)) + Number(this.ETCtoBTC1(this.ETCBTC.locked)) + Number(this.ETHtoBTC1(this.ETHBTC.locked)))| float8|toLocaleString8}} {{money_style}}</span>
+              class="assets-money">{{(Number(this.BTCBTC.locked) + Number(this.LTCtoBTC1(this.LTCBTC.locked)) + Number(this.ETCtoBTC1(this.ETCBTC.locked)) + Number(this.ETHtoBTC1(this.ETHBTC.locked))) | float8 | toLocaleString8}} {{money_style}}</span>
             <div v-show="money_hide1">
               <div class="assets_BTC">
                 <span></span><span><em>BTC</em> {{BTCBTC.locked | toLocaleString8}}</span>
@@ -182,7 +182,7 @@
     },
     mounted() {
       let that = this;
-      this.$store.state.Account='CNY';
+      this.$store.state.Account = 'CNY';
       {
         that.showStyle1($('.viewStyle1').val());
         $('.viewStyle1').change(function () {
@@ -196,12 +196,13 @@
         that.$http({
           url: 'http://192.168.1.48:8089/fwex/web/capital/info',
           method: 'GET',
-          data:{},
+          data: {},
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + that.$store.state.token
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             for (let i = 0; i < res.data.data.length; i++) {
               if (res.data.data[i].legalMoney === 'BTC') {
@@ -415,9 +416,10 @@
   }
 </script>
 <style scoped>
-  .userIndex{
+  .userIndex {
     padding: 0 1.667rem 2rem 3.333rem;
   }
+
   .Q-C-T {
     display: flex;
     align-items: center;

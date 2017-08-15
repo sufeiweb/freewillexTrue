@@ -3,7 +3,9 @@
     <h1>费率声明</h1>
     <table border="1">
       <thead>
-      <tr><td colspan="4">人民币专区账户</td></tr>
+      <tr>
+        <td colspan="4">人民币专区账户</td>
+      </tr>
       <tr>
         <td>币种</td>
         <td>充值</td>
@@ -115,46 +117,55 @@
   </div>
 </template>
 <style scoped>
-  .dealRates{
+  .dealRates {
     background: #fff;
     margin: 1.833rem auto;
-    padding:  2rem;
+    padding: 2rem;
   }
-  .dealRates h1{
+
+  .dealRates h1 {
     padding: 2.5rem 0;
     font-weight: normal;
     text-align: center;
     font-size: 2.75rem;
   }
-  .dealRates table{
+
+  .dealRates table {
     border-spacing: 0;
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 5rem;
     font-size: 1.33rem;
   }
-  .dealRates table td{
+
+  .dealRates table td {
     text-align: center;
     height: 8rem;
   }
-  .dealRates table thead td{
+
+  .dealRates table thead td {
     text-align: center;
     height: 3rem;
   }
-  .dealRates table td:nth-of-type(1){
-    width:25%;
+
+  .dealRates table td:nth-of-type(1) {
+    width: 25%;
   }
-  .dealRates table td:nth-of-type(2){
-    width:25%;
+
+  .dealRates table td:nth-of-type(2) {
+    width: 25%;
   }
-  .dealRates table td:nth-of-type(3){
-    width:25%;
+
+  .dealRates table td:nth-of-type(3) {
+    width: 25%;
   }
-  .dealRates table:nth-of-type(1) thead{
+
+  .dealRates table:nth-of-type(1) thead {
     background: red;
     color: #fff;
   }
-  .dealRates table:nth-of-type(2) thead{
+
+  .dealRates table:nth-of-type(2) thead {
     background: green;
     color: #fff;
   }

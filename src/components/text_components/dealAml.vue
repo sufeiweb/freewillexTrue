@@ -32,7 +32,8 @@
     font-size: 2.5rem;
     text-align: center;
   }
-  .deal-aml p{
+
+  .deal-aml p {
     text-indent: 2em;
     margin-bottom: 10px;
     font-size: 1.33rem;

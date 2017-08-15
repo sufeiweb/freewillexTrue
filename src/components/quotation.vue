@@ -230,7 +230,7 @@
               layout="prev, pager, next"
               :total="totalNum2"
               v-show="!newData"
-              >
+            >
             </el-pagination>
             <span v-show="newData">当前委托</span>
             <span v-show="!newData">历史委托</span>
@@ -260,9 +260,10 @@
                 <td>{{item.orderType | translate}}</td>
                 <td>{{item.price | return_}}</td>
                 <td>{{item.dealPrice}}</td>
-                <td v-show="newData"><a href="javascript:;" :code="item.code" :commodity="item.commodity" style="color:#01aaef"
-                       @click="revoke1($event)">撤销</a></td>
-                <td v-show="!newData">{{item.orderStatus|translate}}</td>
+                <td v-show="newData"><a href="javascript:;" :code="item.code" :commodity="item.commodity"
+                                        style="color:#01aaef"
+                                        @click="revoke1($event)">撤销</a></td>
+                <td v-show="!newData">{{item.orderStatus | translate}}</td>
               </tr>
               </tbody>
               <tbody class="delegate-panel-data-tbody noRecord" v-show="!noRecord">
@@ -495,9 +496,9 @@
         account: 'CNY',
         cunency: 'BTC',
         newData: true,
-        currentPage:1,
-        totalNum1:0,
-        totalNum2:0,
+        currentPage: 1,
+        totalNum1: 0,
+        totalNum2: 0,
       }
     },
     components: {
@@ -562,6 +563,7 @@
             'X-Authorization': 'Bearer ' + that.$store.state.token
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           that.userNumM = res.data.data.loginUser;
           console.log(res, '请求成功')
         }).catch((req) => {
@@ -594,9 +596,10 @@
             source: 'WEB'
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           console.log(res);
           if (res.data.code === 200) {
-            this.newData=true;
+            this.newData = true;
             this.panel_data(1);
             console.log(res.data.message)
           }
@@ -606,10 +609,10 @@
       },//交易
       getData() {
         this.newData = !this.newData;
-        if(this.newData){
-            this.panel_data(1);
-        }else {
-            this.pane1_oldData(1)
+        if (this.newData) {
+          this.panel_data(1);
+        } else {
+          this.pane1_oldData(1)
         }
       },//获取委托
       TKShowTrue(){
@@ -1051,6 +1054,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             ev.target.parentNode.parentNode.remove()
           }
@@ -1067,13 +1071,14 @@
             "Content-Type": "application/json;charset=UTF-8",
           },
           data: {
-            pageNo: currentPage-1,
+            pageNo: currentPage - 1,
             pageSize: 10,
             param: {
               commodity: 'BTCCNY'
             }
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             this.totalNum1 = res.data.data.totalElements;
             if (res.data.data.totalElements) {
@@ -1089,7 +1094,7 @@
       },//当前委托
       pane1_oldData(currentPage) {
         this.$http({
-          url:'http://192.168.1.48:8089/fwex/web/trade/history',
+          url: 'http://192.168.1.48:8089/fwex/web/trade/history',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -1097,20 +1102,21 @@
             "Content-Type": "application/json;charset=UTF-8",
           },
           data: {
-            pageNo: currentPage-1,
+            pageNo: currentPage - 1,
             pageSize: 10,
             param: {
               commodity: 'BTCCNY',
             }
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           console.log(res)
           if (res.data.code === 200) {
             this.totalNum2 = res.data.data.totalElements;
-            if(res.data.data.totalElements){
-              this.noRecord=true;
+            if (res.data.data.totalElements) {
+              this.noRecord = true;
             }
-            this.panel_data1=res.data.data.content;
+            this.panel_data1 = res.data.data.content;
             console.log(res.data.data)
           } else {
             console.log(res.data.message)
@@ -1142,6 +1148,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             for (let i = 0; i < res.data.data.length; i++) {
               if (res.data.data[i].legalMoney === 'CNY') {

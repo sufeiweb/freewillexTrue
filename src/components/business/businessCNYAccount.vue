@@ -190,7 +190,7 @@
     },
     mounted() {
       let that = this;
-      this.$store.state.Account=this.newAccount;
+      this.$store.state.Account = this.newAccount;
 //      console.log(this.newAccount,"当前CNY账户");
       {
         $("input[name='select-accountss']").change(function () {
@@ -242,7 +242,8 @@
             amount: this.amount,
             source: 'WEB'
           }
-        }).then((res) => {
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
           console.log(res);
           if (res.data.code === 200) {
             if (this.buyOrSell) {
@@ -304,17 +305,18 @@
         console.log(this.commodity, '品种');
       },
       getPanKou(){
-       this.getCommodity();
+        this.getCommodity();
         this.$http({
-          url:'http://192.168.1.48:8089/fwex/web/quotation/depth/'+this.commodity+'/'+10,
+          url: 'http://192.168.1.48:8089/fwex/web/quotation/depth/' + this.commodity + '/' + 10,
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
-        }).then((res)=>{
-            console.log(res.data.data,'盘口信息')
-        }).catch((req)=>{
-            console.log(req,'请求失败')
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
+          console.log(res.data.data, '盘口信息')
+        }).catch((req) => {
+          console.log(req, '请求失败')
         })
       }
     },

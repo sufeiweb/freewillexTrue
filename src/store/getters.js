@@ -14,7 +14,10 @@ export default {
   ErrorState(state){
     return state.ErrorState;
   },
+  ErrorState1(state){
+    return state.ErrorState1;
+  },
   ErrorMessage(state){
     return state.ErrorMessage;
-  }
+  },
 }

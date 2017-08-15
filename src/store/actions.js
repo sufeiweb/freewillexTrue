@@ -33,9 +33,24 @@ export default {
                     }) => {
     commit(types.LOGINSTATE_FALSE);
   },
-  errorTips: ({
+  errorShow: ({
                 commit, state
               }) => {
-    commit(types.ERROR_CHULI)
+    commit(types.ERROR_SHOW)
+  },
+  errorHide: ({
+                commit, state
+              }) => {
+    commit(types.ERROR_HIDE)
+  },
+  errorShow1: ({
+                commit, state
+              }) => {
+    commit(types.ERROR_SHOW1)
+  },
+  errorHide1: ({
+                commit, state
+              }) => {
+    commit(types.ERROR_HIDE1)
   }
 }

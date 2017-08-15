@@ -2,7 +2,8 @@
   <div class="rechargeList">
     <div class="rechargeList-title">
       <p>待充值订单</p>
-      <p> 请使用<a :href="'http://'+this.$route.query.bankUrl" target="_blank">{{this.$route.query.bankName}}</a>向以下账户转账</p>
+      <p> 请使用<a :href="'http://'+this.$route.query.bankUrl" target="_blank">{{this.$route.query.bankName}}</a>向以下账户转账
+      </p>
     </div>
     <div class="rechargeList-content">
       <p><span>开户银行</span><span>{{this.$route.query.bankName}}</span></p>
@@ -24,9 +25,7 @@
 <script>
   export default {
     data() {
-      return {
-
-      }
+      return {}
     },
     created() {
 

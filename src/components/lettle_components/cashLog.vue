@@ -7,7 +7,7 @@
       <div class="recharge-group-radio">
         <input name="select-account434" type="radio" id="account-cny434" value="CNY" checked/>
         <label for="account-cny434" class="recharge-group-radio-checked">
-         <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
@@ -33,7 +33,7 @@
           <!--</label>-->
           <input name="select-currency444" type="radio" id="recharge-currency-cny444" value="CNY" checked/>
           <label for="recharge-currency-cny444" class="recharge-group-radio-checked">
-           <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a1"></span>
             <span>CNY</span>
           </label>
@@ -117,9 +117,9 @@
               </thead>
               <tbody class="user-table-tbody" v-show="noData">
               <tr v-for="item in items">
-                <td>{{item.createDate|dateYMDHIS}}</td>
+                <td>{{item.createDate | dateYMDHIS}}</td>
                 <td>{{Account}}</td>
-                <td>{{item.amount?item.amount:item.applyBalance}}</td>
+                <td>{{item.amount ? item.amount : item.applyBalance}}</td>
                 <td>{{item.fee}}</td>
                 <td>{{item.step}}</td>
               </tr>
@@ -162,9 +162,9 @@
         account: false,
         Account: '',//当前账户
         Currency: '',//当前币种
-        totalNum:10,//总条数
-        items:[],//数组
-        currentPage:1,//默认页
+        totalNum: 10,//总条数
+        items: [],//数组
+        currentPage: 1,//默认页
       }
     },
     mounted() {
@@ -205,29 +205,30 @@
         }
         this.$http({
           url: url,
-          method:'POST',
+          method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token,
             "Content-Type": "application/json;charset=UTF-8",
           },
-          data:{
-            pageNo:currentPage-1,
-            pageSize:10,
-            param:{
+          data: {
+            pageNo: currentPage - 1,
+            pageSize: 10,
+            param: {
 
-              currency:this.Currency
+              currency: this.Currency
             }
           }
-        }).then((res)=>{
-            if(res.data.code===200){
-                this.noData=res.data.data.totalElements>0;
-                this.totalNum=res.data.data.totalElements?res.data.data.totalElements:10;
-                this.items=res.data.data.content;
-                console.log(res.data.data);
-            }
-        }).catch((req)=>{
-            console.log(req,'请求失败')
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
+          if (res.data.code === 200) {
+            this.noData = res.data.data.totalElements > 0;
+            this.totalNum = res.data.data.totalElements ? res.data.data.totalElements : 10;
+            this.items = res.data.data.content;
+            console.log(res.data.data);
+          }
+        }).catch((req) => {
+          console.log(req, '请求失败')
         })
       },
       //获取当前账户

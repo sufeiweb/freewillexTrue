@@ -22,7 +22,7 @@
   }
 </script>
 <style scoped>
-  .userIndex-footer-title{
+  .userIndex-footer-title {
     font-weight: 400;
     font-size: 1.667rem;
     padding: 0.833rem 0;

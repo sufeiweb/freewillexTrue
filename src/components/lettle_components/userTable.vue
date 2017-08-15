@@ -59,7 +59,7 @@
         totalName: 10,//总条数
         currentPage: 1,//默认页
         items: [],//返回参数,
-        Account:'',//默认账户
+        Account: '',//默认账户
         startDate: '',//开始时间
         endDate: '',//结束时间
       }
@@ -88,14 +88,15 @@
               endTimes: this.endDate
             }
           }
-        }).then((res) => {
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             if (res.data.data.totalElements) {
               this.noData = true;
             } else {
               this.noData = false;
             }
-            this.totalName = res.data.data.totalElements?res.data.data.totalElements:10;
+            this.totalName = res.data.data.totalElements ? res.data.data.totalElements : 10;
             this.items = res.data.data.content;
           }
         }).catch((req) => {

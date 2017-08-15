@@ -521,9 +521,10 @@
               "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((res) => {
-              if(res.data.code===200){
-                this.$router.push('/login');
-              }
+            this.showError(res.data.code, res.data.message);
+            if (res.data.code === 200) {
+              this.$router.push('/login');
+            }
           }).catch((req) => {
             console.log(req, 22222)
           })
@@ -546,9 +547,10 @@
               "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((res) => {
-              if(res.data.code){
-                this.$router.push('/login');
-              }
+            this.showError(res.data.code, res.data.message);
+            if (res.data.code) {
+              this.$router.push('/login');
+            }
             console.log(res, 11111)
           }).catch((req) => {
             console.log(req, 22222)
@@ -722,21 +724,21 @@
     margin-bottom: 0;
   }
 
-  .password-strength,.password-strengths {
+  .password-strength, .password-strengths {
     display: flex;
     margin-top: -1.5rem;
     align-items: center;
 
   }
 
-  .password-strength span,.password-strengths span {
+  .password-strength span, .password-strengths span {
     width: 3rem;
     height: 1rem;
     margin-right: .8rem;
     background: #e9ecf3;
   }
 
-  .password-strength-view,.password-strength-views {
+  .password-strength-view, .password-strength-views {
     color: red;
   }
 </style>

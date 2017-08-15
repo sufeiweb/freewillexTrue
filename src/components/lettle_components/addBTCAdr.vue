@@ -71,9 +71,9 @@
       }
     },
     mounted() {
-        $("input[name='we1']").change(function () {
-          $(this).next().addClass('border-color').siblings().removeClass('border-color');
-        });
+      $("input[name='we1']").change(function () {
+        $(this).next().addClass('border-color').siblings().removeClass('border-color');
+      });
     },
     methods: {
       bindGet(ev) {
@@ -95,11 +95,12 @@
             types: yzStyle,
             captcha: this.serverYz
           }
-        }).then((res) => {
-            if(res.data.code===200){
-              ev.target.innerHTML = '确认绑定';
-                this.$router.push('/accountManagement')
-            }
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
+          if (res.data.code === 200) {
+            ev.target.innerHTML = '确认绑定';
+            this.$router.push('/accountManagement')
+          }
           console.log(res, '请求成功')
         }).catch((req) => {
           ev.target.innerHTML = '确认绑定';
@@ -121,7 +122,8 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
-        }).then((res) => {
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             let t = 60;
             let tt = setInterval(function () {

@@ -40,9 +40,10 @@
           'X-Requested-With': 'XMLHttpRequest',
           'X-Authorization': 'Bearer ' + that.$store.state.token
         }
-      }).then((res) => {
-          that.userName=res.data.data.userName;
-          that.userCountry=res.data.data.country;
+      }).then((res)=> {
+        this.showError(res.data.code, res.data.message);
+        that.userName = res.data.data.userName;
+        that.userCountry = res.data.data.country;
         console.log(res, '请求成功')
       }).catch((req) => {
         console.log(req, '请求失败')
@@ -54,8 +55,9 @@
           "X-Requested-With": "XMLHttpRequest",
           'X-Authorization': 'Bearer ' + that.$store.state.token
         }
-      }).then((res) => {
-        console.log(res.data,23131313);
+      }).then((res)=> {
+        this.showError(res.data.code, res.data.message);
+        console.log(res.data, 23131313);
         for (let i = 0; i < res.data.data.length; i++) {
           if (res.data.data[i].certificateEnum === 'IDCARD') {
             that.userIdCard = res.data.data[i].code;

@@ -76,6 +76,7 @@
               <input type="checkbox" id="agree"/>
               <label for="agree">
                 我已阅读并同意
+
                 <router-link to="/userAgreement">《FreeWillex用户协议》</router-link>
               </label>
             </div>
@@ -142,6 +143,7 @@
             <input type="checkbox" id="agree1"/>
             <label for="agree1">
               我已阅读并同意
+
               <router-link to="/userAgreement">《FreeWillex用户协议》</router-link>
             </label>
           </div>
@@ -223,8 +225,8 @@
               registerIp: '192.168.1.110',
               captch: that.captchE
             },
-            headers:{
-              "X-Requested-With":"XMLHttpRequest",
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
               "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((data) => {
@@ -259,8 +261,8 @@
               registerIp: '120.0.0.1',
               captch: that.captchM
             },
-            headers:{
-              "X-Requested-With":"XMLHttpRequest",
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
               "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((data) => {
@@ -406,7 +408,7 @@
             $('.phone-tishi').html('');
           }
         });
-  //用户名检测
+        //用户名检测
 //        $('.userNameIpt').blur(function () {
 //            that.$http({
 //              url: 'http://192.168.1.48:8089/fwex/web/register/check',
@@ -417,7 +419,7 @@
 //              headers:{
 //                  'X-Requested-With':'XMLHttpRequest'
 //              }
-//            }).then((res)=>{
+//            }).then((res)=> { this.showError(res.data.code,res.data.message);
 //                console.log(res,'用户名不存在')
 //            }).catch((req)=>{
 //                console.log(req,'请求失败')

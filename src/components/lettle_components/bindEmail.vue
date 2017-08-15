@@ -132,27 +132,28 @@
         this.bindEmailRGetCord = num;
       },
       QbindEmail() {
-          let that=this;
-          console.log(that.$store.state.bindEmailNum.email,that.$store.state.bindEmailNum.YZ);
-        if(that.$store.state.bindEmailNum.email && that.$store.state.bindEmailNum.YZ){
-            that.$http({
-              url:'http://192.168.1.48:8089/fwex/web/authentication/emailAuth',
-              method: 'POST',
-              data: {
-                email:that.bindEmailNum,
-                captcha:that.bindEmailRGetCord
-              },
-              headers: {
-                "X-Requested-With": "XMLHttpRequest",
-                'X-Authorization': 'Bearer ' + this.$store.state.token,
-                "Content-Type": "application/json;charset=UTF-8",
-              }
-            }).then((res)=>{
-                console.log(res,'绑定成功');
-                that.$router.push('/settings');
-            }).catch((req)=>{
-                console.log(req,'绑定失败')
-            })
+        let that = this;
+        console.log(that.$store.state.bindEmailNum.email, that.$store.state.bindEmailNum.YZ);
+        if (that.$store.state.bindEmailNum.email && that.$store.state.bindEmailNum.YZ) {
+          that.$http({
+            url: 'http://192.168.1.48:8089/fwex/web/authentication/emailAuth',
+            method: 'POST',
+            data: {
+              email: that.bindEmailNum,
+              captcha: that.bindEmailRGetCord
+            },
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              'X-Authorization': 'Bearer ' + this.$store.state.token,
+              "Content-Type": "application/json;charset=UTF-8",
+            }
+          }).then((res)=> {
+            this.showError(res.data.code, res.data.message);
+            console.log(res, '绑定成功');
+            that.$router.push('/settings');
+          }).catch((req) => {
+            console.log(req, '绑定失败')
+          })
         }
       }
     }

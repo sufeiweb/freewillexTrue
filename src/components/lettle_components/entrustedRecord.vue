@@ -131,11 +131,11 @@
         totalNumH: 10,
         contentArr: [],
         contentArrH: [],
-        account:'',//当前账户
-        currency:'',//当前币种
-        timerDT:'',//筛选时间
-        startDate:'',
-        endDate:'',
+        account: '',//当前账户
+        currency: '',//当前币种
+        timerDT: '',//筛选时间
+        startDate: '',
+        endDate: '',
       };
     },
     created(){
@@ -146,9 +146,9 @@
       this.handleCurrentChange1(1);
     },
     methods: {
-        //获取当前账户，币种
+      //获取当前账户，币种
       getAccount(){
-        this.account=this.$store.state.Account;
+        this.account = this.$store.state.Account;
 
       },
       handleCurrentChange: function (currentPage) {
@@ -167,7 +167,8 @@
               commodity: 'BTCCNY',
             }
           }
-        }).then((res) => {
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             this.totalNum = res.data.data.totalElements;
             if (res.data.data.totalElements) {
@@ -183,7 +184,7 @@
         })
       },//获取当前委托
       handleCurrentChange1: function (currentPage) {
-        console.log(this.account,1111);
+        console.log(this.account, 1111);
         this.$http({
           url: 'http://192.168.1.48:8089/fwex/web/trade/history',
           method: 'POST',
@@ -196,12 +197,13 @@
             pageNo: currentPage - 1,
             pageSize: 10,
             param: {
-              legalMoney:this.account,
-              startTimes:this.startDate,
-              endTimes:this.endDate
+              legalMoney: this.account,
+              startTimes: this.startDate,
+              endTimes: this.endDate
             }
           }
-        }).then((res) => {
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
           console.log(res)
           if (res.data.code === 200) {
             this.totalNumH = res.data.data.totalElements ? res.data.data.totalElements : 10;
@@ -223,7 +225,8 @@
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
-        }).then((res) => {
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             ev.target.parentNode.parentNode.remove()
           }
@@ -231,9 +234,9 @@
 
       },
     },
-    watch:{
-      timerDT(newValue,oldValue) {
-          console.log(1)
+    watch: {
+      timerDT(newValue, oldValue) {
+        console.log(1)
         let date1 = new Date(newValue[0]);
         let date2 = new Date(newValue[1]);
         this.startDate = date1.getTime();

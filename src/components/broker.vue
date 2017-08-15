@@ -25,8 +25,10 @@
             <a href="javascript:;" class="bds_fbook">Facebook</a>
             <a href="javascript:;" class="bds_twi">Twitter</a>
           </p>
-          <p><input type="text" value="https://192.168.1.110:3000/broker/register?id=402547" readonly id="broker-input"/><i
-            class="iconfont">&#xe635;</i><a href="javascript:;" id="brokerBtn" text="复制成功" @click="CopyText($event)">复制</a></p>
+          <p><input type="text" value="https://192.168.1.110:3000/broker/register?id=402547" readonly
+                    id="broker-input"/><i
+            class="iconfont">&#xe635;</i><a href="javascript:;" id="brokerBtn" text="复制成功"
+                                            @click="CopyText($event)">复制</a></p>
           <p><input type="text" placeholder="输入您好友的邮箱"/><a href="javascript:;">邀请</a></p>
           <p>*多个邮箱请用半角逗号分隔</p>
         </div>
@@ -94,9 +96,9 @@
     },
     mounted() {
     },
-    methods:{
+    methods: {
       CopyText(ev){
-          this.copy('broker-input',ev.target.getAttribute('text'))
+        this.copy('broker-input', ev.target.getAttribute('text'))
       }
     }
   }

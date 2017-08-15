@@ -248,18 +248,19 @@
               password: that.bindFullPsd,
               confirmPwd: that.bindFullPsds,
               types: that.types,
-              captcha:that.bindFullPsdCaptcha
+              captcha: that.bindFullPsdCaptcha
             },
             headers: {
               "X-Requested-With": "XMLHttpRequest",
               'X-Authorization': 'Bearer ' + that.$store.state.token,
               "Content-Type": "application/json;charset=UTF-8",
             }
-          }).then((res)=>{
-              console.log(res,'设置成功');
-              that.$router.push('/settings');
-          }).catch((req)=>{
-              console.log(req,'设置失败')
+          }).then((res)=> {
+            this.showError(res.data.code, res.data.message);
+            console.log(res, '设置成功');
+            that.$router.push('/settings');
+          }).catch((req) => {
+            console.log(req, '设置失败')
           })
         }
       }

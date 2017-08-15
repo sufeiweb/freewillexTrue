@@ -108,12 +108,13 @@
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/account/info',
             method: 'GET',
-            data:{},
+            data: {},
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
               'X-Authorization': 'Bearer ' + that.$store.state.token
             }
           }).then((res) => {
+            this.showError(res.data.code, res.data.message);
             that.userNameM = res.data.data.userName;
             that.userNumM = res.data.data.loginUser;
             console.log(res, '请求成功')
@@ -282,10 +283,12 @@
     padding: 0 1.5rem;
     font-size: 1.6rem;
   }
-  .nav-link-item:nth-of-type(1) a{
+
+  .nav-link-item:nth-of-type(1) a {
     border-bottom: 2px solid #01aaef;
     color: #01aaef;
   }
+
   .nav-link-item a:hover {
     border-bottom: 2px solid #01aaef;
     color: #01aaef;
@@ -393,23 +396,27 @@
   .user-m-ul li:hover {
     background: #f0f0f0;
   }
-  .header-btn-box{
+
+  .header-btn-box {
     padding-right: 2rem;
   }
-  .header-btn-box button{
+
+  .header-btn-box button {
     background: none;
     color: #fff;
-    border:none;
+    border: none;
     margin-left: 1rem;
     cursor: pointer;
     outline: none;
     padding: 0.5rem 1rem;
   }
-  .header-btn-box button:nth-of-type(2){
-    border:1px solid #01aaef;
+
+  .header-btn-box button:nth-of-type(2) {
+    border: 1px solid #01aaef;
 
   }
-  .header-btn-box button:nth-of-type(2):hover{
+
+  .header-btn-box button:nth-of-type(2):hover {
     background: #01aaef;
   }
 </style>

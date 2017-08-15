@@ -127,7 +127,7 @@
       }
     },
     created(){
-        let that =this;
+      let that = this;
       {
         console.log(that.$store.state.token, 'token');
         this.$http({
@@ -137,7 +137,8 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + that.$store.state.token,
           }
-        }).then((res) => {
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
           that.CBank = res.data.data;
           console.log(res.data.data)
           for (let i = 0; i < res.data.data.length; i++) {
@@ -165,32 +166,32 @@
     mounted() {
       let that = this;
       that.RgetCord();//获取验证码
-        that.bankStyles($('.bankStyle').val());
-        $('.bankStyle').change(function () {
-          that.bankStyles($(this).val());
-        });
+      that.bankStyles($('.bankStyle').val());
+      $('.bankStyle').change(function () {
+        that.bankStyles($(this).val());
+      });
       //获取bankid
       {
-          $('.RBankName-input').keyup(function () {
-            if(that.RBankNum){
-              that.$store.state.realNeed.bankNum = true;
-            }else{
-              that.$store.state.realNeed.bankNum = false;
-            }
-          })
+        $('.RBankName-input').keyup(function () {
+          if (that.RBankNum) {
+            that.$store.state.realNeed.bankNum = true;
+          } else {
+            that.$store.state.realNeed.bankNum = false;
+          }
+        })
       }
       {
         $('.RBankAdr-input').keyup(function () {
-          if(that.RBankNum){
+          if (that.RBankNum) {
             that.$store.state.realNeed.bankAdr = true;
-          }else{
+          } else {
             that.$store.state.realNeed.bankAdr = false;
           }
         })
       }
       {
         $('.RUserName-input').keyup(function () {
-          if(that.RUserName) {
+          if (that.RUserName) {
             that.$store.state.realNeed.name = true;
           } else {
             that.$store.state.realNeed.name = false;
@@ -244,8 +245,8 @@
       }//手机号码验证
       {
         $('.RYZ-input').keyup(function () {
-            console.log(that.rGetCord);
-            console.log(that.RYZ);
+          console.log(that.rGetCord);
+          console.log(that.RYZ);
           if (that.RYZ == that.rGetCord) {
             $('.yz-tips').html('');
             that.$store.state.realNeed.Yz = true;
@@ -309,16 +310,17 @@
               'X-Authorization': 'Bearer ' + that.$store.state.token,
               "Content-Type": "application/json;charset=UTF-8",
             }
-          }).then((res)=>{
-              that.$router.push('/settings');
-              console.log(res,'立即认证')
-          }).catch((req)=>{
-              console.log(req,'认证失败')
+          }).then((res)=> {
+            this.showError(res.data.code, res.data.message);
+            that.$router.push('/settings');
+            console.log(res, '立即认证')
+          }).catch((req) => {
+            console.log(req, '认证失败')
           })
         }
       },
       bankStyles(num){
-          let that =this;
+        let that = this;
         switch (num) {
           case 'alipay':
             that.RBankVal = that.$store.state.bankId.alipay;
@@ -427,7 +429,7 @@
     width: 70% !important;
   }
 
-  .input-box > span,.input-box > button{
+  .input-box > span, .input-box > button {
     background: #01aaef;
     color: #fff;
     text-align: center;
@@ -450,7 +452,7 @@
     border: 1px solid #ddd;
   }
 
-  .real-from-group > div > span, .input-box > span,.input-box > button {
+  .real-from-group > div > span, .input-box > span, .input-box > button {
     height: 1.5rem;
   }
 

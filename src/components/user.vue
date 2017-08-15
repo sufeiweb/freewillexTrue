@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <div class="user-box layout">
-        <userBtnLink></userBtnLink>
+      <userBtnLink></userBtnLink>
       <div class="user-box-right">
         <transition enter-active-class="animated fadeIn">
           <router-view></router-view>
@@ -21,16 +21,18 @@
   }
 </script>
 <style scoped>
-  .user .user-box{
+  .user .user-box {
     color: #333;
     height: 100%;
   }
-  .user-box{
+
+  .user-box {
     margin: 2rem auto;
     display: flex;
     align-items: flex-start;
   }
-  .user-box-right{
+
+  .user-box-right {
     width: 100%;
     background: #fff;
     margin-left: 1rem;

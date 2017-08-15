@@ -1,20 +1,25 @@
 <template>
-  <transition enterActiveClass="fadeInDown" leaveActiveClass="fadeOutUp">
-    <div class="tips" v-show="showTips">
-      <i class="iconfont" v-show="dt">&#xe664;</i>
-      <i class="iconfont" v-show="!dt">&#xe690;</i>
-    </div>
-  </transition>
+  <div>
+    <transition enterActiveClass="animated fadeInDown" leaveActiveClass="animated fadeOutUp">
+      <div class="tips" v-show="ErrorState">
+        <i class="iconfont">&#xe664;</i>
+        {{ErrorMessage}}
+
+      </div>
+    </transition>
+    <transition enterActiveClass="animated fadeInDown" leaveActiveClass="animated fadeOutUp">
+      <div class="tips tips1" v-show="ErrorState1">
+        <i class="iconfont">&#xe690;</i>
+        {{ErrorMessage}}
+
+      </div>
+    </transition>
+  </div>
 </template>
 <script>
   import {mapGetters} from 'vuex';
   export default {
-    data() {
-      return {
-        dt: true,
-        showTips: false,
-      }
-    }
+    computed: mapGetters(['ErrorState', 'ErrorMessage', 'ErrorState1'])
   }
 </script>
 <style scoped>
@@ -38,7 +43,11 @@
   }
 
   .tips i {
-    font-size: 3rem;
+    font-size: 2rem;
     margin-right: 3rem;
+  }
+
+  .tips1 {
+    background: red;
   }
 </style>

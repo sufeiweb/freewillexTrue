@@ -9,7 +9,7 @@
 <script>
   import loginCenter from './lettle_components/loginCenter.vue';
   export default {
-    components:{loginCenter},
+    components: {loginCenter},
   }
 </script>
 <style scoped>
@@ -19,6 +19,7 @@
     overflow: hidden;
     background: #0397DD;
   }
+
   .login-box {
     position: relative;
   }

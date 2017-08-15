@@ -288,7 +288,8 @@
               'X-Authorization': 'Bearer ' + that.$store.state.token,
               "Content-Type": "application/json;charset=UTF-8",
             }
-          }).then((res) => {
+          }).then((res)=> {
+            this.showError(res.data.code, res.data.message);
             console.log(res, '设置成功');
             that.$router.push('/login');
             that.$store.state.token = '';

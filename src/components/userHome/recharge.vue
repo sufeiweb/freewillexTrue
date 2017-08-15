@@ -109,7 +109,7 @@
       <div class="recharge-group-radio">
         <input name="select-style" type="radio" id="recharge-style-cny" value="1" checked/>
         <label for="recharge-style-cny" class="recharge-group-radio-checked">
-         <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a6"></span>
           <span>网上银行</span>
         </label>
@@ -343,6 +343,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           that.ZCBank = res.data.data;
           console.log(res.data.data, 111)
         }).catch((req) => {
@@ -358,6 +359,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           that.userBank = res.data.data;
           console.log(res.data.data, 1222211);
           console.log(typeof res.data.data[0].abbreviation)
@@ -405,6 +407,7 @@
             applyBalance: this.remittance + '.' + this.arNum
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           console.log(res)
           if (res.data.code === 200) {
             ev.target.innerHTML = '生成汇款单';
@@ -443,6 +446,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           console.log(res, '请求成功');
           if (res.data.code === 200) {
             this.itemAddrs = res.data.data.address;
@@ -466,6 +470,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             for (let i = 0; i < res.data.data.length; i++) {
               this.$set(this.moneyControl, res.data.data[i].paramKey, res.data.data[i].paramValue);
@@ -517,18 +522,22 @@
     background: url("../../assets/img/iconPng/ETC.png");
     background-position: -22px;
   }
+
   .a6 {
     background: url("../../assets/img/iconPng/wangshangyinhang.png");
     background-position: -22px;
   }
+
   .a7 {
-     background: url("../../assets/img/iconPng/zizhuhuikuan.png");
-     background-position: -22px;
-   }
+    background: url("../../assets/img/iconPng/zizhuhuikuan.png");
+    background-position: -22px;
+  }
+
   .a8 {
     background: url("../../assets/img/iconPng/zhufubao.png");
     background-position: -22px;
   }
+
   .userIndex-recharge {
     padding: 0 1.667rem 0 3.333rem;
     font-size: 1.167rem;

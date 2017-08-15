@@ -179,28 +179,32 @@
   </div>
 </template>
 <style scoped>
-  .deal-register{
+  .deal-register {
     background: #fff;
     margin: 1.833rem auto;
-    padding:  2rem;
+    padding: 2rem;
   }
-  .deal-register h1{
+
+  .deal-register h1 {
     padding: 2.5rem 0;
     font-weight: normal;
     text-align: center;
     font-size: 2.75rem;
   }
-  .deal-register p, .deal-register ul li{
+
+  .deal-register p, .deal-register ul li {
     text-indent: 2em;
     margin-bottom: 10px;
     font-size: 1.33rem;
     line-height: 2.5rem;
     direction: ltr;
   }
-  .deal-register ul li{
-    list-style:inside;
+
+  .deal-register ul li {
+    list-style: inside;
   }
-  .deal-register .title{
+
+  .deal-register .title {
     font-weight: bold;
   }
 </style>

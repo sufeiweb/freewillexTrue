@@ -8,7 +8,7 @@
       <div class="recharge-group-radio">
         <input name="select-account-cash" type="radio" id="account-cny-cash" value="CNY" checked/>
         <label for="account-cny-cash" class="recharge-group-radio-checked">
-         <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
@@ -28,7 +28,7 @@
         <div class="recharge-group-radio" v-show="!account">
           <input name="select-currency-cash" type="radio" id="recharge-currency-cny-cash" value="CNY" checked/>
           <label for="recharge-currency-cny-cash" class="recharge-group-radio-checked">
-           <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a1"></span>
             <span>CNY</span>
           </label>
@@ -119,7 +119,7 @@
               <input name="select-bank-cash1" type="radio" :id="'recharge-mode-cny20-cash1'+index" :value="index+1"
                      :checked="index===0?'checked':''" :address="item.address"/>
               <label :for="'recharge-mode-cny20-cash1'+index" :class="index===0?'recharge-group-radio-checked':''">
-                <p>{{item.currency|translate}}地址 {{index + 1}}</p>
+                <p>{{item.currency | translate}}地址 {{index + 1}}</p>
                 <p>{{item.address}}</p>
               </label>
             </div>
@@ -315,6 +315,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           that.userBank = res.data.data;
         }).then(() => {
           $("input[name='select-bank-cash']").change(function () {
@@ -378,6 +379,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             this.currencyAdr = res.data.data;
             console.log(res.data.data)
@@ -404,6 +406,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             for (let i = 0; i < res.data.data.length; i++) {
               this.$set(this.moneyControl, res.data.data[i].paramKey, res.data.data[i].paramValue);
@@ -425,6 +428,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             let s = 60;
             let ts = setInterval(function () {
@@ -468,6 +472,7 @@
               capitalPwd: this.moneyPsd
             }
           }).then((res) => {
+            this.showError(res.data.code, res.data.message);
             if (res.data.code === 200) {
               ev.target.innerHTML = '确认提现';
               this.closeNum();
@@ -512,6 +517,7 @@
               capitalPwd: this.moneyPsd
             }
           }).then((res) => {
+            this.showError(res.data.code, res.data.message);
             console.log(res);
             if (res.data.code === 200) {
               ev.target.innerHTML = '确认提现';
@@ -534,6 +540,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           },
         }).then((res) => {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             this.Fee = res.data.data;
             console.log(res.data.data.length);

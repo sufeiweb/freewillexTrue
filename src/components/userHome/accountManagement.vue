@@ -7,7 +7,7 @@
       <div class="recharge-group-radio">
         <input name="select-account-cash123" type="radio" id="account-cny-cash123" value="1" checked/>
         <label for="account-cny-cash123" class="recharge-group-radio-checked">
-         <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
@@ -27,7 +27,7 @@
         <div class="recharge-group-radio" v-show="!account">
           <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-cash1231" value="CNY" checked/>
           <label for="recharge-currency-cny-cash1231" class="recharge-group-radio-checked">
-           <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a1"></span>
             <span>CNY</span>
           </label>
@@ -59,7 +59,8 @@
       </transition>
       <transition enter-active-class="animated fadeIn">
         <div class="recharge-group-radio" v-show="account">
-          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-btc1-cash12324" value="BTC" checked/>
+          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-btc1-cash12324" value="BTC"
+                 checked/>
           <label for="recharge-currency-cny-btc1-cash12324" class="recharge-group-radio-checked">
             <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a2"></span>
@@ -105,7 +106,8 @@
       <div class="btcAdr" v-show="moneyStyle">
         <div class="adrItem" v-for="(item,index) in currencyAdr">
           <p>{{item.address}}</p>
-          <p><span>[{{item.currency|translate}}地址{{index + 1}}]</span><a href="javascript:;" @click="delAdr($event)" :digtalid="item.id">删除该地址</a></p>
+          <p><span>[{{item.currency | translate}}地址{{index + 1}}]</span><a href="javascript:;" @click="delAdr($event)"
+                                                                           :digtalid="item.id">删除该地址</a></p>
         </div>
         <router-link to="/accountManagement/addBTCAdr" tag="div" class="adrItem addBankCard">
           <i class="iconfont">&#xe689;</i>
@@ -190,7 +192,8 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
-        }).then((res) => {
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
           console.log(res, '请求成功');
           if (res.data.code === 200) {
             ev.target.parentNode.remove();
@@ -207,7 +210,8 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
-        }).then((res) => {
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
           console.log(res, '请求成功');
           if (res.data.code === 200) {
             ev.target.parentNode.parentNode.remove();
@@ -224,7 +228,8 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
-        }).then((res) => {
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
           console.log(res, '请求成功');
           if (res.data.code === 200) {
             that.itemBanks = res.data.data;
@@ -235,20 +240,21 @@
       },//获取绑定银行卡
       getBindCurrencyAdr(){
         let currency;
-          if($("input[name='select-account-cash123']:checked").val()==='1'){
-            currency=$("input[name='select-currency-cash1231']:checked").val();
-          }else {
-             currency=$("input[name='select-currency1-cash1232']:checked").val();
-          }
+        if ($("input[name='select-account-cash123']:checked").val() === '1') {
+          currency = $("input[name='select-currency-cash1231']:checked").val();
+        } else {
+          currency = $("input[name='select-currency1-cash1232']:checked").val();
+        }
 
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/digital/withdrawInfo/'+currency,
+          url: 'http://192.168.1.48:8089/fwex/web/digital/withdrawInfo/' + currency,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
-        }).then((res) => {
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             console.log(res.data.data)
             this.currencyAdr = res.data.data;
@@ -261,9 +267,10 @@
   }
 </script>
 <style scoped>
-  .accountManagement{
+  .accountManagement {
     padding: 0 1.667rem 0 3.333rem;
   }
+
   .recharge-group-title {
     display: flex;
     flex-wrap: wrap;

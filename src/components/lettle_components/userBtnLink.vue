@@ -37,8 +37,8 @@
         </router-link>
       </dl>
       <!--<dl class="btcTransaction-content-btn">-->
-        <!--<dt class="btcTransaction-content-title">活动</dt>-->
-        <!--<router-link to="/reward" tag="dd"><a href="javascript:"><i class="iconfont">&#xe687;</i>活动奖励</a></router-link>-->
+      <!--<dt class="btcTransaction-content-title">活动</dt>-->
+      <!--<router-link to="/reward" tag="dd"><a href="javascript:"><i class="iconfont">&#xe687;</i>活动奖励</a></router-link>-->
       <!--</dl>-->
       <dl class="btcTransaction-content-btn">
         <dt class="btcTransaction-content-title">安全中心</dt>
@@ -120,38 +120,47 @@
     background: #01aaef;
     color: #fff !important;
   }
-  .router-link-active .s1,.router-link-active .s2,.router-link-active .s3,.router-link-active .s4,
-  .router-link-active .s5,.router-link-active .s6,.router-link-active .s7,.router-link-active .s8{
+
+  .router-link-active .s1, .router-link-active .s2, .router-link-active .s3, .router-link-active .s4,
+  .router-link-active .s5, .router-link-active .s6, .router-link-active .s7, .router-link-active .s8 {
     background-position: -20px;
   }
 
- .s1,.s2,.s3,.s4,.s5,.s6,.s7,.s8{
+  .s1, .s2, .s3, .s4, .s5, .s6, .s7, .s8 {
     width: 20px;
     height: 20px;
-   margin-right: 1rem;
+    margin-right: 1rem;
   }
-  .s1{
+
+  .s1 {
     background: url("../../assets/img/iconPng/CNY.png");
   }
-  .s2{
+
+  .s2 {
     background: url("../../assets/img/iconPng/BTC.png");
   }
-  .s3{
+
+  .s3 {
     background: url("../../assets/img/iconPng/chongzhi.png");
   }
-  .s4{
+
+  .s4 {
     background: url("../../assets/img/iconPng/tixian.png");
   }
-  .s5{
+
+  .s5 {
     background: url("../../assets/img/iconPng/zhuanghumingxi.png");
   }
-  .s6{
+
+  .s6 {
     background: url("../../assets/img/iconPng/zhanghaoguanli.png");
   }
-  .s7{
+
+  .s7 {
     background: url("../../assets/img/iconPng/anquanshezhi.png");
   }
-  .s8{
+
+  .s8 {
     background: url("../../assets/img/iconPng/denglurizhi.png");
   }
 </style>

@@ -7,7 +7,7 @@
       <div class="recharge-group-radio">
         <input name="select-account43" type="radio" id="account-cny43" value="CNY" checked/>
         <label for="account-cny43" class="recharge-group-radio-checked">
-         <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
@@ -28,13 +28,13 @@
         <div class="recharge-group-radio" v-show="!account">
           <!--<input name="select-currency44" type="radio" id="recharge-currency-cny144" value="*" checked/>-->
           <!--<label for="recharge-currency-cny144" class="recharge-group-radio-checked">-->
-            <!--<span class=""><span><i class="iconfont">&#xe664;</i></span></span>-->
-            <!--<span class="iconFont a9"></span>-->
-            <!--<span>全部</span>-->
+          <!--<span class=""><span><i class="iconfont">&#xe664;</i></span></span>-->
+          <!--<span class="iconFont a9"></span>-->
+          <!--<span>全部</span>-->
           <!--</label>-->
           <input name="select-currency44" type="radio" id="recharge-currency-cny44" value="CNY" checked/>
           <label for="recharge-currency-cny44" class="recharge-group-radio-checked">
-           <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a1"></span>
             <span>CNY</span>
           </label>
@@ -68,9 +68,9 @@
         <div class="recharge-group-radio" v-show="account">
           <!--<input name="select-currency45" type="radio" id="recharge-currency-cny-btc145" value="*" checked/>-->
           <!--<label for="recharge-currency-cny-btc145" class="recharge-group-radio-checked">-->
-            <!--<span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>-->
-            <!--<span class="iconFont a9"></span>-->
-            <!--<span>全部</span>-->
+          <!--<span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>-->
+          <!--<span class="iconFont a9"></span>-->
+          <!--<span>全部</span>-->
           <!--</label>-->
           <input name="select-currency45" type="radio" id="recharge-currency-cny-btc45" value="BTC" checked/>
           <label for="recharge-currency-cny-btc45" class="recharge-group-radio-checked">
@@ -118,10 +118,10 @@
               </thead>
               <tbody class="recharge-record-data getTrSelect" v-show="!noRecord">
               <tr v-for="item in items" :currency="item.currency">
-                <td>{{item.createDate|dateYMDHIS}}</td>
+                <td>{{item.createDate | dateYMDHIS}}</td>
                 <td>{{'银行卡'}}</td>
-                <td>{{item.applyBalance |return_}}</td>
-                <td>{{item.balance|return_}}</td>
+                <td>{{item.applyBalance | return_}}</td>
+                <td>{{item.balance | return_}}</td>
                 <td>{{item.flag | translate}}</td>
               </tr>
               </tbody>
@@ -154,30 +154,30 @@
 </template>
 <script>
   export default {
-      data() {
-          return {
-            activeName:'first',
-            noRecord:true,
-            account: false,
-            currentPage:1,
-            totals:0,
-            items:[],
-            currency:'CNY',//默认账户币种CNY
-            legalCurrency:'CNY',//默认什么都没有，就是全部
+    data() {
+      return {
+        activeName: 'first',
+        noRecord: true,
+        account: false,
+        currentPage: 1,
+        totals: 0,
+        items: [],
+        currency: 'CNY',//默认账户币种CNY
+        legalCurrency: 'CNY',//默认什么都没有，就是全部
 
-          }
-      },
+      }
+    },
     mounted() {
-          let that=this;
+      let that = this;
       {
         $("input[name='select-account43']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          that.currency=$(this).val();
+          that.currency = $(this).val();
           if ($(this).val() === 'CNY') {
             that.account = false;
           }
           else {
-              that.legalCurrency='BTC';
+            that.legalCurrency = 'BTC';
             that.account = true;
           }
         })
@@ -185,99 +185,101 @@
       {
         $("input[name='select-currency44']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          that.legalCurrency=$(this).val();
+          that.legalCurrency = $(this).val();
         })
         $("input[name='select-currency45']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          that.legalCurrency=$(this).val();
+          that.legalCurrency = $(this).val();
         })
       }//选择充值币
       this.getRechargeLog(1)
     },
-    methods:{
+    methods: {
       handleCurrentChangeRechargeLog(currentPage){
-          if(this.legalCurrency==="CNY"){
-            this.getRechargeLog(currentPage);
-          }else {
-            this.getRechargeLog1(currentPage);
-          }
+        if (this.legalCurrency === "CNY") {
+          this.getRechargeLog(currentPage);
+        } else {
+          this.getRechargeLog1(currentPage);
+        }
 
       },
       getRechargeLog(currentPage) {
         this.$http({
-          url:'http://192.168.1.48:8089/fwex/web/capital/payments/list',
-          method:'POST',
+          url: 'http://192.168.1.48:8089/fwex/web/capital/payments/list',
+          method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token,
             "Content-Type": "application/json;charset=UTF-8",
           },
-          data:{
-            pageNo:currentPage-1,
-            pageSize:10,
-            param:{
-              currency:this.currency,
-              legalCurrency:this.legalCurrency
+          data: {
+            pageNo: currentPage - 1,
+            pageSize: 10,
+            param: {
+              currency: this.currency,
+              legalCurrency: this.legalCurrency
             }
           }
-        }).then((res)=>{
-            console.log(res,'CNY充值记录');
-          if(res.data.code===200){
-            if(res.data.data.totalElements){
-                this.noRecord=false;
-            }else {
-              this.noRecord=true;
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
+          console.log(res, 'CNY充值记录');
+          if (res.data.code === 200) {
+            if (res.data.data.totalElements) {
+              this.noRecord = false;
+            } else {
+              this.noRecord = true;
             }
-              this.totals=res.data.data.totalElements;
-              this.items=res.data.data.content
+            this.totals = res.data.data.totalElements;
+            this.items = res.data.data.content
           }
 
-        }).catch((req)=>{
+        }).catch((req) => {
           console.log(req)
         })
       },
       getRechargeLog1(currentPage) {
         this.$http({
-          url:'http://192.168.1.48:8089/fwex/web/digital/payments/list',
-          method:'POST',
+          url: 'http://192.168.1.48:8089/fwex/web/digital/payments/list',
+          method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token,
             "Content-Type": "application/json;charset=UTF-8",
           },
-          data:{
-            pageNo:currentPage-1,
-            pageSize:10,
-            param:{
-              currency:this.currency,
-              legalCurrency:this.legalCurrency
+          data: {
+            pageNo: currentPage - 1,
+            pageSize: 10,
+            param: {
+              currency: this.currency,
+              legalCurrency: this.legalCurrency
             }
           }
-        }).then((res)=>{
-          console.log(res,'数字货币充值记录');
-          if(res.data.code===200){
-            this.noRecord=!res.data.data.totalElements>0;
-            this.totals=res.data.data.totalElements?res.data.data.totalElements:10;
-            this.items=res.data.data.content
+        }).then((res)=> {
+          this.showError(res.data.code, res.data.message);
+          console.log(res, '数字货币充值记录');
+          if (res.data.code === 200) {
+            this.noRecord = !res.data.data.totalElements > 0;
+            this.totals = res.data.data.totalElements ? res.data.data.totalElements : 10;
+            this.items = res.data.data.content
           }
-        }).catch((req)=>{
+        }).catch((req) => {
           console.log(req)
         })
       }
     },
-    watch:{
-      currency(newValue,oldValue){
-          if(newValue==='CNY'){
-            this.getRechargeLog(1)
-          }else {
-            this.getRechargeLog1(1)
-          }
-
-      } ,
-      legalCurrency(newValue,oldValue){
-        if(newValue==='CNY'){
+    watch: {
+      currency(newValue, oldValue){
+        if (newValue === 'CNY') {
           this.getRechargeLog(1)
-        }else {
+        } else {
+          this.getRechargeLog1(1)
+        }
+
+      },
+      legalCurrency(newValue, oldValue){
+        if (newValue === 'CNY') {
+          this.getRechargeLog(1)
+        } else {
           this.getRechargeLog1(1)
         }
       }
@@ -289,37 +291,44 @@
     font-size: 1.167rem;
   }
 
-  .iconFont{
+  .iconFont {
     width: 22px;
     height: 22px;
     margin: .5rem;
 
   }
-  .recharge-group-radio-checked .a1,.recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5,.recharge-group-radio-checked .a9{
+
+  .recharge-group-radio-checked .a1, .recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5, .recharge-group-radio-checked .a9 {
     background-position: 0;
   }
-  .a1{
+
+  .a1 {
     background: url("../../assets/img/iconPng/CNYzhanghu.png");
     background-position: -22px;
 
   }
-  .a2{
+
+  .a2 {
     background: url("../../assets/img/iconPng/BTCzhanghu.png");
     background-position: -22px;
   }
-  .a3{
+
+  .a3 {
     background: url("../../assets/img/iconPng/ltc.png");
     background-position: -22px;
   }
-  .a4{
+
+  .a4 {
     background: url("../../assets/img/iconPng/ETH.png");
     background-position: -22px;
   }
-  .a5{
+
+  .a5 {
     background: url("../../assets/img/iconPng/ETC.png");
     background-position: -22px;
   }
-  .a9{
+
+  .a9 {
     background: url("../../assets/img/iconPng/all.png");
     background-position: -22px;
   }
@@ -341,7 +350,7 @@
     font-weight: bold;
   }
 
-  .recharge-group-radio{
+  .recharge-group-radio {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -362,6 +371,7 @@
     position: relative;
     cursor: pointer;
   }
+
   .recharge-group:nth-of-type(1) label {
     flex-direction: column;
   }
@@ -391,6 +401,7 @@
     color: #fff;
     padding: 0.1rem;
   }
+
   .recharge-group-radio-checked {
     border-color: #01aaef !important;
   }
@@ -404,57 +415,79 @@
     background: #01aaef;
     border: none !important;
   }
-  .userIndex-recharge-footer-title{
+
+  .userIndex-recharge-footer-title {
 
   }
-  .el-tabs__header{
+
+  .el-tabs__header {
     margin-bottom: 0 !important;
   }
-  .recharge-record{
+
+  .recharge-record {
     padding: 0.833rem;
-    border:1px solid #d1dbe5;
-    border-top:none;
+    border: 1px solid #d1dbe5;
+    border-top: none;
     padding-top: 3rem;
   }
+
   .recharge-record table {
     width: 100%;
-    border:1px solid #d1dbe5;
+    border: 1px solid #d1dbe5;
     border-spacing: 0;
     border-collapse: collapse;
   }
-  .recharge-record table td{
+
+  .recharge-record table td {
     width: 12.667rem;
     padding: 0.883rem;
     text-align: left;
   }
-  .recharge-record table td:nth-of-type(1){width: 24.25rem}
-  .recharge-record table td:nth-of-type(2){width: 13rem}
-  .recharge-record table td:nth-of-type(3){width: 14.083rem}
-  .recharge-record table td:nth-of-type(4){
+
+  .recharge-record table td:nth-of-type(1) {
+    width: 24.25rem
+  }
+
+  .recharge-record table td:nth-of-type(2) {
+    width: 13rem
+  }
+
+  .recharge-record table td:nth-of-type(3) {
+    width: 14.083rem
+  }
+
+  .recharge-record table td:nth-of-type(4) {
     width: 14.167rem;
   }
-  .recharge-record table td:nth-of-type(5){
+
+  .recharge-record table td:nth-of-type(5) {
     width: 10rem;
   }
-  .recharge-record thead{
-    border:1px solid #d1dbe5;
+
+  .recharge-record thead {
+    border: 1px solid #d1dbe5;
   }
-  .recharge-record-data{
+
+  .recharge-record-data {
     border: 1px solid #d1dbe5;
     background: #f7f7f7;
   }
-  .noRecode td{
+
+  .noRecode td {
     padding: 6.667rem !important;
     text-align: center !important;
   }
-  .noRecode td i{
+
+  .noRecode td i {
     font-size: 3rem;
   }
-  .noRecode td i,.noRecode td span{
+
+  .noRecode td i, .noRecode td span {
     display: inline !important;
 
   }
-  .recharge-record-data-page td{
+
+  .recharge-record-data-page td {
     padding-top: 1.5rem;
     text-align: right !important;
   }
