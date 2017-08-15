@@ -19,7 +19,7 @@
             </label>
             <input name="select-accountss" type="radio" id="account-btcss1" value="2"/>
             <label for="account-btcss1">
-              <span><span><i class="iconfont">&#xe664;</i></span></span>
+              <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
               <i class="iconfont">&#xe6a9;</i>
               <span>卖出</span>
             </label>
@@ -33,25 +33,25 @@
             <div class="recharge-group-radio">
               <input name="select-currencyaa" type="radio" id="recharge-currency-cny-btczz1" value="BTC" checked/>
               <label for="recharge-currency-cny-btczz1" class="recharge-group-radio-checked">
-                <span><span><i class="iconfont">&#xe664;</i></span></span>
+                <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
                 <span class="iconFont a2"></span>
                 <span>BTC</span>
               </label>
               <input name="select-currencyaa" type="radio" id="recharge-currency-cny-ltczz1" value="LTC"/>
               <label for="recharge-currency-cny-ltczz1">
-                <span><span><i class="iconfont">&#xe664;</i></span></span>
+                <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
                 <span class="iconFont a3"></span>
                 <span>LTC</span>
               </label>
               <input name="select-currencyaa" type="radio" id="recharge-currency-cny-ethzz1" value="ETH"/>
               <label for="recharge-currency-cny-ethzz1">
-                <span><span><i class="iconfont">&#xe664;</i></span></span>
+                <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
                 <span class="iconFont a4"></span>
                 <span>ETH</span>
               </label>
               <input name="select-currencyaa" type="radio" id="recharge-currency-cny-etczz1" value="ETC"/>
               <label for="recharge-currency-cny-etczz1">
-                <span><span><i class="iconfont">&#xe664;</i></span></span>
+                <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
                 <span class="iconFont a5"></span>
                 <span>ETC</span>
               </label>
@@ -190,6 +190,7 @@
     },
     mounted() {
       let that = this;
+      this.$store.state.Account=this.newAccount;
 //      console.log(this.newAccount,"当前CNY账户");
       {
         $("input[name='select-accountss']").change(function () {

@@ -13,13 +13,13 @@
           <div class="recharge-group-radio fangxiang">
             <input name="select-accountsss" type="radio" id="account-cnyss11" value="1" checked/>
             <label for="account-cnyss11" class="recharge-group-radio-checked">
-              <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+             <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
               <i class="iconfont">&#xe6a1;</i>
               <span>买入</span>
             </label>
             <input name="select-accountsss" type="radio" id="account-btcss11" value="2"/>
             <label for="account-btcss11">
-              <span><span><i class="iconfont">&#xe664;</i></span></span>
+              <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
               <i class="iconfont">&#xe6a9;</i>
               <span>卖出</span>
             </label>
@@ -33,19 +33,19 @@
             <div class="recharge-group-radio">
               <input name="select-currencyaaa" type="radio" id="recharge-currency-cny-ltczz11" value="LTC"/>
               <label for="recharge-currency-cny-ltczz11" class="recharge-group-radio-checked">
-                <span><span><i class="iconfont">&#xe664;</i></span></span>
+                <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
                 <span class="iconFont a3"></span>
                 <span>LTC</span>
               </label>
               <input name="select-currencyaaa" type="radio" id="recharge-currency-cny-ethzz11" value="ETH"/>
               <label for="recharge-currency-cny-ethzz11">
-                <span><span><i class="iconfont">&#xe664;</i></span></span>
+                <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
                 <span class="iconFont a4"></span>
                 <span>ETH</span>
               </label>
               <input name="select-currencyaaa" type="radio" id="recharge-currency-cny-etczz11" value="ETC"/>
               <label for="recharge-currency-cny-etczz11">
-                <span><span><i class="iconfont">&#xe664;</i></span></span>
+                <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
                 <span class="iconFont a5"></span>
                 <span>ETC</span>
               </label>
@@ -184,7 +184,7 @@
     },
     mounted() {
         let that=this;
-        console.log(this.newAccount,"当前BTC账户");
+      this.$store.state.Account=this.newAccount;
       {
         $("input[name='select-accountsss']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
@@ -212,7 +212,6 @@
             }
           })
       }//限价与市价的选择
-
 
     },
     methods: {

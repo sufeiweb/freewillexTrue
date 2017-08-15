@@ -19,14 +19,15 @@
           <tbody v-show="noRecord" class="entrustedRecord-table-tbody">
           <tr v-for="item in contentArr">
             <td>{{item.createDate | dateYMDHIS}}</td>
-            <td>{{item.orderType |translate}}</td>
-            <td>{{item.cammand |translate}}</td>
+            <td>{{item.orderType | translate}}</td>
+            <td>{{item.cammand | translate}}</td>
             <td>{{item.source}}</td>
-            <td>{{item.price|return_}}</td>
+            <td>{{item.price | return_}}</td>
             <td>{{item.amount}}</td>
-            <td>{{item.amount-item.dealVolume}}</td>
+            <td>{{item.amount - item.dealVolume}}</td>
             <td style="color:#01aaef">{{item.orderStatus | translate}}</td>
-            <td><a href="javascript:;" :code="item.code" :commodity="item.commodity" style="color:#01aaef" @click="revoke($event)">撤销</a></td>
+            <td><a href="javascript:;" :code="item.code" :commodity="item.commodity" style="color:#01aaef"
+                   @click="revoke($event)">撤销</a></td>
           </tr>
           </tbody>
           <tbody v-show="!noRecord" class="entrustedRecord-table-tbody tbody-noRecord">
@@ -58,7 +59,7 @@
               <span>日期</span>
               <div class="block">
                 <el-date-picker
-                  v-model="value"
+                  v-model="timerDT"
                   type="daterange"
                   placeholder="选择日期范围">
                 </el-date-picker>
@@ -82,15 +83,15 @@
           <tbody v-show="noRecord" class="entrustedRecord-table-tbody">
           <tr v-for="item in contentArrH">
             <td>{{item.createDate | dateYMDHIS}}</td>
-            <td>{{item.orderType|translate}}</td>
-            <td>{{item.cammand|translate}}</td>
+            <td>{{item.orderType | translate}}</td>
+            <td>{{item.cammand | translate}}</td>
             <td>{{item.source}}</td>
             <td>{{item.price | return_ }}</td>
             <td>{{item.amount}}</td>
             <td>{{item.dealPrice}}</td>
             <td>{{item.dealVolume}}</td>
             <td>{{item.dealAmount}}</td>
-            <td>{{item.orderStatus|translate}}</td>
+            <td>{{item.orderStatus | translate}}</td>
           </tr>
           </tbody>
           <tbody v-show="!noRecord" class="entrustedRecord-table-tbody tbody-noRecord">
@@ -125,19 +126,31 @@
       return {
         activeName2: 'first',
         noRecord: false,
-        value: '',
         currentPage: 1,
-        totalNum:10,
-        totalNumH:10,
-        contentArr:[],
-        contentArrH:[],
+        totalNum: 10,
+        totalNumH: 10,
+        contentArr: [],
+        contentArrH: [],
+        account:'',//当前账户
+        currency:'',//当前币种
+        timerDT:'',//筛选时间
+        startDate:'',
+        endDate:'',
       };
+    },
+    created(){
+      this.getAccount();
     },
     mounted() {
       this.handleCurrentChange(1);
       this.handleCurrentChange1(1);
     },
     methods: {
+        //获取当前账户，币种
+      getAccount(){
+        this.account=this.$store.state.Account;
+
+      },
       handleCurrentChange: function (currentPage) {
         this.$http({
           url: 'http://192.168.1.48:8089/fwex/web/trade/unsettled',
@@ -156,11 +169,11 @@
           }
         }).then((res) => {
           if (res.data.code === 200) {
-              this.totalNum=res.data.data.totalElements;
-              if(res.data.data.totalElements){
-                  this.noRecord=true;
-              }
-            this.contentArr=res.data.data.content;
+            this.totalNum = res.data.data.totalElements;
+            if (res.data.data.totalElements) {
+              this.noRecord = true;
+            }
+            this.contentArr = res.data.data.content;
             console.log(res.data.data)
           } else {
             console.log(res.data.message)
@@ -169,10 +182,10 @@
           console.log(req)
         })
       },//获取当前委托
-      handleCurrentChange1:function (currentPage) {
-          console.log(currentPage);
+      handleCurrentChange1: function (currentPage) {
+        console.log(this.account,1111);
         this.$http({
-          url:'http://192.168.1.48:8089/fwex/web/trade/history',
+          url: 'http://192.168.1.48:8089/fwex/web/trade/history',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -183,17 +196,17 @@
             pageNo: currentPage - 1,
             pageSize: 10,
             param: {
-              commodity: 'BTCCNY',
+              legalMoney:this.account,
+              startTimes:this.startDate,
+              endTimes:this.endDate
             }
           }
         }).then((res) => {
-            console.log(res)
+          console.log(res)
           if (res.data.code === 200) {
-            this.totalNumH=res.data.data.totalElements;
-            if(res.data.data.totalElements){
-              this.noRecord=true;
-            }
-            this.contentArrH=res.data.data.content;
+            this.totalNumH = res.data.data.totalElements ? res.data.data.totalElements : 10;
+            this.noRecord = res.data.data.totalElements > 0;
+            this.contentArrH = res.data.data.content;
             console.log(res.data.data)
           } else {
             console.log(res.data.message)
@@ -204,19 +217,29 @@
       },//获取历史委托
       revoke(ev) {
         this.$http({
-          url:'http://192.168.1.48:8089/fwex/web/trade/cancels/'+ev.target.getAttribute('commodity')+'/'+ev.target.getAttribute('code'),
-          method:'GET',
+          url: 'http://192.168.1.48:8089/fwex/web/trade/cancels/' + ev.target.getAttribute('commodity') + '/' + ev.target.getAttribute('code'),
+          method: 'GET',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
-        }).then((res)=>{
-              if(res.data.code===200){
-                ev.target.parentNode.parentNode.remove()
-              }
+        }).then((res) => {
+          if (res.data.code === 200) {
+            ev.target.parentNode.parentNode.remove()
+          }
         })
 
       },
+    },
+    watch:{
+      timerDT(newValue,oldValue) {
+          console.log(1)
+        let date1 = new Date(newValue[0]);
+        let date2 = new Date(newValue[1]);
+        this.startDate = date1.getTime();
+        this.endDate = date2.getTime();
+        this.handleCurrentChange1(1)
+      }
     }
   };
 </script>
@@ -254,17 +277,21 @@
   .entrustedRecord-table td:last-child {
     text-align: center;
   }
+
   .entrustedRecord-table td:nth-of-type(1) {
-      width: 12rem;
-      text-align: center;
-    }
-  .entrustedRecord-table td:nth-of-type(2),.entrustedRecord-table td:nth-of-type(3) {
+    width: 12rem;
     text-align: center;
   }
-  .entrustedRecord-table td:nth-of-type(4){
+
+  .entrustedRecord-table td:nth-of-type(2), .entrustedRecord-table td:nth-of-type(3) {
+    text-align: center;
+  }
+
+  .entrustedRecord-table td:nth-of-type(4) {
     width: 5rem;
     text-align: center;
   }
+
   .entrustedRecord-table td:nth-of-type(5) {
     width: 8rem;
     text-align: right;

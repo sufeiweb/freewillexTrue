@@ -89,14 +89,13 @@
             }
           }
         }).then((res) => {
-          console.log(res);
           if (res.data.code === 200) {
             if (res.data.data.totalElements) {
               this.noData = true;
             } else {
               this.noData = false;
             }
-            this.totalName = res.data.data.totalElements;
+            this.totalName = res.data.data.totalElements?res.data.data.totalElements:10;
             this.items = res.data.data.content;
           }
         }).catch((req) => {

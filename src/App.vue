@@ -53,9 +53,11 @@
           this.swted(0)
         }
         if (path === 'businessCNYAccount') {
+            this.$store.state.Account='CNY';
           this.swted(2)
         }
         if (path === 'businessBTCAccount') {
+          this.$store.state.Account='BTC';
           this.swted(2)
         }
         if (path === 'userIndex') {

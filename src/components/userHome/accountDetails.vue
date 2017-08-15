@@ -7,19 +7,19 @@
       <div class="recharge-group-radio">
         <input name="select-account413" type="radio" id="account-cny453" value="" checked/>
         <label for="account-cny453" class="recharge-group-radio-checked">
-          <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+         <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a9"></span>
           <span> 全部 </span>
         </label>
         <input name="select-account413" type="radio" id="account-cny4553" value="CNY" />
         <label for="account-cny4553" >
-          <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+         <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
         <input name="select-account413" type="radio" id="account-btc433" value="BTC"/>
         <label for="account-btc433">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a2"></span>
           <span>BTC账户</span>
         </label>

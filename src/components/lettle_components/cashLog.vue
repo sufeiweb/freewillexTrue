@@ -7,13 +7,13 @@
       <div class="recharge-group-radio">
         <input name="select-account434" type="radio" id="account-cny434" value="CNY" checked/>
         <label for="account-cny434" class="recharge-group-radio-checked">
-          <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+         <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
         <input name="select-account434" type="radio" id="account-btc434" value="BTC"/>
         <label for="account-btc434">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a2"></span>
           <span>BTC账户</span>
         </label>
@@ -33,31 +33,31 @@
           <!--</label>-->
           <input name="select-currency444" type="radio" id="recharge-currency-cny444" value="CNY" checked/>
           <label for="recharge-currency-cny444" class="recharge-group-radio-checked">
-            <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+           <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a1"></span>
             <span>CNY</span>
           </label>
           <input name="select-currency444" type="radio" id="recharge-currency-cny-btc444" value="BTC"/>
           <label for="recharge-currency-cny-btc444">
-            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a2"></span>
             <span>BTC</span>
           </label>
           <input name="select-currency444" type="radio" id="recharge-currency-cny-ltc444" value="LTC"/>
           <label for="recharge-currency-cny-ltc444">
-            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a3"></span>
             <span>LTC</span>
           </label>
           <input name="select-currency444" type="radio" id="recharge-currency-cny-eth444" value="ETH"/>
           <label for="recharge-currency-cny-eth444">
-            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a4"></span>
             <span>ETH</span>
           </label>
           <input name="select-currency444" type="radio" id="recharge-currency-cny-etc444" value="ETC"/>
           <label for="recharge-currency-cny-etc444">
-            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a5"></span>
             <span>ETC</span>
           </label>
@@ -67,31 +67,31 @@
         <div class="recharge-group-radio" v-show="account">
           <!--<input name="select-currency454" type="radio" id="recharge-currency-cny-btc1454" value="0"/>-->
           <!--<label for="recharge-currency-cny-btc1454" class="recharge-group-radio-checked">-->
-          <!--<span><span><i class="iconfont">&#xe664;</i></span></span>-->
+          <!--<span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>-->
           <!--<i class="iconfont">&#xe650;</i>-->
           <!--<span>全部</span>-->
           <!--</label>-->
           <input name="select-currency454" type="radio" id="recharge-currency-cny-btc454" value="BTC" checked/>
           <label for="recharge-currency-cny-btc454" class="recharge-group-radio-checked">
-            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a2"></span>
             <span>BTC</span>
           </label>
           <input name="select-currency454" type="radio" id="recharge-currency-cny-ltc454" value="LTC"/>
           <label for="recharge-currency-cny-ltc454">
-            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a3"></span>
             <span>LTC</span>
           </label>
           <input name="select-currency454" type="radio" id="recharge-currency-cny-eth454" value="ETH"/>
           <label for="recharge-currency-cny-eth454">
-            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a4"></span>
             <span>ETH</span>
           </label>
           <input name="select-currency454" type="radio" id="recharge-currency-cny-etc454" value="ETC"/>
           <label for="recharge-currency-cny-etc454">
-            <span><span><i class="iconfont">&#xe664;</i></span></span>
+            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
             <span class="iconFont a5"></span>
             <span>ETC</span>
           </label>
@@ -220,8 +220,8 @@
           }
         }).then((res)=>{
             if(res.data.code===200){
-                this.noData=true;
-                this.totalNum=res.data.data.totalElements;
+                this.noData=res.data.data.totalElements>0;
+                this.totalNum=res.data.data.totalElements?res.data.data.totalElements:10;
                 this.items=res.data.data.content;
                 console.log(res.data.data);
             }

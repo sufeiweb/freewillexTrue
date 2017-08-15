@@ -14,9 +14,9 @@
         </thead>
         <tbody v-show="noCord">
         <tr v-for="item in items">
-          <td>{{item.createDate|dateYMDHIS}}</td>
+          <td>{{item.createDate | dateYMDHIS}}</td>
           <td>{{item.ip}}</td>
-          <td>{{item.source|translate}}</td>
+          <td>{{item.source | translate}}</td>
         </tr>
         </tbody>
         <tbody class="noCord" v-show="!noCord">
@@ -45,44 +45,42 @@
 </template>
 <script>
   export default {
-      data() {
-          return {
-            noCord:false,
-            currentPage:1,
-            totalNum:10,
-            items:[]
-          }
-      },
-    mounted() {
-      this. handleCurrentChangeLoginLog(1);
+    data() {
+      return {
+        noCord: false,
+        currentPage: 1,
+        totalNum: 10,
+        items: []
+      }
     },
-    methods:{
+    mounted() {
+      this.handleCurrentChangeLoginLog(1);
+    },
+    methods: {
       handleCurrentChangeLoginLog(currentPage){
-          this.$http({
-            url:'http://192.168.1.48:8089/fwex/web/account/logs',
-            method:'POST',
-            headers: {
-              'X-Requested-With': 'XMLHttpRequest',
-              'X-Authorization': 'Bearer ' + this.$store.state.token,
-              "Content-Type": "application/json;charset=UTF-8",
-            },
-            data:{
-              pageNo:currentPage-1,
-              pageSize:10,
-              param:{}
-            }
-          }).then((res)=>{
-              console.log(res)
-            if(res.data.code===200){
-                  if(res.data.data.totalElements){
-                    this.noCord=true;
-                  }
-                  this.totalNum=res.data.data.totalElements;
-                  this.items=res.data.data.content;
-            }
-        }).catch((req)=>{
-              console.log(req)
-          })
+        this.$http({
+          url: 'http://192.168.1.48:8089/fwex/web/account/logs',
+          method: 'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          data: {
+            pageNo: currentPage - 1,
+            pageSize: 10,
+            param: {}
+          }
+        }).then((res) => {
+          console.log(res)
+          if (res.data.code === 200) {
+            this.noCord = res.data.data.totalElements > 0;
+            this.totalNum = res.data.data.totalElements ? res.data.data.totalElements : 10;
+            this.items = res.data.data.content;
+          }
+        }).catch((req) => {
+          console.log(req)
+        })
       }
     }
   }
@@ -122,18 +120,22 @@
   .loginLog-content table tbody tr:hover {
     background: #f9f9f9;
   }
-  .loginLog-content table .noCord td{
+
+  .loginLog-content table .noCord td {
     padding: 6.667rem;
     text-align: center;
   }
-  .loginLog-content table .noCord td span, .loginLog-content table .noCord td i{
+
+  .loginLog-content table .noCord td span, .loginLog-content table .noCord td i {
     display: inline;
     font-size: 2rem;
   }
-  .loginLog-content table .noCord td span{
+
+  .loginLog-content table .noCord td span {
     font-size: 1.167rem;
   }
-  .loginLog-content table tfoot td{
+
+  .loginLog-content table tfoot td {
     text-align: right;
   }
 </style>

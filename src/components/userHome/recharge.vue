@@ -8,13 +8,13 @@
       <div class="recharge-group-radio">
         <input name="select-account" type="radio" id="account-cny" value="CNY" checked/>
         <label for="account-cny" class="recharge-group-radio-checked">
-          <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a1"></span>
           <span>CNY账户</span>
         </label>
         <input name="select-account" type="radio" id="account-btc" value="BTC"/>
         <label for="account-btc">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a2"></span>
           <span>BTC账户</span>
         </label>
@@ -28,34 +28,34 @@
 
         <input name="select-currency" type="radio" id="recharge-currency-cny" value="CNY" checked/>
         <label for="recharge-currency-cny" class="recharge-group-radio-checked">
-          <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a1"></span>
           <span>CNY</span>
         </label>
 
         <input name="select-currency" type="radio" id="recharge-currency-cny-btc" value="BTC"/>
         <label for="recharge-currency-cny-btc">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a2"></span>
           <span>BTC</span>
         </label>
 
         <input name="select-currency" type="radio" id="recharge-currency-cny-ltc" value="LTC"/>
         <label for="recharge-currency-cny-ltc">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a3"></span>
           <span>LTC</span>
         </label>
 
         <input name="select-currency" type="radio" id="recharge-currency-cny-eth" value="ETH"/>
         <label for="recharge-currency-cny-eth">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a4"></span>
           <span>ETH</span>
         </label>
         <input name="select-currency" type="radio" id="recharge-currency-cny-etc" value="ETC"/>
         <label for="recharge-currency-cny-etc">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a5"></span>
           <span>ETC</span>
         </label>
@@ -63,25 +63,25 @@
       <div class="recharge-group-radio" v-show="account">
         <input name="select-currency1" type="radio" id="recharge-currency-cny-btc1" value="BTC" checked/>
         <label for="recharge-currency-cny-btc1" class="recharge-group-radio-checked">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a2"></span>
           <span>BTC</span>
         </label>
         <input name="select-currency1" type="radio" id="recharge-currency-cny-ltc1" value="LTC"/>
         <label for="recharge-currency-cny-ltc1">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a3"></span>
           <span>LTC</span>
         </label>
         <input name="select-currency1" type="radio" id="recharge-currency-cny-eth1" value="ETH"/>
         <label for="recharge-currency-cny-eth1">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a4"></span>
           <span>ETH</span>
         </label>
         <input name="select-currency1" type="radio" id="recharge-currency-cny-etc1" value="ETC"/>
         <label for="recharge-currency-cny-etc1">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a5"></span>
           <span>ETC</span>
         </label>
@@ -109,19 +109,19 @@
       <div class="recharge-group-radio">
         <input name="select-style" type="radio" id="recharge-style-cny" value="1" checked/>
         <label for="recharge-style-cny" class="recharge-group-radio-checked">
-          <span class=""><span><i class="iconfont">&#xe664;</i></span></span>
+         <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a6"></span>
           <span>网上银行</span>
         </label>
         <input name="select-style" type="radio" id="recharge-style-btc" value="2"/>
         <label for="recharge-style-btc">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a7"></span>
           <span>自助汇款</span>
         </label>
         <input name="select-style" type="radio" id="recharge-style-zfb" value="3"/>
         <label for="recharge-style-zfb">
-          <span><span><i class="iconfont">&#xe664;</i></span></span>
+          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a8"></span>
           <span>支付宝</span>
         </label>
@@ -477,7 +477,6 @@
         })
       },
     },
-
   }
 </script>
 <style scoped>
@@ -518,22 +517,18 @@
     background: url("../../assets/img/iconPng/ETC.png");
     background-position: -22px;
   }
-
   .a6 {
-    background: url("../../assets/img/iconPng/BTCzhanghu.png");
+    background: url("../../assets/img/iconPng/wangshangyinhang.png");
     background-position: -22px;
   }
-
   .a7 {
-    background: url("../../assets/img/iconPng/BTCzhanghu.png");
-    background-position: -22px;
-  }
-
+     background: url("../../assets/img/iconPng/zizhuhuikuan.png");
+     background-position: -22px;
+   }
   .a8 {
-    background: url("../../assets/img/iconPng/BTCzhanghu.png");
+    background: url("../../assets/img/iconPng/zhufubao.png");
     background-position: -22px;
   }
-
   .userIndex-recharge {
     padding: 0 1.667rem 0 3.333rem;
     font-size: 1.167rem;

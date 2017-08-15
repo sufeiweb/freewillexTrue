@@ -102,6 +102,7 @@ export default {
   },//绑定银行卡控制
   loginTrue:false,//登录状态
   TKShow:false,//登录弹窗状态,
-  Account:''//当前账户
+  Account:'',//当前账户
+  Currency:''//当前币种
 
 }
