@@ -86,6 +86,9 @@
   }
 </script>
 <style scoped>
+  .loginLog{
+    padding: 0 1.667rem 0 3.333rem;
+  }
   .loginLog-title {
     font-size: 1.33rem;
     padding: 2rem 0;

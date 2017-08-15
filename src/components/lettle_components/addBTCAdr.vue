@@ -71,6 +71,9 @@
       }
     },
     mounted() {
+        $("input[name='we1']").change(function () {
+          $(this).next().addClass('border-color').siblings().removeClass('border-color');
+        });
     },
     methods: {
       bindGet(ev) {

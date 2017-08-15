@@ -215,6 +215,7 @@
             pageNo:currentPage-1,
             pageSize:10,
             param:{
+
               currency:this.Currency
             }
           }

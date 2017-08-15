@@ -49,6 +49,9 @@
   }
 </script>
 <style scoped>
+  .userIndex{
+    padding: 0 1.667rem 2rem 3.333rem;
+  }
   .recharge-group-title {
     display: flex;
     flex-wrap: wrap;

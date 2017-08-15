@@ -27,12 +27,14 @@
   }
   .user-box{
     margin: 2rem auto;
-    background: #fff;
     display: flex;
     align-items: flex-start;
   }
   .user-box-right{
     width: 100%;
+    background: #fff;
+    margin-left: 1rem;
+    min-height: 613px;
     padding: 1rem 1.667rem 1.25rem 1.667rem;
     box-sizing: border-box;
   }

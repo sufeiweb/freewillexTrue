@@ -415,6 +415,9 @@
   }
 </script>
 <style scoped>
+  .userIndex{
+    padding: 0 1.667rem 2rem 3.333rem;
+  }
   .Q-C-T {
     display: flex;
     align-items: center;

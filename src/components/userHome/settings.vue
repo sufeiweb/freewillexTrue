@@ -194,6 +194,9 @@
   }
 </script>
 <style scoped>
+  .setting{
+    padding: 0 1.667rem 0 3.333rem;
+  }
   .setting-header-title {
     padding: 1.5rem;
     border-bottom: 1px solid #ddd;

@@ -78,9 +78,9 @@
 </script>
 <style scoped>
   .btcTransaction {
-    width: 18rem;
+    width: 17rem;
     background: #fafafc;
-    height: 88rem;
+    padding-bottom: 3rem;
     border-right: 1px solid #dbe1e9;
   }
 

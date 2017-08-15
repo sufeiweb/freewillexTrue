@@ -261,6 +261,9 @@
   }
 </script>
 <style scoped>
+  .accountManagement{
+    padding: 0 1.667rem 0 3.333rem;
+  }
   .recharge-group-title {
     display: flex;
     flex-wrap: wrap;
@@ -472,7 +475,7 @@
   .adrItem {
     display: flex;
     flex-direction: column;
-    width: 24.5rem;
+    width: 24rem;
     height: 9.167rem;
     border: 1px solid #ddd;
     border-radius: 4px;

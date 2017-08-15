@@ -119,7 +119,7 @@
               <input name="select-bank-cash1" type="radio" :id="'recharge-mode-cny20-cash1'+index" :value="index+1"
                      :checked="index===0?'checked':''" :address="item.address"/>
               <label :for="'recharge-mode-cny20-cash1'+index" :class="index===0?'recharge-group-radio-checked':''">
-                <p>比特币地址{{index + 1}}</p>
+                <p>{{item.currency|translate}}地址 {{index + 1}}</p>
                 <p>{{item.address}}</p>
               </label>
             </div>
