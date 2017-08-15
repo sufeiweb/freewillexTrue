@@ -216,23 +216,25 @@
               'X-Authorization': 'Bearer ' + that.$store.state.token
             }
           }).then((data) => {
-            console.log(data);
-            $('.modifyFullPsdGetCord').attr("disabled", true).css("cursor", "default");
-            that.timer = setInterval(function () {
-              $('.modifyFullPsdGetCord').html((--second) + 's');
-              if (second === 0) {
-                $('.modifyFullPsdGetCord').removeAttr("disabled").css("cursor", "pointer");
-                clearInterval(that.timer);
-                $('.modifyFullPsdGetCord').html('获取验证码');
-              }
-            }, 1000);
-            $('.form-group-content-tips').html('请输入验证码').css({
-              alignSelf: 'flex-start',
-              color: 'red',
-              marginLeft: '1.5rem'
-            })
-          }).catch((error) => {
-            console.log(error);
+            this.showError(data.data.code, data.data.message);
+            if (data.data.code === 200) {
+              $('.modifyFullPsdGetCord').attr("disabled", true).css("cursor", "default");
+              that.timer = setInterval(function () {
+                $('.modifyFullPsdGetCord').html((--second) + 's');
+                if (second === 0) {
+                  $('.modifyFullPsdGetCord').removeAttr("disabled").css("cursor", "pointer");
+                  clearInterval(that.timer);
+                  $('.modifyFullPsdGetCord').html('获取验证码');
+                }
+              }, 1000);
+              $('.form-group-content-tips').html('请输入验证码').css({
+                alignSelf: 'flex-start',
+                color: 'red',
+                marginLeft: '1.5rem'
+              })
+            }
+          }).catch((req) => {
+            this.showError(req.state, req.message)
           })
         });
       }
@@ -240,10 +242,6 @@
     methods: {
       modifyFullPsdBtn() {
         let that = this;
-        console.log(that.$store.state.modifyFullPsd.oldPsd);
-        console.log(that.$store.state.modifyFullPsd.newPsd);
-        console.log(that.$store.state.modifyFullPsd.newPsds);
-        console.log(that.$store.state.modifyFullPsd.YZCord);
         if (that.$store.state.modifyFullPsd.newPsd && that.$store.state.modifyFullPsd.newPsds && that.$store.state.modifyFullPsd.YZCord) {
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/account/updatePwd',
@@ -259,12 +257,11 @@
               'X-Authorization': 'Bearer ' + that.$store.state.token,
               "Content-Type": "application/json;charset=UTF-8",
             }
-          }).then((res)=> {
+          }).then((res) => {
             this.showError(res.data.code, res.data.message);
-            console.log(res, '设置成功');
             that.$router.push('/settings');
           }).catch((req) => {
-            console.log(req, '设置失败')
+            this.showError(req.state, req.message)
           })
         }
       }

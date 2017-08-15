@@ -294,7 +294,7 @@
       {
         $("input[name='select-style']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'account');
+          //console.log($(this).val(), 'account');
           switch ($(this).val()) {
             case '1':
               that.bank1 = true;
@@ -319,11 +319,11 @@
         setTimeout(function () {
           $("input[name='select-bank']").change(function () {
             $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
-            console.log($(this).val(), 'account')
+            //console.log($(this).val(), 'account')
           })
           $("input[name='select-bank2']").change(function () {
             $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
-            console.log($(this).val(), 'account')
+            //console.log($(this).val(), 'account')
           })
         }, 600);
       }//选择充值银行
@@ -345,9 +345,8 @@
         }).then((res) => {
           this.showError(res.data.code, res.data.message);
           that.ZCBank = res.data.data;
-          console.log(res.data.data, 111)
         }).catch((req) => {
-          console.log(req, '请求错误')
+          this.showError(req.state, req.message)
         })
       }//获取支持银行nag
       {
@@ -361,16 +360,14 @@
         }).then((res) => {
           this.showError(res.data.code, res.data.message);
           that.userBank = res.data.data;
-          console.log(res.data.data, 1222211);
-          console.log(typeof res.data.data[0].abbreviation)
         }).catch((req) => {
-          console.log(req, '请求错误')
+          this.showError(req.state, req.message)
         })
       }//获取用户绑定银行
       {
         $('.remittance-ipt').keyup(function () {
           var pattern = /^[1-9]\d*$/;
-          console.log(pattern.test($(this).val()));
+          //console.log(pattern.test($(this).val()));
           if (!pattern.test($(this).val())) {
             $(this).val('');
           }
@@ -408,18 +405,17 @@
           }
         }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res)
           if (res.data.code === 200) {
             ev.target.innerHTML = '生成汇款单';
-            console.log(res.data.data);
+            //console.log(res.data.data);
             this.$router.push({
               name: 'rechargeList',
               query: res.data.data
             })
           }
         }).catch((req) => {
+          this.showError(req.state, req.message);
           ev.target.innerHTML = '生成汇款单';
-          console.log(req, '请求错误')
         })
       },
 //    获取当前账户
@@ -433,8 +429,6 @@
         }
         this.commodity = $("input[name='select-currency']:checked").val() + this.Account;
         this.accountBankId = $("input[name='select-bank2']:checked").attr('bankid');
-//console.log(this.Account,'ceshi');
-//console.log(this.currency,'ceshi');
       },
       getBindMoneyAdr(){
         this.getAccount();
@@ -447,12 +441,12 @@
           }
         }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res, '请求成功');
+          //console.log(res, '请求成功');
           if (res.data.code === 200) {
             this.itemAddrs = res.data.data.address;
           }
         }).catch((req) => {
-          console.log(req, '')
+          this.showError(req.state, req.message)
         });
       },//获取绑定数字货币充值地址
       CopyAdr(ev){
@@ -461,7 +455,7 @@
       //获取人名币充提参数
       getCNYCode1(){
         let bankId = $("input[name='select-bank2']:checked").attr('bankid');
-        console.log(bankId);
+        //console.log(bankId);
         this.$http({
           url: 'http://192.168.1.48:8089/fwex/web/accountBank/param/' + bankId,
           method: 'GET',
@@ -475,10 +469,9 @@
             for (let i = 0; i < res.data.data.length; i++) {
               this.$set(this.moneyControl, res.data.data[i].paramKey, res.data.data[i].paramValue);
             }
-            console.log(this.moneyControl);
           }
         }).catch((req) => {
-          console.log(req, '请求失败');
+          this.showError(req.state, req.message)
         })
       },
     },

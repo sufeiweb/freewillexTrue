@@ -129,7 +129,6 @@
     created(){
       let that = this;
       {
-        console.log(that.$store.state.token, 'token');
         this.$http({
           url: 'http://192.168.1.48:8089/fwex/web/bank/all',
           method: 'GET',
@@ -137,29 +136,30 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + that.$store.state.token,
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          that.CBank = res.data.data;
-          console.log(res.data.data)
-          for (let i = 0; i < res.data.data.length; i++) {
-            if (res.data.data[i].abbreviation === 'alipay') {
-              that.$store.state.bankId.alipay = res.data.data[i].id;
-            }
-            if (res.data.data[i].abbreviation === 'BOC') {
-              that.$store.state.bankId.BOC = res.data.data[i].id;
-            }
-            if (res.data.data[i].abbreviation === 'ICBC') {
-              that.$store.state.bankId.ICBC = res.data.data[i].id;
-            }
-            if (res.data.data[i].abbreviation === 'CCB') {
-              that.$store.state.bankId.CCB = res.data.data[i].id;
-            }
-            if (res.data.data[i].abbreviation === 'ABC') {
-              that.$store.state.bankId.ABC = res.data.data[i].id;
+          if (res.data.code === 200) {
+            that.CBank = res.data.data;
+            for (let i = 0; i < res.data.data.length; i++) {
+              if (res.data.data[i].abbreviation === 'alipay') {
+                that.$store.state.bankId.alipay = res.data.data[i].id;
+              }
+              if (res.data.data[i].abbreviation === 'BOC') {
+                that.$store.state.bankId.BOC = res.data.data[i].id;
+              }
+              if (res.data.data[i].abbreviation === 'ICBC') {
+                that.$store.state.bankId.ICBC = res.data.data[i].id;
+              }
+              if (res.data.data[i].abbreviation === 'CCB') {
+                that.$store.state.bankId.CCB = res.data.data[i].id;
+              }
+              if (res.data.data[i].abbreviation === 'ABC') {
+                that.$store.state.bankId.ABC = res.data.data[i].id;
+              }
             }
           }
         }).catch((req) => {
-          console.log("出错了")
+          this.showError(req.state, req.message)
         })
       }//获取支持银行
     },
@@ -245,8 +245,8 @@
       }//手机号码验证
       {
         $('.RYZ-input').keyup(function () {
-          console.log(that.rGetCord);
-          console.log(that.RYZ);
+          //console.log(that.rGetCord);
+          //console.log(that.RYZ);
           if (that.RYZ == that.rGetCord) {
             $('.yz-tips').html('');
             that.$store.state.realNeed.Yz = true;
@@ -310,12 +310,13 @@
               'X-Authorization': 'Bearer ' + that.$store.state.token,
               "Content-Type": "application/json;charset=UTF-8",
             }
-          }).then((res)=> {
+          }).then((res) => {
             this.showError(res.data.code, res.data.message);
-            that.$router.push('/settings');
-            console.log(res, '立即认证')
+            if (res.data.code === 200) {
+              that.$router.push('/settings');
+            }
           }).catch((req) => {
-            console.log(req, '认证失败')
+            this.showError(req.state, req.message)
           })
         }
       },
@@ -346,24 +347,25 @@
         let url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile/' + that.RUserPhone;
         if (that.RUserPhone.length !== 0 && pattern.test(that.RUserPhone)) {
           that.$http.get(url).then((data) => {
-            console.log(data);
-            $('.REgetCorde').attr("disabled", true).css("cursor", "default");
-            that.timer = setInterval(function () {
-              $('.REgetCorde').html((--second) + 's');
-              if (second === 0) {
-                $('.REgetCorde').removeAttr("disabled").css("cursor", "pointer");
-                clearInterval(that.timer);
-                $('.REgetCorde').html('获取验证码');
-              }
-            }, 1000);
-            $('.phoneyz-tips').html('请输入验证码').css({
-              alignSelf: 'flex-start',
-              color: 'red',
-              marginLeft: '1.5rem'
-            })
-          }).catch((error) => {
-            console.log(131313);
-            console.log(error);
+            this.showError(data.data.code, data.data.message);
+            if (data.data.code === 200) {
+              $('.REgetCorde').attr("disabled", true).css("cursor", "default");
+              that.timer = setInterval(function () {
+                $('.REgetCorde').html((--second) + 's');
+                if (second === 0) {
+                  $('.REgetCorde').removeAttr("disabled").css("cursor", "pointer");
+                  clearInterval(that.timer);
+                  $('.REgetCorde').html('获取验证码');
+                }
+              }, 1000);
+              $('.phoneyz-tips').html('请输入验证码').css({
+                alignSelf: 'flex-start',
+                color: 'red',
+                marginLeft: '1.5rem'
+              })
+            }
+          }).catch((req) => {
+            this.showError(req.state, req.message)
           })
         } else {
           $('.phoneyz-tips').html('请核对手机号').css({

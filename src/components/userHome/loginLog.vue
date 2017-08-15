@@ -73,14 +73,15 @@
           }
         }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res)
+          //console.log(res)
           if (res.data.code === 200) {
             this.noCord = res.data.data.totalElements > 0;
             this.totalNum = res.data.data.totalElements ? res.data.data.totalElements : 10;
             this.items = res.data.data.content;
           }
         }).catch((req) => {
-          console.log(req)
+          this.showError(req.state, req.message)
+          //console.log(req)
         })
       }
     }

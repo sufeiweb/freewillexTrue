@@ -220,9 +220,8 @@
               legalCurrency: this.legalCurrency
             }
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res, 'CNY充值记录');
           if (res.data.code === 200) {
             if (res.data.data.totalElements) {
               this.noRecord = false;
@@ -234,7 +233,7 @@
           }
 
         }).catch((req) => {
-          console.log(req)
+          this.showError(req.state, req.message)
         })
       },
       getRechargeLog1(currentPage) {
@@ -254,16 +253,15 @@
               legalCurrency: this.legalCurrency
             }
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res, '数字货币充值记录');
           if (res.data.code === 200) {
             this.noRecord = !res.data.data.totalElements > 0;
             this.totals = res.data.data.totalElements ? res.data.data.totalElements : 10;
             this.items = res.data.data.content
           }
         }).catch((req) => {
-          console.log(req)
+          this.showError(req.state, req.message)
         })
       }
     },

@@ -90,9 +90,7 @@
       let that = this;
       that.RgetCord();//获取验证码
       $('.select-bank-zc').change(function () {
-        console.log($(this).val())
         that.RBankVal = $(this).val();
-        console.log(that.RBankVal);
       });
       //获取bankid
       {
@@ -165,12 +163,11 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + that.$store.state.token
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
           that.CBank = res.data.data;
-          console.log(res.data.data)
         }).catch((req) => {
-          console.log("出错了")
+          this.showError(req.state, req.message)
         })
       }//获取支持银行
     },
@@ -210,17 +207,15 @@
               "Content-Type": "application/json;charset=UTF-8",
               'X-Authorization': 'Bearer ' + that.$store.state.token,
             }
-          }).then((res)=> {
+          }).then((res) => {
             this.showError(res.data.code, res.data.message);
-            console.log(res, '绑定')
             if (res.data.code === 200) {
               ev.target.innerHTML = '确认绑定';
               this.$router.push('/accountManagement');
-              console.log(res.data.message)
             }
           }).catch((req) => {
+            this.showError(req.state, req.message);
             ev.target.innerHTML = '确认绑定';
-            console.log(req, '绑定失败')
           })
         }
       },
@@ -231,7 +226,6 @@
         let url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile/' + that.phoneNum;
         if (that.phoneNum.length !== 0 && pattern.test(that.phoneNum)) {
           that.$http.get(url).then((data) => {
-            console.log(data);
             $('.addBankGetCord').attr("disabled", true).css("cursor", "default");
             that.timer = setInterval(function () {
               $('.addBankGetCord').html((--second) + 's');
@@ -246,9 +240,8 @@
               color: 'red',
               marginLeft: '1.5rem'
             })
-          }).catch((error) => {
-            console.log(131313);
-            console.log(error);
+          }).catch((req) => {
+            this.showError(req.state, req.message);
           })
         } else {
           $('.phoneYZ-addBank-tips').html('请核对手机号').css({

@@ -88,7 +88,7 @@
               endTimes: this.endDate
             }
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             if (res.data.data.totalElements) {
@@ -100,7 +100,7 @@
             this.items = res.data.data.content;
           }
         }).catch((req) => {
-          console.log(req, '请求失败')
+          this.showError(req.state, req.message)
         })
       }
     },

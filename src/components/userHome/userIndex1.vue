@@ -221,9 +221,9 @@
               }
             }
           }
-          console.log(res, '资金信息')
+          //console.log(res, '资金信息')
         }).catch((req) => {
-          console.log(req, '获取失败')
+          this.showError(req.state, req.message)
         })
       }//获取资金信息
       {

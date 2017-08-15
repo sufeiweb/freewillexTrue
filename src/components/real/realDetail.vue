@@ -40,13 +40,12 @@
           'X-Requested-With': 'XMLHttpRequest',
           'X-Authorization': 'Bearer ' + that.$store.state.token
         }
-      }).then((res)=> {
+      }).then((res) => {
         this.showError(res.data.code, res.data.message);
         that.userName = res.data.data.userName;
         that.userCountry = res.data.data.country;
-        console.log(res, '请求成功')
       }).catch((req) => {
-        console.log(req, '请求失败')
+        this.showError(req.state, req.message)
       });
       that.$http({
         url: 'http://192.168.1.48:8089/fwex/web/authentication/info',
@@ -55,16 +54,17 @@
           "X-Requested-With": "XMLHttpRequest",
           'X-Authorization': 'Bearer ' + that.$store.state.token
         }
-      }).then((res)=> {
+      }).then((res) => {
         this.showError(res.data.code, res.data.message);
-        console.log(res.data, 23131313);
-        for (let i = 0; i < res.data.data.length; i++) {
-          if (res.data.data[i].certificateEnum === 'IDCARD') {
-            that.userIdCard = res.data.data[i].code;
+        if(res.data.code===200){
+          for (let i = 0; i < res.data.data.length; i++) {
+            if (res.data.data[i].certificateEnum === 'IDCARD') {
+              that.userIdCard = res.data.data[i].code;
+            }
           }
         }
       }).catch((req) => {
-        console.log(req, "请求错误")
+        this.showError(req.state, req.message)
       })
     }
 

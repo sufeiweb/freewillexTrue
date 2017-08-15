@@ -191,7 +191,7 @@
       {
         $("input[name='select-accountsss']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'accountss');
+          //console.log($(this).val(), 'accountss');
           if ($(this).val() == '1') {
             that.buyOrSell = true;
           } else {
@@ -238,15 +238,12 @@
           }
         }).then((res)=> {
           this.showError(res.data.code, res.data.message);
-          console.log(res);
           if (res.data.code === 200) {
             this.shuaxin1 = false;
-            console.log(res.data.message)
           }
         }).then(() => {
           this.shuaxin1 = true;
-        }).catch((req) => {
-          console.log(req, '请求失败')
+        }).catch((req)=> { this.showError(req.state,req.message)
         })
       },
 //      获得types，price,amount;
@@ -255,12 +252,10 @@
           //买
 //            判断types
           if (this.priceStyle) {
-//            console.log('限价买');
             this.types = 'B_LIMITED';
             this.price = this.buyPrice;
             this.amount = this.buyNum;
           } else {
-//            console.log('市价买');
             this.types = 'B_MARKET';
             this.price = '';
             this.amount = this.buyTotal;
@@ -268,25 +263,19 @@
         } else {
           //卖
           if (this.priceStyle) {
-//            console.log('限价卖');
             this.types = 'S_LIMITED';
             this.price = this.sellPrice;
             this.amount = this.sellNum;
           } else {
-//            console.log('市价卖');
             this.types = 'S_MARKET';
             this.price = '';
             this.amount = this.sellTotal;
           }
         }
-        console.log(this.types, '类型');
-        console.log(this.price, '价格');
-        console.log(this.amount, '数量');
       },
 //      获取交易品种
       getCommodity() {
         this.commodity = $("input[name='select-currencyaaa']:checked").val() + this.newAccount;
-        console.log(this.commodity, '品种');
       },
     }
   }

@@ -77,6 +77,7 @@
               <label for="agree">
                 我已阅读并同意
 
+
                 <router-link to="/userAgreement">《FreeWillex用户协议》</router-link>
               </label>
             </div>
@@ -143,6 +144,7 @@
             <input type="checkbox" id="agree1"/>
             <label for="agree1">
               我已阅读并同意
+
 
               <router-link to="/userAgreement">《FreeWillex用户协议》</router-link>
             </label>
@@ -229,19 +231,17 @@
               "X-Requested-With": "XMLHttpRequest",
               "Content-Type": "application/json;charset=UTF-8",
             }
-          }).then((data) => {
-            //          push路由
-            console.log(data);
-            localStorage.setItem('username', that.userNameE);
-            setTimeout(function () {
-              that.$router.push('/login')
-            }, 1500)
-          }).catch((error) => {
-            console.log("邮箱注册出错了");
-            console.log(error);
+          }).then((res) => {
+            this.showError(res.data.code, res.data.message);
+            if (res.data.code === 200) {
+              localStorage.setItem('username', that.userNameE);
+              setTimeout(function () {
+                that.$router.push('/login')
+              }, 1500)
+            }
+          }).catch((req) => {
+            this.showError(req.state, req.message)
           })
-        } else {
-          console.log("输入框有空的地方")
         }
 
       },
@@ -266,20 +266,16 @@
               "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((data) => {
-            //          push路由
-            console.log(data);
-            localStorage.setItem('username', that.userNameM);
-            setTimeout(function () {
-              that.$router.push('/login')
-            }, 1500)
-
-          }).catch((error) => {
-            console.log("手机注册出错了");
-            console.log(error);
-          });
-
-        } else {
-          console.log("输入框有空的地方")
+            this.showError(data.data.code, data.data.message);
+            if(data.data.code===200){
+              localStorage.setItem('username', that.userNameM);
+              setTimeout(function () {
+                that.$router.push('/login')
+              }, 1500)
+            }
+          }).catch((req) => {
+            this.showError(req.state, req.message)
+          })
         }
       },
       mover (){
@@ -383,11 +379,11 @@
         let that = this;
         $('#agree1').click(function () {
           that.$store.state.registerE.checkStyleE = $(this).is(':checked');
-//          console.log($(this).is(':checked'))
+//          //console.log($(this).is(':checked'))
         });
         $('#agree').click(function () {
           that.$store.state.registerM.checkStyleM = $(this).is(':checked');
-//          console.log($(this).is(':checked'))
+//          //console.log($(this).is(':checked'))
         })
 
       }
@@ -420,9 +416,9 @@
 //                  'X-Requested-With':'XMLHttpRequest'
 //              }
 //            }).then((res)=> { this.showError(res.data.code,res.data.message);
-//                console.log(res,'用户名不存在')
+//                //console.log(res,'用户名不存在')
 //            }).catch((req)=>{
-//                console.log(req,'请求失败')
+//                //console.log(req,'请求失败')
 //            })
 //        });
 
@@ -699,25 +695,25 @@
           let url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile/' + that.userNameM;
           if (that.userNameM.length !== 0 && pattern.test(that.userNameM)) {
             that.$http.get(url).then((data) => {
-              console.log(121212);
-              console.log(data);
-              $('.getCodeM').attr("disabled", true).css("cursor", "default");
-              that.timer = setInterval(function () {
-                $('.getCodeM').html((--second) + 's');
-                if (second === 0) {
-                  $('.getCodeM').removeAttr("disabled").css("cursor", "pointer");
-                  clearInterval(that.timer);
-                  $('.getCodeM').html('获取验证码');
-                }
-              }, 1000);
-              $('.help-tips-getCodeM').html('请输入验证码').css({
-                alignSelf: 'flex-start',
-                color: 'red',
-                marginLeft: '1.5rem'
-              })
-            }).catch((error) => {
-              console.log(131313);
-              console.log(error);
+              this.showError(data.data.code, data.data.message);
+              if (data.data.code === 200) {
+                $('.getCodeM').attr("disabled", true).css("cursor", "default");
+                that.timer = setInterval(function () {
+                  $('.getCodeM').html((--second) + 's');
+                  if (second === 0) {
+                    $('.getCodeM').removeAttr("disabled").css("cursor", "pointer");
+                    clearInterval(that.timer);
+                    $('.getCodeM').html('获取验证码');
+                  }
+                }, 1000);
+                $('.help-tips-getCodeM').html('请输入验证码').css({
+                  alignSelf: 'flex-start',
+                  color: 'red',
+                  marginLeft: '1.5rem'
+                })
+              }
+            }).catch((req) => {
+              this.showError(req.state, req.message)
             })
           } else {
             $('.help-tips-getCodeM').html('请核对手机号').css({
@@ -733,28 +729,26 @@
           let url = 'http://192.168.1.48:8089/fwex/web/captcha/email/' + that.userNameE;
           if (that.userNameE.length !== 0 && pattern.test(that.userNameE)) {
             that.$http.get(url).then((data) => {
-              $('.getCodeE').attr("disabled", true).css("cursor", "default");
-              that.timer = setInterval(function () {
-                $('.getCodeE').html((--second) + 's');
-                if (second === 0) {
-                  $('.getCodeE').removeAttr("disabled").css("cursor", "pointer");
-                  clearInterval(that.timer);
-                  $('.getCodeE').html('获取验证码');
-                }
-              }, 1000);
-              $('.help-tips-getCodeE').html('请输入验证码').css({
-                alignSelf: 'flex-start',
-                color: 'red',
-                marginLeft: '1.5rem'
-              })
-              console.log(111);
-              console.log(data);
-            }).catch((error) => {
-              console.log(222);
-              console.log(error);
+              this.showError(data.data.code, data.data.message);
+              if (data.data.code === 200) {
+                $('.getCodeE').attr("disabled", true).css("cursor", "default");
+                that.timer = setInterval(function () {
+                  $('.getCodeE').html((--second) + 's');
+                  if (second === 0) {
+                    $('.getCodeE').removeAttr("disabled").css("cursor", "pointer");
+                    clearInterval(that.timer);
+                    $('.getCodeE').html('获取验证码');
+                  }
+                }, 1000);
+                $('.help-tips-getCodeE').html('请输入验证码').css({
+                  alignSelf: 'flex-start',
+                  color: 'red',
+                  marginLeft: '1.5rem'
+                })
+              }
+            }).catch((req) => {
+              this.showError(req.state, req.message)
             })
-
-
           } else {
             $('.help-tips-getCodeE').html('请核对邮箱').css({
               alignSelf: 'flex-start',

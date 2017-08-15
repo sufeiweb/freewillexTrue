@@ -245,23 +245,25 @@
               'X-Authorization': 'Bearer ' + that.$store.state.token,
             }
           }).then((data) => {
-            console.log(data);
-            $('.modifyPsdGetCord').attr("disabled", true).css("cursor", "default");
-            that.timer = setInterval(function () {
-              $('.modifyPsdGetCord').html((--second) + 's');
-              if (second === 0) {
-                $('.modifyPsdGetCord').removeAttr("disabled").css("cursor", "pointer");
-                clearInterval(that.timer);
-                $('.modifyPsdGetCord').html('获取验证码');
-              }
-            }, 1000);
-            $('.form-group-content-tips').html('请输入验证码').css({
-              alignSelf: 'flex-start',
-              color: 'red',
-              marginLeft: '1.5rem'
-            })
-          }).catch((error) => {
-            console.log(error);
+            this.showError(data.data.code, data.data.message);
+            if(data.data.code===200){
+              $('.modifyPsdGetCord').attr("disabled", true).css("cursor", "default");
+              that.timer = setInterval(function () {
+                $('.modifyPsdGetCord').html((--second) + 's');
+                if (second === 0) {
+                  $('.modifyPsdGetCord').removeAttr("disabled").css("cursor", "pointer");
+                  clearInterval(that.timer);
+                  $('.modifyPsdGetCord').html('获取验证码');
+                }
+              }, 1000);
+              $('.form-group-content-tips').html('请输入验证码').css({
+                alignSelf: 'flex-start',
+                color: 'red',
+                marginLeft: '1.5rem'
+              })
+            }
+          }).catch((req) => {
+            this.showError(req.state, req.message)
           })
         });
       }
@@ -269,10 +271,10 @@
     methods: {
       modifyPsdBtn() {
         let that = this;
-        console.log(that.$store.state.modifyPsd.oldPsd);
-        console.log(that.$store.state.modifyPsd.newPsd);
-        console.log(that.$store.state.modifyPsd.newPsds);
-        console.log(that.$store.state.modifyPsd.YZCord);
+        //console.log(that.$store.state.modifyPsd.oldPsd);
+        //console.log(that.$store.state.modifyPsd.newPsd);
+        //console.log(that.$store.state.modifyPsd.newPsds);
+        //console.log(that.$store.state.modifyPsd.YZCord);
         if (that.$store.state.modifyPsd.oldPsd && that.$store.state.modifyPsd.newPsd && that.$store.state.modifyPsd.newPsds && that.$store.state.modifyPsd.YZCord) {
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/account/updatePwd',
@@ -290,11 +292,11 @@
             }
           }).then((res)=> {
             this.showError(res.data.code, res.data.message);
-            console.log(res, '设置成功');
+            //console.log(res, '设置成功');
             that.$router.push('/login');
             that.$store.state.token = '';
-          }).catch((req) => {
-            console.log(req, '设置失败')
+          }).catch((req)=> { this.showError(req.state,req.message)
+            //console.log(req, '设置失败')
           })
         }
       }

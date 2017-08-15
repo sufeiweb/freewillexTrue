@@ -40,7 +40,6 @@
         },
       routeChange(path) {
         path = path.substring(1);
-        console.log(path);
         if (path === 'quotation') {
           this.$store.dispatch('hideHeader');
           this.$store.dispatch('hideFooter');

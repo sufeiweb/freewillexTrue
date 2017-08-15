@@ -152,7 +152,7 @@
         let that = this;
         $('.userNameIptR').keyup(function () {
           let pattern = /0?^(13|14|15|18|17)[0-9]{9}/;
-          console.log(pattern.test(that.userNameM));
+          //console.log(pattern.test(that.userNameM));
           if (!pattern.test(that.userNameM)) {
             that.$store.state.phoneR.username = false;
             $('.phone-tishiR').html('您输入的号码格式不正确').css({
@@ -437,23 +437,26 @@
           let pattern = /0?^(13|14|15|18|17)[0-9]{9}/;
           let url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile/' + that.userNameM;
           if (that.userNameM.length !== 0 && pattern.test(that.userNameM)) {
-            that.$http.get(url).then((data) => {
-              console.log(data);
-              $('.getCodeMR').attr("disabled", true).css("cursor", "default");
-              that.timer = setInterval(function () {
-                $('.getCodeMR').html((--second) + 's');
-                if (second === 0) {
-                  $('.getCodeMR').removeAttr("disabled").css("cursor", "pointer");
-                  clearInterval(that.timer);
-                  $('.getCodeMR').html('获取验证码');
-                }
-              }, 1000);
-              $('.help-tips-getCodeMR').html('请输入验证码').css({
-                alignSelf: 'flex-start',
-                color: 'red',
-                marginLeft: '1.5rem'
-              })
-            }).catch((error) => {
+            that.$http.get(url).then((res) => {
+              this.showError(res.data.code, res.data.message);
+              if (res.data.code === 200) {
+                $('.getCodeMR').attr("disabled", true).css("cursor", "default");
+                that.timer = setInterval(function () {
+                  $('.getCodeMR').html((--second) + 's');
+                  if (second === 0) {
+                    $('.getCodeMR').removeAttr("disabled").css("cursor", "pointer");
+                    clearInterval(that.timer);
+                    $('.getCodeMR').html('获取验证码');
+                  }
+                }, 1000);
+                $('.help-tips-getCodeMR').html('请输入验证码').css({
+                  alignSelf: 'flex-start',
+                  color: 'red',
+                  marginLeft: '1.5rem'
+                })
+              }
+            }).catch((req) => {
+              this.showError(req.state, req.message)
             })
           } else {
             $('.help-tips-getCodeMR').html('请核对手机号').css({
@@ -468,23 +471,26 @@
           let pattern = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+(com|cn)$/;
           let url = 'http://192.168.1.48:8089/fwex/web/captcha/email/' + that.userNameE;
           if (that.userNameE.length !== 0 && pattern.test(that.userNameE)) {
-            that.$http.get(url).then((data) => {
-              console.log(data);
-              $('.getCodeER').attr("disabled", true).css("cursor", "default");
-              that.timer = setInterval(function () {
-                $('.getCodeER').html((--second) + 's');
-                if (second === 0) {
-                  $('.getCodeER').removeAttr("disabled").css("cursor", "pointer");
-                  clearInterval(that.timer);
-                  $('.getCodeER').html('获取验证码');
-                }
-              }, 1000);
-              $('.help-tips-getCodeER').html('请输入验证码').css({
-                alignSelf: 'flex-start',
-                color: 'red',
-                marginLeft: '1.5rem'
-              });
-            }).catch((error) => {
+            that.$http.get(url).then((res) => {
+              this.showError(res.data.code, res.data.message);
+              if (res.data.code === 200) {
+                $('.getCodeER').attr("disabled", true).css("cursor", "default");
+                that.timer = setInterval(function () {
+                  $('.getCodeER').html((--second) + 's');
+                  if (second === 0) {
+                    $('.getCodeER').removeAttr("disabled").css("cursor", "pointer");
+                    clearInterval(that.timer);
+                    $('.getCodeER').html('获取验证码');
+                  }
+                }, 1000);
+                $('.help-tips-getCodeER').html('请输入验证码').css({
+                  alignSelf: 'flex-start',
+                  color: 'red',
+                  marginLeft: '1.5rem'
+                });
+              }
+            }).catch((req) => {
+              this.showError(req.state, req.message)
             })
           } else {
             $('.help-tips-getCodeER').html('请核对邮箱').css({
@@ -502,10 +508,6 @@
       },
       phoneRE() {
         let that = this;
-        console.log(that.$store.state.phoneR.username, "username");
-        console.log(that.$store.state.phoneR.usercord, "usercord");
-        console.log(that.$store.state.phoneR.userpsd, "userpsd");
-        console.log(that.$store.state.phoneR.userpsds, "userPsds");
         if (that.$store.state.phoneR.username && that.$store.state.phoneR.usercord && that.$store.state.phoneR.userpsd && that.$store.state.phoneR.userpsds) {
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/forget/password',
@@ -526,7 +528,7 @@
               this.$router.push('/login');
             }
           }).catch((req) => {
-            console.log(req, 22222)
+            this.showError(req.state, req.message)
           })
         }
       },//手机找回密码js
@@ -548,12 +550,11 @@
             }
           }).then((res) => {
             this.showError(res.data.code, res.data.message);
-            if (res.data.code) {
+            if (res.data.code===200) {
               this.$router.push('/login');
             }
-            console.log(res, 11111)
           }).catch((req) => {
-            console.log(req, 22222)
+            this.showError(req.state, req.message)
           })
         }
       },//邮箱找回密码js

@@ -89,25 +89,26 @@
           let pattern = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+(com|cn)$/;
           let url = 'http://192.168.1.48:8089/fwex/web/captcha/email/' + that.bindEmailNum;
           if (that.bindEmailNum.length !== 0 && pattern.test(that.bindEmailNum)) {
-            that.$http.get(url).then((data) => {
-              console.log(data);
-              $('.bindGetEmailCord').attr("disabled", true).css("cursor", "default");
-              that.timer = setInterval(function () {
-                $('.bindGetEmailCord').html((--second) + 's');
-                if (second === 0) {
-                  $('.bindGetEmailCord').removeAttr("disabled").css("cursor", "pointer");
-                  clearInterval(that.timer);
-                  $('.bindGetEmailCord').html('获取验证码');
-                }
-              }, 1000);
-              $('.bindEmailRCaptcha-tips').html('请输入验证码').css({
-                alignSelf: 'flex-start',
-                color: 'red',
-                marginLeft: '1.5rem'
-              })
-            }).catch((error) => {
-              console.log(131313);
-              console.log(error);
+            that.$http.get(url).then((res) => {
+              this.showError(res.data.code, res.data.message);
+              if (res.data.code === 200) {
+                $('.bindGetEmailCord').attr("disabled", true).css("cursor", "default");
+                that.timer = setInterval(function () {
+                  $('.bindGetEmailCord').html((--second) + 's');
+                  if (second === 0) {
+                    $('.bindGetEmailCord').removeAttr("disabled").css("cursor", "pointer");
+                    clearInterval(that.timer);
+                    $('.bindGetEmailCord').html('获取验证码');
+                  }
+                }, 1000);
+                $('.bindEmailRCaptcha-tips').html('请输入验证码').css({
+                  alignSelf: 'flex-start',
+                  color: 'red',
+                  marginLeft: '1.5rem'
+                })
+              }
+            }).catch((req) => {
+              this.showError(req.state, req.message);
             })
           } else {
             $('.bindEmailRCaptcha-tips').html('请核对邮箱').css({
@@ -133,7 +134,6 @@
       },
       QbindEmail() {
         let that = this;
-        console.log(that.$store.state.bindEmailNum.email, that.$store.state.bindEmailNum.YZ);
         if (that.$store.state.bindEmailNum.email && that.$store.state.bindEmailNum.YZ) {
           that.$http({
             url: 'http://192.168.1.48:8089/fwex/web/authentication/emailAuth',
@@ -147,12 +147,11 @@
               'X-Authorization': 'Bearer ' + this.$store.state.token,
               "Content-Type": "application/json;charset=UTF-8",
             }
-          }).then((res)=> {
+          }).then((res) => {
             this.showError(res.data.code, res.data.message);
-            console.log(res, '绑定成功');
             that.$router.push('/settings');
           }).catch((req) => {
-            console.log(req, '绑定失败')
+            this.showError(req.state, req.message)
           })
         }
       }

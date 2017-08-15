@@ -316,14 +316,16 @@
           }
         }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          that.userBank = res.data.data;
+          if(res.data.code===200){
+            that.userBank = res.data.data;
+          }
         }).then(() => {
           $("input[name='select-bank-cash']").change(function () {
             $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
             that.getCNYCode();
           });//选择充值银行
         }).catch((req) => {
-          console.log(req, '请求错误')
+          this.showError(req.state, req.message)
         })
       }//获取用户绑定银行
       {
@@ -351,7 +353,6 @@
           }
         });
       }//输入显示控制资金信息
-      console.log($("input[name='select-Service-Charge']:checked").val())
     },
     methods: {
       //获取当前账户//当前币种
@@ -365,8 +366,6 @@
           this.currency = $("input[name='select-currency-cash']:checked").val()
         }
 
-        console.log('当前为账户' + this.Account);
-        console.log('当前币种' + this.currency)
       },
       //获取提现地址
       getCashAdr(){
@@ -382,16 +381,15 @@
           this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             this.currencyAdr = res.data.data;
-            console.log(res.data.data)
           }
         }).then(() => {
           //btc提现地址
           $("input[name='select-bank-cash1']").change(function () {
-            console.log(1)
+            //console.log(1)
             $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
           })
         }).catch((req) => {
-          console.log(req, '请求失败')
+          this.showError(req.state, req.message)
         });
         this.closeNum();
       },
@@ -411,10 +409,9 @@
             for (let i = 0; i < res.data.data.length; i++) {
               this.$set(this.moneyControl, res.data.data[i].paramKey, res.data.data[i].paramValue);
             }
-            console.log(this.moneyControl);
           }
         }).catch((req) => {
-          console.log(req, '请求失败');
+          this.showError(req.state, req.message)
         })
       },
       //获取验证码
@@ -440,11 +437,9 @@
                 ev.target.setAttribute('disabled', 'false');
               }
             }, 1000);
-
-            console.log(res.data.message);
           }
         }).catch((req) => {
-          console.log(req, '请求失败')
+          this.showError(req.state, req.message)
         })
       },
       //法币确认提现
@@ -478,6 +473,7 @@
               this.closeNum();
             }
           }).catch((req) => {
+            this.showError(req.state, req.message);
             ev.target.innerHTML = '确认提现';
           })
         }
@@ -518,14 +514,13 @@
             }
           }).then((res) => {
             this.showError(res.data.code, res.data.message);
-            console.log(res);
             if (res.data.code === 200) {
               ev.target.innerHTML = '确认提现';
               this.closeNum();
             }
           }).catch((req) => {
+            this.showError(req.state, req.message);
             ev.target.innerHTML = '确认提现';
-            console.log(req)
           })
         }
       },
@@ -543,9 +538,7 @@
           this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             this.Fee = res.data.data;
-            console.log(res.data.data.length);
             this.FreeShow = res.data.data.length > 0;
-            console.log(res.data.data);
           }
         }).then(() => {
           //提现速率
@@ -553,7 +546,7 @@
             $(this).parent().addClass('cash-btc-select-color').siblings().removeClass('cash-btc-select-color');
           })
         }).catch((req) => {
-          console.log(req, '请求失败')
+          this.showError(req.state, req.message)
         })
       },
       closeNum(){

@@ -167,7 +167,7 @@
               commodity: 'BTCCNY',
             }
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             this.totalNum = res.data.data.totalElements;
@@ -175,16 +175,12 @@
               this.noRecord = true;
             }
             this.contentArr = res.data.data.content;
-            console.log(res.data.data)
-          } else {
-            console.log(res.data.message)
           }
         }).catch((req) => {
-          console.log(req)
+          this.showError(req.state, req.message)
         })
       },//获取当前委托
       handleCurrentChange1: function (currentPage) {
-        console.log(this.account, 1111);
         this.$http({
           url: 'http://192.168.1.48:8089/fwex/web/trade/history',
           method: 'POST',
@@ -202,19 +198,16 @@
               endTimes: this.endDate
             }
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res)
           if (res.data.code === 200) {
             this.totalNumH = res.data.data.totalElements ? res.data.data.totalElements : 10;
             this.noRecord = res.data.data.totalElements > 0;
             this.contentArrH = res.data.data.content;
-            console.log(res.data.data)
-          } else {
-            console.log(res.data.message)
           }
         }).catch((req) => {
-          console.log(req)
+          this.showError(req.state, req.message)
+
         })
       },//获取历史委托
       revoke(ev) {
@@ -225,18 +218,18 @@
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             ev.target.parentNode.parentNode.remove()
           }
+        }).catch((req) => {
+          this.showError(req.state, req.message)
         })
-
       },
     },
     watch: {
       timerDT(newValue, oldValue) {
-        console.log(1)
         let date1 = new Date(newValue[0]);
         let date2 = new Date(newValue[1]);
         this.startDate = date1.getTime();

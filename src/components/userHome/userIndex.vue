@@ -214,7 +214,6 @@
         that.$http({
           url: 'http://192.168.1.48:8089/fwex/web/capital/info',
           method: 'GET',
-          data: {},
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + that.$store.state.token
@@ -242,9 +241,8 @@
               }
             }
           }
-          console.log(res, '资金信息')
         }).catch((req) => {
-          console.log(req, '获取失败')
+          this.showError(req.state, req.message)
         })
       }//获取资金信息
       {
@@ -405,7 +403,6 @@
       },
       refresh() {
         this.$router.go(0)
-//          this.$router.push('/userIndex')
       },//刷新当前页面
       BTCtoCNY(str) {
         return (str * 1864.12).toFixed(2);

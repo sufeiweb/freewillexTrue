@@ -565,10 +565,9 @@
         }).then((res) => {
           this.showError(res.data.code, res.data.message);
           that.userNumM = res.data.data.loginUser;
-          console.log(res, '请求成功')
         }).catch((req) => {
+          this.showError(req.state, req.message);
           that.quitLogin();
-          console.log(req, '请求失败')
         })//获取用户信息
       }
 //      k线启动
@@ -597,14 +596,12 @@
           }
         }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res);
           if (res.data.code === 200) {
             this.newData = true;
             this.panel_data(1);
-            console.log(res.data.message)
           }
         }).catch((req) => {
-          console.log(req, '请求失败')
+          this.showError(req.state, req.message)
         })
       },//交易
       getData() {
@@ -1017,25 +1014,25 @@
       getTypes() {
         if (this.trading_style) {
           //买
-          console.log("买");
+          //console.log("买");
           if (this.businessStyle2) {
-            console.log('限价买');
+            //console.log('限价买');
             this.amount = this.business_num;
             this.types = 'B_LIMITED';
           } else {
-            console.log('市价买');
+            //console.log('市价买');
             this.amount = this.business_price;
             this.types = 'B_MARKET';
           }
         } else {
           //卖
-          console.log("卖");
+          //console.log("卖");
           if (this.businessStyle1) {
-            console.log('限价卖');
+            //console.log('限价卖');
             this.amount = this.business_num;
             this.types = 'S_LIMITED';
           } else {
-            console.log('市价卖');
+            //console.log('市价卖');
             this.types = 'S_MARKET';
             this.amount = this.business_num;
           }
@@ -1043,7 +1040,7 @@
       },//获取买卖方式
       getCommodity(){
         this.commodity = this.cunency + this.account;
-        console.log(this.commodity);
+        //console.log(this.commodity);
       },//获取交易品种
       revoke1(ev) {
         this.$http({
@@ -1086,10 +1083,11 @@
             }
             this.panel_data1 = res.data.data.content;
           } else {
-            console.log(res.data.message)
+            //console.log(res.data.message)
           }
         }).catch((req) => {
-          console.log(req)
+          this.showError(req.state, req.message)
+          //console.log(req)
         })
       },//当前委托
       pane1_oldData(currentPage) {
@@ -1110,19 +1108,20 @@
           }
         }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res)
+          //console.log(res)
           if (res.data.code === 200) {
             this.totalNum2 = res.data.data.totalElements;
             if (res.data.data.totalElements) {
               this.noRecord = true;
             }
             this.panel_data1 = res.data.data.content;
-            console.log(res.data.data)
+            //console.log(res.data.data)
           } else {
-            console.log(res.data.message)
+            //console.log(res.data.message)
           }
         }).catch((req) => {
-          console.log(req)
+          this.showError(req.state, req.message)
+          //console.log(req)
         })
       },
       handleCurrentChange2(currentPage){
@@ -1185,12 +1184,13 @@
             }
 
           }
-          console.log(res, '资金信息')
+          //console.log(res, '资金信息')
         }).then(() => {
           this.computedLang1();
           this.computedLang2();
         }).catch((req) => {
-          console.log(req, '获取失败')
+          this.showError(req.state, req.message)
+          //console.log(req, '获取失败')
         })
       },
 

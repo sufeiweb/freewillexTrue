@@ -25,6 +25,9 @@
         userPsdTK: ''
       }
     },
+    mounted(){
+      this.userNameTK = localStorage.getItem('username') ? localStorage.getItem('username') : '';
+    },
     methods: {
       loginStart() {
         let that = this;
@@ -50,9 +53,8 @@
               that.$store.state.token = data.data.data;
             }
           }).catch((req) => {
-              this.showError(req.state,req.message);
+            this.showError(req.state, req.message);
             that.$store.dispatch('loginStateFalse');
-            sessionStorage.removeItem('token');
           })
         }
       },

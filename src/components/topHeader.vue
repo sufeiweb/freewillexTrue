@@ -117,10 +117,9 @@
             this.showError(res.data.code, res.data.message);
             that.userNameM = res.data.data.userName;
             that.userNumM = res.data.data.loginUser;
-            console.log(res, '请求成功')
           }).catch((req) => {
+            this.showError(req.state, req.message);
             that.quitLogin();
-            console.log(req, '请求失败')
           })//获取用户信息
         }
       }

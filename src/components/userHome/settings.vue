@@ -137,41 +137,42 @@
         }
       }).then((res) => {
         this.showError(res.data.code, res.data.message);
-        console.log(res.data, 23131313);
-        that.Xiang = 5 - res.data.data.length;
-        if (res.data.data.length <= 2) {
-          that.EXP = '低';
-        } else if (res.data.data.length <= 4) {
-          that.EXP = '中';
-        } else {
-          that.EXP = '高';
-        }
-        $('.setting-safe-view-box i').css({
-          left: 20 * res.data.data.length + '%'
-        });
-        for (let i = 0; i < res.data.data.length; i++) {
-          if (res.data.data[i].authsEnum === 'PASSWORD') {
-            that.$store.state.realName.userPsd = true;
-            that.loginTime = res.data.data[i].createDate;
+        if(res.data.code===200){
+          that.Xiang = 5 - res.data.data.length;
+          if (res.data.data.length <= 2) {
+            that.EXP = '低';
+          } else if (res.data.data.length <= 4) {
+            that.EXP = '中';
+          } else {
+            that.EXP = '高';
+          }
+          $('.setting-safe-view-box i').css({
+            left: 20 * res.data.data.length + '%'
+          });
+          for (let i = 0; i < res.data.data.length; i++) {
+            if (res.data.data[i].authsEnum === 'PASSWORD') {
+              that.$store.state.realName.userPsd = true;
+              that.loginTime = res.data.data[i].createDate;
 
-          }//密码
-          if (res.data.data[i].authsEnum === 'ORDINARY_REAL_NAME') {
-            that.$store.state.realName.userName = true;
-          }//实名
-          if (res.data.data[i].authsEnum === 'MOBILE') {
-            that.$store.state.realName.userPhone = true;
-            that.iponeNum = res.data.data[i].code;
-          }//手机
-          if (res.data.data[i].authsEnum === 'EMAIL') {
-            that.$store.state.realName.userEmail = true;
-            that.emailNum = res.data.data[i].code;
-          }//邮箱
-          if (res.data.data[i].authsEnum === 'CAPIT_PASSWORD') {
-            that.$store.state.realName.userMoneyPsd = true;
-          }//资金密码
+            }//密码
+            if (res.data.data[i].authsEnum === 'ORDINARY_REAL_NAME') {
+              that.$store.state.realName.userName = true;
+            }//实名
+            if (res.data.data[i].authsEnum === 'MOBILE') {
+              that.$store.state.realName.userPhone = true;
+              that.iponeNum = res.data.data[i].code;
+            }//手机
+            if (res.data.data[i].authsEnum === 'EMAIL') {
+              that.$store.state.realName.userEmail = true;
+              that.emailNum = res.data.data[i].code;
+            }//邮箱
+            if (res.data.data[i].authsEnum === 'CAPIT_PASSWORD') {
+              that.$store.state.realName.userMoneyPsd = true;
+            }//资金密码
+          }
         }
       }).catch((req) => {
-        console.log(req, "请求错误")
+        this.showError(req.state, req.message)
       })
     },
     computed: {

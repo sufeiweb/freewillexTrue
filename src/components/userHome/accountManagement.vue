@@ -192,13 +192,13 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res, '请求成功');
           if (res.data.code === 200) {
             ev.target.parentNode.remove();
-            console.log(res.data.message)
           }
+        }).catch((req) => {
+          this.showError(req.state, req.message)
         })
       },//删除银行卡
       delAdr(ev){
@@ -210,13 +210,13 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res, '请求成功');
           if (res.data.code === 200) {
             ev.target.parentNode.parentNode.remove();
-            console.log(res.data.message)
           }
+        }).catch((req) => {
+          this.showError(req.state, req.message)
         })
       },//删除数字货币地址
       getBindBankCard(){
@@ -228,14 +228,13 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res, '请求成功');
           if (res.data.code === 200) {
             that.itemBanks = res.data.data;
           }
         }).catch((req) => {
-          console.log(req, '请求失败')
+          this.showError(req.state, req.message)
         });
       },//获取绑定银行卡
       getBindCurrencyAdr(){
@@ -253,14 +252,13 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
-            console.log(res.data.data)
             this.currencyAdr = res.data.data;
           }
         }).catch((req) => {
-          console.log(req, '请求失败')
+          this.showError(req.state, req.message)
         })
       }//获取绑定数字货币地址
     },

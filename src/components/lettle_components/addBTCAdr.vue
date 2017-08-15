@@ -95,16 +95,15 @@
             types: yzStyle,
             captcha: this.serverYz
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             ev.target.innerHTML = '确认绑定';
             this.$router.push('/accountManagement')
           }
-          console.log(res, '请求成功')
         }).catch((req) => {
+          this.showError(req.state, req.message);
           ev.target.innerHTML = '确认绑定';
-          console.log(req, '请求失败')
         })
       },
       bindClose() {
@@ -122,7 +121,7 @@
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             let t = 60;
@@ -135,10 +134,11 @@
               ev.target.setAttribute('disabled', false);
               clearInterval(tt)
             }
-            console.log(res.data.message);
+
           }
         }).catch((req) => {
-          console.log(req, '请求失败')
+          this.showError(req.state, req.message)
+
         })
       }
     },

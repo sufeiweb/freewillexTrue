@@ -219,16 +219,15 @@
               currency: this.Currency
             }
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             this.noData = res.data.data.totalElements > 0;
             this.totalNum = res.data.data.totalElements ? res.data.data.totalElements : 10;
             this.items = res.data.data.content;
-            console.log(res.data.data);
           }
         }).catch((req) => {
-          console.log(req, '请求失败')
+          this.showError(req.state, req.message)
         })
       },
       //获取当前账户
@@ -240,9 +239,6 @@
         } else if (this.Account === 'BTC') {
           this.Currency = $("input[name='select-currency454']:checked").val();
         }
-        ;
-        console.log(this.Account);
-        console.log(this.Currency);
       },
       //换页
       handleCurrentChangeCashLog(currentPage){

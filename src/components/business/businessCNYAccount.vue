@@ -191,11 +191,9 @@
     mounted() {
       let that = this;
       this.$store.state.Account = this.newAccount;
-//      console.log(this.newAccount,"当前CNY账户");
       {
         $("input[name='select-accountss']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          console.log($(this).val(), 'accountss');
           if ($(this).val() == '1') {
             that.buyOrSell = true;
           } else {
@@ -242,9 +240,8 @@
             amount: this.amount,
             source: 'WEB'
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res);
           if (res.data.code === 200) {
             if (this.buyOrSell) {
               ev.target.innerHTML = '买入';
@@ -252,17 +249,16 @@
               ev.target.innerHTML = '卖出';
             }
             this.shuaxin = false;
-            console.log(res.data.message)
           }
         }).then(() => {
           this.shuaxin = true;
         }).catch((req) => {
+          this.showError(req.state, req.message);
           if (this.buyOrSell) {
             ev.target.innerHTML = '买入';
           } else {
             ev.target.innerHTML = '卖出';
           }
-          console.log(req, '请求失败')
         })
       },
 //      获得types，price,amount;
@@ -271,12 +267,10 @@
           //买
 //            判断types
           if (this.priceStyle) {
-//            console.log('限价买');
             this.types = 'B_LIMITED';
             this.price = this.buyPrice;
             this.amount = this.buyNum;
           } else {
-//            console.log('市价买');
             this.types = 'B_MARKET';
             this.price = '';
             this.amount = this.buyTotal;
@@ -284,25 +278,19 @@
         } else {
           //卖
           if (this.priceStyle) {
-//            console.log('限价卖');
             this.types = 'S_LIMITED';
             this.price = this.sellPrice;
             this.amount = this.sellNum;
           } else {
-//            console.log('市价卖');
             this.types = 'S_MARKET';
             this.price = '';
             this.amount = this.sellTotal;
           }
         }
-        console.log(this.types, '类型');
-        console.log(this.price, '价格');
-        console.log(this.amount, '数量');
       },
 //      获取交易品种
       getCommodity() {
         this.commodity = $("input[name='select-currencyaa']:checked").val() + this.newAccount;
-        console.log(this.commodity, '品种');
       },
       getPanKou(){
         this.getCommodity();
@@ -312,11 +300,12 @@
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
-          console.log(res.data.data, '盘口信息')
+          //console.log(res.data.data, '盘口信息')
         }).catch((req) => {
-          console.log(req, '请求失败')
+          this.showError(req.state, req.message)
+          //console.log(req, '请求失败')
         })
       }
     },

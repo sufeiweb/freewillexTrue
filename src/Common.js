@@ -8,8 +8,7 @@ exports.install = function (Vue, options) {
     let Url = $("#" + objId);
     Url.select(); // 选择对象
     document.execCommand("Copy"); // 执行浏览器复制命令
-    console.log(tipInfo)
-  }
+  };
 
   Vue.prototype.showError=function (num,str) {
     let _this=this;
