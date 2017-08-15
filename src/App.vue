@@ -5,17 +5,19 @@
       <router-view></router-view>
     </transition>
     <footers v-show="FooterStyle"></footers>
+    <Tips></Tips>
   </div>
 </template>
 
 <script>
   import topHeader from './components/topHeader.vue';
   import footers from './components/footer.vue';
+  import Tips from './components/text_components/tips.vue';
 
   import {mapGetters} from 'vuex';
   export default {
     components: {
-      topHeader, footers
+      topHeader, footers,Tips
     },
     computed: mapGetters(
       ['TopHeaderStyle', 'FooterStyle']

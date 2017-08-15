@@ -209,7 +209,7 @@
         <div class="quotation-center-title">行情图表</div>
         <!--行情K线图-->
         <div class="quotation-chart-line">
-          <div id="myChart_k"></div>
+          <div id="myChart_k" style="height: 535px; min-width: 310px">图表加载中...</div>
         </div>
         <div class="delegate-panel">
           <div class="quotation-center-title">委托面板</div>

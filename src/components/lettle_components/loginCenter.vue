@@ -162,6 +162,7 @@
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
               'X-Authorization': 'Bearer ' + that.$store.state.token,
+              'source':'WEB',
               'Content-Type': 'application/json'
             }
           }).then((res) => {

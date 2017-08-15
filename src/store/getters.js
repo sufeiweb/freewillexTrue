@@ -10,5 +10,11 @@ export default {
   },
   LoginState(state) {
     return state.loginState;
+  },
+  ErrorState(state){
+    return state.ErrorState;
+  },
+  ErrorMessage(state){
+    return state.ErrorMessage;
   }
 }

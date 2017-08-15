@@ -298,7 +298,7 @@
   }
 
   .a3 {
-    background: url("../../assets/img/iconPng/LTC.png");
+    background: url("../../assets/img/iconPng/ltc.png");
     background-position: -22px;
   }
 

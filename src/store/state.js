@@ -103,6 +103,7 @@ export default {
   loginTrue:false,//登录状态
   TKShow:false,//登录弹窗状态,
   Account:'',//当前账户
-  Currency:''//当前币种
-
+  Currency:'',//当前币种
+  ErrorMessage:'',//错误码
+  ErrorState:false,//提示错误状态
 }

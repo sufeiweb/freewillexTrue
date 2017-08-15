@@ -32,5 +32,10 @@ export default {
                       commit, state
                     }) => {
     commit(types.LOGINSTATE_FALSE);
+  },
+  errorTips: ({
+                commit, state
+              }) => {
+    commit(types.ERROR_CHULI)
   }
 }

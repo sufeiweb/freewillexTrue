@@ -10,6 +10,7 @@ import  store from './store'
 import  echarts from 'echarts'
 import axios from 'axios';
 import Common from './Common';
+import 'babel-polyfill'
 Vue.use(Common);
 
 // import VueResource from 'vue-resource'

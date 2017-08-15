@@ -20,5 +20,8 @@ export default {
   },
   [types.LOGINSTATE_FALSE]: (state) => {
     state.loginState = false;
+  },
+  [types.ERROR_CHULI]: (state) => {
+    state.ErrorState = true;
   }
 }
