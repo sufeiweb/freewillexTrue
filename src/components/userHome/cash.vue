@@ -184,6 +184,7 @@
             <div class="btc-num-input">
               <input placeholder="输入提币数量" v-model="W_Money"/>
             </div>
+            <span class="btc-num-input-tips" style="color: red;"></span>
           </section>
           <section class="select-shouxufei" v-show="FreeShow">
             <p>选择手续费</p>
@@ -258,12 +259,14 @@
         serverYZ: '',//验证码
         Fee: [],//数字货币手续费
         FreeShow: true,
+        CurrencyFee: '',//数字货币费率控制
       }
     },
     mounted() {
       let that = this;
       {
         $("input[name='select-account-cash']").change(function () {
+          that.closeNum();
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
           if ($(this).val() === 'CNY') {
             that.account = false;
@@ -283,6 +286,7 @@
       }//选择账户
       {
         $("input[name='select-currency-cash']").change(function () {
+          that.closeNum();
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
           if ($(this).val() === 'CNY') {
             that.moneyStyle = false;
@@ -293,6 +297,7 @@
           that.getFee();
         })
         $("input[name='select-currency1-cash']").change(function () {
+          that.closeNum();
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
           that.getCashAdr();
           that.getFee();
@@ -315,10 +320,10 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
-          if(res.data.code!==200){
+          if (res.data.code !== 200) {
             this.showError(res.data.code, res.data.message);
           }
-          if(res.data.code===200){
+          if (res.data.code === 200) {
             that.userBank = res.data.data;
           }
         }).then(() => {
@@ -355,6 +360,21 @@
           }
         });
       }//输入显示控制资金信息
+      {
+        $('.btc-num-input input').keyup(function () {
+          if (isNaN(that.W_Money)) {
+            that.W_Money = '';
+            $('.btc-num-input-tips').html('请输入数字');
+          }
+          if (parseFloat($(this).val()) < that.CurrencyFee.minWithdraw) {
+            $('.btc-num-input-tips').html('最小提现数量为 ' + that.CurrencyFee.minWithdraw + ' ' + that.CurrencyFee.currency);
+          } else if (parseFloat($(this).val()) > that.CurrencyFee.maxWithdraw) {
+            $('.btc-num-input-tips').html('最小提现数量为 ' + that.CurrencyFee.maxWithdraw + ' ' + that.CurrencyFee.currency);
+          } else {
+            $('.btc-num-input-tips').html();
+          }
+        });
+      }//数字货币资金控制
     },
     methods: {
       //获取当前账户//当前币种
@@ -380,7 +400,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
-          if(res.data.code!==200){
+          if (res.data.code !== 200) {
             this.showError(res.data.code, res.data.message);
           }
           if (res.data.code === 200) {
@@ -408,7 +428,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
-          if(res.data.code!==200){
+          if (res.data.code !== 200) {
             this.showError(res.data.code, res.data.message);
           }
           if (res.data.code === 200) {
@@ -450,44 +470,49 @@
       },
       //法币确认提现
       QCash(ev){
-        ev.target.innerHTML = '处理中...';
         let id = $("input[name='select-bank-cash']:checked").attr('bankid');
         let val = $("input[name='cash-btc-style-yz1']:checked").val();
         if (this.moneyPsd && this.W_Money && this.serverYZ) {
-          this.$http({
-            url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/withdraw',
-            method: 'POST',
-            headers: {
-              'X-Requested-With': 'XMLHttpRequest',
-              'X-Authorization': 'Bearer ' + this.$store.state.token,
-              "Content-Type": "application/json;charset=UTF-8",
-            },
-            data: {
-              accountBankId: id,
-              commodity: 'CNYCNY',
-              currency: 'CNY',
-              business: 'W',
-              applyBalance: this.W_Money,
-              types: val,
-              captcha: this.serverYz,
-              capitalPwd: this.moneyPsd
-            }
-          }).then((res) => {
-            this.showError(res.data.code, res.data.message);
-            if (res.data.code === 200) {
+          if (this.W_Money >= this.moneyControl.W_MIN && this.W_Money <= this.moneyControl.W_MAX) {
+            ev.target.innerHTML = '处理中...';
+            this.$http({
+              url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/withdraw',
+              method: 'POST',
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-Authorization': 'Bearer ' + this.$store.state.token,
+                "Content-Type": "application/json;charset=UTF-8",
+              },
+              data: {
+                accountBankId: id,
+                commodity: 'CNYCNY',
+                currency: 'CNY',
+                business: 'W',
+                applyBalance: this.W_Money,
+                types: val,
+                captcha: this.serverYz,
+                capitalPwd: this.moneyPsd
+              }
+            }).then((res) => {
+              this.showError(res.data.code, res.data.message);
+              if (res.data.code === 200) {
+                ev.target.innerHTML = '确认提现';
+                this.closeNum();
+                this.$router.push('/cash/cashLog')
+              }
+            }).catch((req) => {
+              this.showError(req.code, req.message);
               ev.target.innerHTML = '确认提现';
-              this.closeNum();
-              this.$router.push('/cash/cashLog')
-            }
-          }).catch((req) => {
-            this.showError(req.code, req.message);
-            ev.target.innerHTML = '确认提现';
-          })
+            })
+          } else {
+            this.showError('', '请输入正确的金额');
+          }
+        } else {
+          this.showError('', '必备参数不能为空');
         }
       },
       //数字货币提现
       QCash1(ev){
-        ev.target.innerHTML = '处理中...';
         this.getAccount();
         //手续费
         let fee = $("input[name='select-Service-Charge']:checked").val();
@@ -500,41 +525,50 @@
         //地址
         let adr = $("input[name='select-bank-cash1']:checked").attr('address');
         let val = $("input[name='cash-btc-style-yz']:checked").val();
+        if (!nextd) {
+          this.showError('', '请选择手续费')
+        }
         if (this.moneyPsd && this.W_Money && this.serverYZ && nextd) {
-          this.$http({
-            url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/withdraw',
-            method: 'POST',
-            headers: {
-              'X-Requested-With': 'XMLHttpRequest',
-              'X-Authorization': 'Bearer ' + this.$store.state.token,
-              "Content-Type": "application/json;charset=UTF-8",
-            },
-            data: {
-              digtalAddr: adr,
-              commodity: this.currency + this.Account,
-              currency: this.currency,
-              amount: this.W_Money,
-              fee: this.FreeShow ? fee : 0,
-              types: val,
-              captcha: this.serverYZ,
-              capitalPwd: this.moneyPsd
-            }
-          }).then((res) => {
-            this.showError(res.data.code, res.data.message);
-            if (res.data.code === 200) {
+          if (this.W_Money >= this.CurrencyFee.minWithdraw && this.W_Money <= this.CurrencyFee.maxWithdraw) {
+            ev.target.innerHTML = '处理中...';
+            this.$http({
+              url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/withdraw',
+              method: 'POST',
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-Authorization': 'Bearer ' + this.$store.state.token,
+                "Content-Type": "application/json;charset=UTF-8",
+              },
+              data: {
+                digtalAddr: adr,
+                commodity: this.currency + this.Account,
+                currency: this.currency,
+                amount: this.W_Money,
+                fee: this.FreeShow ? fee : 0,
+                types: val,
+                captcha: this.serverYZ,
+                capitalPwd: this.moneyPsd
+              }
+            }).then((res) => {
+              this.showError(res.data.code, res.data.message);
+              if (res.data.code === 200) {
+                ev.target.innerHTML = '确认提现';
+                this.closeNum();
+                this.$router.push('/cash/cashLog')
+              }
+            }).catch((req) => {
+              this.showError(req.code, req.message);
               ev.target.innerHTML = '确认提现';
-              this.closeNum();
-              this.$router.push('/cash/cashLog')
-            }
-          }).catch((req) => {
-            this.showError(req.code, req.message);
-            ev.target.innerHTML = '确认提现';
-          })
+            })
+          }
+        } else {
+          this.showError('', '必备参数不能为空');
         }
       },
       //获取数字货币提现手续费
       getFee(){
         this.getAccount();
+        this.getCurrencyFee();
         this.$http({
           url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/fee/' + this.currency,
           method: 'GET',
@@ -543,7 +577,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           },
         }).then((res) => {
-          if(res.data.code!==200){
+          if (res.data.code !== 200) {
             this.showError(res.data.code, res.data.message);
           }
           if (res.data.code === 200) {
@@ -555,6 +589,25 @@
           $("input[name='select-Service-Charge']").change(function () {
             $(this).parent().addClass('cash-btc-select-color').siblings().removeClass('cash-btc-select-color');
           })
+        }).catch((req) => {
+          this.showError(req.code, req.message)
+        })
+      },
+      //获取费率
+      getCurrencyFee(){
+        this.$http({
+          url: 'http://192.168.1.48:8089/fwex/web/digital/rates/' + this.currency,
+          method: 'GET',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+          },
+        }).then((res) => {
+          if (res.data.code === 200) {
+            this.CurrencyFee = res.data.data;
+            console.log(this.CurrencyFee);
+          }
+
         }).catch((req) => {
           this.showError(req.code, req.message)
         })

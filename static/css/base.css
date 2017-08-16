@@ -59,3 +59,30 @@ ul li {
   background: rgb(30, 43, 52)
 }
 
+.pankou .sell-pankou p, .pankou .buy-pankou p,.dd {
+  padding: 8px 30px;
+  display: flex;
+  align-items: center;
+}
+
+.pankou .sell-pankou p > span, .pankou section > span, .pankou .buy-pankou p > span {
+  flex: 1;
+  text-align: right;
+}
+
+.pankou .sell-pankou p > span:nth-of-type(1), .pankou section > span:nth-of-type(1), .pankou .buy-pankou p > span:nth-of-type(1) {
+  text-align: left;
+}
+
+.pankou .sell-pankou p > span:nth-of-type(2), .pankou section > span:nth-of-type(2), .pankou .buy-pankou p > span:nth-of-type(2) {
+  text-align: left;
+  flex: .5;
+
+}
+.sell-pankou p > span:nth-of-type(1) {
+  color: #63b212;
+}
+
+.buy-pankou p > span:nth-of-type(1) {
+  color: #f54648;
+}

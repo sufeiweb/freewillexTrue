@@ -392,35 +392,41 @@
       rechargeBtn(ev) {
         ev.target.innerHTML = '处理中...';
         this.getAccount();
-        this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/payments',
-          method: 'POST',
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-Authorization': 'Bearer ' + this.$store.state.token,
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-          data: {
-            accountBankId: this.accountBankId,
-            commodity: this.commodity,
-            currency: this.currency,
-            business: 'R',
-            applyBalance: this.remittance + '.' + this.arNum
-          }
-        }).then((res) => {
-          this.showError(res.data.code, res.data.message);
-          if (res.data.code === 200) {
+        if(this.remittance>=this.moneyControl.R_MIN && this.remittance<=this.moneyControl.R_MAX){
+          this.$http({
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/payments',
+            method: 'POST',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'X-Authorization': 'Bearer ' + this.$store.state.token,
+              "Content-Type": "application/json;charset=UTF-8",
+            },
+            data: {
+              accountBankId: this.accountBankId,
+              commodity: this.commodity,
+              currency: this.currency,
+              business: 'R',
+              applyBalance: this.remittance + '.' + this.arNum
+            }
+          }).then((res) => {
+            this.showError(res.data.code, res.data.message);
+            if (res.data.code === 200) {
+              ev.target.innerHTML = '生成汇款单';
+              //console.log(res.data.data);
+              this.$router.push({
+                name: 'rechargeList',
+                query: res.data.data
+              })
+            }
+          }).catch((req) => {
+            this.showError(req.code, req.message);
             ev.target.innerHTML = '生成汇款单';
-            //console.log(res.data.data);
-            this.$router.push({
-              name: 'rechargeList',
-              query: res.data.data
-            })
-          }
-        }).catch((req) => {
-          this.showError(req.code, req.message);
+          })
+        }else {
+          this.showError('', '请输入正确的金额');
           ev.target.innerHTML = '生成汇款单';
-        })
+        }
+
       },
 //    获取当前账户
       getAccount() {

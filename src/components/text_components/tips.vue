@@ -24,14 +24,11 @@
 </script>
 <style scoped>
   .tips {
-    position: absolute;
-    top: 15rem;
+    position: fixed;
     width: 25rem;
     height: 5rem;
     text-align: center;
     line-height: 5rem;
-    left: 50%;
-    margin-left: -12.5rem;
     background: green;
     color: #fff;
     font-size: 1.5rem;
@@ -40,6 +37,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    top:15rem;
+    right:0;
+    left:0;
+    margin: auto;
   }
 
   .tips i {

@@ -2,7 +2,7 @@
   <div class="rechargeList">
     <div class="rechargeList-title">
       <p>待充值订单</p>
-      <p> 请使用<a :href="'http://'+this.$route.query.bankUrl" target="_blank">{{this.$route.query.bankName}}</a>向以下账户转账
+      <p> 请使用<a :href="this.$route.query.bankUrl" target="_blank">{{this.$route.query.bankName}}</a>向以下账户转账
       </p>
     </div>
     <div class="rechargeList-content">
@@ -13,7 +13,7 @@
       <p><span>待支付金额</span><span class="color-blue">￥{{ this.$route.query.balance}}</span></p>
       <p><span>备注/附言</span><span>{{this.$route.query.postScript}}</span></p>
       <p><span>到账时间</span><span>转账完成后40分钟内</span></p>
-      <p><a :href="'http://'+this.$route.query.bankUrl" target="_blank">进入{{this.$route.query.bankName}}</a></p>
+      <p><a :href="this.$route.query.bankUrl" target="_blank">进入{{this.$route.query.bankName}}</a></p>
     </div>
     <div class="rechargeList-footer">
       <p>请在汇款备注/附言中严格按要求填写充值ID：<span>{{this.$route.query.postScript}}</span></p>

@@ -104,7 +104,7 @@ export default {
   TKShow:false,//登录弹窗状态,
   Account:'',//当前账户
   Currency:'',//当前币种
-  ErrorMessage:'测试',//错误码
+  ErrorMessage:'',//错误码
   ErrorState:false,//提示错误状态
   ErrorState1:false,//提示错误状态
 }

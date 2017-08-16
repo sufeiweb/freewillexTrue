@@ -138,21 +138,9 @@
             <span>价格(￥)</span>
             <span>挂单量(L)</span>
           </section>
-          <div class="sell-pankou">
-            <p><span>卖（5）</span><span>18763.35</span><span>1.23569854</span></p>
-            <p><span>卖（4）</span><span>18763.35</span><span>12.23569854</span></p>
-            <p><span>卖（3）</span><span>18763.35</span><span>5.23569854</span></p>
-            <p><span>卖（2）</span><span>18763.35</span><span>6.23569854</span></p>
-            <p><span>卖（1）</span><span>18763.35</span><span>4.23569854</span></p>
-          </div>
+          <div class="sell-pankou"></div>
           <div><em></em></div>
-          <div class="buy-pankou">
-            <p><span>买（1）</span><span>18763.35</span><span>1.23569854</span></p>
-            <p><span>买（2）</span><span>18763.35</span><span>12.23569854</span></p>
-            <p><span>买（3）</span><span>18763.35</span><span>5.23569854</span></p>
-            <p><span>买（4）</span><span>18763.35</span><span>6.23569854</span></p>
-            <p><span>买（5）</span><span>18763.35</span><span>4.23569854</span></p>
-          </div>
+          <div class="buy-pankou"></div>
         </div>
         <div class="hangqing"></div>
       </div>
@@ -182,7 +170,8 @@
         types: '',//类型
         price: '',//价格
         amount: '',//数量
-        shuaxin: true
+        shuaxin: true,
+        panKou: [],//盘口信息
       }
     },
     components: {
@@ -218,7 +207,7 @@
           }
         })
       }//限价与市价的选择
-//      that.getPanKou()
+      that.getPanKou();
     },
     methods: {
       transaction(ev) {
@@ -243,6 +232,7 @@
         }).then((res) => {
           this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
+
             if (this.buyOrSell) {
               ev.target.innerHTML = '买入';
             } else {
@@ -251,6 +241,7 @@
             this.shuaxin = false;
           }
         }).then(() => {
+            this.getPanKou();
           this.shuaxin = true;
         }).catch((req) => {
           this.showError(req.code, req.message);
@@ -295,18 +286,43 @@
       getPanKou(){
         this.getCommodity();
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/quotation/depth/' + this.commodity + '/' + 10,
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/quotation/depth/' + this.commodity + '/' + 5,
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
+            console.log(res)
 //          this.showError(res.data.code, res.data.message);
-          //console.log(res.data.data, '盘口信息')
+          if (res.data.code === 200) {
+            this.pushViewB(res.data.data.b);
+            this.pushViewS(res.data.data.s);
+          }
         }).catch((req) => {
           this.showError(req.code, req.message)
-          //console.log(req, '请求失败')
         })
+      },
+      pushViewB(num){
+        $('.buy-pankou').html('');
+        for (let i = 0; i < num.length; i++) {
+          $('.buy-pankou').append(`<p><span>买${i + 1}</span><span>${(num[i].price).toFixed(2)}</span><span>${(num[i].vol).toFixed(4)}</span></p>`);
+        }
+        if (num.length < 5) {
+          for (let i = 0; i < 5 - num.length; i++) {
+            $('.buy-pankou').append(`<p><span>买${i+1 + num.length}</span><span>--</span><span>--</span></p>`);
+          }
+        }
+      },
+      pushViewS(num){
+        $('.sell-pankou').html('');
+        for (let i = 0; i < num.length; i++) {
+          $('.sell-pankou').prepend(`<p><span>卖${i + 1}</span><span>${(num[i].price).toFixed(2)}</span><span>${(num[i].vol).toFixed(4)}</span></p>`) ;
+        }
+        if (num.length < 5) {
+          for (let i = 0; i < 5 - num.length; i++) {
+            $('.sell-pankou').prepend(`<p><span>卖${i+1 + num.length}</span><span>--</span><span>--</span></p>`);
+          }
+        }
       }
     },
     computed: {
@@ -412,24 +428,7 @@
     padding: 8px 30px;
   }
 
-  .pankou .sell-pankou p, .pankou .buy-pankou p {
-    padding: 8px 30px;
-    display: flex;
-    align-items: center;
-  }
 
-  .pankou .sell-pankou p > span, .pankou section > span, .pankou .buy-pankou p > span {
-    flex: 1;
-    text-align: right;
-  }
-
-  .pankou .sell-pankou p > span:nth-of-type(1), .pankou section > span:nth-of-type(1), .pankou .buy-pankou p > span:nth-of-type(1) {
-    text-align: left;
-  }
-
-  .pankou .sell-pankou p > span:nth-of-type(2), .pankou section > span:nth-of-type(2), .pankou .buy-pankou p > span:nth-of-type(2) {
-    text-align: center;
-  }
 
   .pankou > div > em {
     margin: 1rem 30px;
@@ -440,13 +439,7 @@
     box-sizing: border-box;
   }
 
-  .sell-pankou p > span:nth-of-type(1) {
-    color: #63b212;
-  }
 
-  .buy-pankou p > span:nth-of-type(1) {
-    color: #f54648;
-  }
 
   .content-left .content-left-header {
     display: flex;
