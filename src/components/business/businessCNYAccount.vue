@@ -218,7 +218,7 @@
           }
         })
       }//限价与市价的选择
-      that.getPanKou()
+//      that.getPanKou()
     },
     methods: {
       transaction(ev) {
@@ -226,7 +226,7 @@
         this.getTypes();
         this.getCommodity();
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/trade/entrust',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/entrust',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -253,7 +253,7 @@
         }).then(() => {
           this.shuaxin = true;
         }).catch((req) => {
-          this.showError(req.state, req.message);
+          this.showError(req.code, req.message);
           if (this.buyOrSell) {
             ev.target.innerHTML = '买入';
           } else {
@@ -295,16 +295,16 @@
       getPanKou(){
         this.getCommodity();
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/quotation/depth/' + this.commodity + '/' + 10,
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/quotation/depth/' + this.commodity + '/' + 10,
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+//          this.showError(res.data.code, res.data.message);
           //console.log(res.data.data, '盘口信息')
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
           //console.log(req, '请求失败')
         })
       }

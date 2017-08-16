@@ -129,14 +129,16 @@
     mounted() {
       let that = this;
       this.$http({
-        url: 'http://192.168.1.48:8089/fwex/web/authentication/info',
+        url: 'https://kaifamobile.firstcoinex.com/fwex/web/authentication/info',
         method: 'GET',
         headers: {
           "X-Requested-With": "XMLHttpRequest",
           'X-Authorization': 'Bearer ' + this.$store.state.token
         }
       }).then((res) => {
-        this.showError(res.data.code, res.data.message);
+        if(res.data.code!==200){
+          this.showError(res.data.code, res.data.message);
+        }
         if(res.data.code===200){
           that.Xiang = 5 - res.data.data.length;
           if (res.data.data.length <= 2) {
@@ -172,7 +174,7 @@
           }
         }
       }).catch((req) => {
-        this.showError(req.state, req.message)
+        this.showError(req.code, req.message)
       })
     },
     computed: {

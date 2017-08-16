@@ -556,17 +556,19 @@
       {
         let that = this;
         that.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/account/info',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/info',
           method: 'GET',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + that.$store.state.token
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           that.userNumM = res.data.data.loginUser;
         }).catch((req) => {
-          this.showError(req.state, req.message);
+          this.showError(req.code, req.message);
           that.quitLogin();
         })//获取用户信息
       }
@@ -580,7 +582,7 @@
         this.getTypes();
         this.getCommodity();
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/trade/entrust',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/entrust',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -601,7 +603,7 @@
             this.panel_data(1);
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       },//交易
       getData() {
@@ -1044,7 +1046,7 @@
       },//获取交易品种
       revoke1(ev) {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/trade/cancels/' + ev.target.getAttribute('commodity') + '/' + ev.target.getAttribute('code'),
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/cancels/' + ev.target.getAttribute('commodity') + '/' + ev.target.getAttribute('code'),
           method: 'GET',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -1060,7 +1062,7 @@
       },
       panel_data(currentPage) {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/trade/unsettled',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/unsettled',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -1075,7 +1077,9 @@
             }
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             this.totalNum1 = res.data.data.totalElements;
             if (res.data.data.totalElements) {
@@ -1086,13 +1090,13 @@
             //console.log(res.data.message)
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
           //console.log(req)
         })
       },//当前委托
       pane1_oldData(currentPage) {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/trade/history',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/history',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -1107,8 +1111,9 @@
             }
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
-          //console.log(res)
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             this.totalNum2 = res.data.data.totalElements;
             if (res.data.data.totalElements) {
@@ -1116,11 +1121,9 @@
             }
             this.panel_data1 = res.data.data.content;
             //console.log(res.data.data)
-          } else {
-            //console.log(res.data.message)
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
           //console.log(req)
         })
       },
@@ -1140,14 +1143,16 @@
       },
       getCNYMoney() {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/capital/info',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/info',
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             for (let i = 0; i < res.data.data.length; i++) {
               if (res.data.data[i].legalMoney === 'CNY') {
@@ -1189,7 +1194,7 @@
           this.computedLang1();
           this.computedLang2();
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
           //console.log(req, '获取失败')
         })
       },

@@ -336,32 +336,36 @@
       }//btc充值地址二维码放大
       {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/bank/all',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/bank/all',
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           that.ZCBank = res.data.data;
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       }//获取支持银行nag
       {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/accountBank/all',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/all',
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           that.userBank = res.data.data;
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       }//获取用户绑定银行
       {
@@ -389,7 +393,7 @@
         ev.target.innerHTML = '处理中...';
         this.getAccount();
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/capital/payments',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/payments',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -414,7 +418,7 @@
             })
           }
         }).catch((req) => {
-          this.showError(req.state, req.message);
+          this.showError(req.code, req.message);
           ev.target.innerHTML = '生成汇款单';
         })
       },
@@ -433,20 +437,21 @@
       getBindMoneyAdr(){
         this.getAccount();
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/digital/rechargeInfo/' + this.currency + '/' + this.Account,
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/rechargeInfo/' + this.currency + '/' + this.Account,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
-          //console.log(res, '请求成功');
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             this.itemAddrs = res.data.data.address;
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         });
       },//获取绑定数字货币充值地址
       CopyAdr(ev){
@@ -457,21 +462,23 @@
         let bankId = $("input[name='select-bank2']:checked").attr('bankid');
         //console.log(bankId);
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/accountBank/param/' + bankId,
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/param/' + bankId,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             for (let i = 0; i < res.data.data.length; i++) {
               this.$set(this.moneyControl, res.data.data[i].paramKey, res.data.data[i].paramValue);
             }
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       },
     },

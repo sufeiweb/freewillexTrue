@@ -203,10 +203,10 @@
           }
           let second = 60;
           let url;
-          if (that.radioIpt == 1) {
-            url = 'http://192.168.1.48:8089/fwex/web/captcha/email'
+          if (that.radioIpt == '1') {
+            url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/email'
           } else {
-            url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile'
+            url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/mobile'
           }
           that.$http({
             url: url,
@@ -234,7 +234,7 @@
               })
             }
           }).catch((req) => {
-            this.showError(req.state, req.message)
+            this.showError(req.code, req.message)
           })
         });
       }
@@ -244,7 +244,7 @@
         let that = this;
         if (that.$store.state.bindFullPsd.fullPsd && that.$store.state.bindFullPsd.fullPsds && that.$store.state.bindFullPsd.YZCord) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/authentication/capitPwd',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/authentication/capitPwd',
             method: 'POST',
             data: {
               password: that.bindFullPsd,
@@ -262,7 +262,7 @@
             //console.log(res, '设置成功');
             that.$router.push('/settings');
           }).catch((req) => {
-            this.showError(req.state, req.message)
+            this.showError(req.code, req.message)
             //console.log(req, '设置失败')
           })
         }

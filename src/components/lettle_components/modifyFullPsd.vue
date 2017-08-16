@@ -204,9 +204,9 @@
           let second = 60;
           let url;
           if (that.radioIpt == 1) {
-            url = 'http://192.168.1.48:8089/fwex/web/captcha/email'
+            url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/email'
           } else {
-            url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile'
+            url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/mobile'
           }
           that.$http({
             url: url,
@@ -216,7 +216,7 @@
               'X-Authorization': 'Bearer ' + that.$store.state.token
             }
           }).then((data) => {
-            this.showError(data.data.code, data.data.message);
+            that.showError(data.data.code, data.data.message);
             if (data.data.code === 200) {
               $('.modifyFullPsdGetCord').attr("disabled", true).css("cursor", "default");
               that.timer = setInterval(function () {
@@ -234,7 +234,7 @@
               })
             }
           }).catch((req) => {
-            this.showError(req.state, req.message)
+            that.showError(req.code, req.message)
           })
         });
       }
@@ -244,7 +244,7 @@
         let that = this;
         if (that.$store.state.modifyFullPsd.newPsd && that.$store.state.modifyFullPsd.newPsds && that.$store.state.modifyFullPsd.YZCord) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/account/updatePwd',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/updatePwd',
             method: 'POST',
             data: {
               password: that.modifyFullPsd,
@@ -258,10 +258,10 @@
               "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((res) => {
-            this.showError(res.data.code, res.data.message);
+            that.showError(res.data.code, res.data.message);
             that.$router.push('/settings');
           }).catch((req) => {
-            this.showError(req.state, req.message)
+            that.showError(req.code, req.message)
           })
         }
       }

@@ -59,7 +59,7 @@
     methods: {
       handleCurrentChangeLoginLog(currentPage){
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/account/logs',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/logs',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -72,15 +72,16 @@
             param: {}
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
-          //console.log(res)
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             this.noCord = res.data.data.totalElements > 0;
             this.totalNum = res.data.data.totalElements ? res.data.data.totalElements : 10;
             this.items = res.data.data.content;
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
           //console.log(req)
         })
       }

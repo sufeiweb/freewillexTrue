@@ -205,7 +205,7 @@
       },
       getRechargeLog(currentPage) {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/capital/payments/list',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/payments/list',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -221,7 +221,9 @@
             }
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             if (res.data.data.totalElements) {
               this.noRecord = false;
@@ -233,12 +235,12 @@
           }
 
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       },
       getRechargeLog1(currentPage) {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/digital/payments/list',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/payments/list',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -254,14 +256,16 @@
             }
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             this.noRecord = !res.data.data.totalElements > 0;
             this.totals = res.data.data.totalElements ? res.data.data.totalElements : 10;
             this.items = res.data.data.content
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       }
     },

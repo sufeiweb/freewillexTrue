@@ -7,6 +7,7 @@
           |
 
 
+
           <router-link to="/businessBTCAccount" class="hover-color-css">BTC专区帐号</router-link>
         </div>
         <div class="recharge-group">
@@ -115,10 +116,10 @@
             </div>
           </transition>
           <transition enter-active-class="animated fadeIn">
-            <button class="business-cny-buy" v-show="buyOrSell" @click="transaction1()">买入</button>
+            <button class="business-cny-buy" v-show="buyOrSell" @click="transaction1($event)">买入</button>
           </transition>
           <transition enter-active-class="animated fadeIn">
-            <button class="business-cny-sell" v-show="!buyOrSell" @click="transaction1()">卖出</button>
+            <button class="business-cny-sell" v-show="!buyOrSell" @click="transaction1($event)">卖出</button>
           </transition>
         </div>
       </div>
@@ -218,11 +219,12 @@
 
     },
     methods: {
-      transaction1() {
+      transaction1(ev) {
+        ev.target.innerHTML = '处理中...';
         this.getTypes();
         this.getCommodity();
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/trade/entrust',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/entrust',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -236,14 +238,25 @@
             amount: this.amount,
             source: 'WEB'
           }
-        }).then((res)=> {
+        }).then((res) => {
           this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
+            if (this.buyOrSell) {
+              ev.target.innerHTML = '买入';
+            } else {
+              ev.target.innerHTML = '卖出';
+            }
             this.shuaxin1 = false;
           }
         }).then(() => {
           this.shuaxin1 = true;
-        }).catch((req)=> { this.showError(req.state,req.message)
+        }).catch((req) => {
+          this.showError(req.code, req.message);
+          if (this.buyOrSell) {
+            ev.target.innerHTML = '买入';
+          } else {
+            ev.target.innerHTML = '卖出';
+          }
         })
       },
 //      获得types，price,amount;

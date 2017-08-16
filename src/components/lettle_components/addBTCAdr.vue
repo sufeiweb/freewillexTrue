@@ -80,7 +80,7 @@
         ev.target.innerHTML = '处理中...';
         let yzStyle = $("input[name='we1']:checked").val();
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/digital/bind',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/bind',
           method: 'POST',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -102,7 +102,7 @@
             this.$router.push('/accountManagement')
           }
         }).catch((req) => {
-          this.showError(req.state, req.message);
+          this.showError(req.code, req.message);
           ev.target.innerHTML = '确认绑定';
         })
       },
@@ -115,7 +115,7 @@
       getCode(ev){
         let yzStyle = $("input[name='we1']:checked").val();
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/captcha/' + yzStyle,
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/' + yzStyle,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -134,10 +134,9 @@
               ev.target.setAttribute('disabled', false);
               clearInterval(tt)
             }
-
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
 
         })
       }

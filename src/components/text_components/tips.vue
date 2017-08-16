@@ -10,7 +10,7 @@
     <transition enterActiveClass="animated fadeInDown" leaveActiveClass="animated fadeOutUp">
       <div class="tips tips1" v-show="ErrorState1">
         <i class="iconfont">&#xe690;</i>
-        {{ErrorMessage}}
+        {{ErrorMessage | errorLog}}
 
       </div>
     </transition>

@@ -70,7 +70,7 @@
     methods: {
       handleCurrentChangeAccountLog(currentPage){
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/capital/serial',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/serial',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -89,7 +89,9 @@
             }
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             if (res.data.data.totalElements) {
               this.noData = true;
@@ -100,7 +102,7 @@
             this.items = res.data.data.content;
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       }
     },

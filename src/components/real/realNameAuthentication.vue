@@ -130,14 +130,16 @@
       let that = this;
       {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/bank/all',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/bank/all',
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + that.$store.state.token,
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             that.CBank = res.data.data;
             for (let i = 0; i < res.data.data.length; i++) {
@@ -159,7 +161,7 @@
             }
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       }//获取支持银行
     },
@@ -291,7 +293,7 @@
           that.$store.state.realNeed.phoneY &&
           that.$store.state.realNeed.checkbox) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/authentication/realNameAuth',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/authentication/realNameAuth',
             method: 'POST',
             data: {
               country: that.country,
@@ -316,7 +318,7 @@
               that.$router.push('/settings');
             }
           }).catch((req) => {
-            this.showError(req.state, req.message)
+            this.showError(req.code, req.message)
           })
         }
       },
@@ -344,7 +346,7 @@
         let that = this;
         let second = 60;
         let pattern = /0?^(13|14|15|18|17)[0-9]{9}/;
-        let url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile/' + that.RUserPhone;
+        let url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/mobile/' + that.RUserPhone;
         if (that.RUserPhone.length !== 0 && pattern.test(that.RUserPhone)) {
           that.$http.get(url).then((data) => {
             this.showError(data.data.code, data.data.message);
@@ -365,7 +367,7 @@
               })
             }
           }).catch((req) => {
-            this.showError(req.state, req.message)
+            this.showError(req.code, req.message)
           })
         } else {
           $('.phoneyz-tips').html('请核对手机号').css({

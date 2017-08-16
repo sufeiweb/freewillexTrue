@@ -106,7 +106,7 @@
         let that = this;
         if (this.$store.state.loginState) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/account/info',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/info',
             method: 'GET',
             data: {},
             headers: {
@@ -114,11 +114,13 @@
               'X-Authorization': 'Bearer ' + that.$store.state.token
             }
           }).then((res) => {
-            this.showError(res.data.code, res.data.message);
+            if(res.data.code!==200){
+              this.showError(res.data.code, res.data.message);
+            }
             that.userNameM = res.data.data.userName;
             that.userNumM = res.data.data.loginUser;
           }).catch((req) => {
-            this.showError(req.state, req.message);
+            this.showError(req.code, req.message);
             that.quitLogin();
           })//获取用户信息
         }

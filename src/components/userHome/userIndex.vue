@@ -212,14 +212,16 @@
       }//控制显示的模式
       {
         that.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/capital/info',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/info',
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + that.$store.state.token
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             for (let i = 0; i < res.data.data.length; i++) {
               if (res.data.data[i].legalMoney === 'CNY') {
@@ -242,7 +244,7 @@
             }
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       }//获取资金信息
       {

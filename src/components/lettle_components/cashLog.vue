@@ -199,9 +199,9 @@
         this.getAccount();
         let url;
         if (this.Currency === 'CNY') {
-          url = 'http://192.168.1.48:8089/fwex/web/capital/withdraw/list'
+          url = 'https://kaifamobile.firstcoinex.com/fwex/web/capital/withdraw/list'
         } else {
-          url = 'http://192.168.1.48:8089/fwex/web/digital/withdraw/list'
+          url = 'https://kaifamobile.firstcoinex.com/fwex/web/digital/withdraw/list'
         }
         this.$http({
           url: url,
@@ -215,19 +215,20 @@
             pageNo: currentPage - 1,
             pageSize: 10,
             param: {
-
               currency: this.Currency
             }
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             this.noData = res.data.data.totalElements > 0;
             this.totalNum = res.data.data.totalElements ? res.data.data.totalElements : 10;
             this.items = res.data.data.content;
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       },
       //获取当前账户

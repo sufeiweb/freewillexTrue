@@ -233,9 +233,9 @@
           let second = 60;
           let url;
           if (that.radioIpt == 1) {
-            url = 'http://192.168.1.48:8089/fwex/web/captcha/email'
+            url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/email'
           } else {
-            url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile'
+            url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/mobile'
           }
           that.$http({
             url: url,
@@ -245,7 +245,7 @@
               'X-Authorization': 'Bearer ' + that.$store.state.token,
             }
           }).then((data) => {
-            this.showError(data.data.code, data.data.message);
+            that.showError(data.data.code, data.data.message);
             if(data.data.code===200){
               $('.modifyPsdGetCord').attr("disabled", true).css("cursor", "default");
               that.timer = setInterval(function () {
@@ -263,7 +263,7 @@
               })
             }
           }).catch((req) => {
-            this.showError(req.state, req.message)
+            that.showError(req.code, req.message)
           })
         });
       }
@@ -271,13 +271,9 @@
     methods: {
       modifyPsdBtn() {
         let that = this;
-        //console.log(that.$store.state.modifyPsd.oldPsd);
-        //console.log(that.$store.state.modifyPsd.newPsd);
-        //console.log(that.$store.state.modifyPsd.newPsds);
-        //console.log(that.$store.state.modifyPsd.YZCord);
         if (that.$store.state.modifyPsd.oldPsd && that.$store.state.modifyPsd.newPsd && that.$store.state.modifyPsd.newPsds && that.$store.state.modifyPsd.YZCord) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/account/updatePwd',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/updatePwd',
             method: 'POST',
             data: {
               password: that.modifyPsd,
@@ -295,7 +291,7 @@
             //console.log(res, '设置成功');
             that.$router.push('/login');
             that.$store.state.token = '';
-          }).catch((req)=> { this.showError(req.state,req.message)
+          }).catch((req)=> { this.showError(req.code,req.message)
             //console.log(req, '设置失败')
           })
         }

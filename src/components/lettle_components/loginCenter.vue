@@ -117,7 +117,7 @@
         let that = this;
         if (that.userName && that.userPassword) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/auth/login',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/auth/login',
             method: 'POST',
             data: {
               "loginUser": that.userName,
@@ -128,23 +128,25 @@
               "Content-Type": "application/json;charset=UTF-8",
             }
           }).then(function (data) {
-            this.showError(data.data.code, data.data.message);
-            that.$store.dispatch('loginStateTrue');
-            sessionStorage.setItem('token', data.data.data);
-            that.$store.state.loginTrue = true;
-            that.$store.state.realName.userPsd = true;
-            that.$store.state.token = data.data.data;
-            let loginPattern = /0?^(13|14|15|18|17)[0-9]{9}/;
-            if (loginPattern.test(that.userName)) {
-              that.$store.state.realName.userPhone = true;
-              that.$store.state.realName.userPhoneNum = that.userName;
-            } else {
-              that.$store.state.realName.userEmail = true;
-              that.$store.state.realName.userEmailNum = that.userName;
+            that.showError(data.data.code, data.data.message);
+            if(data.data.code===200){
+              that.$store.dispatch('loginStateTrue');
+              sessionStorage.setItem('token', data.data.data);
+              that.$store.state.loginTrue = true;
+              that.$store.state.realName.userPsd = true;
+              that.$store.state.token = data.data.data;
+              let loginPattern = /0?^(13|14|15|18|17)[0-9]{9}/;
+              if (loginPattern.test(that.userName)) {
+                that.$store.state.realName.userPhone = true;
+                that.$store.state.realName.userPhoneNum = that.userName;
+              } else {
+                that.$store.state.realName.userEmail = true;
+                that.$store.state.realName.userEmailNum = that.userName;
+              }
+              that.$router.push('/user');
             }
-            that.$router.push('/user');
           }).catch((req) => {
-            this.showError(req.state, req.message)
+            this.showError(req.code, req.message)
           })
         }
       },//帐号登录
@@ -157,7 +159,7 @@
         let that = this;
         if (this.$store.state.token) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/account/info',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/info',
             method: 'GET',
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
@@ -166,12 +168,14 @@
               'Content-Type': 'application/json'
             }
           }).then((res) => {
-            this.showError(res.data.code, res.data.message);
+            if(res.data.code!==200){
+              this.showError(res.data.code, res.data.message);
+            }
             if (res.data.code === 200) {
               that.userLoginName = res.data.data.loginUser;
             }
           }).catch((req) => {
-            this.showError(req.state, req.message)
+            this.showError(req.code, req.message)
           })//获取用户信息
         }
       },

@@ -33,7 +33,7 @@
         let that = this;
         if (this.userNameTK && this.userPsdTK) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/auth/login',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/auth/login',
             method: 'POST',
             data: {
               "loginUser": that.userNameTK,
@@ -53,7 +53,7 @@
               that.$store.state.token = data.data.data;
             }
           }).catch((req) => {
-            this.showError(req.state, req.message);
+            this.showError(req.code, req.message);
             that.$store.dispatch('loginStateFalse');
           })
         }

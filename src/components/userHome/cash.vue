@@ -308,14 +308,16 @@
       }//验证方式选择
       {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/accountBank/all',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/all',
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if(res.data.code===200){
             that.userBank = res.data.data;
           }
@@ -325,7 +327,7 @@
             that.getCNYCode();
           });//选择充值银行
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       }//获取用户绑定银行
       {
@@ -371,14 +373,16 @@
       getCashAdr(){
         this.getAccount();
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/digital/withdrawInfo/' + this.currency,
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/withdrawInfo/' + this.currency,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             this.currencyAdr = res.data.data;
           }
@@ -389,7 +393,7 @@
             $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
           })
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         });
         this.closeNum();
       },
@@ -397,28 +401,30 @@
       getCNYCode(){
         let bankId = $("input[name='select-bank-cash']:checked").attr('bankid');
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/accountBank/param/' + bankId,
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/param/' + bankId,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             for (let i = 0; i < res.data.data.length; i++) {
               this.$set(this.moneyControl, res.data.data[i].paramKey, res.data.data[i].paramValue);
             }
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       },
       //获取验证码
       getYZCode(ev){
         let code = $("input[name='cash-btc-style-yz1']:checked").val();
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/captcha/' + code,
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/' + code,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -439,7 +445,7 @@
             }, 1000);
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       },
       //法币确认提现
@@ -449,7 +455,7 @@
         let val = $("input[name='cash-btc-style-yz1']:checked").val();
         if (this.moneyPsd && this.W_Money && this.serverYZ) {
           this.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/capital/withdraw',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/withdraw',
             method: 'POST',
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
@@ -471,9 +477,10 @@
             if (res.data.code === 200) {
               ev.target.innerHTML = '确认提现';
               this.closeNum();
+              this.$router.push('/cash/cashLog')
             }
           }).catch((req) => {
-            this.showError(req.state, req.message);
+            this.showError(req.code, req.message);
             ev.target.innerHTML = '确认提现';
           })
         }
@@ -495,7 +502,7 @@
         let val = $("input[name='cash-btc-style-yz']:checked").val();
         if (this.moneyPsd && this.W_Money && this.serverYZ && nextd) {
           this.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/digital/withdraw',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/withdraw',
             method: 'POST',
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
@@ -517,9 +524,10 @@
             if (res.data.code === 200) {
               ev.target.innerHTML = '确认提现';
               this.closeNum();
+              this.$router.push('/cash/cashLog')
             }
           }).catch((req) => {
-            this.showError(req.state, req.message);
+            this.showError(req.code, req.message);
             ev.target.innerHTML = '确认提现';
           })
         }
@@ -528,14 +536,16 @@
       getFee(){
         this.getAccount();
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/digital/fee/' + this.currency,
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/fee/' + this.currency,
           method: 'GET',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           },
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             this.Fee = res.data.data;
             this.FreeShow = res.data.data.length > 0;
@@ -546,7 +556,7 @@
             $(this).parent().addClass('cash-btc-select-color').siblings().removeClass('cash-btc-select-color');
           })
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       },
       closeNum(){

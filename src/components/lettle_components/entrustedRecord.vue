@@ -153,7 +153,7 @@
       },
       handleCurrentChange: function (currentPage) {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/trade/unsettled',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/unsettled',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -168,7 +168,9 @@
             }
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             this.totalNum = res.data.data.totalElements;
             if (res.data.data.totalElements) {
@@ -177,12 +179,12 @@
             this.contentArr = res.data.data.content;
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       },//获取当前委托
       handleCurrentChange1: function (currentPage) {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/trade/history',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/history',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -199,20 +201,22 @@
             }
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+            if(res.data.code!==200){
+              this.showError(res.data.code, res.data.message);
+            }
           if (res.data.code === 200) {
             this.totalNumH = res.data.data.totalElements ? res.data.data.totalElements : 10;
             this.noRecord = res.data.data.totalElements > 0;
             this.contentArrH = res.data.data.content;
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
 
         })
       },//获取历史委托
       revoke(ev) {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/trade/cancels/' + ev.target.getAttribute('commodity') + '/' + ev.target.getAttribute('code'),
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/cancels/' + ev.target.getAttribute('commodity') + '/' + ev.target.getAttribute('code'),
           method: 'GET',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -224,7 +228,7 @@
             ev.target.parentNode.parentNode.remove()
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       },
     },

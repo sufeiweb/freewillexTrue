@@ -184,7 +184,7 @@
     },
     methods: {
       delBankCard(ev){
-        let url = 'http://192.168.1.48:8089/fwex/web/accountBank/cancel/' + ev.target.getAttribute('bankid');
+        let url = 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/cancel/' + ev.target.getAttribute('bankid');
         this.$http({
           url: url,
           method: 'GET',
@@ -198,11 +198,11 @@
             ev.target.parentNode.remove();
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       },//删除银行卡
       delAdr(ev){
-        let url = 'http://192.168.1.48:8089/fwex/web/digital/cancel/' + ev.target.getAttribute('digtalid');
+        let url = 'https://kaifamobile.firstcoinex.com/fwex/web/digital/cancel/' + ev.target.getAttribute('digtalid');
         this.$http({
           url: url,
           method: 'GET',
@@ -216,25 +216,27 @@
             ev.target.parentNode.parentNode.remove();
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       },//删除数字货币地址
       getBindBankCard(){
         let that = this;
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/accountBank/all',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/all',
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             that.itemBanks = res.data.data;
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         });
       },//获取绑定银行卡
       getBindCurrencyAdr(){
@@ -246,19 +248,21 @@
         }
 
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/digital/withdrawInfo/' + currency,
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/withdrawInfo/' + currency,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
           if (res.data.code === 200) {
             this.currencyAdr = res.data.data;
           }
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       }//获取绑定数字货币地址
     },

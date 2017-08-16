@@ -157,17 +157,17 @@
       }//验证码校验
       {
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/bank/all',
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/bank/all',
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + that.$store.state.token
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
+//          this.showError(res.data.code, res.data.message);
           that.CBank = res.data.data;
         }).catch((req) => {
-          this.showError(req.state, req.message)
+          this.showError(req.code, req.message)
         })
       }//获取支持银行
     },
@@ -193,7 +193,7 @@
           that.$store.state.addBankCard.YZ &&
           that.$store.state.addBankCard.serverYZ) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/accountBank/bind',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/bind',
             method: 'POST',
             data: {
               bankId: that.RBankVal,
@@ -214,7 +214,7 @@
               this.$router.push('/accountManagement');
             }
           }).catch((req) => {
-            this.showError(req.state, req.message);
+            this.showError(req.code, req.message);
             ev.target.innerHTML = '确认绑定';
           })
         }
@@ -223,25 +223,28 @@
         let that = this;
         let second = 60;
         let pattern = /0?^(13|14|15|18|17)[0-9]{9}/;
-        let url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile/' + that.phoneNum;
+        let url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/mobile/' + that.phoneNum;
         if (that.phoneNum.length !== 0 && pattern.test(that.phoneNum)) {
           that.$http.get(url).then((data) => {
-            $('.addBankGetCord').attr("disabled", true).css("cursor", "default");
-            that.timer = setInterval(function () {
-              $('.addBankGetCord').html((--second) + 's');
-              if (second === 0) {
-                $('.addBankGetCord').removeAttr("disabled").css("cursor", "pointer");
-                clearInterval(that.timer);
-                $('.addBankGetCord').html('获取验证码');
-              }
-            }, 1000);
-            $('.phoneYZ-addBank-tips').html('请输入验证码').css({
-              alignSelf: 'flex-start',
-              color: 'red',
-              marginLeft: '1.5rem'
-            })
+            this.showError(data.data.code, data.data.message);
+            if (data.data.code === 200) {
+              $('.addBankGetCord').attr("disabled", true).css("cursor", "default");
+              that.timer = setInterval(function () {
+                $('.addBankGetCord').html((--second) + 's');
+                if (second === 0) {
+                  $('.addBankGetCord').removeAttr("disabled").css("cursor", "pointer");
+                  clearInterval(that.timer);
+                  $('.addBankGetCord').html('获取验证码');
+                }
+              }, 1000);
+              $('.phoneYZ-addBank-tips').html('请输入验证码').css({
+                alignSelf: 'flex-start',
+                color: 'red',
+                marginLeft: '1.5rem'
+              })
+            }
           }).catch((req) => {
-            this.showError(req.state, req.message);
+            this.showError(req.code, req.message);
           })
         } else {
           $('.phoneYZ-addBank-tips').html('请核对手机号').css({

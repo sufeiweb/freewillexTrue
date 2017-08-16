@@ -87,7 +87,7 @@
         $('.bindGetEmailCord').click(function () {
           let second = 60;
           let pattern = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+(com|cn)$/;
-          let url = 'http://192.168.1.48:8089/fwex/web/captcha/email/' + that.bindEmailNum;
+          let url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/email/' + that.bindEmailNum;
           if (that.bindEmailNum.length !== 0 && pattern.test(that.bindEmailNum)) {
             that.$http.get(url).then((res) => {
               this.showError(res.data.code, res.data.message);
@@ -108,7 +108,7 @@
                 })
               }
             }).catch((req) => {
-              this.showError(req.state, req.message);
+              this.showError(req.code, req.message);
             })
           } else {
             $('.bindEmailRCaptcha-tips').html('请核对邮箱').css({
@@ -136,7 +136,7 @@
         let that = this;
         if (that.$store.state.bindEmailNum.email && that.$store.state.bindEmailNum.YZ) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/authentication/emailAuth',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/authentication/emailAuth',
             method: 'POST',
             data: {
               email: that.bindEmailNum,
@@ -151,7 +151,7 @@
             this.showError(res.data.code, res.data.message);
             that.$router.push('/settings');
           }).catch((req) => {
-            this.showError(req.state, req.message)
+            this.showError(req.code, req.message)
           })
         }
       }

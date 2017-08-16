@@ -435,7 +435,7 @@
         $('.getCodeMR').click(function () {
           let second = 60;
           let pattern = /0?^(13|14|15|18|17)[0-9]{9}/;
-          let url = 'http://192.168.1.48:8089/fwex/web/captcha/mobile/' + that.userNameM;
+          let url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/mobile/' + that.userNameM;
           if (that.userNameM.length !== 0 && pattern.test(that.userNameM)) {
             that.$http.get(url).then((res) => {
               this.showError(res.data.code, res.data.message);
@@ -456,7 +456,7 @@
                 })
               }
             }).catch((req) => {
-              this.showError(req.state, req.message)
+              this.showError(req.code, req.message)
             })
           } else {
             $('.help-tips-getCodeMR').html('请核对手机号').css({
@@ -469,7 +469,7 @@
         $('.getCodeER').click(function () {
           let second = 60;
           let pattern = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+(com|cn)$/;
-          let url = 'http://192.168.1.48:8089/fwex/web/captcha/email/' + that.userNameE;
+          let url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/email/' + that.userNameE;
           if (that.userNameE.length !== 0 && pattern.test(that.userNameE)) {
             that.$http.get(url).then((res) => {
               this.showError(res.data.code, res.data.message);
@@ -490,7 +490,7 @@
                 });
               }
             }).catch((req) => {
-              this.showError(req.state, req.message)
+              this.showError(req.code, req.message)
             })
           } else {
             $('.help-tips-getCodeER').html('请核对邮箱').css({
@@ -510,7 +510,7 @@
         let that = this;
         if (that.$store.state.phoneR.username && that.$store.state.phoneR.usercord && that.$store.state.phoneR.userpsd && that.$store.state.phoneR.userpsds) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/forget/password',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/forget/password',
             method: 'POST',
             data: {
               moe: that.userNameM,
@@ -528,7 +528,7 @@
               this.$router.push('/login');
             }
           }).catch((req) => {
-            this.showError(req.state, req.message)
+            this.showError(req.code, req.message)
           })
         }
       },//手机找回密码js
@@ -536,7 +536,7 @@
         let that = this;
         if (that.$store.state.emailR.username && that.$store.state.emailR.usercord && that.$store.state.emailR.userpsd && that.$store.state.emailR.userpsds) {
           that.$http({
-            url: 'http://192.168.1.48:8089/fwex/web/forget/password',
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/forget/password',
             method: 'POST',
             data: {
               moe: that.userNameE,
@@ -554,7 +554,7 @@
               this.$router.push('/login');
             }
           }).catch((req) => {
-            this.showError(req.state, req.message)
+            this.showError(req.code, req.message)
           })
         }
       },//邮箱找回密码js
