@@ -25,7 +25,7 @@
 <style scoped>
   .tips {
     position: fixed;
-    width: 25rem;
+    width: 30rem;
     height: 5rem;
     text-align: center;
     line-height: 5rem;

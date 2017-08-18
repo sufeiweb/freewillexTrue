@@ -37,14 +37,14 @@
             method: 'POST',
             data: {
               "loginUser": that.userNameTK,
-              "loginPwd": that.userPsdTK
+              "loginPwd": md5(that.userPsdTK)
             },
             headers: {
               "X-Requested-With": "XMLHttpRequest",
               "Content-Type": "application/json;charset=UTF-8",
             }
           }).then(function (data) {
-            this.showError(data.data.code, data.data.message);
+            that.showError(data.data.code, data.data.message);
             if (data.data.code === 200) {
               that.$store.dispatch('loginStateTrue');
               sessionStorage.setItem('token', data.data.data);
@@ -53,7 +53,7 @@
               that.$store.state.token = data.data.data;
             }
           }).catch((req) => {
-            this.showError(req.code, req.message);
+            that.showError(req.code, req.message);
             that.$store.dispatch('loginStateFalse');
           })
         }

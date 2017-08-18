@@ -3,10 +3,10 @@
     <header>
       <div class="header layout">
         <div class="header_left">
-          <img src="../../src/assets/img/header/fw_logo.png" alt=""/>
+          <router-link to="/home"><img src="../../src/assets/img/header/fw_logo.png" alt=""/></router-link>
           <div class="header-data-box">
-            <p>BTC/CNY<span class="header-span-ratio">-0.14%</span></p>
-            <p><span class="header-span-price">8560.2</span>CNY</p>
+            <p class="header-span-ratio">BTC/CNY<span :class="LatestPrice.price>LatestPrice.beforePrice?'red':'green'">{{((LatestPrice.price-LatestPrice.beforePrice)/LatestPrice.beforePrice) | float2}}%</span></p>
+            <p class="header-span-price"><span :class="LatestPrice.price>LatestPrice.beforePrice?'red':'green'">{{LatestPrice.price |float2}}</span>CNY</p>
           </div>
         </div>
         <div class="header-right">
@@ -70,6 +70,7 @@
 </template>
 <script>
   import $ from  'jquery';
+  import {mapGetters} from 'vuex'
   export default {
     data(){
       return {
@@ -114,7 +115,7 @@
               'X-Authorization': 'Bearer ' + that.$store.state.token
             }
           }).then((res) => {
-            if(res.data.code!==200){
+            if (res.data.code !== 200) {
               this.showError(res.data.code, res.data.message);
             }
             that.userNameM = res.data.data.userName;
@@ -124,7 +125,8 @@
             that.quitLogin();
           })//获取用户信息
         }
-      }
+      },
+      ...mapGetters(['LatestPrice'])
     },
     mounted() {
       let that = this;
@@ -183,17 +185,20 @@
     color: #ffffff;
   }
 
-  .header-span-ratio {
+  .header-span-ratio >span{
     font-weight: normal;
-    color: #00cc00;
     margin-left: 10px;
   }
 
-  .header-span-price {
-    color: #00cc00;
+  .header-span-price >span{
     margin-right: 10px;
   }
-
+.green{
+  color: #00cc00;
+}
+.red{
+  color: #cc0000;
+}
   .header-data-box p:nth-of-type(2) {
     font-size: 2rem;
   }

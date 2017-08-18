@@ -440,252 +440,6 @@
           }
         });
       }
-//      密码强度检测
-      {
-        let that = this;
-        $('.userPsd').keyup(function () {
-          let N = /^\d+$/;
-          let C = /^[a-zA-Z]+$/;
-          let TC = /^[@#$%*,.^&]+$/;
-          let N_C = /^(?!\d+$)(?![a-zA-Z]+$)[a-zA-Z\d]+$/;
-          let C_TC = /^(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[a-zA-Z@#$%*,.^&]+$/;
-          let N_TC = /^(?!\d+)(?![@#$%*,.^&]+$)[\d@#$%*,.^&]+$/;
-          let N_C_TC = /^(?!\d+$)(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[\da-zA-Z@#$%*,.^&]+$/;
-          if (that.userPasswordM.length < 6) {
-            that.$store.state.registerM.userpsd = false;
-            $('.password-strength span').css({
-              background: '#cfd0d2'
-            });
-            $('.password-strength-view').html('');
-            $('.help-tips-psd').html('密码应该长度在6~22位之间').css({
-              alignSelf: 'flex-start',
-              color: 'red'
-            })
-          } else {
-            $('.help-tips-psd').html('');
-            that.$store.state.registerM.userpsd = true;
-          }
-//          纯数字
-          if (N.test(that.userPasswordM) && that.userPasswordM.length >= 6) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: '#cfd0d2'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('低').css({color: 'red'})
-          }
-//          纯字母
-          else if (C.test(that.userPasswordM) && that.userPasswordM.length >= 6 && that.userPasswordM.length <= 13) {
-            $('.password-strength span').eq(0).css({
-              background: 'red'
-            });
-            $('.password-strength-view').html('低').css({color: 'red'})
-          }
-          else if (C.test(that.userPasswordM) && that.userPasswordM.length > 13) {
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'})
-          }
-//          纯特殊字符
-          else if (TC.test(that.userPasswordM) && that.userPasswordM.length >= 6 && that.userPasswordM.length <= 13) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
-          }
-          else if (TC.test(that.userPasswordM) && that.userPasswordM.length > 13) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
-          }
-//          字母加数字
-          else if (N_C.test(that.userPasswordM) && that.userPasswordM.length >= 6 && that.userPasswordM.length <= 12) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: '#cfd0d2'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('低').css({color: 'red'})
-          }
-          else if (N_C.test(that.userPasswordM) && that.userPasswordM.length > 12) {
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'})
-          }
-//          字母加特殊字符
-          else if (C_TC.test(that.userPasswordM) && that.userPasswordM.length >= 6 && that.userPasswordM.length <= 10) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
-          }
-          else if (C_TC.test(that.userPasswordM) && that.userPasswordM.length > 10) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
-          }
-//          数字加特殊字符
-          else if (N_TC.test(that.userPasswordM) && that.userPasswordM.length >= 6 && that.userPasswordM.length <= 11) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
-          }
-          else if (N_TC.test(that.userPasswordM) && that.userPasswordM.length > 11) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
-          }
-//          数字加字母加特殊字符
-          else if (N_C_TC.test(that.userPasswordM) && that.userPasswordM.length >= 6 && that.userPasswordM.length <= 8) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
-          }
-          else if (N_C_TC.test(that.userPasswordM) && that.userPasswordM.length > 8) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
-          }
-        });
-        $('.userPsdE').keyup(function () {
-          let N = /^\d+$/;
-          let C = /^[a-zA-Z]+$/;
-          let TC = /^[@#$%*,.^&]+$/;
-          let N_C = /^(?!\d+$)(?![a-zA-Z]+$)[a-zA-Z\d]+$/;
-          let C_TC = /^(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[a-zA-Z@#$%*,.^&]+$/;
-          let N_TC = /^(?!\d+)(?![@#$%*,.^&]+$)[\d@#$%*,.^&]+$/;
-          let N_C_TC = /^(?!\d+$)(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[\da-zA-Z@#$%*,.^&]+$/;
-          if (that.userPasswordE.length < 6) {
-            that.$store.state.registerE.userpsd = false;
-            $('.password-strengths span').css({
-              background: '#cfd0d2'
-            });
-            $('.password-strength-views').html('');
-            $('.help-tips-psdE').html('密码应该长度在6~22位之间').css({
-              alignSelf: 'flex-start',
-              color: 'red'
-            })
-          } else {
-            that.$store.state.registerE.userpsd = true;
-            $('.help-tips-psdE').html('');
-          }
-//          纯数字
-          if (N.test(that.userPasswordE) && that.userPasswordE.length >= 6) {
-            $('.password-strengths span').eq(0).css({background: 'red'});
-            $('.password-strengths span').eq(1).css({background: '#cfd0d2'});
-            $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-views').html('低').css({color: 'red'})
-          }
-//          纯字母
-          else if (C.test(that.userPasswordE) && that.userPasswordE.length >= 6 && that.userPasswordE.length <= 13) {
-            $('.password-strengths span').eq(0).css({
-              background: 'red'
-            });
-            $('.password-strength-views').html('低').css({color: 'red'})
-          }
-          else if (C.test(that.userPasswordE) && that.userPasswordE.length > 13) {
-            $('.password-strengths span').eq(1).css({background: 'yellow'});
-            $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-views').html('中').css({color: 'yellow'})
-          }
-//          纯特殊字符
-          else if (TC.test(that.userPasswordE) && that.userPasswordE.length >= 6 && that.userPasswordE.length <= 13) {
-            $('.password-strengths span').eq(0).css({background: 'red'});
-            $('.password-strengths span').eq(1).css({background: 'yellow'});
-            $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-views').html('中').css({color: 'yellow'});
-          }
-          else if (TC.test(that.userPasswordE) && that.userPasswordE.length > 13) {
-            $('.password-strengths span').eq(0).css({background: 'red'});
-            $('.password-strengths span').eq(1).css({background: 'yellow'});
-            $('.password-strengths span').eq(2).css({background: 'green'});
-            $('.password-strength-views').html('高').css({color: 'green'});
-          }
-//          字母加数字
-          else if (N_C.test(that.userPasswordE) && that.userPasswordE.length >= 6 && that.userPasswordE.length <= 12) {
-            $('.password-strengths span').eq(0).css({background: 'red'});
-            $('.password-strengths span').eq(1).css({background: '#cfd0d2'});
-            $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-views').html('低').css({color: 'red'})
-          }
-          else if (N_C.test(that.userPasswordE) && that.userPasswordE.length > 12) {
-            $('.password-strengths span').eq(1).css({background: 'yellow'});
-            $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-views').html('中').css({color: 'yellow'})
-          }
-//          字母加特殊字符
-          else if (C_TC.test(that.userPasswordE) && that.userPasswordE.length >= 6 && that.userPasswordE.length <= 10) {
-            $('.password-strengths span').eq(0).css({background: 'red'});
-            $('.password-strengths span').eq(1).css({background: 'yellow'});
-            $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-views').html('中').css({color: 'yellow'});
-          }
-          else if (C_TC.test(that.userPasswordE) && that.userPasswordE.length > 10) {
-            $('.password-strengths span').eq(0).css({background: 'red'});
-            $('.password-strengths span').eq(1).css({background: 'yellow'});
-            $('.password-strengths span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
-          }
-//          数字加特殊字符
-          else if (N_TC.test(that.userPasswordE) && that.userPasswordE.length >= 6 && that.userPasswordE.length <= 11) {
-            $('.password-strengths span').eq(0).css({background: 'red'});
-            $('.password-strengths span').eq(1).css({background: 'yellow'});
-            $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
-          }
-          else if (N_TC.test(that.userPasswordE) && that.userPasswordE.length > 11) {
-            $('.password-strengths span').eq(0).css({background: 'red'});
-            $('.password-strengths span').eq(1).css({background: 'yellow'});
-            $('.password-strengths span').eq(2).css({background: 'green'});
-            $('.password-strength-views').html('高').css({color: 'green'});
-          }
-//          数字加字母加特殊字符
-          else if (N_C_TC.test(that.userPasswordE) && that.userPasswordE.length >= 6 && that.userPasswordE.length <= 8) {
-            $('.password-strengths span').eq(0).css({background: 'red'});
-            $('.password-strengths span').eq(1).css({background: 'yellow'});
-            $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
-          }
-          else if (N_C_TC.test(that.userPasswordE) && that.userPasswordE.length > 8) {
-            $('.password-strengths span').eq(0).css({background: 'red'});
-            $('.password-strengths span').eq(1).css({background: 'yellow'});
-            $('.password-strengths span').eq(2).css({background: 'green'});
-            $('.password-strength-views').html('高').css({color: 'green'});
-          }
-        });
-
-      }
-      //确认密码
-      {
-        let that = this;
-        $('.userPsds').keyup(function () {
-          if (that.userPasswordM === that.userPasswordsM) {
-            that.$store.state.registerM.userpsds = true;
-            $('.help-tips-psds').html('');
-          } else {
-            that.$store.state.registerM.userpsds = false;
-            $('.help-tips-psds').html('两次输入的密码不一致').css({
-              alignSelf: 'flex-start',
-              color: 'red'
-            })
-          }
-        });
-        $('.userPsdsE').keyup(function () {
-          if (that.userPasswordE === that.userPasswordsE) {
-            $('.help-tip-psdsE').html('');
-            that.$store.state.registerE.userpsds = true;
-          } else {
-            that.$store.state.registerE.userpsds = false;
-            $('.help-tip-psdsE').html('两次输入的密码不一致').css({
-              alignSelf: 'flex-start',
-              color: 'red'
-            })
-          }
-        });
-
-      }
       //获取验证码
       {
         let that = this;
@@ -700,7 +454,7 @@
                 $('.getCodeM').attr("disabled", true).css("cursor", "default");
                 that.timer = setInterval(function () {
                   $('.getCodeM').html((--second) + 's');
-                  if (second === 0) {
+                  if (second <= 0) {
                     $('.getCodeM').removeAttr("disabled").css("cursor", "pointer");
                     clearInterval(that.timer);
                     $('.getCodeM').html('获取验证码');
@@ -734,7 +488,7 @@
                 $('.getCodeE').attr("disabled", true).css("cursor", "default");
                 that.timer = setInterval(function () {
                   $('.getCodeE').html((--second) + 's');
-                  if (second === 0) {
+                  if (second <= 0) {
                     $('.getCodeE').removeAttr("disabled").css("cursor", "pointer");
                     clearInterval(that.timer);
                     $('.getCodeE').html('获取验证码');
@@ -759,6 +513,280 @@
         });
       }
 
+    },
+    watch:{
+      userPasswordE(){
+          let that=this;
+          if(that.userPasswordsE){
+            if (that.userPasswordE === that.userPasswordsE) {
+              $('.help-tip-psdsE').html('');
+              that.$store.state.registerE.userpsds = true;
+            } else {
+              that.$store.state.registerE.userpsds = false;
+              $('.help-tip-psdsE').html('两次输入的密码不一致').css({
+                alignSelf: 'flex-start',
+                color: 'red'
+              })
+            }
+          }
+        let N = /^\d+$/;
+        let C = /^[a-zA-Z]+$/;
+        let TC = /^[@#$%*,.^&]+$/;
+        let N_C = /^(?!\d+$)(?![a-zA-Z]+$)[a-zA-Z\d]+$/;
+        let C_TC = /^(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[a-zA-Z@#$%*,.^&]+$/;
+        let N_TC = /^(?!\d+)(?![@#$%*,.^&]+$)[\d@#$%*,.^&]+$/;
+        let N_C_TC = /^(?!\d+$)(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[\da-zA-Z@#$%*,.^&]+$/;
+        if (that.userPasswordE.length < 6) {
+          that.$store.state.registerE.userpsd = false;
+          $('.password-strengths span').css({
+            background: '#cfd0d2'
+          });
+          $('.password-strength-views').html('');
+          $('.help-tips-psdE').html('密码应该长度在6~22位之间').css({
+            alignSelf: 'flex-start',
+            color: 'red'
+          })
+        } else {
+          that.$store.state.registerE.userpsd = true;
+          $('.help-tips-psdE').html('');
+        }
+//          纯数字
+        if (N.test(that.userPasswordE) && that.userPasswordE.length >= 6) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#cfd0d2'});
+          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-views').html('低').css({color: 'red'})
+        }
+//          纯字母
+        else if (C.test(that.userPasswordE) && that.userPasswordE.length >= 6 && that.userPasswordE.length <= 13) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#cfd0d2'});
+          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-views').html('低').css({color: 'red'})
+        }
+        else if (C.test(that.userPasswordE) && that.userPasswordE.length > 13) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#01aaef'});
+          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-views').html('中').css({color: '#01aaef'})
+        }
+//          纯特殊字符
+        else if (TC.test(that.userPasswordE) && that.userPasswordE.length >= 6 && that.userPasswordE.length <= 13) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#01aaef'});
+          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-views').html('中').css({color: '#01aaef'});
+        }
+        else if (TC.test(that.userPasswordE) && that.userPasswordE.length > 13) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#01aaef'});
+          $('.password-strengths span').eq(2).css({background: '#0c0'});
+          $('.password-strength-views').html('高').css({color: '#0c0'});
+        }
+//          字母加数字
+        else if (N_C.test(that.userPasswordE) && that.userPasswordE.length >= 6 && that.userPasswordE.length <= 12) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#cfd0d2'});
+          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-views').html('低').css({color: 'red'})
+        }
+        else if (N_C.test(that.userPasswordE) && that.userPasswordE.length > 12) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#01aaef'});
+          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-views').html('中').css({color: '#01aaef'})
+        }
+//          字母加特殊字符
+        else if (C_TC.test(that.userPasswordE) && that.userPasswordE.length >= 6 && that.userPasswordE.length <= 10) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#01aaef'});
+          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-views').html('中').css({color: '#01aaef'});
+        }
+        else if (C_TC.test(that.userPasswordE) && that.userPasswordE.length > 10) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#01aaef'});
+          $('.password-strengths span').eq(2).css({background: '#0c0'});
+          $('.password-strength-view').html('高').css({color: '#0c0'});
+        }
+//          数字加特殊字符
+        else if (N_TC.test(that.userPasswordE) && that.userPasswordE.length >= 6 && that.userPasswordE.length <= 11) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#01aaef'});
+          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'});
+        }
+        else if (N_TC.test(that.userPasswordE) && that.userPasswordE.length > 11) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#01aaef'});
+          $('.password-strengths span').eq(2).css({background: '#0c0'});
+          $('.password-strength-views').html('高').css({color: '#0c0'});
+        }
+//          数字加字母加特殊字符
+        else if (N_C_TC.test(that.userPasswordE) && that.userPasswordE.length >= 6 && that.userPasswordE.length <= 8) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#01aaef'});
+          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'});
+        }
+        else if (N_C_TC.test(that.userPasswordE) && that.userPasswordE.length > 8) {
+          $('.password-strengths span').eq(0).css({background: 'red'});
+          $('.password-strengths span').eq(1).css({background: '#01aaef'});
+          $('.password-strengths span').eq(2).css({background: '#0c0'});
+          $('.password-strength-views').html('高').css({color: '#0c0'});
+        }
+      },
+      userPasswordM(){
+          let that=this;
+          if(that.userPasswordsM){
+            if (that.userPasswordM === that.userPasswordsM) {
+              that.$store.state.registerM.userpsds = true;
+              $('.help-tips-psds').html('');
+            } else {
+              that.$store.state.registerM.userpsds = false;
+              $('.help-tips-psds').html('两次输入的密码不一致').css({
+                alignSelf: 'flex-start',
+                color: 'red'
+              })
+            }
+          }
+        let N = /^\d+$/;
+        let C = /^[a-zA-Z]+$/;
+        let TC = /^[@#$%*,.^&]+$/;
+        let N_C = /^(?!\d+$)(?![a-zA-Z]+$)[a-zA-Z\d]+$/;
+        let C_TC = /^(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[a-zA-Z@#$%*,.^&]+$/;
+        let N_TC = /^(?!\d+)(?![@#$%*,.^&]+$)[\d@#$%*,.^&]+$/;
+        let N_C_TC = /^(?!\d+$)(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[\da-zA-Z@#$%*,.^&]+$/;
+        if (that.userPasswordM.length < 6) {
+          that.$store.state.registerM.userpsd = false;
+          $('.password-strength span').css({
+            background: '#cfd0d2'
+          });
+          $('.password-strength-view').html('');
+          $('.help-tips-psd').html('密码应该长度在6~22位之间').css({
+            alignSelf: 'flex-start',
+            color: 'red'
+          })
+        } else {
+          $('.help-tips-psd').html('');
+          that.$store.state.registerM.userpsd = true;
+        }
+//          纯数字
+        if (N.test(that.userPasswordM) && that.userPasswordM.length >= 6) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#cfd0d2'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('低').css({color: 'red'})
+        }
+//          纯字母
+        else if (C.test(that.userPasswordM) && that.userPasswordM.length >= 6 && that.userPasswordM.length <= 13) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#cfd0d2'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('低').css({color: 'red'})
+        }
+        else if (C.test(that.userPasswordM) && that.userPasswordM.length > 13) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'})
+        }
+//          纯特殊字符
+        else if (TC.test(that.userPasswordM) && that.userPasswordM.length >= 6 && that.userPasswordM.length <= 13) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'});
+        }
+        else if (TC.test(that.userPasswordM) && that.userPasswordM.length > 13) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#0c0'});
+          $('.password-strength-view').html('高').css({color: '#0c0'});
+        }
+//          字母加数字
+        else if (N_C.test(that.userPasswordM) && that.userPasswordM.length >= 6 && that.userPasswordM.length <= 12) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#cfd0d2'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('低').css({color: 'red'})
+        }
+        else if (N_C.test(that.userPasswordM) && that.userPasswordM.length > 12) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'})
+        }
+//          字母加特殊字符
+        else if (C_TC.test(that.userPasswordM) && that.userPasswordM.length >= 6 && that.userPasswordM.length <= 10) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'});
+        }
+        else if (C_TC.test(that.userPasswordM) && that.userPasswordM.length > 10) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#0c0'});
+          $('.password-strength-view').html('高').css({color: '#0c0'});
+        }
+//          数字加特殊字符
+        else if (N_TC.test(that.userPasswordM) && that.userPasswordM.length >= 6 && that.userPasswordM.length <= 11) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'});
+        }
+        else if (N_TC.test(that.userPasswordM) && that.userPasswordM.length > 11) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#0c0'});
+          $('.password-strength-view').html('高').css({color: '#0c0'});
+        }
+//          数字加字母加特殊字符
+        else if (N_C_TC.test(that.userPasswordM) && that.userPasswordM.length >= 6 && that.userPasswordM.length <= 8) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'});
+        }
+        else if (N_C_TC.test(that.userPasswordM) && that.userPasswordM.length > 8) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#0c0'});
+          $('.password-strength-view').html('高').css({color: '#0c0'});
+        }
+      },
+      userPasswordsE(){
+          let that=this;
+          if(that.userPasswordE){
+            if (that.userPasswordE === that.userPasswordsE) {
+              $('.help-tip-psdsE').html('');
+              that.$store.state.registerE.userpsds = true;
+            } else {
+              that.$store.state.registerE.userpsds = false;
+              $('.help-tip-psdsE').html('两次输入的密码不一致').css({
+                alignSelf: 'flex-start',
+                color: 'red'
+              })
+            }
+          }
+      },
+      userPasswordsM(){
+        let that=this;
+        if(that.userPasswordM){
+          if (that.userPasswordM === that.userPasswordsM) {
+            that.$store.state.registerM.userpsds = true;
+            $('.help-tips-psds').html('');
+          } else {
+            that.$store.state.registerM.userpsds = false;
+            $('.help-tips-psds').html('两次输入的密码不一致').css({
+              alignSelf: 'flex-start',
+              color: 'red'
+            })
+          }
+        }
+      }
     }
   }
 </script>

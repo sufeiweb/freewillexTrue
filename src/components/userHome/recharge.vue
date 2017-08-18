@@ -254,6 +254,7 @@
     created() {
       this.arNum = parseInt(Math.random() * 90 + 10);//10~99;
 
+
     },
     mounted() {
       let that = this;
@@ -271,8 +272,8 @@
           else {
             that.account = true;
             that.moneyStyle = true;
+            that.getBindMoneyAdr();
           }
-          that.getBindMoneyAdr();
         })
       }//选择账户
       {
@@ -282,13 +283,17 @@
             that.moneyStyle = false;
           } else {
             that.moneyStyle = true;
+            that.getBindMoneyAdr();
           }
-          ;
-          that.getBindMoneyAdr();
         })
         $("input[name='select-currency1']").change(function () {
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          that.getBindMoneyAdr();
+          if ($(this).val() === 'CNY') {
+            that.moneyStyle = false;
+          } else {
+            that.moneyStyle = true;
+            that.getBindMoneyAdr();
+          }
         })
       }//选择充值币种
       {
@@ -351,23 +356,7 @@
           this.showError(req.code, req.message)
         })
       }//获取支持银行nag
-      {
-        this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/all',
-          method: 'GET',
-          headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            'X-Authorization': 'Bearer ' + this.$store.state.token
-          }
-        }).then((res) => {
-          if(res.data.code!==200){
-            this.showError(res.data.code, res.data.message);
-          }
-          that.userBank = res.data.data;
-        }).catch((req) => {
-          this.showError(req.code, req.message)
-        })
-      }//获取用户绑定银行
+      this.getUserBank();
       {
         $('.remittance-ipt').keyup(function () {
           var pattern = /^[1-9]\d*$/;
@@ -475,18 +464,33 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
-          if(res.data.code!==200){
-            this.showError(res.data.code, res.data.message);
-          }
           if (res.data.code === 200) {
             for (let i = 0; i < res.data.data.length; i++) {
               this.$set(this.moneyControl, res.data.data[i].paramKey, res.data.data[i].paramValue);
             }
           }
         }).catch((req) => {
-          this.showError(req.code, req.message)
         })
       },
+      getUserBank(){
+        this.$http({
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/all',
+          method: 'GET',
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'X-Authorization': 'Bearer ' + this.$store.state.token
+          }
+        }).then((res) => {
+          if(res.data.code!==200){
+            this.showError(res.data.code, res.data.message);
+          }
+          if(res.data.code===200){
+            this.userBank = res.data.data;
+          }
+        }).catch((req) => {
+          this.showError(req.code, req.message)
+        })
+      }
     },
   }
 </script>

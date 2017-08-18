@@ -109,7 +109,7 @@
           <p><span>[{{item.currency | translate}}地址{{index + 1}}]</span><a href="javascript:;" @click="delAdr($event)"
                                                                            :digtalid="item.id">删除该地址</a></p>
         </div>
-        <router-link to="/accountManagement/addBTCAdr" tag="div" class="adrItem addBankCard">
+        <router-link :to="'/accountManagement/addCurrencyAdr/'+selectCurrency"  tag="div" class="adrItem addBankCard">
           <i class="iconfont">&#xe689;</i>
           <span>添加新地址</span>
         </router-link>
@@ -142,6 +142,7 @@
           "PSBC": require('../../assets/img/banklogo/PSBC.png'),
         },
         currencyAdr: [],
+        selectCurrency: 'BTC'
       }
     },
     mounted (){
@@ -238,7 +239,7 @@
         }).catch((req) => {
           this.showError(req.code, req.message)
         });
-      },//获取绑定银行卡
+      },//获取提现地址
       getBindCurrencyAdr(){
         let currency;
         if ($("input[name='select-account-cash123']:checked").val() === '1') {
@@ -246,6 +247,8 @@
         } else {
           currency = $("input[name='select-currency1-cash1232']:checked").val();
         }
+
+        this.selectCurrency = currency;
 
         this.$http({
           url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/withdrawInfo/' + currency,

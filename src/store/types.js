@@ -14,3 +14,4 @@ export const ERROR_HIDE='ERROR_HIDE';//错误处理
 export const ERROR_SHOW1='ERROR_SHOW1';//错误处理
 export const ERROR_HIDE1='ERROR_HIDE1';//错误处理
 
+

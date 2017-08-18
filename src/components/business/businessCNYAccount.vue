@@ -130,8 +130,9 @@
           <header>
             <span>{{buyClass}}/{{accountClass}}</span>
             <span>|</span>
-            <span>￥18247.25</span>
-            <span>+26.58%</span>
+            <span>￥{{LatestPrice.price | float2}}</span>
+            <span
+              :class="LatestPrice.price>LatestPrice.beforePrice?'red':'green'">{{((LatestPrice.price - LatestPrice.beforePrice) / LatestPrice.beforePrice) | float2}}%</span>
           </header>
           <section>
             <span>买卖</span>
@@ -150,6 +151,7 @@
 </template>
 <script>
   import entrustedRecord from '../lettle_components/entrustedRecord.vue';
+  import {mapGetters} from 'vuex';
   export default {
     data() {
       return {
@@ -241,7 +243,7 @@
             this.shuaxin = false;
           }
         }).then(() => {
-            this.getPanKou();
+          this.getPanKou();
           this.shuaxin = true;
         }).catch((req) => {
           this.showError(req.code, req.message);
@@ -292,7 +294,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
-            console.log(res)
+          console.log(res)
 //          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             this.pushViewB(res.data.data.b);
@@ -309,18 +311,18 @@
         }
         if (num.length < 5) {
           for (let i = 0; i < 5 - num.length; i++) {
-            $('.buy-pankou').append(`<p><span>买${i+1 + num.length}</span><span>--</span><span>--</span></p>`);
+            $('.buy-pankou').append(`<p><span>买${i + 1 + num.length}</span><span>--</span><span>--</span></p>`);
           }
         }
       },
       pushViewS(num){
         $('.sell-pankou').html('');
         for (let i = 0; i < num.length; i++) {
-          $('.sell-pankou').prepend(`<p><span>卖${i + 1}</span><span>${(num[i].price).toFixed(2)}</span><span>${(num[i].vol).toFixed(4)}</span></p>`) ;
+          $('.sell-pankou').prepend(`<p><span>卖${i + 1}</span><span>${(num[i].price).toFixed(2)}</span><span>${(num[i].vol).toFixed(4)}</span></p>`);
         }
         if (num.length < 5) {
           for (let i = 0; i < 5 - num.length; i++) {
-            $('.sell-pankou').prepend(`<p><span>卖${i+1 + num.length}</span><span>--</span><span>--</span></p>`);
+            $('.sell-pankou').prepend(`<p><span>卖${i + 1 + num.length}</span><span>--</span><span>--</span></p>`);
           }
         }
       }
@@ -332,10 +334,17 @@
       sellComP() {
         return this.sellSum = (this.sellPrice * this.sellNum).toFixed(2);
       },
+      ...mapGetters(['LatestPrice'])
     }
   }
 </script>
 <style scoped>
+  .red{
+    color: #cc0000 !important;
+  }
+  .green{
+    color: #00cc00 !important;
+  }
   .business-home-content {
     display: flex;
     background: #e9ecf3;
@@ -428,8 +437,6 @@
     padding: 8px 30px;
   }
 
-
-
   .pankou > div > em {
     margin: 1rem 30px;
     background: #ddd;
@@ -438,8 +445,6 @@
     display: block;
     box-sizing: border-box;
   }
-
-
 
   .content-left .content-left-header {
     display: flex;

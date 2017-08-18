@@ -231,7 +231,7 @@
               $('.addBankGetCord').attr("disabled", true).css("cursor", "default");
               that.timer = setInterval(function () {
                 $('.addBankGetCord').html((--second) + 's');
-                if (second === 0) {
+                if (second <= 0) {
                   $('.addBankGetCord').removeAttr("disabled").css("cursor", "pointer");
                   clearInterval(that.timer);
                   $('.addBankGetCord').html('获取验证码');

@@ -7,7 +7,7 @@
       <div class="modifyFullPsd-group1">
         <span>新密码</span>
         <div class="form-group-content de">
-          <input type="password" placeholder="密码" v-model="modifyFullPsd" class="modifyFullpsd"/>
+          <input type="password" placeholder="密码" v-model="modifyFullPsd" class="modifyFullpsd" minlength="6" maxlength="22">
           <div class="help-tips-modifyFullPsd"></div>
         </div>
         <p class="password-strength"><span></span><span></span><span></span><em
@@ -16,16 +16,16 @@
       <div class="modifyFullPsd-group1">
         <span>确认密码</span>
         <div class="form-group-content de">
-          <input type="password" placeholder="确认密码" v-model="modifyFullPsds" class="modifyFullPsds"/>
+          <input type="password" placeholder="确认密码" v-model="modifyFullPsds" class="modifyFullPsds" minlength="6" maxlength="22"/>
           <div class="help-tips-modifyFullPsds"></div>
         </div>
       </div>
       <div class="modifyFullPsd-group1">
         <span>验证方式</span>
         <div class="form-group-content1">
-          <input type="radio" name="YZStyle11" id="email_style11" value="3" class="YZStyle111"/><label
+          <input type="radio" name="YZStyle11" id="email_style11" value="email"/><label
           for="email_style11">邮箱验证</label>
-          <input type="radio" name="YZStyle11" id="phone_style11" value="4" class="YZStyle111" checked/><label
+          <input type="radio" name="YZStyle11" id="phone_style11" value="mobile" checked/><label
           for="phone_style11">短信验证</label>
         </div>
       </div>
@@ -34,7 +34,7 @@
         <div class="dyt">
           <div class="form-group-content">
             <input type="text" placeholder="验证码" v-model="modifyFullPsdCaptcha"/>
-            <button class="modifyFullPsdGetCord">获取验证码</button>
+            <button class="modifyFullPsdGetCord" @click="getCodeYZ($event)">获取验证码</button>
           </div>
           <span class="form-group-content-tips"></span>
         </div>
@@ -59,183 +59,16 @@
         modifyFullPsds: '',
         modifyFullPsdCaptcha: '',
         radioIpt: '',
-        types: ''
+        types: '',
+        timer:'',
       }
     },
     mounted() {
       let that = this;
-//      密码强度检测
       {
-        $('.modifyFullpsd').keyup(function () {
-          let N = /^\d+$/;
-          let C = /^[a-zA-Z]+$/;
-          let TC = /^[@#$%*,.^&]+$/;
-          let N_C = /^(?!\d+$)(?![a-zA-Z]+$)[a-zA-Z\d]+$/;
-          let C_TC = /^(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[a-zA-Z@#$%*,.^&]+$/;
-          let N_TC = /^(?!\d+)(?![@#$%*,.^&]+$)[\d@#$%*,.^&]+$/;
-          let N_C_TC = /^(?!\d+$)(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[\da-zA-Z@#$%*,.^&]+$/;
-          if (that.modifyFullPsd.length < 6) {
-            that.$store.state.modifyFullPsd.newPsd = false;
-            $('.password-strength span').css({
-              background: '#cfd0d2'
-            });
-            $('.password-strength-view').html('');
-            $('.help-tips-modifyFullPsd').html('密码应该长度在6~22位之间').css({
-              alignSelf: 'flex-start',
-              color: 'red'
-            })
-          } else {
-            $('.help-tips-modifyFullPsd').html('');
-            that.$store.state.modifyFullPsd.newPsd = true;
-          }
-//          纯数字
-          if (N.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: '#cfd0d2'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('低').css({color: 'red'})
-          }
-//          纯字母
-          else if (C.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6 && that.modifyFullPsd.length <= 13) {
-            $('.password-strength span').eq(0).css({
-              background: 'red'
-            });
-            $('.password-strength-view').html('低').css({color: 'red'})
-          }
-          else if (C.test(that.modifyFullPsd) && that.modifyFullPsd.length > 13) {
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'})
-          }
-//          纯特殊字符
-          else if (TC.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6 && that.modifyFullPsd.length <= 13) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
-          }
-          else if (TC.test(that.modifyFullPsd) && that.modifyFullPsd.length > 13) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
-          }
-//          字母加数字
-          else if (N_C.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6 && that.modifyFullPsd.length <= 12) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: '#cfd0d2'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('低').css({color: 'red'})
-          }
-          else if (N_C.test(that.modifyFullPsd) && that.modifyFullPsd.length > 12) {
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'})
-          }
-//          字母加特殊字符
-          else if (C_TC.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6 && that.modifyFullPsd.length <= 10) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
-          }
-          else if (C_TC.test(that.modifyFullPsd) && that.modifyFullPsd.length > 10) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
-          }
-//          数字加特殊字符
-          else if (N_TC.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6 && that.modifyFullPsd.length <= 11) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
-          }
-          else if (N_TC.test(that.modifyFullPsd) && that.modifyFullPsd.length > 11) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
-          }
-//          数字加字母加特殊字符
-          else if (N_C_TC.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6 && that.modifyFullPsd.length <= 8) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
-          }
-          else if (N_C_TC.test(that.modifyFullPsd) && that.modifyFullPsd.length > 8) {
-            $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
-          }
-        });
-      }
-      //确认密码
-      {
-        $('.modifyFullPsds').keyup(function () {
-          if (that.modifyFullPsd === that.modifyFullPsds) {
-            that.$store.state.modifyFullPsd.newPsds = true;
-            $('.help-tips-modifyFullPsds').html('');
-          } else {
-            that.$store.state.modifyFullPsd.newPsds = false;
-            $('.help-tips-modifyFullPsds').html('两次输入的密码不一致').css({
-              alignSelf: 'flex-start',
-              color: 'red'
-            })
-          }
-        });
-      }
-      //获取验证码
-      {
-        $('.modifyFullPsdGetCord').click(function () {
-          for (let i = 0; i < $('.YZStyle111').length; i++) {
-            if ($('.YZStyle111').eq(i).is(":checked")) {
-              that.radioIpt = $('.YZStyle111').eq(i).val();
-              if (that.radioIpt == '3') {
-                that.types = 'email';
-              } else {
-                that.types = 'mobile';
-              }
-            }
-          }
-          let second = 60;
-          let url;
-          if (that.radioIpt == 1) {
-            url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/email'
-          } else {
-            url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/mobile'
-          }
-          that.$http({
-            url: url,
-            method: 'GET',
-            headers: {
-              "X-Requested-With": "XMLHttpRequest",
-              'X-Authorization': 'Bearer ' + that.$store.state.token
-            }
-          }).then((data) => {
-            that.showError(data.data.code, data.data.message);
-            if (data.data.code === 200) {
-              $('.modifyFullPsdGetCord').attr("disabled", true).css("cursor", "default");
-              that.timer = setInterval(function () {
-                $('.modifyFullPsdGetCord').html((--second) + 's');
-                if (second === 0) {
-                  $('.modifyFullPsdGetCord').removeAttr("disabled").css("cursor", "pointer");
-                  clearInterval(that.timer);
-                  $('.modifyFullPsdGetCord').html('获取验证码');
-                }
-              }, 1000);
-              $('.form-group-content-tips').html('请输入验证码').css({
-                alignSelf: 'flex-start',
-                color: 'red',
-                marginLeft: '1.5rem'
-              })
-            }
-          }).catch((req) => {
-            that.showError(req.code, req.message)
-          })
+        $("input[name='YZStyle11']").change(function () {
+          $('.modifyFullPsdGetCord').html('获取验证码').removeAttr('disabled');
+          clearInterval(that.timer);
         });
       }
     },
@@ -247,8 +80,8 @@
             url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/updatePwd',
             method: 'POST',
             data: {
-              password: that.modifyFullPsd,
-              confirmPwd: that.modifyFullPsds,
+              password: md5(that.modifyFullPsd),
+              confirmPwd: md5(that.modifyFullPsds),
               types: that.types,
               captcha: that.modifyFullPsdCaptcha
             },
@@ -264,8 +97,173 @@
             that.showError(req.code, req.message)
           })
         }
+      },
+      getCodeYZ(ev){
+        let second = 60;
+        let _this=this;
+        let YZStyle = $("input[name='YZStyle11']:checked").val();
+        this.$http({
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/' + YZStyle,
+          method: 'GET',
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'X-Authorization': 'Bearer ' + this.$store.state.token
+          }
+        }).then((res) => {
+          this.showError(res.data.code, res.data.message);
+          if (res.data.code === 200) {
+            ev.target.setAttribute("disabled", true);
+            this.timer = setInterval(function () {
+              ev.target.innerHTML = (--second) + 's';
+              if (second <= 0) {
+                ev.target.setAttribute("disabled",false);
+                clearInterval(_this.timer);
+                ev.target.innerHTML = '获取验证码';
+              }
+            }, 1000);
+          }
+
+        })
       }
     },
+    watch:{
+      modifyFullPsd(){
+          let that=this;
+          if(that.modifyFullPsds){
+            if (that.modifyFullPsd === that.modifyFullPsds) {
+              that.$store.state.modifyFullPsd.newPsds = true;
+              $('.help-tips-modifyFullPsds').html('');
+            } else {
+              that.$store.state.modifyFullPsd.newPsds = false;
+              $('.help-tips-modifyFullPsds').html('两次输入的密码不一致').css({
+                alignSelf: 'flex-start',
+                color: 'red'
+              })
+            }
+          }
+        let N = /^\d+$/;
+        let C = /^[a-zA-Z]+$/;
+        let TC = /^[@#$%*,.^&]+$/;
+        let N_C = /^(?!\d+$)(?![a-zA-Z]+$)[a-zA-Z\d]+$/;
+        let C_TC = /^(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[a-zA-Z@#$%*,.^&]+$/;
+        let N_TC = /^(?!\d+)(?![@#$%*,.^&]+$)[\d@#$%*,.^&]+$/;
+        let N_C_TC = /^(?!\d+$)(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[\da-zA-Z@#$%*,.^&]+$/;
+        if (that.modifyFullPsd.length < 6) {
+          that.$store.state.modifyFullPsd.newPsd = false;
+          $('.password-strength span').css({
+            background: '#cfd0d2'
+          });
+          $('.password-strength-view').html('');
+          $('.help-tips-modifyFullPsd').html('密码应该长度在6~22位之间').css({
+            alignSelf: 'flex-start',
+            color: 'red'
+          })
+        } else {
+          $('.help-tips-modifyFullPsd').html('');
+          that.$store.state.modifyFullPsd.newPsd = true;
+        }
+//          纯数字
+        if (N.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#cfd0d2'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('低').css({color: 'red'})
+        }
+//          纯字母
+        else if (C.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6 && that.modifyFullPsd.length <= 13) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#cfd0d2'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('低').css({color: 'red'})
+        }
+        else if (C.test(that.modifyFullPsd) && that.modifyFullPsd.length > 13) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'})
+        }
+//          纯特殊字符
+        else if (TC.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6 && that.modifyFullPsd.length <= 13) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'});
+        }
+        else if (TC.test(that.modifyFullPsd) && that.modifyFullPsd.length > 13) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#0c0'});
+          $('.password-strength-view').html('高').css({color: '#0c0'});
+        }
+//          字母加数字
+        else if (N_C.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6 && that.modifyFullPsd.length <= 12) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#cfd0d2'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('低').css({color: 'red'})
+        }
+        else if (N_C.test(that.modifyFullPsd) && that.modifyFullPsd.length > 12) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'})
+        }
+//          字母加特殊字符
+        else if (C_TC.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6 && that.modifyFullPsd.length <= 10) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'});
+        }
+        else if (C_TC.test(that.modifyFullPsd) && that.modifyFullPsd.length > 10) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#0c0'});
+          $('.password-strength-view').html('高').css({color: '#0c0'});
+        }
+//          数字加特殊字符
+        else if (N_TC.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6 && that.modifyFullPsd.length <= 11) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'});
+        }
+        else if (N_TC.test(that.modifyFullPsd) && that.modifyFullPsd.length > 11) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#0c0'});
+          $('.password-strength-view').html('高').css({color: '#0c0'});
+        }
+//          数字加字母加特殊字符
+        else if (N_C_TC.test(that.modifyFullPsd) && that.modifyFullPsd.length >= 6 && that.modifyFullPsd.length <= 8) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
+          $('.password-strength-view').html('中').css({color: '#01aaef'});
+        }
+        else if (N_C_TC.test(that.modifyFullPsd) && that.modifyFullPsd.length > 8) {
+          $('.password-strength span').eq(0).css({background: 'red'});
+          $('.password-strength span').eq(1).css({background: '#01aaef'});
+          $('.password-strength span').eq(2).css({background: '#0c0'});
+          $('.password-strength-view').html('高').css({color: '#0c0'});
+        }
+      },
+      modifyFullPsds(){
+          let that=this;
+          if(that.modifyFullPsd){
+            if (that.modifyFullPsd === that.modifyFullPsds) {
+              that.$store.state.modifyFullPsd.newPsds = true;
+              $('.help-tips-modifyFullPsds').html('');
+            } else {
+              that.$store.state.modifyFullPsd.newPsds = false;
+              $('.help-tips-modifyFullPsds').html('两次输入的密码不一致').css({
+                alignSelf: 'flex-start',
+                color: 'red'
+              })
+            }
+          }
+      }
+    }
   }
 </script>
 <style scoped>

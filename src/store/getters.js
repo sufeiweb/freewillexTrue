@@ -20,4 +20,19 @@ export default {
   ErrorMessage(state){
     return state.ErrorMessage;
   },
+  LatestPrice(state){
+    return state.LatestPrice;
+  },
+  trades(state){
+    return state.trades;
+  },
+  depth(state){
+    return state.depth;
+  },
+  Quotation(state){
+    return state.Quotation;
+  },
+  ShowOrHide(state){
+    return state.ShowOrHide;
+  }
 }

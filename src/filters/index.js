@@ -2,6 +2,7 @@
 import {phoneStar} from './phoneStar';
 import {emailStar} from './emailStar';
 import {dateYMDHIS} from './dateYMDHIS';
+import {dateHIS} from './dateHIS';
 import {bankNo} from './bankNo';
 import {translate} from './translate';
 import {bankName} from './bankName';
@@ -16,5 +17,5 @@ import {errorLog} from './errorLog';
 
 export default {
   phoneStar,emailStar,dateYMDHIS,bankNo,translate,bankName,returnZero,float2,float8,toLocaleString,toLocaleString8,return_,
-  AoJ,errorLog
+  AoJ,errorLog,dateHIS
 }

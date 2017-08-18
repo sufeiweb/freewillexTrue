@@ -36,7 +36,7 @@ import modifyFullPsd from '@/components/lettle_components/modifyFullPsd'
 import rechargeLog from '@/components/lettle_components/rechargeLog'
 import rechargeList from '@/components/lettle_components/rechargeList'
 import addBankCard from '@/components/lettle_components/addBankCard'
-import addBTCAdr from '@/components/lettle_components/addBTCAdr'
+import addCurrencyAdr from '@/components/lettle_components/addCurrencyAdr'
 import cashLog from '@/components/lettle_components/cashLog'
 import dealRegister from '@/components/text_components/dealRegister'
 import dealAml from '@/components/text_components/dealAml'
@@ -58,7 +58,7 @@ export default new Router({
     {path: '/dealRates', name: 'dealRates', component: dealRates},
     {path: '/quotation', name: 'quotation', component: quotation},
     {path: '/broker', name: 'quotation', component: broker, meta: {auth: true}},
-    {path: '/userAgreement', name: 'userAgreement', component: userAgreement, meta: {auth: true}},
+    {path: '/userAgreement', name: 'userAgreement', component: userAgreement},
     {
       path: '/business', name: 'business', component: business, meta: {auth: true}, children: [
       {path: '/businessCNYAccount', name: 'businessCNYAccount', component: businessCNYAccount, meta: {auth: true}},
@@ -76,7 +76,7 @@ export default new Router({
       {path: '/', redirect: '/userIndex'},
       {path: '/accountDetails', name: 'accountDetails', component: accountDetails, meta: {auth: true}},
       {path: '/accountManagement', name: 'accountManagement', component: accountManagement, meta: {auth: true}},
-      {path: '/accountManagement/addBTCAdr', name: 'addBTCAdr', component: addBTCAdr, meta: {auth: true}},
+      {path: '/accountManagement/addCurrencyAdr/:currency', name: 'addCurrencyAdr', component: addCurrencyAdr, meta: {auth: true}},
       {path: '/accountManagement/addBankCard', name: 'addBankCard', component: addBankCard, meta: {auth: true}},
       {path: '/cash', name: 'cash', component: cash, meta: {auth: true}},
       {path: '/cash/cashLog', name: 'cashLog', component: cashLog, meta: {auth: true}},

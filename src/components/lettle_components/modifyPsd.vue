@@ -4,7 +4,7 @@
       <p>修改登录密码</p>
     </div>
     <div class="modifyPsd-content">
-      <div class="modifyPsd-group1">
+      <div class="modifyPsd-group1" style="display: none">
         <span>原密码</span>
         <div class="form-group-content de">
           <input type="password" placeholder="原始密码" v-model="OldModifyPsd" class="OldModifyPsd"/>
@@ -14,7 +14,7 @@
       <div class="modifyPsd-group1">
         <span>新密码</span>
         <div class="form-group-content de">
-          <input type="password" placeholder="密码" v-model="modifyPsd" class="modifypsd"/>
+          <input type="password" placeholder="密码" v-model="modifyPsd" class="modifypsd" minlength="6" maxlength="22"/>
           <div class="help-tips-modifyPsd"></div>
         </div>
         <p class="password-strength"><span></span><span></span><span></span><em
@@ -23,16 +23,16 @@
       <div class="modifyPsd-group1">
         <span>确认密码</span>
         <div class="form-group-content de">
-          <input type="password" placeholder="确认密码" v-model="modifyPsds" class="modifyPsds"/>
+          <input type="password" placeholder="确认密码" v-model="modifyPsds" class="modifyPsds" minlength="6" maxlength="22"/>
           <div class="help-tips-modifyPsds"></div>
         </div>
       </div>
       <div class="modifyPsd-group1">
         <span>验证方式</span>
         <div class="form-group-content1">
-          <input type="radio" name="YZStyle1" id="email_style1" value="3" class="YZStyle11"/><label
+          <input type="radio" name="YZStyle1" id="email_style1" value="email" /><label
           for="email_style1">邮箱验证</label>
-          <input type="radio" name="YZStyle1" id="phone_style1" value="4" class="YZStyle11" checked/><label
+          <input type="radio" name="YZStyle1" id="phone_style1" value="mobile"  checked/><label
           for="phone_style1">短信验证</label>
         </div>
       </div>
@@ -41,7 +41,7 @@
         <div class="dyt">
           <div class="form-group-content">
             <input type="text" placeholder="验证码" v-model="modifyPsdCaptcha"/>
-            <button class="modifyPsdGetCord">获取验证码</button>
+            <button class="modifyPsdGetCord" @click="getCodeYz($event)">获取验证码</button>
           </div>
           <span class="form-group-content-tips"></span>
         </div>
@@ -66,28 +66,108 @@
         modifyPsds: '',
         modifyPsdCaptcha: '',
         radioIpt: '',
-        types: ''
+        types: '',
+        timer: ''
       }
     },
     mounted() {
       let that = this;
-      {
-        if (that.OldModifyPsd) {
-          that.$store.state.modifyPsd.oldPsd = true;
-        } else {
-          that.$store.state.modifyPsd.oldPsd = false;
-        }
-        $('.OldModifyPsd').keyup(function () {
-          if (that.OldModifyPsd) {
-            that.$store.state.modifyPsd.oldPsd = true;
-          } else {
-            that.$store.state.modifyPsd.oldPsd = false;
-          }
-        })
-      }
+//      {
+//        if (that.OldModifyPsd) {
+//          that.$store.state.modifyPsd.oldPsd = true;
+//        } else {
+//          that.$store.state.modifyPsd.oldPsd = false;
+//        }
+//        $('.OldModifyPsd').keyup(function () {
+//          if (that.OldModifyPsd) {
+//            that.$store.state.modifyPsd.oldPsd = true;
+//          } else {
+//            that.$store.state.modifyPsd.oldPsd = false;
+//          }
+//        })
+//      }
 //      密码强度检测
       {
-        $('.modifypsd').keyup(function () {
+        $("input[name='YZStyle1']").change(function () {
+          $('.modifyPsdGetCord').html('获取验证码').removeAttr('disabled');
+          clearInterval(that.timer);
+        });
+      }
+      //确认密码
+
+    },
+    methods: {
+      modifyPsdBtn() {
+        let that = this;
+        if (that.$store.state.modifyPsd.newPsd && that.$store.state.modifyPsd.newPsds && that.$store.state.modifyPsd.YZCord) {
+          that.$http({
+            url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/updatePwd',
+            method: 'POST',
+            data: {
+              password: md5(that.modifyPsd),
+              confirmPwd: md5(that.modifyPsds),
+              types: that.types,
+              captcha: that.modifyPsdCaptcha
+            },
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              'X-Authorization': 'Bearer ' + that.$store.state.token,
+              "Content-Type": "application/json;charset=UTF-8",
+            }
+          }).then((res) => {
+            this.showError(res.data.code, res.data.message);
+            //console.log(res, '设置成功');
+            that.$router.push('/login');
+            that.$store.state.token = '';
+          }).catch((req) => {
+            this.showError(req.code, req.message)
+            //console.log(req, '设置失败')
+          })
+        }
+      },
+      getCodeYz(ev){
+        let second = 60;
+        let _this = this;
+        let YZStyle = $("input[name='YZStyle1']:checked").val();
+        this.$http({
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/' + YZStyle,
+          method: 'GET',
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'X-Authorization': 'Bearer ' + this.$store.state.token
+          }
+        }).then((res) => {
+          this.showError(res.data.code, res.data.message);
+          if (res.data.code === 200) {
+            ev.target.setAttribute("disabled", true);
+            this.timer = setInterval(function () {
+              ev.target.innerHTML = (--second) + 's';
+              if (second <= 0) {
+                ev.target.setAttribute("disabled", false);
+                clearInterval(_this.timer);
+                ev.target.innerHTML = '获取验证码';
+              }
+            }, 1000);
+          }
+
+        })
+      }
+    },
+    watch: {
+      modifyPsd() {
+        let that = this;
+        if(that.modifyPsds){
+          if (that.modifyPsd === that.modifyPsds) {
+            that.$store.state.modifyPsd.newPsds = true;
+            $('.help-tips-modifyPsds').html('');
+          } else {
+            that.$store.state.modifyPsd.newPsds = false;
+            $('.help-tips-modifyPsds').html('两次输入的密码不一致').css({
+              alignSelf: 'flex-start',
+              color: 'red'
+            })
+          }
+        }
           let N = /^\d+$/;
           let C = /^[a-zA-Z]+$/;
           let TC = /^[@#$%*,.^&]+$/;
@@ -126,28 +206,29 @@
           }
 //          纯字母
           else if (C.test(that.modifyPsd) && that.modifyPsd.length >= 6 && that.modifyPsd.length <= 13) {
-            $('.password-strength span').eq(0).css({
-              background: 'red'
-            });
+            $('.password-strength span').eq(0).css({background: 'red'});
+            $('.password-strength span').eq(1).css({background: '#cfd0d2'});
+            $('.password-strength span').eq(2).css({background: '#cfd0d2'});
             $('.password-strength-view').html('低').css({color: 'red'})
           }
           else if (C.test(that.modifyPsd) && that.modifyPsd.length > 13) {
-            $('.password-strength span').eq(1).css({background: 'yellow'});
+            $('.password-strength span').eq(0).css({background: 'red'});
+            $('.password-strength span').eq(1).css({background: '#01aaef'});
             $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'})
+            $('.password-strength-view').html('中').css({color: '#01aaef'})
           }
 //          纯特殊字符
           else if (TC.test(that.modifyPsd) && that.modifyPsd.length >= 6 && that.modifyPsd.length <= 13) {
             $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
+            $('.password-strength span').eq(1).css({background: '#01aaef'});
             $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
+            $('.password-strength-view').html('中').css({color: '#01aaef'});
           }
           else if (TC.test(that.modifyPsd) && that.modifyPsd.length > 13) {
             $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
+            $('.password-strength span').eq(1).css({background: '#01aaef'});
+            $('.password-strength span').eq(2).css({background: '#0c0'});
+            $('.password-strength-view').html('高').css({color: '#0c0'});
           }
 //          字母加数字
           else if (N_C.test(that.modifyPsd) && that.modifyPsd.length >= 6 && that.modifyPsd.length <= 12) {
@@ -157,146 +238,67 @@
             $('.password-strength-view').html('低').css({color: 'red'})
           }
           else if (N_C.test(that.modifyPsd) && that.modifyPsd.length > 12) {
-            $('.password-strength span').eq(1).css({background: 'yellow'});
+            $('.password-strength span').eq(0).css({background: 'red'});
+            $('.password-strength span').eq(1).css({background: '#01aaef'});
             $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'})
+            $('.password-strength-view').html('中').css({color: '#01aaef'})
           }
 //          字母加特殊字符
           else if (C_TC.test(that.modifyPsd) && that.modifyPsd.length >= 6 && that.modifyPsd.length <= 10) {
             $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
+            $('.password-strength span').eq(1).css({background: '#01aaef'});
             $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
+            $('.password-strength-view').html('中').css({color: '#01aaef'});
           }
           else if (C_TC.test(that.modifyPsd) && that.modifyPsd.length > 10) {
             $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
+            $('.password-strength span').eq(1).css({background: '#01aaef'});
+            $('.password-strength span').eq(2).css({background: '#0c0'});
+            $('.password-strength-view').html('高').css({color: '#0c0'});
           }
 //          数字加特殊字符
           else if (N_TC.test(that.modifyPsd) && that.modifyPsd.length >= 6 && that.modifyPsd.length <= 11) {
             $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
+            $('.password-strength span').eq(1).css({background: '#01aaef'});
             $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
+            $('.password-strength-view').html('中').css({color: '#01aaef'});
           }
           else if (N_TC.test(that.modifyPsd) && that.modifyPsd.length > 11) {
             $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
+            $('.password-strength span').eq(1).css({background: '#01aaef'});
+            $('.password-strength span').eq(2).css({background: '#0c0'});
+            $('.password-strength-view').html('高').css({color: '#0c0'});
           }
 //          数字加字母加特殊字符
           else if (N_C_TC.test(that.modifyPsd) && that.modifyPsd.length >= 6 && that.modifyPsd.length <= 8) {
             $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
+            $('.password-strength span').eq(1).css({background: '#01aaef'});
             $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-            $('.password-strength-view').html('中').css({color: 'yellow'});
+            $('.password-strength-view').html('中').css({color: '#01aaef'});
           }
           else if (N_C_TC.test(that.modifyPsd) && that.modifyPsd.length > 8) {
             $('.password-strength span').eq(0).css({background: 'red'});
-            $('.password-strength span').eq(1).css({background: 'yellow'});
-            $('.password-strength span').eq(2).css({background: 'green'});
-            $('.password-strength-view').html('高').css({color: 'green'});
+            $('.password-strength span').eq(1).css({background: '#01aaef'});
+            $('.password-strength span').eq(2).css({background: '#0c0'});
+            $('.password-strength-view').html('高').css({color: '#0c0'});
           }
-        });
-      }
-      //确认密码
-      {
-        $('.modifyPsds').keyup(function () {
-          if (that.modifyPsd === that.modifyPsds) {
-            that.$store.state.modifyPsd.newPsds = true;
-            $('.help-tips-modifyPsds').html('');
-          } else {
-            that.$store.state.modifyPsd.newPsds = false;
-            $('.help-tips-modifyPsds').html('两次输入的密码不一致').css({
-              alignSelf: 'flex-start',
-              color: 'red'
-            })
-          }
-        });
-      }
-      //获取验证码
-      {
-        $('.modifyPsdGetCord').click(function () {
-          for (let i = 0; i < $('.YZStyle11').length; i++) {
-            if ($('.YZStyle11').eq(i).is(":checked")) {
-              that.radioIpt = $('.YZStyle11').eq(i).val();
-              if (that.radioIpt == '3') {
-                that.types = 'email';
-              } else {
-                that.types = 'mobile';
-              }
-            }
-          }
-          let second = 60;
-          let url;
-          if (that.radioIpt == 1) {
-            url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/email'
-          } else {
-            url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/mobile'
-          }
-          that.$http({
-            url: url,
-            method: 'GET',
-            headers: {
-              "X-Requested-With": "XMLHttpRequest",
-              'X-Authorization': 'Bearer ' + that.$store.state.token,
-            }
-          }).then((data) => {
-            that.showError(data.data.code, data.data.message);
-            if(data.data.code===200){
-              $('.modifyPsdGetCord').attr("disabled", true).css("cursor", "default");
-              that.timer = setInterval(function () {
-                $('.modifyPsdGetCord').html((--second) + 's');
-                if (second === 0) {
-                  $('.modifyPsdGetCord').removeAttr("disabled").css("cursor", "pointer");
-                  clearInterval(that.timer);
-                  $('.modifyPsdGetCord').html('获取验证码');
-                }
-              }, 1000);
-              $('.form-group-content-tips').html('请输入验证码').css({
+        },
+      modifyPsds(){
+          let that=this;
+          if(that.modifyPsd){
+            if (that.modifyPsd === that.modifyPsds) {
+              that.$store.state.modifyPsd.newPsds = true;
+              $('.help-tips-modifyPsds').html('');
+            } else {
+              that.$store.state.modifyPsd.newPsds = false;
+              $('.help-tips-modifyPsds').html('两次输入的密码不一致').css({
                 alignSelf: 'flex-start',
-                color: 'red',
-                marginLeft: '1.5rem'
+                color: 'red'
               })
             }
-          }).catch((req) => {
-            that.showError(req.code, req.message)
-          })
-        });
+          }
       }
-    },
-    methods: {
-      modifyPsdBtn() {
-        let that = this;
-        if (that.$store.state.modifyPsd.oldPsd && that.$store.state.modifyPsd.newPsd && that.$store.state.modifyPsd.newPsds && that.$store.state.modifyPsd.YZCord) {
-          that.$http({
-            url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/updatePwd',
-            method: 'POST',
-            data: {
-              password: that.modifyPsd,
-              confirmPwd: that.modifyPsds,
-              types: that.types,
-              captcha: that.modifyPsdCaptcha
-            },
-            headers: {
-              "X-Requested-With": "XMLHttpRequest",
-              'X-Authorization': 'Bearer ' + that.$store.state.token,
-              "Content-Type": "application/json;charset=UTF-8",
-            }
-          }).then((res)=> {
-            this.showError(res.data.code, res.data.message);
-            //console.log(res, '设置成功');
-            that.$router.push('/login');
-            that.$store.state.token = '';
-          }).catch((req)=> { this.showError(req.code,req.message)
-            //console.log(req, '设置失败')
-          })
-        }
-      }
-    },
+    }
   }
 </script>
 <style scoped>

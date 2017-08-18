@@ -1,6 +1,6 @@
 <template>
-  <div class="addBTCAdr">
-    <div class="addBTCAdr-title">
+  <div class="addCurrencyAdr">
+    <div class="addCurrencyAdr-title">
       <p>绑定数字货币地址</p>
     </div>
     <div class="from-box">
@@ -16,7 +16,7 @@
           <input type="text" placeholder="备注" v-model="tags"/>
         </p>
       </div>
-      <div>
+      <div style="display: none">
         <span>数字货币币种</span>
         <p>
           <input type="text" placeholder="数字货币币种" v-model="currencyStyle"/>
@@ -24,7 +24,7 @@
       </div>
       <div>
         <span> </span>
-        <p class="addBTCAdr-yz">
+        <p class="addCurrencyAdr-yz">
           <input name="we1" type="radio" id="we11" value="email" checked/>
           <label for="we11" class="border-color">邮箱验证</label>
           <input name="we1" type="radio" value="mobile" id="we12"/>
@@ -74,6 +74,7 @@
       $("input[name='we1']").change(function () {
         $(this).next().addClass('border-color').siblings().removeClass('border-color');
       });
+
     },
     methods: {
       bindGet(ev) {
@@ -88,10 +89,10 @@
             "Content-Type": "application/json;charset=UTF-8",
           },
           data: {
-            currency: this.currencyStyle,
+            currency: this.$route.params.currency,
             address: this.currencyAdr,
             remark: this.tags,
-            capitalPwd: this.capitalPwd,
+            capitalPwd: md5(this.capitalPwd),
             types: yzStyle,
             captcha: this.serverYz
           }
@@ -109,7 +110,7 @@
       bindClose() {
         this.currencyAdr = '';
         this.tags = '';
-        this.currencyStyle = '';
+        this.currencyStyle = this.$route.params.currency;
         this.serverYz = '';
       },
       getCode(ev){
@@ -145,7 +146,7 @@
   }
 </script>
 <style scoped>
-  .addBTCAdr-title {
+  .addCurrencyAdr-title {
     padding: 2rem 0;
     font-size: 1.833rem;
     border-bottom: 1px solid #ddd;
@@ -243,11 +244,11 @@
     display: none;
   }
 
-  .addBTCAdr-yz input {
+  .addCurrencyAdr-yz input {
     display: none;
   }
 
-  .addBTCAdr-yz label {
+  .addCurrencyAdr-yz label {
     padding: 0.8rem 1rem;
     border: 1px solid #999;
     border-radius: 3px;
@@ -255,7 +256,7 @@
     font-size: 1.167rem;
   }
 
-  .addBTCAdr-yz .border-color {
+  .addCurrencyAdr-yz .border-color {
     border-color: #01aaef;
     background: #01aaef;
     color: #fff;

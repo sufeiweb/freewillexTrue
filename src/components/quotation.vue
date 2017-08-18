@@ -146,7 +146,7 @@
     <div class="quotation-center">
       <div class="past-transaction">
         <div class="quotation-center-title">过往交易</div>
-        <div class="quotation-center-table">
+        <div class="quotation-center-table quotation-center-table1 dtscoll">
           <table>
             <thead>
             <tr>
@@ -156,12 +156,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in items">
-              <td class="display-flex" :class="item.oStatus? 'red':'green'">{{item.price}}<i class="iconfont"
-                                                                                             v-show="!item.oStatus">&#xe6a1;</i><i
+            <tr v-for="(item,index) in trades">
+              <td class="display-flex">{{item.price | float2}}<i class="iconfont" v-show="!item.oStatus">&#xe6a1;</i><i
                 class="iconfont" v-show="item.oStatus">&#xe6a9;</i></td>
-              <td>{{item.num}}</td>
-              <td>{{item.timer}}</td>
+              <td>{{item.volume | float8}}</td>
+              <td>{{item.time | dateHIS}}</td>
             </tr>
             </tbody>
           </table>
@@ -169,40 +168,48 @@
       </div>
       <div class="handicap">
         <div class="quotation-center-title">盘口</div>
-        <div class="quotation-center-table">
-          <table>
-            <thead>
-            <tr>
-              <td>价格(CMY)</td>
-              <td>数量</td>
-              <td>我的数量</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="item in items2">
-              <td class="display-flex" :class="item.oStatus? 'red':'green'">{{item.price}}<i class="iconfont"
-                                                                                             v-show="!item.oStatus">&#xe6a1;</i><i
-                class="iconfont" v-show="item.oStatus">&#xe6a9;</i></td>
-              <td>{{item.num}}</td>
-              <td>{{item.my_num}}</td>
-            </tr>
-            </tbody>
-            <tbody class="tbody-center">
-            <tr>
-              <td colspan="3">差价 {{0.58}} CNY</td>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr v-for="item in items3">
-              <td class="display-flex" :class="item.oStatus? 'red':'green'">{{item.price}}<i class="iconfont"
-                                                                                             v-show="!item.oStatus">&#xe6a1;</i><i
-                class="iconfont" v-show="item.oStatus">&#xe6a9;</i></td>
-              <td>{{item.num}}</td>
-              <td>{{item.my_num}}</td>
-            </tr>
-            </tbody>
-          </table>
-
+        <div class="quotation-center-table quotation-center-table2">
+          <div class="dtscoll">
+            <table>
+              <thead>
+              <tr>
+                <td>价格(CMY)</td>
+                <td>数量</td>
+                <td>我的数量</td>
+              </tr>
+              </thead>
+                <tbody>
+                <tr v-for="item in depth.s">
+                  <td class="display-flex" :class="item.oStatus? 'red':'green'">{{item.price | float2}}<i class="iconfont" v-show="!item.oStatus">&#xe6a1;</i><i
+                    class="iconfont" v-show="item.oStatus">&#xe6a9;</i></td>
+                  <td>{{item.count | float8}}</td>
+                  <td>{{item.vol | float8}}</td>
+                </tr>
+                </tbody>
+              </table>
+          </div>
+          <div>
+            <table>
+              <tbody class="tbody-center">
+              <tr>
+                <td colspan="3">差价 {{0.58}} CNY</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="dtscoll">
+            <table>
+              <tbody>
+              <tr v-for="item in depth.b">
+                <td class="display-flex" :class="item.oStatus? 'red':'green'">{{item.price | float2}}<i class="iconfont"
+                                                                                                        v-show="!item.oStatus">&#xe6a1;</i><i
+                  class="iconfont" v-show="item.oStatus">&#xe6a9;</i></td>
+                <td>{{item.count | float8}}</td>
+                <td>{{item.vol | float8}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <div class="quotation-chart">
@@ -294,7 +301,7 @@
             <div class="tab-content">
               <div class="cny-content" v-show="cnyAccount">
                 <p><a href="javascript:;" @click="RouterGo()"><i class="iconfont">&#xe6c1;</i></a>
-                  <router-link to="/userIndex">详情{{getCNYMoney}}</router-link>
+                  <router-link to="/userIndex">详情</router-link>
                 </p>
                 <div class="numBGColor">
                   <p><span>CNY</span><span class="em1">{{CNYCNYNum}}<em></em></span></p>
@@ -370,102 +377,10 @@
   import $ from 'jquery';
   import TKLogin from '../components/lettle_components/TKLogin.vue';
   import KLine from '../components/K.vue';
+  import {mapGetters} from 'vuex';
   export default {
     data() {
       return {
-        items: [
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: false},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: false},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: false},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: false},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: false},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: false},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: false},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: false},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-          {price: 12345.12, num: 345.12345678, timer: '12.33.5', oStatus: true},
-        ],
-        items2: [
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: false},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: false},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: false},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: false},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: false},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: false},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true}
-        ],
-        items3: [
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: false},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: false},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: false},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: false},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: false},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: false},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true},
-          {price: 12345.12, num: '345.12300000', my_num: '12', oStatus: true}
-        ],
         coinStyle: [
           {coinStyle: 'BTC/USD', price: '$2336.71', range: '1.14%', trend: true},
           {coinStyle: 'BTC/USD', price: '$2336.71', range: '1.14%', trend: true},
@@ -503,7 +418,7 @@
       }
     },
     components: {
-      TKLogin,KLine
+      TKLogin, KLine
     },
     mounted() {
       //阻止行情面板页面刷新时，头部和尾部组件出来
@@ -564,7 +479,7 @@
             'X-Authorization': 'Bearer ' + that.$store.state.token
           }
         }).then((res) => {
-          if(res.data.code!==200){
+          if (res.data.code !== 200) {
             this.showError(res.data.code, res.data.message);
           }
           that.userNumM = res.data.data.loginUser;
@@ -574,6 +489,7 @@
         })//获取用户信息
       }
       this.panel_data(1);
+      this.getCNYMoney();
     },
     methods: {
       businessTran() {
@@ -771,7 +687,7 @@
             }
           }
         }).then((res) => {
-          if(res.data.code!==200){
+          if (res.data.code !== 200) {
             this.showError(res.data.code, res.data.message);
           }
           if (res.data.code === 200) {
@@ -805,7 +721,7 @@
             }
           }
         }).then((res) => {
-          if(res.data.code!==200){
+          if (res.data.code !== 200) {
             this.showError(res.data.code, res.data.message);
           }
           if (res.data.code === 200) {
@@ -826,14 +742,6 @@
       },
       handleCurrentChange3(currentPage){
         this.pane1_oldData(currentPage)
-      }
-    },
-    computed: {
-      TKLoginShow() {
-        return this.$store.state.TKShow;
-      },
-      trading_login() {
-        return this.$store.state.loginState;
       },
       getCNYMoney() {
         this.$http({
@@ -844,7 +752,7 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
-          if(res.data.code!==200){
+          if (res.data.code !== 200) {
             this.showError(res.data.code, res.data.message);
           }
           if (res.data.code === 200) {
@@ -892,6 +800,15 @@
           //console.log(req, '获取失败')
         })
       },
+    },
+    computed: {
+      TKLoginShow() {
+        return this.$store.state.TKShow;
+      },
+      trading_login() {
+        return this.$store.state.loginState;
+      },
+      ...mapGetters(['trades', 'depth'])
 
     }
   }
@@ -1265,13 +1182,24 @@
     width: 55%;
     min-width: 60rem;
   }
-
+.quotation-center-table1{
+  height: 71.66rem;
+  overflow: scroll;
+  overflow-x: hidden;
+}
   .quotation-center-title {
     background: #42515a;
     color: #b4b9bc;
     padding: 0.866rem 1rem;
   }
-
+  .handicap .quotation-center-table2{
+    height: 100%;
+  }
+  .quotation-center-table2 div:nth-of-type(1),.quotation-center-table2 div:nth-of-type(3){
+    height: 34rem;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
   .display-flex {
     display: flex;
     align-items: center;
@@ -1326,13 +1254,49 @@
 
   .tbody-center td {
     width: 100%;
-    height: 3.5rem;
+    height: 3.1rem;
     text-align: right !important;
   }
 
   .quotation-chart-line {
     height: 45rem;
   }
+
+
+  /*.quotation-center-table1::-webkit-scrollbar {height:8px; width:8px;}*/
+  /*.quotation-center-table1::-webkit-scrollbar-button {height:0; width:0}*/
+  /*.quotation-center-table1::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment { display:block}*/
+  /*.quotation-center-table1::-webkit-scrollbar-button:vertical:start:increment,::-webkit-scrollbar-button:vertical:end:decrement { display:none}*/
+  /*.quotation-center-table1::-webkit-scrollbar-track:vertical,::-webkit-scrollbar-track:horizontal,::-webkit-scrollbar-thumb:vertical,::-webkit-scrollbar-thumb:horizontal,::-webkit-scrollbar-track:vertical,::-webkit-scrollbar-track:horizontal,::-webkit-scrollbar-thumb:vertical,::-webkit-scrollbar-thumb:horizontal { border-style:solid; border-color:transparent}*/
+  /*.quotation-center-table1::-webkit-scrollbar-track:vertical::-webkit-scrollbar-track:horizontal{background-clip:padding-box;background-color:#fff;}*/
+
+  /*.quotation-center-table1::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.05);*/
+    /*border-radius: 10px;*/
+    /*-webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1);}*/
+  /*.quotation-center-table1::-webkit-scrollbar-thumb:hover {background-color:rgba(0,0,0,0.2);border-radius:10px;-webkit-box-shadow:inset 1px 1px 0 rgba(0,0,0,.1)}*/
+  /*.quotation-center-table1::-webkit-scrollbar-thumb:active {background:rgba(0,0,0,0.6);-webkit-border-radius:15px;}*/
+  /*.quotation-center-table1::-webkit-scrollbar-track:vertical,::-webkit-scrollbar-track:horizontal,::-webkit-scrollbar-thumb:vertical,::-webkit-scrollbar-thumb:horizontal {  border-width:0;}*/
+  /*.quotation-center-table1::-webkit-scrollbar-track:hover {-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.4);background-color:rgba(0,0,0,0.01);-webkit-border-radius:15px;}*/
+  /*.quotation-center-table1::-webkit-scrollbar-track:active {-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.4);background-color:rgba(0,0,0,0.05);-webkit-border-radius:15px;}*/
+
+
+
+  /*.quotation-center-table2 div::-webkit-scrollbar {height:8px; width:8px;}*/
+  /*.quotation-center-table2 div::-webkit-scrollbar-button {height:0; width:0}*/
+  /*.quotation-center-table2 div::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment { display:block}*/
+  /*.quotation-center-table2 div::-webkit-scrollbar-button:vertical:start:increment,::-webkit-scrollbar-button:vertical:end:decrement { display:none}*/
+  /*.quotation-center-table2 div::-webkit-scrollbar-track:vertical,::-webkit-scrollbar-track:horizontal,::-webkit-scrollbar-thumb:vertical,::-webkit-scrollbar-thumb:horizontal,::-webkit-scrollbar-track:vertical,::-webkit-scrollbar-track:horizontal,::-webkit-scrollbar-thumb:vertical,::-webkit-scrollbar-thumb:horizontal { border-style:solid; border-color:transparent}*/
+  /*.quotation-center-table2 div::-webkit-scrollbar-track:vertical::-webkit-scrollbar-track:horizontal{background-clip:padding-box;background-color:#fff;}*/
+
+  /*.quotation-center-table2 div::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.05);*/
+    /*border-radius: 10px;*/
+    /*-webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1);}*/
+  /*.quotation-center-table2 div::-webkit-scrollbar-thumb:hover {background-color:rgba(0,0,0,0.2);border-radius:10px;-webkit-box-shadow:inset 1px 1px 0 rgba(0,0,0,.1)}*/
+  /*.quotation-center-table2 div::-webkit-scrollbar-thumb:active {background:rgba(0,0,0,0.6);-webkit-border-radius:15px;}*/
+  /*.quotation-center-table2 div::-webkit-scrollbar-track:vertical,::-webkit-scrollbar-track:horizontal,::-webkit-scrollbar-thumb:vertical,::-webkit-scrollbar-thumb:horizontal {  border-width:0;}*/
+  /*.quotation-center-table2 div::-webkit-scrollbar-track:hover {-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.4);background-color:rgba(0,0,0,0.01);-webkit-border-radius:15px;}*/
+  /*.quotation-center-table2 div::-webkit-scrollbar-track:active {-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.4);background-color:rgba(0,0,0,0.05);-webkit-border-radius:15px;}*/
+
 
   .delegate-panel-title {
     padding: 0 1.5rem;
@@ -1363,7 +1327,6 @@
   .delegate-panel-data {
     color: #caced0;
   }
-
   .delegate-panel-data-table {
     border-spacing: 0;
     border-collapse: collapse;
@@ -1589,10 +1552,5 @@
     right: -2rem;
     top: -2rem;
     cursor: pointer;
-  }
-
-  #myChart_k {
-    width: 100%;
-    height: 540px;
   }
 </style>

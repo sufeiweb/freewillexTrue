@@ -3,7 +3,6 @@
   cursor: default;
   font-family: arial, sans;
   font-size: 12px;
-  height:300%;
   position: relative;
   width: 100%;
 }
@@ -177,7 +176,7 @@
 }
 
 #chart_container.dark .chart_dropdown_t {
-  background-image: url("../../src/assets/img/dropdown_w.png?__sprite");
+  background-image: url("../../src/assets/img/dropdown_w.png");
   background-position: right 9px;
   border-color: #0a0a0a;
   color: #e5e5e5
@@ -185,7 +184,7 @@
 
 #chart_container.dark .chart_dropdown-hover.chart_dropdown_t {
   background-color: #0a0a0a;
-  background-image: url("../../src/assets/img/dropup_w.png?__sprite");
+  background-image: url("../../src/assets/img/dropup_w.png");
   background-position: right 8px;
   border-color: #606060;
   color: #fff
@@ -214,7 +213,7 @@
 }
 
 #chart_container.light .chart_dropdown_t {
-  background-image: url("../../src/assets/img/dropdown_b.png?__sprite");
+  background-image: url("../../src/assets/img/dropdown_b.png");
   background-position: right 10px;
   border-color: #fff;
   color: #393c40
@@ -222,7 +221,7 @@
 
 #chart_container.light .chart_dropdown-hover.chart_dropdown_t {
   background-color: #fff;
-  background-image: url("../../src/assets/img/dropup_b.png?__sprite");
+  background-image: url("../../src/assets/img/dropup_b.png");
   background-position: right 9px;
   border-color: #4c4f53;
   color: #393c40
@@ -387,7 +386,7 @@
 
 #chart_container .chart_dropdown_data a.chart_icon {
   display: inline-block;
-  magin: 0 6px 0 6px
+  margin: 0 6px 0 6px
 }
 
 #chart_container a.chart_icon_theme_dark, #chart_container .chart_dropdown_data li a.chart_icon_theme_dark:hover {
@@ -490,7 +489,7 @@
   margin: 1px 4px 1px 4px;
   padding: 3px;
   position: relative;
-  width: 24px;
+  width: 20px;
   z-index: 101
 }
 
@@ -648,10 +647,8 @@
   border-top-width: 1px;
   border-top-style: solid;
   cursor: default;
-  display: none;
   *font-weight: bold;
   height: 22px;
-  overflow: hidden;
   position: absolute;
   z-index: 1
 }
@@ -718,10 +715,14 @@
 }
 
 #chart_canvasGroup {
+  width: 100% !important;
   position: absolute;
-  z-index: 0
+  z-index: 0;
 }
-
+#chart_canvasGroup >img{
+  position: absolute;
+  bottom: 0;
+}
 #chart_mainCanvas {
   overflow: hidden;
   position: absolute;

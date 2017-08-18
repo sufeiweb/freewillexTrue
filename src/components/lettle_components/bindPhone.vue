@@ -104,7 +104,7 @@
                 $('.bindGetEmailCord').attr("disabled", true).css("cursor", "default");
                 that.timer = setInterval(function () {
                   $('.bindGetEmailCord').html((--second) + 's');
-                  if (second === 0) {
+                  if (second <= 0) {
                     $('.bindGetEmailCord').removeAttr("disabled").css("cursor", "pointer");
                     clearInterval(that.timer);
                     $('.bindGetEmailCord').html('获取验证码');

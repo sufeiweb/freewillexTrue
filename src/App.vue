@@ -6,6 +6,7 @@
     </transition>
     <footers v-show="FooterStyle"></footers>
     <Tips></Tips>
+    <goTop v-show="ShowOrHide"></goTop>
   </div>
 </template>
 
@@ -13,14 +14,20 @@
   import topHeader from './components/topHeader.vue';
   import footers from './components/footer.vue';
   import Tips from './components/text_components/tips.vue';
+  import goTop from './components/lettle_components/goTop.vue';
 
   import {mapGetters} from 'vuex';
   export default {
+    data(){
+      return {
+        dt: 0,
+      }
+    },
     components: {
-      topHeader, footers,Tips
+      topHeader, footers, Tips, goTop
     },
     computed: mapGetters(
-      ['TopHeaderStyle', 'FooterStyle']
+      ['TopHeaderStyle', 'FooterStyle','ShowOrHide']
     ),
     watch: {
       $route(to) {
@@ -28,16 +35,16 @@
       }
     },
     methods: {
-        swted(num){
-          $('.nav-link-box li').find('a').css({
-            borderBottom: 'none',
-            color: '#333'
-          });
-          $('.nav-link-box li').eq(num).find('a').css({
-            borderBottom: '2px solid #01aaef',
-            color: '#01aaef'
-          });
-        },
+      swted(num){
+        $('.nav-link-box li').find('a').css({
+          borderBottom: 'none',
+          color: '#333'
+        });
+        $('.nav-link-box li').eq(num).find('a').css({
+          borderBottom: '2px solid #01aaef',
+          color: '#01aaef'
+        });
+      },
       routeChange(path) {
         path = path.substring(1);
         if (path === 'quotation') {
@@ -54,11 +61,11 @@
           this.swted(0)
         }
         if (path === 'businessCNYAccount') {
-            this.$store.state.Account='CNY';
+          this.$store.state.Account = 'CNY';
           this.swted(2)
         }
         if (path === 'businessBTCAccount') {
-          this.$store.state.Account='BTC';
+          this.$store.state.Account = 'BTC';
           this.swted(2)
         }
         if (path === 'userIndex') {
@@ -67,7 +74,31 @@
         if (path === 'userIndex1') {
           this.swted(3)
         }
+      },
+      getScrollTop() {
+        var scrollPos;
+        if (window.pageYOffset) {
+          scrollPos = window.pageYOffset;
+        }
+        else if (document.compatMode && document.compatMode != 'BackCompat') {
+          scrollPos = document.documentElement.scrollTop;
+        }
+        else if (document.body) {
+          scrollPos = document.body.scrollTop;
+        }
+        this.dt = scrollPos;
       }
     },
+    mounted(){
+      let _this = this;
+      $(window).scroll(function () {
+        _this.getScrollTop();
+        if (_this.dt > 720) {
+          _this.$store.state.ShowOrHide = true;
+        } else {
+          _this.$store.state.ShowOrHide = false;
+        }
+      })
+    }
   }
 </script>

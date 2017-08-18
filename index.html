@@ -13,9 +13,32 @@
   <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.js"></script>
   <script src="static/js/socket.io-client/socket.io.js"></script>
   <script src="static/js/stomp.min.js"></script>
+  <script src="static/js/jquery.md5.js"></script>
+  <script src="static/js/jquery-ui-1.9.2.custom.min.js"></script>
+  <script src="static/js/jquery.nicescroll.js"></script>
     </head>
 <body>
 <div id="app"></div>
 <script src="https://www.sobot.com/chat/pc/pc.min.js?sysNum=6abf7450830a48529e7d617b5f100d1c" class="customerService"></script>
+<script>
+  $(function () {
+    $("html").niceScroll({
+      cursorcolor:"#01aaef",
+      cursoropacitymax:1,
+      touchbehavior:false,
+      cursorwidth:"10px",
+      cursorborder:"0",
+      cursorborderradius:"5px",
+    })
+    $(".dtscoll").niceScroll({
+      cursorcolor:"#01aaef",
+      cursoropacitymax:1,
+      touchbehavior:false,
+      cursorwidth:"10px",
+      cursorborder:"0",
+      cursorborderradius:"5px",
+    })
+  })
+</script>
 </body>
 </html>

@@ -5,9 +5,6 @@
         <div class="content-left-header">
           <router-link to="/businessCNYAccount">CNY专区帐号</router-link>
           |
-
-
-
           <router-link to="/businessBTCAccount" class="hover-color-css">BTC专区帐号</router-link>
         </div>
         <div class="recharge-group">
@@ -128,8 +125,8 @@
           <header>
             <span>{{buyClass}}/{{accountClass}}</span>
             <span>|</span>
-            <span>￥18247.25</span>
-            <span>+26.58%</span>
+            <span>￥{{LatestPrice.price|float2}}</span>
+            <span :class="LatestPrice.price>LatestPrice.beforePrice?'red':'green'">{{((LatestPrice.price-LatestPrice.beforePrice)/LatestPrice.beforePrice) | float2}}%</span>
           </header>
           <section>
             <span>买卖</span>
@@ -137,19 +134,9 @@
             <span>挂单量(L)</span>
           </section>
           <div class="sell-pankou">
-            <p><span>卖（5）</span><span>18763.35</span><span>1.23569854</span></p>
-            <p><span>卖（4）</span><span>18763.35</span><span>12.23569854</span></p>
-            <p><span>卖（3）</span><span>18763.35</span><span>5.23569854</span></p>
-            <p><span>卖（2）</span><span>18763.35</span><span>6.23569854</span></p>
-            <p><span>卖（1）</span><span>18763.35</span><span>4.23569854</span></p>
           </div>
           <div><em></em></div>
           <div class="buy-pankou">
-            <p><span>买（1）</span><span>18763.35</span><span>1.23569854</span></p>
-            <p><span>买（2）</span><span>18763.35</span><span>12.23569854</span></p>
-            <p><span>买（3）</span><span>18763.35</span><span>5.23569854</span></p>
-            <p><span>买（4）</span><span>18763.35</span><span>6.23569854</span></p>
-            <p><span>买（5）</span><span>18763.35</span><span>4.23569854</span></p>
           </div>
         </div>
         <div class="hangqing"></div>
@@ -160,6 +147,7 @@
 </template>
 <script>
   import entrustedRecord from '../lettle_components/entrustedRecord.vue';
+  import {mapGetters} from 'vuex';
   export default {
     data() {
       return {
@@ -198,10 +186,12 @@
           } else {
             that.buyOrSell = false;
           }
+          that.getPanKou();
         })
       }//选择方向
       {
         $("input[name='select-currencyaaa']").change(function () {
+          that.getPanKou();
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
           that.buyClass = $(this).val();
         })
@@ -216,6 +206,7 @@
           }
         })
       }//限价与市价的选择
+      this.getPanKou();
 
     },
     methods: {
@@ -290,10 +281,60 @@
       getCommodity() {
         this.commodity = $("input[name='select-currencyaaa']:checked").val() + this.newAccount;
       },
+      getPanKou(){
+        this.getCommodity();
+        this.$http({
+          url: 'https://kaifamobile.firstcoinex.com/fwex/web/quotation/depth/' + this.commodity + '/' + 5,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+          }
+        }).then((res) => {
+          console.log(res)
+//          this.showError(res.data.code, res.data.message);
+          if (res.data.code === 200) {
+            this.pushViewB(res.data.data.b);
+            this.pushViewS(res.data.data.s);
+          }
+        }).catch((req) => {
+          this.showError(req.code, req.message)
+        })
+      },
+      pushViewB(num){
+        $('.buy-pankou').html('');
+        for (let i = 0; i < num.length; i++) {
+          $('.buy-pankou').append(`<p><span>买${i + 1}</span><span>${(num[i].price).toFixed(2)}</span><span>${(num[i].vol).toFixed(4)}</span></p>`);
+        }
+        if (num.length < 5) {
+          for (let i = 0; i < 5 - num.length; i++) {
+            $('.buy-pankou').append(`<p><span>买${i+1 + num.length}</span><span>--</span><span>--</span></p>`);
+          }
+        }
+      },
+      pushViewS(num){
+        $('.sell-pankou').html('');
+        for (let i = 0; i < num.length; i++) {
+          $('.sell-pankou').prepend(`<p><span>卖${i + 1}</span><span>${(num[i].price).toFixed(2)}</span><span>${(num[i].vol).toFixed(4)}</span></p>`) ;
+        }
+        if (num.length < 5) {
+          for (let i = 0; i < 5 - num.length; i++) {
+            $('.sell-pankou').prepend(`<p><span>卖${i+1 + num.length}</span><span>--</span><span>--</span></p>`);
+          }
+        }
+      }
+    },
+    computed:{
+      ...mapGetters(['LatestPrice'])
     }
   }
 </script>
 <style scoped>
+  .red{
+    color: #cc0000 !important;
+  }
+  .green{
+    color: #00cc00 !important;
+  }
   .business-home-content {
     display: flex;
     background: #e9ecf3;

@@ -125,7 +125,7 @@
             </div>
             <div>
               <input name="select-bank-cash1" type="radio" id="recharge-mode-cny22-cash1" value="0"/>
-              <router-link to="/accountManagement/addBTCAdr" tag="label" for="recharge-mode-cny22-cash1"
+              <router-link :to="'/accountManagement/addCurrencyAdr/'+currency"  tag="label" for="recharge-mode-cny22-cash1"
                            class="add-bank-select-bank-btcAdr">
                 <i class="iconfont">&#xe689;</i>
                 <em>添加新地址</em>
@@ -292,9 +292,9 @@
             that.moneyStyle = false;
           } else {
             that.moneyStyle = true;
+            that.getCashAdr();
+            that.getFee();
           }
-          that.getCashAdr();
-          that.getFee();
         })
         $("input[name='select-currency1-cash']").change(function () {
           that.closeNum();
@@ -428,16 +428,12 @@
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
-          if (res.data.code !== 200) {
-            this.showError(res.data.code, res.data.message);
-          }
           if (res.data.code === 200) {
             for (let i = 0; i < res.data.data.length; i++) {
               this.$set(this.moneyControl, res.data.data[i].paramKey, res.data.data[i].paramValue);
             }
           }
         }).catch((req) => {
-          this.showError(req.code, req.message)
         })
       },
       //获取验证码
@@ -491,7 +487,7 @@
                 applyBalance: this.W_Money,
                 types: val,
                 captcha: this.serverYz,
-                capitalPwd: this.moneyPsd
+                capitalPwd: md5(this.moneyPsd)
               }
             }).then((res) => {
               this.showError(res.data.code, res.data.message);
@@ -547,7 +543,7 @@
                 fee: this.FreeShow ? fee : 0,
                 types: val,
                 captcha: this.serverYZ,
-                capitalPwd: this.moneyPsd
+                capitalPwd: md5(this.moneyPsd)
               }
             }).then((res) => {
               this.showError(res.data.code, res.data.message);
@@ -687,7 +683,7 @@
   }
 
   .recharge-group-radio-select-bank > div {
-    width: 316px;
+    width: 330px;
   }
 
   .recharge-group-radio > input, .recharge-group-radio-select-bank > div > input {

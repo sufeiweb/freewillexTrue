@@ -121,7 +121,7 @@
             method: 'POST',
             data: {
               "loginUser": that.userName,
-              "loginPwd": that.userPassword
+              "loginPwd": md5(that.userPassword)
             },
             headers: {
               "X-Requested-With": "XMLHttpRequest",
@@ -157,9 +157,10 @@
       },
       getUserM() {
         let that = this;
-        if (this.$store.state.token) {
+        if (this.$store.state.loginTrue) {
           that.$http({
             url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/info',
+//            url: 'http://192.168.1.120:8089/fwex/web/account/info',
             method: 'GET',
             headers: {
               'X-Requested-With': 'XMLHttpRequest',

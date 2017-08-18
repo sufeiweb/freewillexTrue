@@ -230,7 +230,8 @@
       }//获取资金信息
       {
         $('.coinStyle1').change(function () {
-          that.money_style = $(this).val()
+          that.money_style = $(this).val();
+          that.drawing1();
         })
       }
     },
@@ -246,6 +247,10 @@
         let JEcharts1 = this.$echarts.init(document.getElementById('JEcharts1'));
         let KEcharts1 = this.$echarts.init(document.getElementById('KEcharts1'));
         let DEcharts1 = this.$echarts.init(document.getElementById('DEcharts1'));
+        ZEcharts.clear();
+        JEcharts.clear();
+        KEcharts.clear();
+        DEcharts.clear();
         ZEcharts1.setOption({
           color: ['#fead22', '#38c1e8', '#9c5ff9', '#2dd1a5'],
           tooltip: {
@@ -385,13 +390,13 @@
 //          this.$router.push('/userIndex')
       },//刷新当前页面
       LTCtoBTC1(str) {
-        return (str * 4.12).toFixed(2);
+        return (str * this.$store.state.LatestPrice.price).toFixed(2);
       },
       ETCtoBTC1(str) {
-        return (str * 0.12).toFixed(2);
+        return (str * this.$store.state.LatestPrice.price).toFixed(2);
       },
       ETHtoBTC1(str) {
-        return (str * 2.12).toFixed(2);
+        return (str * this.$store.state.LatestPrice.price).toFixed(2);
       },
       //血条长度计算
       computedLangZ1(num){

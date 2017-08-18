@@ -181,6 +181,7 @@
 
   import dottedLine from '../lettle_components/dottedLine.vue';
   import userFooter from '../lettle_components/userFooter.vue';
+  import {mapGetters} from 'vuex';
   export default {
     data() {
       return {
@@ -211,6 +212,18 @@
         })
       }//控制显示的模式
       {
+        $('.coinStyle').change(function () {
+          switch ($(this).val()) {
+            case 'CNY':
+              that.$store.state.LatestPrice.price = 1250.36;
+              break;
+            case 'BTC':
+              that.$store.state.LatestPrice.price = 1100.36;
+              break;
+          }
+        })
+      }
+      {
         that.$http({
           url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/info',
           method: 'GET',
@@ -219,7 +232,7 @@
             'X-Authorization': 'Bearer ' + that.$store.state.token
           }
         }).then((res) => {
-          if(res.data.code!==200){
+          if (res.data.code !== 200) {
             this.showError(res.data.code, res.data.message);
           }
           if (res.data.code === 200) {
@@ -265,6 +278,10 @@
         let JEcharts = this.$echarts.init(document.getElementById('JEcharts'));
         let KEcharts = this.$echarts.init(document.getElementById('KEcharts'));
         let DEcharts = this.$echarts.init(document.getElementById('DEcharts'));
+        ZEcharts.clear();
+        JEcharts.clear();
+        KEcharts.clear();
+        DEcharts.clear();
         ZEcharts.setOption({
           color: ['#f54648', '#fead22', '#38c1e8', '#9c5ff9', '#2dd1a5'],
           tooltip: {
@@ -407,16 +424,16 @@
         this.$router.go(0)
       },//刷新当前页面
       BTCtoCNY(str) {
-        return (str * 1864.12).toFixed(2);
+        return (str * this.$store.state.LatestPrice.price).toFixed(2);
       },
       LTCtoCNY(str) {
-        return (str * 564.12).toFixed(2);
+        return (str * this.$store.state.LatestPrice.price).toFixed(2);
       },
       ETCtoCNY(str) {
-        return (str * 464.12).toFixed(2);
+        return (str * this.$store.state.LatestPrice.price).toFixed(2);
       },
       ETHtoCNY(str) {
-        return (str * 664.12).toFixed(2);
+        return (str * this.$store.state.LatestPrice.price).toFixed(2);
       },
       //血条长度计算
       computedLangZ(num){
@@ -440,7 +457,9 @@
         }
       },
     },
-    computed: {}
+    computed: {
+      ...mapGetters(['LatestPrice'])
+    }
   }
 </script>
 <style scoped>

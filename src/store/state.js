@@ -107,4 +107,10 @@ export default {
   ErrorMessage:'',//错误码
   ErrorState:false,//提示错误状态
   ErrorState1:false,//提示错误状态
+
+  LatestPrice:'',//最新价
+  trades:[],//交易流水
+  depth:'',//盘口信息
+  Quotation:'',//行情数据
+  ShowOrHide:false,//gotop显示隐藏
 }

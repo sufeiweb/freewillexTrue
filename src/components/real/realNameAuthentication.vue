@@ -354,7 +354,7 @@
               $('.REgetCorde').attr("disabled", true).css("cursor", "default");
               that.timer = setInterval(function () {
                 $('.REgetCorde').html((--second) + 's');
-                if (second === 0) {
+                if (second <= 0) {
                   $('.REgetCorde').removeAttr("disabled").css("cursor", "pointer");
                   clearInterval(that.timer);
                   $('.REgetCorde').html('获取验证码');

@@ -1,7 +1,7 @@
 <template>
   <div class="K">
-    <div class="chart_option" style="width: 1042px">
-      <div id="chart_container" class="dark" style="width: 1042px">
+    <div class="chart_option" id="chart_option">
+      <div id="chart_container" class="dark">
         <div id="chart_dom_elem_cache"></div>
         <div id="chart_toolbar">
           <div class="chart_toolbar_minisep"></div>
@@ -174,12 +174,13 @@
         </div>
         <div id="chart_canvasGroup" class="chart_canvasGroup">
           <!--{{#compare data.lang '===' 'zh-cn'}}-->
-          <!--<div class="fw_market_logo"><img src="../../../static/img/market_bg_logo.png" width="50%"></div>-->
+
           <!--{{else}}-->
           <!--<div class="fw_market_logo"><img src="../../../static/img/market_bg_logo_en.png" width="50%"></div>-->
           <!--{{/compare}}-->
           <canvas class="chart_canvas" id="chart_mainCanvas"></canvas>
           <canvas class="chart_canvas" id="chart_overlayCanvas"></canvas>
+          <!--<div class="fw_market_logo"><img src="../../src/assets/img/market_bg_logo.png" width="50%"></div>-->
         </div>
         <div id="chart_tabbar">
           <ul>
@@ -419,20 +420,32 @@
 </template>
 <script>
   import $ from 'jquery';
-//  import '../../static/js/kline.draw';
   export default {
     mounted() {
       {
+      $("body").addClass("market-body");
+        $(".market-content").removeClass("hide");
+//        var kline = this.Kline(); // 初始化k线
         $("body").addClass("market-body");
         $("body").append('<script src="../../static/js/kline.draw.js"><\/script>');
-        $(".market-content").removeClass("hide");
       }
     },
     methods: {
-
+     Kline() {
+    if (this instanceof Kline) {
+    } else {
+      return new Kline();
+    }
+  }
     }
   }
 </script>
 <style>
   @import "../../static/css/marketK.css";
+  .K{
+    height: 100%;
+  }
+  #chart_option{
+    height: 100%;
+  }
 </style>
