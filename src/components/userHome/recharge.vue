@@ -98,9 +98,7 @@
         </div>
         <a href="javascript:;" @click="CopyAdr($event)" text="复制成功">复制地址</a>
       </div>
-      <div class="erCord_big">
-        <img src="../../assets/img/download/APPcode.jpg" width="150"/>
-      </div>
+      <div class="erCord_big"></div>
     </div>
     <div class="recharge-group" v-show="!moneyStyle">
       <div class="recharge-group-title">
@@ -199,11 +197,9 @@
         <span>元</span>
       </div>
       <div style="color: red" v-show="bank2"><span>转账时请务必包含此两位小数</span><span class="show-tips-show"></span></div>
-      <div class="ER-cord">
-        <img src="../../assets/img/download/APPcode.jpg" width="150" v-show="erCord"/>
-      </div>
+      <div class="ER-cord"></div>
       <button class="recharge-group-button" v-show="!bank3" @click="rechargeBtn($event)">生成汇款单</button>
-      <button class="recharge-group-button" v-show="bank3" @click="erCord=true">生成充值码</button>
+      <button class="recharge-group-button" v-show="bank3" @click="erCord()">生成充值码</button>
     </div>
   </div>
 </template>
@@ -334,9 +330,9 @@
       }//选择充值银行
       {
         $('.erCord_bigBtn').hover(function () {
-          $('.erCord_big').animate({opacity: 1})
+          that.QRC($('.erCord_big'),that.itemAddrs);
         }, function () {
-          $('.erCord_big').animate({opacity: 0})
+          $('.erCord_big').html('');
         })
       }//btc充值地址二维码放大
       {
@@ -378,6 +374,10 @@
       }
     },
     methods: {
+        //生成充值二维码
+      erCord(){
+        this.QRC($('.ER-cord'),this.ZFB)
+      },
       rechargeBtn(ev) {
         ev.target.innerHTML = '处理中...';
         this.getAccount();
