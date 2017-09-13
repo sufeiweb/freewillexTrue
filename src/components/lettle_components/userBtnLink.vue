@@ -12,7 +12,7 @@
         <router-link to="/userIndex1" tag="dd"><a href="javascript:">
           <span class="s2"></span>
           BTC专区
-</a>
+        </a>
         </router-link>
       </dl>
       <dl class="btcTransaction-content-btn">
@@ -20,12 +20,12 @@
         <router-link to="/recharge" tag="dd"><a href="javascript:">
           <span class="s3"></span>
           充值
-</a>
+        </a>
         </router-link>
         <router-link to="/cash" tag="dd"><a href="javascript:">
           <span class="s4"></span>
           提现
-</a>
+        </a>
         </router-link>
         <router-link to="/accountDetails" tag="dd">
           <a href="javascript:">
@@ -36,10 +36,11 @@
           <span class="s6"></span>账户管理</a>
         </router-link>
       </dl>
-      <!--<dl class="btcTransaction-content-btn">-->
-      <!--<dt class="btcTransaction-content-title">活动</dt>-->
-      <!--<router-link to="/reward" tag="dd"><a href="javascript:"><i class="iconfont">&#xe687;</i>活动奖励</a></router-link>-->
-      <!--</dl>-->
+      <dl class="btcTransaction-content-btn">
+      <dt class="btcTransaction-content-title">活动</dt>
+        <router-link to="/activity/activityCenter" tag="dd"><a href="javascript:"><i class="iconfont">&#xe61c;</i>活动中心</a></router-link>
+      <router-link to="/activity/reward" tag="dd"><a href="javascript:"><i class="iconfont">&#xe687;</i>活动奖励</a></router-link>
+      </dl>
       <dl class="btcTransaction-content-btn">
         <dt class="btcTransaction-content-title">安全中心</dt>
         <router-link to="/settings" tag="dd"><a href="javascript:"> <span class="s7"></span>安全设置</a>
@@ -54,7 +55,21 @@
   import $ from 'jquery';
   export default {
     mounted() {
+      let that = this;
       $('.btcTransaction-content-btn a').click(function () {
+        if ($(this).text().trim() === 'CNY专区') {
+          localStorage.setItem('Account', 'CNY');
+//          that.$store.state.accountDateilState = 'CNY';
+//          console.log(localStorage.getItem('Account') + '切换成');
+//          console.log('切换成' + that.$store.state.accountDateilState);
+        }
+        if ($(this).text().trim() === 'BTC专区') {
+          localStorage.setItem('Account', 'BTC');
+//          that.$store.state.accountDateilState = 'BTC';
+//          console.log(localStorage.getItem('Account') + '切换成');
+//          console.log('切换成' + that.$store.state.accountDateilState);
+////          that.sendEvent('accountDetails', '')
+        }
         $('.btcTransaction-content dd').removeClass('dd-active');
         $(this).parent().addClass('dd-active');
       });
@@ -117,7 +132,7 @@
   }
 
   .router-link-active {
-    background: #01aaef;
+    background: linear-gradient(to right, #148ffd, #3babfd);
     color: #fff !important;
   }
 

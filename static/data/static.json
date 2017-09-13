@@ -1,0 +1,130 @@
+{
+  "CNY": {
+    "url": "https://zh.firstcoinex.com",
+    "companyName": "上海数炫网络科技股份有限公司",
+    "tel": "400-960-0212",
+    "email": [
+      "service@freewillex.cn"
+    ],
+    "QQ": [
+      "455813191"
+    ],
+    "copyright": "Copyright ©2015 上海数炫网络科技股份有限公司 版权所有 沪ICP备16036274号",
+    "wechat": {
+      "name": "FreeWillex",
+      "url": "http://weixin.qq.com/r/oj_Pl3PEJC5brTf092qw"
+    },
+    "sina": {
+      "name": "FreeWillex",
+      "url": "http://weibo.com/FreeWillex"
+    },
+    "tencent": {
+      "name": "FreeWillex",
+      "url": "http://t.qq.com/FreeWillex"
+    },
+    "facebook": {
+      "name": "FreeWillex",
+      "url": "https://www.facebook.com/freewillex"
+    },
+    "twitter": {
+      "name": "FreeWillex",
+      "url": "https://twitter.com/FreeWillex"
+    },
+    "zh-cn": {
+      "share": {
+        "active": {
+          "title": "FreeWillex免费比特币派发活动正在进行中……",
+          "url": "https://zh.firstcoinex.com/active/list?lang=zh-cn&id=",
+          "imgUrl": "https://zh.firstcoinex.com/img/zh-cn/share_active.png",
+          "content": "注册就送比特币，比特币交易免费，可提现比特币。"
+        },
+        "broker": {
+          "title": "你的朋友XXX邀请你和ta一起去FreeWillex领福利！快点击领取！",
+          "url": "https://zh.firstcoinex.com/broker/register?id=",
+          "imgUrl": "https://zh.firstcoinex.com/img/zh-cn/share_broker.png",
+          "content": "FreeWillex自由意志比特币交易平台正在派送大礼包，就问你来不来拿？"
+        }
+      }
+    },
+    "en": {
+      "share": {
+        "active": {
+          "title": "FreeWillex——free bitcoin distribution activity is underway.",
+          "url": "https://zh.firstcoinex.com/active/list?lang=en&id=",
+          "imgUrl": "https://zh.firstcoinex.com/img/en/share_active.png",
+          "content": "Sign up can get BTC, free transaction fees, support BTC withdrawals."
+        },
+        "broker": {
+          "title": "Your friend XXX invite you experience FreeWillex to take rewards together. Click now!",
+          "url": "https://zh.firstcoinex.com/broker/register?id=",
+          "imgUrl": "https://zh.firstcoinex.com/img/zh-cn/share_broker.png",
+          "content": "FreeWillex BTC trading platform is sending gifts now, are you want to take?"
+        }
+      }
+    }
+  },
+  "USD": {
+    "url": "https://en.firstcoinex.com",
+    "companyName": "上海数炫网络科技股份有限公司",
+    "tel": "400-960-0212",
+    "email": [
+      "service@freewillex.com"
+    ],
+    "QQ": [
+      "455813191"
+    ],
+    "copyright": "Copyright ©2015 上海数炫网络科技股份有限公司 版权所有 沪ICP备16036274号",
+    "wechat": {
+      "name": "FreeWillex",
+      "url": "http://weixin.qq.com/r/oj_Pl3PEJC5brTf092qw"
+    },
+    "sina": {
+      "name": "FreeWillex",
+      "url": "http://weibo.com/FreeWillex"
+    },
+    "tencent": {
+      "name": "FreeWillex",
+      "url": "http://t.qq.com/FreeWillex"
+    },
+    "facebook": {
+      "name": "FreeWillex",
+      "url": "https://www.facebook.com/freewillex"
+    },
+    "twitter": {
+      "name": "FreeWillex",
+      "url": "https://twitter.com/FreeWillex"
+    },
+    "zh-cn": {
+      "share": {
+        "active": {
+          "title": "FreeWillex免费比特币派发活动正在进行中……",
+          "url": "https://en.firstcoinex.com/active/list?lang=zh-cn&id=",
+          "imgUrl": "https://en.firstcoinex.com/img/zh-cn/share_active.png",
+          "content": "注册就送比特币，比特币交易免费，可提现比特币。"
+        },
+        "broker": {
+          "title": "你的朋友XXX邀请你和ta一起去FreeWillex领福利！快点击领取！",
+          "url": "https://zh.firstcoinex.com/broker/register?id=",
+          "imgUrl": "https://zh.firstcoinex.com/img/zh-cn/share_broker.png",
+          "content": "FreeWillex自由意志比特币交易平台正在派送大礼包，就问你来不来拿？"
+        }
+      }
+    },
+    "en": {
+      "share": {
+        "active": {
+          "title": "FreeWillex——free bitcoin distribution activity is underway.",
+          "url": "https://en.firstcoinex.com/active/list?lang=en&id=",
+          "imgUrl": "https://en.firstcoinex.com/img/en/share_active.png",
+          "content": "Sign up can get BTC, free transaction fees, support BTC withdrawals."
+        },
+        "broker": {
+          "title": "Your friend XXX invite you experience FreeWillex to take rewards together. Click now!",
+          "url": "https://zh.firstcoinex.com/broker/register?id=",
+          "imgUrl": "https://zh.firstcoinex.com/img/zh-cn/share_broker.png",
+          "content": "FreeWillex BTC trading platform is sending gifts now, are you want to take?"
+        }
+      }
+    }
+  }
+}

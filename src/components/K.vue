@@ -47,7 +47,7 @@
           <div id="chart_show_indicator" class="chart_toolbar_button chart_str_indicator_cap selected">技术指标</div>
           <div class="chart_dropdown" id="chart_dropdown_settings">
             <div class="chart_dropdown_t">
-              <a class="chart_str_settings">更多</a>
+              <a class="chart_str_settings" style="color: #fff">更多</a>
             </div>
             <div class="chart_dropdown_data">
               <table>
@@ -104,8 +104,8 @@
           </div>
           <div id="chart_zoom" class="icon_zoom"></div>
         </div>
-        <div id="chart_toolpanel" style="display: inline;">
-          <div class="chart_toolpanel_separator"></div>
+        <div id="chart_toolpanel" style="display: inline;top:0; overflow: hidden">
+          <!--<div class="chart_toolpanel_separator"></div>-->
           <div class="chart_toolpanel_button">
             <div class="chart_toolpanel_icon" id="chart_Cursor" name="Cursor"></div>
             <div class="chart_toolpanel_tip chart_str_cursor">光标</div>
@@ -427,7 +427,10 @@
         $(".market-content").removeClass("hide");
 //        var kline = this.Kline(); // 初始化k线
         $("body").addClass("market-body");
+        $("body").append('<script src="../../static/js/jquery.mousewheel.js"><\/script>');
         $("body").append('<script src="../../static/js/kline.draw.js"><\/script>');
+        $("body").append('<script src="../../static/js/jquery.slimscroll.js"><\/script>');
+
       }
     },
     methods: {

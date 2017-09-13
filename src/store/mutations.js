@@ -32,5 +32,11 @@ export default {
   },
   [types.ERROR_HIDE1]: (state) => {
     state.ErrorState1 = false;
+  },
+  [types.SING_LOG_SHOW]:(state)=>{
+    state.signLogState=true;
+  },
+  [types.SING_LOG_HIDE]:(state)=>{
+    state.signLogState=false;
   }
 }

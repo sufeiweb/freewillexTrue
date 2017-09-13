@@ -15,7 +15,7 @@
         <span>验证码</span>
         <div>
           <div class="bindEmail-input-box">
-            <input type="text" placeholder="验证码" v-model="bindEmailRYZ" class="bindEmailRYZ-input"/>
+            <input type="text" placeholder="验证码" v-model="bindEmailRYZ" class="bindEmailRYZ-input" maxlength="6"/>
             <a @click="bindEmailRgetCord()">{{bindEmailRGetCord}}</a>
           </div>
           <span class="bindEmailRYZ-tips"></span>
@@ -25,7 +25,7 @@
         <span>邮箱验证码</span>
         <div>
           <div class="bindEmail-input-box">
-            <input type="text" placeholder="邮箱验证码" v-model="bindEmailRCaptcha"/>
+            <input type="text" placeholder="邮箱验证码" v-model="bindEmailRCaptcha" maxlength="6"/>
             <button class="bindGetEmailCord">获取验证码</button>
           </div>
           <span class="bindEmailRCaptcha-tips"></span>
@@ -82,17 +82,30 @@
             });
           }
         });
+        $('.bindEmailNum-input').blur(function () {
+          that.$http({
+            url: that.$URL_API + 'register/check/' + that.bindEmailNum,
+            method: 'GET',
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              "Content-Type": "application/json;charset=UTF-8",
+            }
+          }).then((res) => {
+            that.showError(res.data.code, res.data.message);
+            //console.log(res,'用户名不存在')
+          })
+        })
       } //邮箱正则验证
       {
         $('.bindGetEmailCord').click(function () {
+          $('.bindGetEmailCord').attr("disabled", true).css("cursor", "default");
           let second = 60;
           let pattern = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+(com|cn)$/;
-          let url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/email/' + that.bindEmailNum;
+          let url = that.$URL_API+'captcha/email/' + that.bindEmailNum;
           if (that.bindEmailNum.length !== 0 && pattern.test(that.bindEmailNum)) {
             that.$http.get(url).then((res) => {
-              this.showError(res.data.code, res.data.message);
+              that.showError(res.data.code, res.data.message);
               if (res.data.code === 200) {
-                $('.bindGetEmailCord').attr("disabled", true).css("cursor", "default");
                 that.timer = setInterval(function () {
                   $('.bindGetEmailCord').html((--second) + 's');
                   if (second <= 0) {
@@ -106,11 +119,15 @@
                   color: 'red',
                   marginLeft: '1.5rem'
                 })
+              }else {
+                $('.bindGetEmailCord').removeAttr("disabled").css("cursor", "pointer");
               }
             }).catch((req) => {
-              this.showError(req.code, req.message);
+              $('.bindGetEmailCord').removeAttr("disabled").css("cursor", "pointer");
+              that.showError(req.code, req.message);
             })
           } else {
+            $('.bindGetEmailCord').removeAttr("disabled").css("cursor", "pointer");
             $('.bindEmailRCaptcha-tips').html('请核对邮箱').css({
               alignSelf: 'flex-start',
               color: 'red',
@@ -136,7 +153,7 @@
         let that = this;
         if (that.$store.state.bindEmailNum.email && that.$store.state.bindEmailNum.YZ) {
           that.$http({
-            url: 'https://kaifamobile.firstcoinex.com/fwex/web/authentication/emailAuth',
+            url: this.$URL_API+'authentication/emailAuth',
             method: 'POST',
             data: {
               email: that.bindEmailNum,
@@ -149,9 +166,12 @@
             }
           }).then((res) => {
             this.showError(res.data.code, res.data.message);
-            that.$router.push('/settings');
+            if(res.data.code===200){
+              that.$router.push('/settings');
+            }
           }).catch((req) => {
             this.showError(req.code, req.message)
+
           })
         }
       }

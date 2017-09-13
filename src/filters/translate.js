@@ -57,6 +57,15 @@ export const translate = (str) => {
     case 'ETC':
       return '以太经典';
       break;
+    case 'XRP':
+      return '瑞波币';
+      break;
+    case 'BCC':
+      return '比特币现金';
+      break;
+    case 'CNY':
+      return '人民币';
+      break;
     case false:
       return '未完成';
       break;

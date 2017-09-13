@@ -19,7 +19,7 @@
             <span>验证码</span>
             <div class="form-group1-box">
               <div class="form-group-content">
-                <input type="text" placeholder="验证码"/>
+                <input type="text" placeholder="验证码" maxlength="6"/>
                 <a href="javascript:">获取验证码</a>
               </div>
               <div class="help-tips"></div>
@@ -29,8 +29,8 @@
             <span>手机验证码</span>
             <div class="form-group1-box">
               <div class="form-group-content">
-                <input type="text" placeholder="手机验证码" v-model="userCordM"/>
-                <button href="javascript:" class="getCodeMR">获取验证码</button>
+                <input type="text" placeholder="手机验证码" v-model="userCordM" maxlength="6"/>
+                <button class="getCodeMR" @click="getCodeMR($event)">获取验证码</button>
               </div>
               <div class="help-tips-getCodeMR"></div>
             </div>
@@ -38,7 +38,8 @@
           <div class="form-group1">
             <span>密码</span>
             <div class="form-group-content de">
-              <input type="password" placeholder="密码" v-model="userPsdM" class="userPsdMR" minlength="6" maxlength="22"/>
+              <input type="password" placeholder="密码" v-model="userPsdM" class="userPsdMR" minlength="6"
+                     maxlength="32"/>
               <div class="help-tips-psd"></div>
             </div>
             <p class="password-strength"><span></span><span></span><span></span><em
@@ -47,14 +48,15 @@
           <div class="form-group1">
             <span>确认密码</span>
             <div class="form-group-content de">
-              <input type="password" placeholder="确认密码" v-model="userPsdsM" class="userPsdsMR" minlength="6" maxlength="22"/>
+              <input type="password" placeholder="确认密码" v-model="userPsdsM" class="userPsdsMR" minlength="6"
+                     maxlength="32"/>
               <div class="help-tips-psdsMR"></div>
             </div>
           </div>
           <div class="form-group1 dd margin-bottom-0">
             <span> </span>
             <div class="form-group-content1">
-              <input type="button" value="提交" class="retrieval-submit" @click="phoneRE()"/>
+              <input type="button" value="提交" class="retrieval-submit" @click="phoneRE($event)"/>
             </div>
           </div>
           <div class="form-group1 margin-bottom-0">
@@ -79,7 +81,7 @@
             <span>验证码</span>
             <div class="form-group1-box">
               <div class="form-group-content">
-                <input type="text" placeholder="验证码"/>
+                <input type="text" placeholder="验证码" maxlength="6"/>
                 <a href="javascript:">获取验证码</a>
               </div>
               <div class="help-tips"></div>
@@ -89,8 +91,8 @@
             <span>邮箱验证码</span>
             <div class="form-group1-box">
               <div class="form-group-content">
-                <input type="text" placeholder="邮箱验证码" v-model="userCordE"/>
-                <button href="javascript:" class="getCodeER">获取验证码</button>
+                <input type="text" placeholder="邮箱验证码" v-model="userCordE" maxlength="6"/>
+                <button class="getCodeER" @click="getCodeER($event)">获取验证码</button>
               </div>
               <div class="help-tips-getCodeER"></div>
             </div>
@@ -98,7 +100,8 @@
           <div class="form-group1">
             <span>密码</span>
             <div class="form-group-content de">
-              <input type="password" placeholder="密码" v-model="userPsdE" class="userPsdER" minlength="6" maxlength="22"/>
+              <input type="password" placeholder="密码" v-model="userPsdE" class="userPsdER" minlength="6"
+                     maxlength="32"/>
               <div class="help-tips-psdE"></div>
             </div>
             <p class="password-strengths"><span></span><span></span><span></span><em
@@ -107,7 +110,8 @@
           <div class="form-group1">
             <span>确认密码</span>
             <div class="form-group-content de">
-              <input type="password" placeholder="确认密码" v-model="userPsdsE" class="userPsdsER" minlength="6" maxlength="22"/>
+              <input type="password" placeholder="确认密码" v-model="userPsdsE" class="userPsdsER" minlength="6"
+                     maxlength="32"/>
               <div class="help-tip-psdsER"></div>
             </div>
           </div>
@@ -147,6 +151,7 @@
       }
     },
     mounted() {
+      let that = this;
       //      手机号码正则验证
       {
         let that = this;
@@ -186,91 +191,123 @@
       //获取验证码
       {
         let that = this;
-        $('.getCodeMR').click(function () {
-          let second = 60;
-          let pattern = /0?^(13|14|15|18|17)[0-9]{9}/;
-          let url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/mobile/' + that.userNameM;
-          if (that.userNameM.length !== 0 && pattern.test(that.userNameM)) {
-            that.$http.get(url).then((res) => {
-              this.showError(res.data.code, res.data.message);
-              if (res.data.code === 200) {
-                $('.getCodeMR').attr("disabled", true).css("cursor", "default");
-                that.timer = setInterval(function () {
-                  $('.getCodeMR').html((--second) + 's');
-                  if (second <= 0) {
-                    $('.getCodeMR').removeAttr("disabled").css("cursor", "pointer");
-                    clearInterval(that.timer);
-                    $('.getCodeMR').html('获取验证码');
-                  }
-                }, 1000);
-                $('.help-tips-getCodeMR').html('请输入验证码').css({
-                  alignSelf: 'flex-start',
-                  color: 'red',
-                  marginLeft: '1.5rem'
-                })
-              }
-            }).catch((req) => {
-              this.showError(req.code, req.message)
+        $('.getCodeMR').html('获取验证码');
+        $('.getCodeER').html('获取验证码');
+      }
+      {
+        {
+          $('.userPsdER').mousedown(function () {
+            $(document).keyup(function () {
+              that.passWord(that.userPsdE, 'password-strengths', 'password-strength-views');
             })
-          } else {
-            $('.help-tips-getCodeMR').html('请核对手机号').css({
-              alignSelf: 'flex-start',
-              color: 'red',
-              marginLeft: '1.5rem'
+          });
+          $('.userPsdER').mouseleave(function () {
+            $('.userPsdER').mousedown = null;
+          })
+          $('.userPsdMR').mousedown(function () {
+            $(document).keyup(function () {
+              that.passWord(that.userPsdM, 'password-strength', 'password-strength-view');
             })
-          }
-        });
-        $('.getCodeER').click(function () {
-          let second = 60;
-          let pattern = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+(com|cn)$/;
-          let url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/email/' + that.userNameE;
-          if (that.userNameE.length !== 0 && pattern.test(that.userNameE)) {
-            that.$http.get(url).then((res) => {
-              this.showError(res.data.code, res.data.message);
-              if (res.data.code === 200) {
-                $('.getCodeER').attr("disabled", true).css("cursor", "default");
-                that.timer = setInterval(function () {
-                  $('.getCodeER').html((--second) + 's');
-                  if (second <= 0) {
-                    $('.getCodeER').removeAttr("disabled").css("cursor", "pointer");
-                    clearInterval(that.timer);
-                    $('.getCodeER').html('获取验证码');
-                  }
-                }, 1000);
-                $('.help-tips-getCodeER').html('请输入验证码').css({
-                  alignSelf: 'flex-start',
-                  color: 'red',
-                  marginLeft: '1.5rem'
-                });
-              }
-            }).catch((req) => {
-              this.showError(req.code, req.message)
-            })
-          } else {
-            $('.help-tips-getCodeER').html('请核对邮箱').css({
-              alignSelf: 'flex-start',
-              color: 'red',
-              marginLeft: '1.5rem'
-            })
-          }
-        });
+          });
+          $('.userPsdMR').mouseleave(function () {
+            $('.userPsdMR').mousedown = null;
+          })
+        }
       }
     },
     methods: {
+      getCodeER(ev){
+        $('.getCodeER').attr("disabled", true).css("cursor", "default");
+        let that = this;
+        let second = 60;
+        let pattern = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+(com|cn)$/;
+        let url = that.$URL_API + 'captcha/email/' + that.userNameE;
+        if (that.userNameE.length && pattern.test(that.userNameE)) {
+          that.$http.get(url).then((res) => {
+            that.showError(res.data.code, res.data.message);
+            if (res.data.code === 200) {
+              that.timer = setInterval(function () {
+                $('.getCodeER').html((--second) + 's');
+                if (second <= 0) {
+                  $('.getCodeER').removeAttr("disabled").css("cursor", "pointer");
+                  clearInterval(that.timer);
+                  $('.getCodeER').html('获取验证码');
+                }
+              }, 1000);
+              $('.help-tips-getCodeER').html('请输入验证码').css({
+                alignSelf: 'flex-start',
+                color: 'red',
+                marginLeft: '1.5rem'
+              });
+            } else {
+              $('.getCodeER').removeAttr("disabled").css("cursor", "pointer");
+            }
+          }).catch((req) => {
+            $('.getCodeER').removeAttr("disabled").css("cursor", "pointer");
+            that.showError(req.code, req.message)
+          })
+        } else {
+          $('.getCodeER').removeAttr("disabled").css("cursor", "pointer");
+          $('.help-tips-getCodeER').html('请核对邮箱').css({
+            alignSelf: 'flex-start',
+            color: 'red',
+            marginLeft: '1.5rem'
+          })
+        }
+      },
+      getCodeMR(ev){
+        let that = this;
+        let second = 60;
+        $('.getCodeMR').attr("disabled", true).css("cursor", "default");
+        let pattern = /0?^(13|14|15|18|17)[0-9]{9}/;
+        let url = that.$URL_API + 'captcha/mobile/' + that.userNameM;
+        if (that.userNameM && pattern.test(that.userNameM)) {
+          that.$http.get(url).then((res) => {
+            that.showError(res.data.code, res.data.message);
+            if (res.data.code === 200) {
+              that.timer = setInterval(function () {
+                $('.getCodeMR').html((--second) + 's');
+                if (second <= 0) {
+                  $('.getCodeMR').removeAttr("disabled").css("cursor", "pointer");
+                  clearInterval(that.timer);
+                  $('.getCodeMR').html('获取验证码');
+                }
+              }, 1000);
+              $('.help-tips-getCodeMR').html('请输入验证码').css({
+                alignSelf: 'flex-start',
+                color: 'red',
+                marginLeft: '1.5rem'
+              })
+            } else {
+              $('.getCodeMR').removeAttr("disabled").css("cursor", "pointer");
+            }
+          }).catch((req) => {
+            $('.getCodeMR').removeAttr("disabled").css("cursor", "pointer");
+            that.showError(req.code, req.message)
+          })
+        } else {
+          $('.getCodeMR').removeAttr("disabled").css("cursor", "pointer");
+          $('.help-tips-getCodeMR').html('请核对手机号').css({
+            alignSelf: 'flex-start',
+            color: 'red',
+            marginLeft: '1.5rem'
+          })
+        }
+      },
       retrieval_style() {
         this.retrieval_text = !this.retrieval_text;
       },
       phoneRE() {
         let that = this;
-        if (that.$store.state.phoneR.username && that.$store.state.phoneR.usercord && that.$store.state.phoneR.userpsd && that.$store.state.phoneR.userpsds) {
+        if (that.userNameM && that.userCordM && that.userPsdM && that.userPsdsM) {
           that.$http({
-            url: 'https://kaifamobile.firstcoinex.com/fwex/web/forget/password',
+            url: this.$URL_API + 'forget/password',
             method: 'POST',
             data: {
               moe: that.userNameM,
               captcha: that.userCordM,
-              password: that.userPsdM,
-              cfpassword: that.userPsdsM
+              password: md5(that.userPsdM),
+              cfpassword: md5(that.userPsdsM)
             },
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
@@ -288,15 +325,15 @@
       },//手机找回密码js
       emailRE() {
         let that = this;
-        if (that.$store.state.emailR.username && that.$store.state.emailR.usercord && that.$store.state.emailR.userpsd && that.$store.state.emailR.userpsds) {
+        if (that.userNameE && that.userCordE && that.userPsdE && that.userPsdsE) {
           that.$http({
-            url: 'https://kaifamobile.firstcoinex.com/fwex/web/forget/password',
+            url: this.$URL_API + 'forget/password',
             method: 'POST',
             data: {
               moe: that.userNameE,
               captcha: that.userCordE,
-              password: that.userPsdE,
-              cfpassword: that.userPsdsE
+              password: md5(that.userPsdE),
+              cfpassword: md5(that.userPsdsE)
             },
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
@@ -304,7 +341,7 @@
             }
           }).then((res) => {
             this.showError(res.data.code, res.data.message);
-            if (res.data.code===200) {
+            if (res.data.code === 200) {
               this.$router.push('/login');
             }
           }).catch((req) => {
@@ -313,252 +350,40 @@
         }
       },//邮箱找回密码js
     },
-    watch:{
+    watch: {
       userPsdM(){
-          let that=this;
-          if(that.userPsdsM){
-            if (that.userPsdM === that.userPsdsM) {
-              that.$store.state.phoneR.userpsds = true;
-              $('.help-tips-psdsMR').html('');
-            } else {
-              that.$store.state.phoneR.userpsds = false;
-              $('.help-tips-psdsMR').html('两次输入的密码不一致').css({
-                alignSelf: 'flex-start',
-                color: 'red'
-              })
-            }
+        let that = this;
+        if (that.userPsdsM) {
+          if (that.userPsdM === that.userPsdsM) {
+            that.$store.state.phoneR.userpsds = true;
+            $('.help-tips-psdsMR').html('');
+          } else {
+            that.$store.state.phoneR.userpsds = false;
+            $('.help-tips-psdsMR').html('两次输入的密码不一致').css({
+              alignSelf: 'flex-start',
+              color: 'red'
+            })
           }
-        let N = /^\d+$/;
-        let C = /^[a-zA-Z]+$/;
-        let TC = /^[@#$%*,.^&]+$/;
-        let N_C = /^(?!\d+$)(?![a-zA-Z]+$)[a-zA-Z\d]+$/;
-        let C_TC = /^(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[a-zA-Z@#$%*,.^&]+$/;
-        let N_TC = /^(?!\d+)(?![@#$%*,.^&]+$)[\d@#$%*,.^&]+$/;
-        let N_C_TC = /^(?!\d+$)(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[\da-zA-Z@#$%*,.^&]+$/;
-        if (that.userPsdM.length < 6) {
-          that.$store.state.phoneR.userpsd = false;
-          $('.password-strength span').css({
-            background: '#cfd0d2'
-          });
-          $('.password-strength-view').html('');
-          $('.help-tips-psd').html('密码应该长度在6~22位之间').css({
-            alignSelf: 'flex-start',
-            color: 'red'
-          })
-        } else {
-          $('.help-tips-psd').html('');
-          that.$store.state.phoneR.userpsd = true;
-        }
-//          纯数字
-        if (N.test(that.userPsdM) && that.userPsdM.length >= 6) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#cfd0d2'});
-          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-view').html('低').css({color: 'red'})
-        }
-//          纯字母
-        else if (C.test(that.userPsdM) && that.userPsdM.length >= 6 && that.userPsdM.length <= 13) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#01aaef'});
-          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-view').html('低').css({color: 'red'})
-        }
-        else if (C.test(that.userPsdM) && that.userPsdM.length > 13) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#01aaef'});
-          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-view').html('中').css({color: '#01aaef'})
-        }
-//          纯特殊字符
-        else if (TC.test(that.userPsdM) && that.userPsdM.length >= 6 && that.userPsdM.length <= 13) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#01aaef'});
-          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-view').html('中').css({color: '#01aaef'});
-        }
-        else if (TC.test(that.userPsdM) && that.userPsdM.length > 13) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#01aaef'});
-          $('.password-strength span').eq(2).css({background: '#0c0'});
-          $('.password-strength-view').html('高').css({color: '#0c0'});
-        }
-//          字母加数字
-        else if (N_C.test(that.userPsdM) && that.userPsdM.length >= 6 && that.userPsdM.length <= 12) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#cfd0d2'});
-          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-view').html('低').css({color: 'red'})
-        }
-        else if (N_C.test(that.userPsdM) && that.userPsdM.length > 12) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#01aaef'});
-          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-view').html('中').css({color: '#01aaef'})
-        }
-//          字母加特殊字符
-        else if (C_TC.test(that.userPsdM) && that.userPsdM.length >= 6 && that.userPsdM.length <= 10) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#01aaef'});
-          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-view').html('中').css({color: '#01aaef'});
-        }
-        else if (C_TC.test(that.userPsdM) && that.userPsdM.length > 10) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#01aaef'});
-          $('.password-strength span').eq(2).css({background: '#0c0'});
-          $('.password-strength-view').html('高').css({color: '#0c0'});
-        }
-//          数字加特殊字符
-        else if (N_TC.test(that.userPsdM) && that.userPsdM.length >= 6 && that.userPsdM.length <= 11) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#01aaef'});
-          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-view').html('中').css({color: '#01aaef'});
-        }
-        else if (N_TC.test(that.userPsdM) && that.userPsdM.length > 11) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#01aaef'});
-          $('.password-strength span').eq(2).css({background: '#0c0'});
-          $('.password-strength-view').html('高').css({color: '#0c0'});
-        }
-//          数字加字母加特殊字符
-        else if (N_C_TC.test(that.userPsdM) && that.userPsdM.length >= 6 && that.userPsdM.length <= 8) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#01aaef'});
-          $('.password-strength span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-view').html('中').css({color: '#01aaef'});
-        }
-        else if (N_C_TC.test(that.userPsdM) && that.userPsdM.length > 8) {
-          $('.password-strength span').eq(0).css({background: 'red'});
-          $('.password-strength span').eq(1).css({background: '#01aaef'});
-          $('.password-strength span').eq(2).css({background: '#0c0'});
-          $('.password-strength-view').html('高').css({color: '#0c0'});
         }
       },
       userPsdE(){
-          let that=this;
-          if(that.userPsdsE){
-            if (that.userPsdE === that.userPsdsE) {
-              $('.help-tip-psdsER').html('');
-              that.$store.state.emailR.userpsds = true;
-            } else {
-              that.$store.state.emailR.userpsds = false;
-              $('.help-tip-psdsER').html('两次输入的密码不一致').css({
-                alignSelf: 'flex-start',
-                color: 'red'
-              })
-            }
+        let that = this;
+        if (that.userPsdsE) {
+          if (that.userPsdE === that.userPsdsE) {
+            $('.help-tip-psdsER').html('');
+            that.$store.state.emailR.userpsds = true;
+          } else {
+            that.$store.state.emailR.userpsds = false;
+            $('.help-tip-psdsER').html('两次输入的密码不一致').css({
+              alignSelf: 'flex-start',
+              color: 'red'
+            })
           }
-        let N = /^\d+$/;
-        let C = /^[a-zA-Z]+$/;
-        let TC = /^[@#$%*,.^&]+$/;
-        let N_C = /^(?!\d+$)(?![a-zA-Z]+$)[a-zA-Z\d]+$/;
-        let C_TC = /^(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[a-zA-Z@#$%*,.^&]+$/;
-        let N_TC = /^(?!\d+)(?![@#$%*,.^&]+$)[\d@#$%*,.^&]+$/;
-        let N_C_TC = /^(?!\d+$)(?![a-zA-Z]+$)(?![@#$%*,.^&]+$)[\da-zA-Z@#$%*,.^&]+$/;
-        if (that.userPsdE.length < 6) {
-          that.$store.state.emailR.userpsd = false;
-          $('.password-strengths span').css({
-            background: '#cfd0d2'
-          });
-          $('.password-strength-views').html('');
-          $('.help-tips-psdE').html('密码应该长度在6~22位之间').css({
-            alignSelf: 'flex-start',
-            color: 'red'
-          })
-        } else {
-          that.$store.state.emailR.userpsd = true;
-          $('.help-tips-psdE').html('');
-        }
-//          纯数字
-        if (N.test(that.userPsdE) && that.userPsdE.length >= 6) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#cfd0d2'});
-          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-views').html('低').css({color: 'red'})
-        }
-//          纯字母
-        else if (C.test(that.userPsdE) && that.userPsdE.length >= 6 && that.userPsdE.length <= 13) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#cfd0d2'});
-          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-views').html('低').css({color: 'red'})
-        }
-        else if (C.test(that.userPsdE) && that.userPsdE.length > 13) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#01aaef'});
-          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-views').html('中').css({color: '#01aaef'})
-        }
-//          纯特殊字符
-        else if (TC.test(that.userPsdE) && that.userPsdE.length >= 6 && that.userPsdE.length <= 13) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#01aaef'});
-          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-views').html('中').css({color: '#01aaef'});
-        }
-        else if (TC.test(that.userPsdE) && that.userPsdE.length > 13) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#01aaef'});
-          $('.password-strengths span').eq(2).css({background: '#0c0'});
-          $('.password-strength-views').html('高').css({color: '#0c0'});
-        }
-//          字母加数字
-        else if (N_C.test(that.userPsdE) && that.userPsdE.length >= 6 && that.userPsdE.length <= 12) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#cfd0d2'});
-          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-views').html('低').css({color: 'red'})
-        }
-        else if (N_C.test(that.userPsdE) && that.userPsdE.length > 12) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#01aaef'});
-          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-views').html('中').css({color: '#01aaef'})
-        }
-//          字母加特殊字符
-        else if (C_TC.test(that.userPsdE) && that.userPsdE.length >= 6 && that.userPsdE.length <= 10) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#01aaef'});
-          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-views').html('中').css({color: '#01aaef'});
-        }
-        else if (C_TC.test(that.userPsdE) && that.userPsdE.length > 10) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#01aaef'});
-          $('.password-strengths span').eq(2).css({background: '#0c0'});
-          $('.password-strength-views').html('高').css({color: '#0c0'});
-        }
-//          数字加特殊字符
-        else if (N_TC.test(that.userPsdE) && that.userPsdE.length >= 6 && that.userPsdE.length <= 11) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#01aaef'});
-          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-views').html('中').css({color: '#01aaef'});
-        }
-        else if (N_TC.test(that.userPsdE) && that.userPsdE.length > 11) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#01aaef'});
-          $('.password-strengths span').eq(2).css({background: '#0c0'});
-          $('.password-strength-views').html('高').css({color: '#0c0'});
-        }
-//          数字加字母加特殊字符
-        else if (N_C_TC.test(that.userPsdE) && that.userPsdE.length >= 6 && that.userPsdE.length <= 8) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#01aaef'});
-          $('.password-strengths span').eq(2).css({background: '#cfd0d2'});
-          $('.password-strength-views').html('中').css({color: '#01aaef'});
-        }
-        else if (N_C_TC.test(that.userPsdE) && that.userPsdE.length > 8) {
-          $('.password-strengths span').eq(0).css({background: 'red'});
-          $('.password-strengths span').eq(1).css({background: '#01aaef'});
-          $('.password-strengths span').eq(2).css({background: '#0c0'});
-          $('.password-strength-views').html('高').css({color: '#0c0'});
         }
       },
       userPsdsE(){
-        let that=this;
-        if(that.userPsdE){
+        let that = this;
+        if (that.userPsdE) {
           if (that.userPsdE === that.userPsdsE) {
             $('.help-tip-psdsER').html('');
             that.$store.state.emailR.userpsds = true;
@@ -573,8 +398,8 @@
         }
       },
       userPsdsM(){
-        let that=this;
-        if(that.userPsdM ){
+        let that = this;
+        if (that.userPsdM) {
           if (that.userPsdM === that.userPsdsM) {
             that.$store.state.phoneR.userpsds = true;
             $('.help-tips-psdsMR').html('');
@@ -719,7 +544,7 @@
   }
 
   .retrieval-submit {
-    width: 100%;
+    width: 120%;
     padding: 0.667rem 1rem;
     border: none;
     color: #FFFFFF;
@@ -729,6 +554,7 @@
     cursor: pointer;
     margin-top: 1.8rem;
     margin-bottom: .8rem;
+    margin-left: -25px;
   }
 
   .retrieval-submit:hover {

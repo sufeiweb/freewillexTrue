@@ -96,21 +96,48 @@ export default {
     bankNo: false,
     bankNum: false,
     bankAdr: false,
-    phone:false,
+    phone: false,
     YZ: false,
     serverYZ: true
   },//绑定银行卡控制
-  loginTrue:false,//登录状态
-  TKShow:false,//登录弹窗状态,
-  Account:'',//当前账户
-  Currency:'',//当前币种
-  ErrorMessage:'',//错误码
-  ErrorState:false,//提示错误状态
-  ErrorState1:false,//提示错误状态
-
-  LatestPrice:'',//最新价
-  trades:[],//交易流水
-  depth:'',//盘口信息
-  Quotation:'',//行情数据
-  ShowOrHide:false,//gotop显示隐藏
+  loginTrue: false,//登录状态
+  TKShow: false,//登录弹窗状态,
+  Account: '',//当前账户
+  Currency: '',//当前币种
+  ErrorMessage: '',//错误码
+  ErrorState: false,//提示错误状态
+  ErrorState1: false,//提示错误状态
+  LatestPrice: '',//最新价
+  trades: [],//交易流水
+  depth: '',//盘口信息
+  chaPrice: '',//盘口差价
+  Quotation: '',//行情数据
+  kStyle: 'min1',//k线类型，默认是min1
+  ShowOrHide: false,//gotop显示隐藏
+  LatestPriceCurrency: 'BTCCNY',//最新价种类，默认为BTCCNY
+  weiTuo: '',//委托
+  priceArr: '',
+  businessPrice: {
+    name: '',
+    data: new Map()
+  },
+  bankImgUrl:{
+    "ABC": require('../assets/img/banklogo/ABC.png'),
+    "BCM": require('../assets/img/banklogo/BCM.png'),
+    "BOB": require('../assets/img/banklogo/BOB.png'),
+    "BOC": require('../assets/img/banklogo/BOC.png'),
+    "CCB": require('../assets/img/banklogo/CCB.png'),
+    "CEB": require('../assets/img/banklogo/CEB.png'),
+    "CIB": require('../assets/img/banklogo/CIB.png'),
+    "CMB": require('../assets/img/banklogo/CMB.png'),
+    "CMBC": require('../assets/img/banklogo/CMBC.png'),
+    "CNCB": require('../assets/img/banklogo/CNCB.png'),
+    "HSBC": require('../assets/img/banklogo/HSBC.png'),
+    "ICBC": require('../assets/img/banklogo/ICBC.png'),
+    "PBC": require('../assets/img/banklogo/PBC.png'),
+    "PSBC": require('../assets/img/banklogo/PSBC.png'),
+    "PINGAN": require('../assets/img/banklogo/PINGAN.png'),
+  },
+  signLogState:false,//签到日志状态
+  accountDateilState:'CNY',//账户明细状态
 }

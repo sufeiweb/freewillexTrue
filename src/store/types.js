@@ -15,3 +15,9 @@ export const ERROR_SHOW1='ERROR_SHOW1';//错误处理
 export const ERROR_HIDE1='ERROR_HIDE1';//错误处理
 
 
+export const SING_LOG_SHOW='SING_LOG_SHOW';//签到日志显示
+export const SING_LOG_HIDE='SING_LOG_HIDE';//签到日志隐藏
+
+
+
+

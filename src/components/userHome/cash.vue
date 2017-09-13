@@ -9,13 +9,13 @@
         <input name="select-account-cash" type="radio" id="account-cny-cash" value="CNY" checked/>
         <label for="account-cny-cash" class="recharge-group-radio-checked">
           <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-          <span class="iconFont a1"></span>
+          <span class="iconFont aCNY"></span>
           <span>CNY账户</span>
         </label>
         <input name="select-account-cash" type="radio" id="account-btc-cash" value="BTC"/>
         <label for="account-btc-cash">
           <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-          <span class="iconFont a2"></span>
+          <span class="iconFont aBTC"></span>
           <span>BTC账户</span>
         </label>
       </div>
@@ -23,67 +23,31 @@
     <div class="recharge-group">
       <div class="recharge-group-title">
         <p>提现币种</p>
+
       </div>
       <transition enter-active-class="animated fadeIn">
         <div class="recharge-group-radio" v-show="!account">
-          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-cash" value="CNY" checked/>
-          <label for="recharge-currency-cny-cash" class="recharge-group-radio-checked">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a1"></span>
-            <span>CNY</span>
-          </label>
-          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-btc-cash" value="BTC"/>
-          <label for="recharge-currency-cny-btc-cash">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a2"></span>
-            <span>BTC</span>
-          </label>
-          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-ltc-cash" value="LTC"/>
-          <label for="recharge-currency-cny-ltc-cash">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a3"></span>
-            <span>LTC</span>
-          </label>
-          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-eth-cash" value="ETH"/>
-          <label for="recharge-currency-cny-eth-cash">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a4"></span>
-            <span>ETH</span>
-          </label>
-          <input name="select-currency-cash" type="radio" id="recharge-currency-cny-etc-cash" value="ETC"/>
-          <label for="recharge-currency-cny-etc-cash">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a5"></span>
-            <span>ETC</span>
-          </label>
+          <section v-for="(item,index) in AccountZ.CNY">
+            <input name="select-currency-cash" type="radio" :id='"recharge-currency-cny-cash"+index' :value="item"/>
+            <label :for='"recharge-currency-cny-cash"+index' :class="index===0?'recharge-group-radio-checked':''">
+              <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+              <span class="iconFont" :class='"a"+item'></span>
+              <span>{{item}}</span>
+            </label>
+          </section>
         </div>
       </transition>
       <transition enter-active-class="animated fadeIn">
         <div class="recharge-group-radio" v-show="account">
-          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-btc1-cash" value="BTC" checked/>
-          <label for="recharge-currency-cny-btc1-cash" class="recharge-group-radio-checked">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a2"></span>
-            <span>BTC</span>
-          </label>
-          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-ltc1-cash" value="LTC"/>
-          <label for="recharge-currency-cny-ltc1-cash">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a3"></span>
-            <span>LTC</span>
-          </label>
-          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-eth1-cash" value="ETH"/>
-          <label for="recharge-currency-cny-eth1-cash">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a4"></span>
-            <span>ETH</span>
-          </label>
-          <input name="select-currency1-cash" type="radio" id="recharge-currency-cny-etc1-cash" value="ETC"/>
-          <label for="recharge-currency-cny-etc1-cash">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a5"></span>
-            <span>ETC</span>
-          </label>
+          <section v-for="(item,index) in AccountZ.BTC">
+            <input name="select-currency1-cash" type="radio" :id='"recharge-currency-cny-btc1-cash"+index'
+                   :value="item"/>
+            <label :for='"recharge-currency-cny-btc1-cash"+index' :class="index===0?'recharge-group-radio-checked':''">
+              <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+              <span class="iconFont" :class='"a"+item'></span>
+              <span>{{item}}</span>
+            </label>
+          </section>
         </div>
       </transition>
     </div>
@@ -105,11 +69,10 @@
             </div>
             <div>
               <input name="select-bank-cash" type="radio" id="recharge-mode-cny22-cash" value="3"/>
-              <router-link to="/accountManagement/addBankCard" tag="label" for="recharge-mode-cny22"
-                           class="add-bank-select-bank">
+              <label for="recharge-mode-cny22-cash" class="add-bank-select-bank" @click="goAddBankCard()">
                 <i class="iconfont">&#xe689;</i>
                 <em>添加新银行卡</em>
-              </router-link>
+              </label>
             </div>
           </div>
         </transition>
@@ -125,10 +88,13 @@
             </div>
             <div>
               <input name="select-bank-cash1" type="radio" id="recharge-mode-cny22-cash1" value="0"/>
-              <router-link :to="'/accountManagement/addCurrencyAdr/'+currency"  tag="label" for="recharge-mode-cny22-cash1"
-                           class="add-bank-select-bank-btcAdr">
+              <label for="recharge-mode-cny22-cash1" class="add-bank-select-bank-btcAdr" @click="goAddAdr()">
                 <i class="iconfont">&#xe689;</i>
                 <em>添加新地址</em>
+              </label>
+              <router-link :to="'/accountManagement/addCurrencyAdr/'+currency" tag="label"
+                           for="recharge-mode-cny22-cash1"
+                           class="add-bank-select-bank-btcAdr">
               </router-link>
             </div>
 
@@ -145,7 +111,9 @@
           <section>
             <div>
               <span>输入金额</span>
-              <input type="text" :placeholder="'本次最多可提'+this.moneyControl.W_MAX+'CNY'" v-model="W_Money"
+              <input type="text"
+                     :placeholder="'本次最多可提'+((this.userMoney.CNYCNY > this.moneyControl.W_MAX) ? this.moneyControl.W_MAX : this.userMoney.CNYCNY)+'CNY'"
+                     v-model="W_Money"
                      class="w-money"/>
             </div>
             <span>手续费<span class="color-blue">{{FEE ? FEE : moneyControl.W_MIN_FEE | float2}} CNY</span></span>
@@ -161,16 +129,17 @@
           </section>
           <section>
             <div class="section-div-label">
-              <input type="radio" name="cash-btc-style-yz1" id="cash-btc-style-yz-emai11" value="email" checked/>
-              <label for="cash-btc-style-yz-emai11" class="cash-btc-select-color">邮箱验证</label>
-              <input type="radio" name="cash-btc-style-yz1" id="cash-btc-style-yz-phone11" value="mobile"/>
-              <label for="cash-btc-style-yz-phone11">手机验证</label>
+              <input type="radio" name="cash-btc-style-yz1" id="cash-btc-style-yz-emai11" value="emails" v-show="EMAIL"/>
+              <label for="cash-btc-style-yz-emai11" v-show="EMAIL">邮箱验证</label>
+              <input type="radio" name="cash-btc-style-yz1" id="cash-btc-style-yz-phone11" value="mobiles"
+                     v-show="MOBILE"/>
+              <label for="cash-btc-style-yz-phone11" v-show="MOBILE">手机验证</label>
             </div>
           </section>
           <section>
             <div>
-              <input type="text" placeholder="验证码" v-model="serverYZ"/>
-              <button @click="getYZCode($event)">发送验证码</button>
+              <input type="text" placeholder="验证码" v-model="serverYZ" maxlength="6"/>
+              <button @click="getYZCode1($event)">发送验证码</button>
             </div>
           </section>
           <section>
@@ -182,7 +151,9 @@
         <div class="cash-btc" v-show="moneyStyle">
           <section>
             <div class="btc-num-input">
-              <input placeholder="输入提币数量" v-model="W_Money"/>
+              <input
+                :placeholder="'本次最多可提'+((this.userMoney[currency+Account] > this.CurrencyFee.maxWithdraw) ? this.CurrencyFee.maxWithdraw : this.userMoney[currency+Account])+currency"
+                v-model="W_Money"/>
             </div>
             <span class="btc-num-input-tips" style="color: red;"></span>
           </section>
@@ -205,15 +176,16 @@
           </section>
           <section>
             <div class="section-div-label">
-              <input type="radio" name="cash-btc-style-yz" id="cash-btc-style-yz-email" value="email" checked/>
-              <label for="cash-btc-style-yz-email" class="cash-btc-select-color">邮箱验证</label>
-              <input type="radio" name="cash-btc-style-yz" id="cash-btc-style-yz-phone" value="mobile"/>
-              <label for="cash-btc-style-yz-phone">手机验证</label>
+              <input type="radio" name="cash-btc-style-yz" id="cash-btc-style-yz-email" value="emails"
+                     v-show="EMAIL"/>
+              <label for="cash-btc-style-yz-email" v-show="EMAIL">邮箱验证</label>
+              <input type="radio" name="cash-btc-style-yz" id="cash-btc-style-yz-phone" value="mobiles" v-show="MOBILE"/>
+              <label for="cash-btc-style-yz-phone" v-show="MOBILE">手机验证</label>
             </div>
           </section>
           <section>
             <div>
-              <input type="text" placeholder="验证码" v-model="serverYZ"/>
+              <input type="text" placeholder="验证码" v-model="serverYZ" maxlength="6"/>
               <button @click="getYZCode($event)">发送验证码</button>
             </div>
           </section>
@@ -227,27 +199,12 @@
 </template>
 <script>
   import $ from 'jquery';
+  import {mapGetters} from 'vuex';
   export default {
     data() {
       return {
         account: false,
         moneyStyle: false,
-        bankImgUrl: {
-          "ABC": require('../../assets/img/banklogo/ABC.png'),
-          "BCM": require('../../assets/img/banklogo/BCM.png'),
-          "BOB": require('../../assets/img/banklogo/BOB.png'),
-          "BOC": require('../../assets/img/banklogo/BOC.png'),
-          "CCB": require('../../assets/img/banklogo/CCB.png'),
-          "CEB": require('../../assets/img/banklogo/CEB.png'),
-          "CIB": require('../../assets/img/banklogo/CIB.png'),
-          "CMB": require('../../assets/img/banklogo/CMB.png'),
-          "CMBC": require('../../assets/img/banklogo/CMBC.png'),
-          "CNCB": require('../../assets/img/banklogo/CNCB.png'),
-          "HSBC": require('../../assets/img/banklogo/HSBC.png'),
-          "ICBC": require('../../assets/img/banklogo/ICBC.png'),
-          "PBC": require('../../assets/img/banklogo/PBC.png'),
-          "PSBC": require('../../assets/img/banklogo/PSBC.png'),
-        },
         userBank: [],//银行
         currencyAdr: [],//地址
         Account: '',//当前账户
@@ -260,48 +217,88 @@
         Fee: [],//数字货币手续费
         FreeShow: true,
         CurrencyFee: '',//数字货币费率控制
+//        AccountCNY: [],
+//        AccountBTC: [],
+        AccountZ: '',
+        EMAIL: false,
+        MOBILE: false,
+        userMoney: {},
       }
     },
+    created(){
+      this.getAccountCommodity();
+    },
     mounted() {
+      this.getUserMoney();
+      {
+        if (sessionStorage.getItem('EMAIL')) {
+          this.EMAIL = true;
+        }
+        if (sessionStorage.getItem('MOBILE')) {
+          this.MOBILE = true;
+        }
+      }
       let that = this;
       {
         $("input[name='select-account-cash']").change(function () {
-          that.closeNum();
           $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
+          if (sessionStorage.getItem('testCheck')) {
+
+          } else {
+            sessionStorage.setItem('testCheck', 'CNY')
+          }
           if ($(this).val() === 'CNY') {
             that.account = false;
-            if ($("input[name='select-currency-cash']:checked").val() === 'CNY') {
-              that.moneyStyle = false;
-            } else {
+            that.moneyStyle = false;
+            if (sessionStorage.getItem('testCheck') !== 'CNY') {
               that.moneyStyle = true;
+              that.getCashAdr();
+              that.getFee();
+              setTimeout(function () {
+                sessionStorage.setItem('currencyAdr', $("input[name='select-bank-cash1']:checked").attr('address'))
+              }, 100)
+            } else {
+              that.moneyStyle = false;
             }
-          }
-          else {
+          } else {
             that.account = true;
             that.moneyStyle = true;
             that.getCashAdr();
             that.getFee();
+            setTimeout(function () {
+              sessionStorage.setItem('currencyAdr', $("input[name='select-bank-cash1']:checked").attr('address'))
+            }, 100)
           }
-        })
-      }//选择账户
+        });
+      }
       {
-        $("input[name='select-currency-cash']").change(function () {
-          that.closeNum();
-          $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          if ($(this).val() === 'CNY') {
-            that.moneyStyle = false;
-          } else {
+        setTimeout(function () {
+          that.getCNYCode();
+          $("input[name='select-currency-cash']").change(function () {
+            that.closeNum();
+            $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
+            sessionStorage.setItem('testCheck', $(this).val());
+            if ($(this).val() === 'CNY') {
+              that.moneyStyle = false;
+            } else {
+              that.moneyStyle = true;
+              that.getCashAdr();
+              that.getFee();
+              setTimeout(function () {
+                sessionStorage.setItem('currencyAdr', $("input[name='select-bank-cash1']:checked").attr('address'))
+              }, 100)
+            }
+          })
+          $("input[name='select-currency1-cash']").change(function () {
+            $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
             that.moneyStyle = true;
             that.getCashAdr();
             that.getFee();
-          }
-        })
-        $("input[name='select-currency1-cash']").change(function () {
-          that.closeNum();
-          $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          that.getCashAdr();
-          that.getFee();
-        })
+            setTimeout(function () {
+              sessionStorage.setItem('currencyAdr', $("input[name='select-bank-cash1']:checked").attr('address'))
+            }, 100)
+          })
+        }, 600)
       }//选择提现币种
       {
         $("input[name='cash-btc-style-yz']").change(function () {
@@ -313,33 +310,29 @@
       }//验证方式选择
       {
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/all',
+          url: this.$URL_API + 'accountBank/all',
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
-          if (res.data.code !== 200) {
-            this.showError(res.data.code, res.data.message);
-          }
           if (res.data.code === 200) {
             that.userBank = res.data.data;
           }
         }).then(() => {
+          setTimeout(function () {
+            sessionStorage.setItem('bankId', $("input[name='select-bank-cash']:checked").attr('bankid'))
+          }, 100);
           $("input[name='select-bank-cash']").change(function () {
             $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
+            setTimeout(function () {
+              sessionStorage.setItem('bankId', $("input[name='select-bank-cash']:checked").attr('bankid'))
+            }, 100);
             that.getCNYCode();
           });//选择充值银行
-        }).catch((req) => {
-          this.showError(req.code, req.message)
         })
       }//获取用户绑定银行
-      {
-        setTimeout(function () {
-          that.getCNYCode();
-        }, 500)
-      }//初始化当前资金控制信息
       {
         $('.w-money').keyup(function () {
           if (isNaN($(this).val())) {
@@ -369,7 +362,7 @@
           if (parseFloat($(this).val()) < that.CurrencyFee.minWithdraw) {
             $('.btc-num-input-tips').html('最小提现数量为 ' + that.CurrencyFee.minWithdraw + ' ' + that.CurrencyFee.currency);
           } else if (parseFloat($(this).val()) > that.CurrencyFee.maxWithdraw) {
-            $('.btc-num-input-tips').html('最小提现数量为 ' + that.CurrencyFee.maxWithdraw + ' ' + that.CurrencyFee.currency);
+            $('.btc-num-input-tips').html('最大提现数量为 ' + that.CurrencyFee.maxWithdraw + ' ' + that.CurrencyFee.currency);
           } else {
             $('.btc-num-input-tips').html();
           }
@@ -377,15 +370,31 @@
       }//数字货币资金控制
     },
     methods: {
+      goAddBankCard(){
+        if (localStorage.getItem('real')) {
+          this.$router.push('/accountManagement/addBankCard')
+        } else {
+          this.showError('', '未实名认证');
+          this.$router.push('/settings/user')
+        }
+      },
+      goAddAdr(){
+        if (localStorage.getItem('real')) {
+          this.$router.push('/accountManagement/addCurrencyAdr/' + this.currency)
+        } else {
+          this.showError('', '未实名认证');
+          this.$router.push('/settings/user')
+        }
+      },
       //获取当前账户//当前币种
       getAccount(){
         if (this.account) {
           this.Account = 'BTC';
-          this.currency = $("input[name='select-currency1-cash']:checked").val();
+          this.currency = $("input[name='select-currency1-cash']:checked").val() ? $("input[name='select-currency1-cash']:checked").val() : 'BTC';
         }
         else {
           this.Account = 'CNY';
-          this.currency = $("input[name='select-currency-cash']:checked").val()
+          this.currency = $("input[name='select-currency-cash']:checked").val() ? $("input[name='select-currency-cash']:checked").val() : 'CNY';
         }
 
       },
@@ -393,35 +402,30 @@
       getCashAdr(){
         this.getAccount();
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/withdrawInfo/' + this.currency,
+          url: this.$URL_API + 'digital/withdrawInfo/' + this.currency,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
-          if (res.data.code !== 200) {
-            this.showError(res.data.code, res.data.message);
-          }
           if (res.data.code === 200) {
             this.currencyAdr = res.data.data;
           }
         }).then(() => {
           //btc提现地址
           $("input[name='select-bank-cash1']").change(function () {
-            //console.log(1)
             $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
+            sessionStorage.setItem('currencyAdr', $(this).attr('address'))
           })
-        }).catch((req) => {
-          this.showError(req.code, req.message)
-        });
+        })
         this.closeNum();
       },
       //获取人名币充提参数
       getCNYCode(){
         let bankId = $("input[name='select-bank-cash']:checked").attr('bankid');
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/param/' + bankId,
+          url: this.$URL_API + 'accountBank/param/' + bankId,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -433,46 +437,84 @@
               this.$set(this.moneyControl, res.data.data[i].paramKey, res.data.data[i].paramValue);
             }
           }
-        }).catch((req) => {
         })
       },
       //获取验证码
-      getYZCode(ev){
+      getYZCode1(ev){
         let code = $("input[name='cash-btc-style-yz1']:checked").val();
-        this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/' + code,
-          method: 'GET',
-          headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            'X-Authorization': 'Bearer ' + this.$store.state.token,
-          }
-        }).then((res) => {
-          this.showError(res.data.code, res.data.message);
-          if (res.data.code === 200) {
-            let s = 60;
-            let ts = setInterval(function () {
-              ev.target.innerHTML = (--s) + 's';
-              ev.target.setAttribute('disabled', 'true');
-              if (s === 0) {
-                clearInterval(ts);
-                ev.target.innerHTML = '获取验证码';
-                ev.target.setAttribute('disabled', 'false');
-              }
-            }, 1000);
-          }
-        }).catch((req) => {
-          this.showError(req.code, req.message)
-        })
+        if (code) {
+          ev.target.setAttribute('disabled', 'true');
+          this.$http({
+            url: this.$URL_API + 'captcha/' + code,
+            method: 'GET',
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              'X-Authorization': 'Bearer ' + this.$store.state.token,
+            }
+          }).then((res) => {
+            this.showError(res.data.code, res.data.message);
+            if (res.data.code === 200) {
+              let s = 60;
+              let ts = setInterval(function () {
+                ev.target.innerHTML = (--s) + 's';
+
+                if (s <= 0) {
+                  clearInterval(ts);
+                  ev.target.innerHTML = '获取验证码';
+                  ev.target.setAttribute('disabled', 'false');
+                }
+              }, 1000);
+            }
+          }).catch((req) => {
+            ev.target.setAttribute('disabled', 'false');
+            this.showError(req.code, req.message)
+          })
+        } else {
+          this.showError('', '请选择验证方式')
+        }
+      },
+      getYZCode(ev){
+        let code = $("input[name='cash-btc-style-yz']:checked").val();
+        if (code) {
+          ev.target.setAttribute('disabled', 'true');
+          this.$http({
+            url: this.$URL_API + 'captcha/' + code,
+            method: 'GET',
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              'X-Authorization': 'Bearer ' + this.$store.state.token,
+            }
+          }).then((res) => {
+            this.showError(res.data.code, res.data.message);
+            if (res.data.code === 200) {
+              let s = 60;
+              let ts = setInterval(function () {
+                ev.target.innerHTML = (--s) + 's';
+                if (s <= 0) {
+                  clearInterval(ts);
+                  ev.target.innerHTML = '获取验证码';
+                  ev.target.setAttribute('disabled', 'false');
+                }
+              }, 1000);
+            }
+          }).catch((req) => {
+            ev.target.setAttribute('disabled', 'false');
+            this.showError(req.code, req.message)
+          })
+        } else {
+          this.showError('', '请选择验证方式')
+        }
       },
       //法币确认提现
       QCash(ev){
-        let id = $("input[name='select-bank-cash']:checked").attr('bankid');
+        let id = sessionStorage.getItem('bankId');
         let val = $("input[name='cash-btc-style-yz1']:checked").val();
         if (this.moneyPsd && this.W_Money && this.serverYZ) {
-          if (this.W_Money >= this.moneyControl.W_MIN && this.W_Money <= this.moneyControl.W_MAX) {
+          if (this.W_Money >= this.moneyControl.W_MIN && this.W_Money <= this.moneyControl.W_MAX && this.W_Money <= this.userMoney.CNYCNY) {
             ev.target.innerHTML = '处理中...';
             this.$http({
-              url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/withdraw',
+              url: this.$URL_API + 'capital/withdraw',
+//              url:'http://192.168.1.113:8089/capital/withdraw',
               method: 'POST',
               headers: {
                 'X-Requested-With': 'XMLHttpRequest',
@@ -481,7 +523,8 @@
               },
               data: {
                 accountBankId: id,
-                commodity: 'CNYCNY',
+//                commodity: 'CNYCNY',
+                legalCurrency: 'CNY',
                 currency: 'CNY',
                 business: 'W',
                 applyBalance: this.W_Money,
@@ -501,10 +544,10 @@
               ev.target.innerHTML = '确认提现';
             })
           } else {
-            this.showError('', '请输入正确的金额');
+            this.showError('', '请输入正确提现金额');
           }
         } else {
-          this.showError('', '必备参数不能为空');
+          this.showError('', '请检查是否输入完整');
         }
       },
       //数字货币提现
@@ -513,22 +556,24 @@
         //手续费
         let fee = $("input[name='select-Service-Charge']:checked").val();
         let nextd;
+//        alert(fee);
         if (this.FreeShow) {
           nextd = fee ? true : false;
         } else {
           nextd = true;
         }
         //地址
-        let adr = $("input[name='select-bank-cash1']:checked").attr('address');
+//        alert(nextd);
+        let adr = sessionStorage.getItem('currencyAdr');
         let val = $("input[name='cash-btc-style-yz']:checked").val();
         if (!nextd) {
           this.showError('', '请选择手续费')
         }
         if (this.moneyPsd && this.W_Money && this.serverYZ && nextd) {
-          if (this.W_Money >= this.CurrencyFee.minWithdraw && this.W_Money <= this.CurrencyFee.maxWithdraw) {
+          if (this.W_Money >= this.CurrencyFee.minWithdraw && this.W_Money <= this.CurrencyFee.maxWithdraw && this.W_Money <= this.userMoney[this.currency+this.Account] && adr) {
             ev.target.innerHTML = '处理中...';
             this.$http({
-              url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/withdraw',
+              url: this.$URL_API + 'digital/withdraw',
               method: 'POST',
               headers: {
                 'X-Requested-With': 'XMLHttpRequest',
@@ -537,7 +582,8 @@
               },
               data: {
                 digtalAddr: adr,
-                commodity: this.currency + this.Account,
+                legalCurrency: this.Account,
+//                commodity: this.currency + this.Account,
                 currency: this.currency,
                 amount: this.W_Money,
                 fee: this.FreeShow ? fee : 0,
@@ -556,9 +602,11 @@
               this.showError(req.code, req.message);
               ev.target.innerHTML = '确认提现';
             })
+          } else {
+            this.showError('', '请输入正确提现数量');
           }
         } else {
-          this.showError('', '必备参数不能为空');
+          this.showError('', '请检查是否输入完整');
         }
       },
       //获取数字货币提现手续费
@@ -566,16 +614,13 @@
         this.getAccount();
         this.getCurrencyFee();
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/fee/' + this.currency,
+          url: this.$URL_API + 'digital/fee/' + this.currency,
           method: 'GET',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           },
         }).then((res) => {
-          if (res.data.code !== 200) {
-            this.showError(res.data.code, res.data.message);
-          }
           if (res.data.code === 200) {
             this.Fee = res.data.data;
             this.FreeShow = res.data.data.length > 0;
@@ -585,14 +630,12 @@
           $("input[name='select-Service-Charge']").change(function () {
             $(this).parent().addClass('cash-btc-select-color').siblings().removeClass('cash-btc-select-color');
           })
-        }).catch((req) => {
-          this.showError(req.code, req.message)
         })
       },
       //获取费率
       getCurrencyFee(){
         this.$http({
-          url: 'http://192.168.1.48:8089/fwex/web/digital/rates/' + this.currency,
+          url: this.$URL_API + 'digital/rates/' + this.currency,
           method: 'GET',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -601,19 +644,44 @@
         }).then((res) => {
           if (res.data.code === 200) {
             this.CurrencyFee = res.data.data;
-            console.log(this.CurrencyFee);
           }
-
-        }).catch((req) => {
-          this.showError(req.code, req.message)
         })
       },
       closeNum(){
         this.W_Money = '';
         this.serverYZ = '';
         this.moneyPsd = '';
-      }
-    }
+      },
+      getAccountCommodity(){
+        this.$http({
+          url: this.$URL_API + 'commodity/account',
+          header: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        }).then((res) => {
+          this.AccountZ = res.data.data;
+        })
+      },
+//      获取用户资金信息
+      getUserMoney(){
+        this.$http({
+          url: this.$URL_API + 'capital/info',
+          method: 'GET',
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+          }
+        }).then((res) => {
+//            console.log(res);
+          for (let i = 0; i < res.data.data.length; i++) {
+//              this.userMoney[res.data.data[i].currency]=res.data.data[i].amount
+            this.$set(this.userMoney, res.data.data[i].currency+res.data.data[i].legalMoney, res.data.data[i].amount);
+          }
+//          console.log(this.userMoney);
+        })
+      },
+    },
+    computed: mapGetters(['bankImgUrl'])
   }
 </script>
 <style scoped>
@@ -629,32 +697,44 @@
 
   }
 
-  .recharge-group-radio-checked .a1, .recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5 {
+  .recharge-group-radio-checked .aCNY, .recharge-group-radio-checked .aBCC, .recharge-group-radio-checked .aXRP, .recharge-group-radio-checked .aBTC, .recharge-group-radio-checked .aLTC, .recharge-group-radio-checked .aETH, .recharge-group-radio-checked .aETC {
     background-position: 0;
   }
 
-  .a1 {
+  .aCNY {
     background: url("../../assets/img/iconPng/CNYzhanghu.png");
     background-position: -22px;
 
   }
 
-  .a2 {
+  .aBCC {
+    background: url("../../assets/img/iconPng/BCC.png");
+    background-position: -22px;
+
+  }
+
+  .aXRP {
+    background: url("../../assets/img/iconPng/ripple.png");
+    background-position: -22px;
+
+  }
+
+  .aBTC {
     background: url("../../assets/img/iconPng/BTCzhanghu.png");
     background-position: -22px;
   }
 
-  .a3 {
+  .aLTC {
     background: url("../../assets/img/iconPng/ltc.png");
     background-position: -22px;
   }
 
-  .a4 {
+  .aETH {
     background: url("../../assets/img/iconPng/ETH.png");
     background-position: -22px;
   }
 
-  .a5 {
+  .aETC {
     background: url("../../assets/img/iconPng/ETC.png");
     background-position: -22px;
   }
@@ -676,21 +756,21 @@
     font-weight: bold;
   }
 
-  .recharge-group-radio, .recharge-group-radio-select-bank {
+  .recharge-group-radio, .recharge-group-radio-select-bank, .recharge-group-radio > section {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
   }
 
   .recharge-group-radio-select-bank > div {
-    width: 330px;
+    min-width: 320px;
   }
 
-  .recharge-group-radio > input, .recharge-group-radio-select-bank > div > input {
+  .recharge-group-radio > input, .recharge-group-radio-select-bank > div > input, .recharge-group-radio > section > input {
     display: none;
   }
 
-  .recharge-group-radio > label, .recharge-group-radio-select-bank > div > label {
+  .recharge-group-radio > label, .recharge-group-radio-select-bank > div > label, .recharge-group-radio > section > label {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -717,11 +797,11 @@
     margin-right: 0;
   }
 
-  .recharge-group-radio label > i {
+  .recharge-group-radio label > i, .recharge-group-radio > section label > i {
     margin-right: 1rem;
   }
 
-  .recharge-group-radio > label > span:nth-of-type(1) {
+  .recharge-group-radio > label > span:nth-of-type(1), .recharge-group-radio > section > label > span:nth-of-type(1) {
     display: none;
     position: absolute;
     right: -0.8rem;
@@ -898,9 +978,11 @@
   .section-div-label > input, .section-div-label > div > input {
     display: none;
   }
-
-  .section-div-label > label, .section-div-label > div {
+  .section-div-label > label{
     padding: .8rem 1rem;
+  }
+  .section-div-label > label, .section-div-label > div {
+
     border: 1px solid #ddd;
     border-radius: 2px;
     margin: 0 1rem 1rem 0;
@@ -908,6 +990,8 @@
   }
 
   .section-div-label > div > label {
+    padding: .8rem 1rem;
+    display: inline-block;
     cursor: pointer;
   }
 

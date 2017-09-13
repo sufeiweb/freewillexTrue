@@ -8,13 +8,13 @@
         <input name="select-account-cash123" type="radio" id="account-cny-cash123" value="1" checked/>
         <label for="account-cny-cash123" class="recharge-group-radio-checked">
           <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-          <span class="iconFont a1"></span>
+          <span class="iconFont aCNY"></span>
           <span>CNY账户</span>
         </label>
         <input name="select-account-cash123" type="radio" id="account-btc-cash124" value="2"/>
         <label for="account-btc-cash124">
           <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-          <span class="iconFont a2"></span>
+          <span class="iconFont aBTC"></span>
           <span>BTC账户</span>
         </label>
       </div>
@@ -25,65 +25,31 @@
       </div>
       <transition enter-active-class="animated fadeIn">
         <div class="recharge-group-radio" v-show="!account">
-          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-cash1231" value="CNY" checked/>
-          <label for="recharge-currency-cny-cash1231" class="recharge-group-radio-checked">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a1"></span>
-            <span>CNY</span>
-          </label>
-          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-btc-cash1232" value="BTC"/>
-          <label for="recharge-currency-cny-btc-cash1232">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a2"></span>
-            <span>BTC</span>
-          </label>
-          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-ltc-cash1233" value="LTC"/>
-          <label for="recharge-currency-cny-ltc-cash1233">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a3"></span>
-            <span>LTC</span>
-          </label>
-          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-eth-cash1234" value="ETH"/>
-          <label for="recharge-currency-cny-eth-cash1234">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a4"></span>
-            <span>ETH</span>
-          </label>
-          <input name="select-currency-cash1231" type="radio" id="recharge-currency-cny-etc-cash1235" value="ETC"/>
-          <label for="recharge-currency-cny-etc-cash1235">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a5"></span>
-            <span>ETC</span>
-          </label>
+          <section v-for="(item,index) in AccountCNY">
+            <input name="select-currency-cash1231" type="radio" :id='"recharge-currency-cny-cash1231"+index'
+                   :value="item"
+            />
+            <label :for='"recharge-currency-cny-cash1231"+index' :class="index===0?'recharge-group-radio-checked':''">
+              <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+              <span class="iconFont" :class='"a"+item'></span>
+              <span>{{item}}</span>
+            </label>
+          </section>
         </div>
       </transition>
       <transition enter-active-class="animated fadeIn">
         <div class="recharge-group-radio" v-show="account">
-          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-btc1-cash12324" value="BTC"
-                 checked/>
-          <label for="recharge-currency-cny-btc1-cash12324" class="recharge-group-radio-checked">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a2"></span>
-            <span>BTC</span>
-          </label>
-          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-ltc1-cash12323" value="LTC"/>
-          <label for="recharge-currency-cny-ltc1-cash12323">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a3"></span>
-            <span>LTC</span>
-          </label>
-          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-eth1-cash12322" value="ETH"/>
-          <label for="recharge-currency-cny-eth1-cash12322">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a4"></span>
-            <span>ETH</span>
-          </label>
-          <input name="select-currency1-cash1232" type="radio" id="recharge-currency-cny-etc1-cash12321" value="ETC"/>
-          <label for="recharge-currency-cny-etc1-cash12321">
-            <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-            <span class="iconFont a5"></span>
-            <span>ETC</span>
-          </label>
+          <section v-for="(item,index) in AccountBTC">
+            <input name="select-currency1-cash1232" type="radio" :id='"recharge-currency-cny-btc1-cash12324"+index'
+                   :value="item"
+            />
+            <label :for='"recharge-currency-cny-btc1-cash12324"+index'
+                   :class="index===0?'recharge-group-radio-checked':''">
+              <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+              <span class="iconFont" :class='"a"+item'></span>
+              <span>{{item}}</span>
+            </label>
+          </section>
         </div>
       </transition>
     </div>
@@ -98,10 +64,13 @@
           <p>{{item.accountNo | bankNo}}</p>
           <a href="javascript:;" @click="delBankCard($event)" :bankid="item.id">删除该卡</a>
         </div>
-        <router-link to="/accountManagement/addBankCard" tag="div" class="backItem addBankCard">
+        <div class="backItem addBankCard" @click="goAddBank()">
           <i class="iconfont">&#xe689;</i>
           <span>添加新银行卡</span>
-        </router-link>
+        </div>
+        <!--<router-link to="/accountManagement/addBankCard" tag="div">-->
+
+        <!--</router-link>-->
       </div>
       <div class="btcAdr" v-show="moneyStyle">
         <div class="adrItem" v-for="(item,index) in currencyAdr">
@@ -109,10 +78,13 @@
           <p><span>[{{item.currency | translate}}地址{{index + 1}}]</span><a href="javascript:;" @click="delAdr($event)"
                                                                            :digtalid="item.id">删除该地址</a></p>
         </div>
-        <router-link :to="'/accountManagement/addCurrencyAdr/'+selectCurrency"  tag="div" class="adrItem addBankCard">
+        <div class="adrItem addBankCard" @click="goAddAdr()">
           <i class="iconfont">&#xe689;</i>
           <span>添加新地址</span>
-        </router-link>
+        </div>
+        <!--<router-link :to="'/accountManagement/addCurrencyAdr/'+selectCurrency"  tag="div" class="adrItem addBankCard">-->
+        <!---->
+        <!--</router-link>-->
       </div>
     </div>
   </div>
@@ -140,10 +112,16 @@
           "ICBC": require('../../assets/img/banklogo/ICBC.png'),
           "PBC": require('../../assets/img/banklogo/PBC.png'),
           "PSBC": require('../../assets/img/banklogo/PSBC.png'),
+          "PINGAN": require('../../assets/img/banklogo/PINGAN.png'),
         },
         currencyAdr: [],
-        selectCurrency: 'BTC'
+        selectCurrency: 'BTC',
+        AccountCNY: [],
+        AccountBTC: [],
       }
+    },
+    created(){
+      this.getCommodity();
     },
     mounted (){
       let that = this;
@@ -167,25 +145,44 @@
         })
       }//选择账户
       {
-        $("input[name='select-currency-cash1231']").change(function () {
-          $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          if ($(this).val() === 'CNY') {
-            that.moneyStyle = false;
-          } else {
-            that.moneyStyle = true;
+        setTimeout(function () {
+          $("input[name='select-currency-cash1231']").change(function () {
+            $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
+            if ($(this).val() === 'CNY') {
+              that.moneyStyle = false;
+            } else {
+              that.moneyStyle = true;
+              that.getBindCurrencyAdr();
+            }
+          })
+          $("input[name='select-currency1-cash1232']").change(function () {
+            $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
             that.getBindCurrencyAdr();
-          }
-        })
-        $("input[name='select-currency1-cash1232']").change(function () {
-          $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          that.getBindCurrencyAdr();
-        })
+          })
+        }, 600);
+
       }//选择提现币种
       this.getBindBankCard();
     },
     methods: {
+      goAddBank(){
+        if (localStorage.getItem('real')) {
+          this.$router.push('/accountManagement/addBankCard')
+        } else {
+          this.showError('', '未实名认证');
+          this.$router.push('/settings/user')
+        }
+      },
+      goAddAdr(){
+        if (localStorage.getItem('real')) {
+          this.$router.push('/accountManagement/addCurrencyAdr/' + this.selectCurrency)
+        } else {
+          this.showError('', '未实名认证');
+          this.$router.push('/settings/user')
+        }
+      },
       delBankCard(ev){
-        let url = 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/cancel/' + ev.target.getAttribute('bankid');
+        let url = this.$URL_API + 'accountBank/cancel/' + ev.target.getAttribute('bankid');
         this.$http({
           url: url,
           method: 'GET',
@@ -203,7 +200,7 @@
         })
       },//删除银行卡
       delAdr(ev){
-        let url = 'https://kaifamobile.firstcoinex.com/fwex/web/digital/cancel/' + ev.target.getAttribute('digtalid');
+        let url = this.$URL_API + 'digital/cancel/' + ev.target.getAttribute('digtalid');
         this.$http({
           url: url,
           method: 'GET',
@@ -223,14 +220,14 @@
       getBindBankCard(){
         let that = this;
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/all',
+          url: this.$URL_API + 'accountBank/all',
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
-          if(res.data.code!==200){
+          if (res.data.code !== 200) {
             this.showError(res.data.code, res.data.message);
           }
           if (res.data.code === 200) {
@@ -243,22 +240,22 @@
       getBindCurrencyAdr(){
         let currency;
         if ($("input[name='select-account-cash123']:checked").val() === '1') {
-          currency = $("input[name='select-currency-cash1231']:checked").val();
+          currency = $("input[name='select-currency-cash1231']:checked").val() ? $("input[name='select-currency-cash1231']:checked").val() : 'CNY';
         } else {
-          currency = $("input[name='select-currency1-cash1232']:checked").val();
+          currency = $("input[name='select-currency1-cash1232']:checked").val() ? $("input[name='select-currency1-cash1232']:checked").val() : 'BTC';
         }
 
         this.selectCurrency = currency;
 
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/withdrawInfo/' + currency,
+          url: this.$URL_API + 'digital/withdrawInfo/' + currency,
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
             'X-Authorization': 'Bearer ' + this.$store.state.token
           }
         }).then((res) => {
-          if(res.data.code!==200){
+          if (res.data.code !== 200) {
             this.showError(res.data.code, res.data.message);
           }
           if (res.data.code === 200) {
@@ -267,7 +264,18 @@
         }).catch((req) => {
           this.showError(req.code, req.message)
         })
-      }//获取绑定数字货币地址
+      },//获取绑定数字货币地址
+      getCommodity(){
+        this.$http({
+          url: this.$URL_API + 'commodity/account',
+          header: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        }).then((res) => {
+          this.AccountCNY = res.data.data.CNY;
+          this.AccountBTC = res.data.data.BTC;
+        })
+      },
     },
   }
 </script>
@@ -294,32 +302,44 @@
 
   }
 
-  .recharge-group-radio-checked .a1, .recharge-group-radio-checked .a2, .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5 {
+  .recharge-group-radio-checked .aCNY, .recharge-group-radio-checked .aBCC, .recharge-group-radio-checked .aXRP, .recharge-group-radio-checked .aBTC, .recharge-group-radio-checked .aLTC, .recharge-group-radio-checked .aETH, .recharge-group-radio-checked .aETC {
     background-position: 0;
   }
 
-  .a1 {
+  .aCNY {
     background: url("../../assets/img/iconPng/CNYzhanghu.png");
     background-position: -22px;
 
   }
 
-  .a2 {
+  .aBCC {
+    background: url("../../assets/img/iconPng/BCC.png");
+    background-position: -22px;
+
+  }
+
+  .aXRP {
+    background: url("../../assets/img/iconPng/ripple.png");
+    background-position: -22px;
+
+  }
+
+  .aBTC {
     background: url("../../assets/img/iconPng/BTCzhanghu.png");
     background-position: -22px;
   }
 
-  .a3 {
+  .aLTC {
     background: url("../../assets/img/iconPng/ltc.png");
     background-position: -22px;
   }
 
-  .a4 {
+  .aETH {
     background: url("../../assets/img/iconPng/ETH.png");
     background-position: -22px;
   }
 
-  .a5 {
+  .aETC {
     background: url("../../assets/img/iconPng/ETC.png");
     background-position: -22px;
   }
@@ -330,17 +350,17 @@
     font-weight: bold;
   }
 
-  .recharge-group-radio {
+  .recharge-group-radio, .recharge-group-radio > section {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
   }
 
-  .recharge-group-radio > input {
+  .recharge-group-radio > input, .recharge-group-radio > section > input {
     display: none;
   }
 
-  .recharge-group-radio > label {
+  .recharge-group-radio > label, .recharge-group-radio > section > label {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -361,11 +381,11 @@
     margin-right: 0;
   }
 
-  .recharge-group-radio label > i {
+  .recharge-group-radio label > i, .recharge-group-radio > section > label > i {
     margin-right: 1rem;
   }
 
-  .recharge-group-radio > label > span:nth-of-type(1) {
+  .recharge-group-radio > label > span:nth-of-type(1), .recharge-group-radio > section > label > span:nth-of-type(1) {
     display: none;
     position: absolute;
     right: -0.8rem;
@@ -375,7 +395,7 @@
     border-radius: 50%;
   }
 
-  .recharge-group-radio > label > span:nth-of-type(1) > span {
+  .recharge-group-radio > label > span:nth-of-type(1) > span, .recharge-group-radio > section > label > span:nth-of-type(1) > span {
     border-radius: 50%;
     background: #01aaef;
     color: #fff;
@@ -487,7 +507,7 @@
   .adrItem {
     display: flex;
     flex-direction: column;
-    width: 24rem;
+    min-width: 24rem;
     height: 9.167rem;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -504,7 +524,7 @@
   }
 
   .adrItem > p {
-    padding: 0 1.833rem;
+    padding: 0 1.5rem;
     box-sizing: border-box;
   }
 

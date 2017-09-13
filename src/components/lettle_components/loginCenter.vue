@@ -52,26 +52,24 @@
       </form>
 
     </div>
-    <div class="login-box-content login-show-box-user" v-show="loginTrue">
-      <p class="title">登录{{getUserM}}</p>
-      <section><span>您好，{{userLoginName | phoneStar}}</span><i class="iconfont" v-show="showMoney"
-                                                               @click="showMoney=!showMoney">&#xe6a6;</i><i
-        class="iconfont" v-show="!showMoney" @click="showMoney=!showMoney">&#xe692;</i></section>
-      <section><span>总资产</span><span>￥</span><span v-show="showMoney">{{totalAssets}}</span><span
-        v-show="!showMoney">--</span></section>
-      <section><span>净资产</span><span>￥</span><span v-show="showMoney">{{netAssets}}</span><span
-        v-show="!showMoney">--</span></section>
-      <section>
-        <router-link to="/business">买/卖</router-link>
-      </section>
-      <section>
-        <router-link to="/recharge">充值</router-link>
-        |
-
-
-        <router-link to="/cash">提现</router-link>
-      </section>
-    </div>
+    <!--<div class="login-box-content login-show-box-user" v-show="loginTrue">-->
+    <!--<p class="title">登录{{getUserM}}</p>-->
+    <!--<section><span>您好，{{userLoginName | phoneStar}}</span><i class="iconfont" v-show="showMoney"-->
+    <!--@click="showMoney=!showMoney">&#xe6a6;</i><i-->
+    <!--class="iconfont" v-show="!showMoney" @click="showMoney=!showMoney">&#xe692;</i></section>-->
+    <!--<section><span>总资产</span><span>￥</span><span v-show="showMoney">{{totalAssets}}</span><span-->
+    <!--v-show="!showMoney">&#45;&#45;</span></section>-->
+    <!--<section><span>净资产</span><span>￥</span><span v-show="showMoney">{{netAssets}}</span><span-->
+    <!--v-show="!showMoney">&#45;&#45;</span></section>-->
+    <!--<section>-->
+    <!--<router-link to="/business">买/卖</router-link>-->
+    <!--</section>-->
+    <!--<section>-->
+    <!--<router-link to="/recharge">充值</router-link>-->
+    <!--|-->
+    <!--<router-link to="/cash">提现</router-link>-->
+    <!--</section>-->
+    <!--</div>-->
   </div>
 </template>
 <script>
@@ -83,7 +81,6 @@
         userName: '',
         userPassword: '',
         showMoney: true,
-        userLoginName: '',
         totalAssets: '',
         netAssets: ''
       }
@@ -91,8 +88,8 @@
     mounted() {
       let that = this;
       {
-        if (localStorage.getItem('username')) {
-          that.userName = localStorage.getItem('username');
+        if (localStorage.getItem('userName')) {
+          that.userName = localStorage.getItem('userName');
           $('#remember').attr('checked', true);
           that.$store.state.login.remember = true;
         }
@@ -101,14 +98,22 @@
         $('#remember').click(function () {
           that.$store.state.login.remember = $(this).is(':checked');
           if (that.$store.state.login.remember) {
-            localStorage.setItem('username', that.userName);
+            localStorage.setItem('userName', that.userName);
           } else {
-            localStorage.removeItem('username');
+            localStorage.removeItem('userName');
           }
         });
-      }//记住密码
+      }//记住用户名
+      {
+        $(document).keyup(function () {
+          if (window.event.keyCode === 13) {
+            that.userLogin();
+          }
+        })
+      }
     },
     methods: {
+
       login_style() {
         this.login_style1 = !this.login_style1;
         return false;
@@ -117,7 +122,7 @@
         let that = this;
         if (that.userName && that.userPassword) {
           that.$http({
-            url: 'https://kaifamobile.firstcoinex.com/fwex/web/auth/login',
+            url: this.$URL_API + 'auth/login',
             method: 'POST',
             data: {
               "loginUser": that.userName,
@@ -126,15 +131,22 @@
             headers: {
               "X-Requested-With": "XMLHttpRequest",
               "Content-Type": "application/json;charset=UTF-8",
+              "source": 'WEB'
             }
           }).then(function (data) {
             that.showError(data.data.code, data.data.message);
-            if(data.data.code===200){
+            if (data.data.code === 200) {
               that.$store.dispatch('loginStateTrue');
-              sessionStorage.setItem('token', data.data.data);
+              localStorage.setItem('token', data.data.data);
+              localStorage.setItem('userPsd', md5(that.userPassword));
+              localStorage.setItem('userName', that.userName);
+              localStorage.setItem('commodity', 'BTCCNY');
               that.$store.state.loginTrue = true;
               that.$store.state.realName.userPsd = true;
               that.$store.state.token = data.data.data;
+              that.getdr();
+              that.sendEvent('login', '');
+//              that.getUserM();
               let loginPattern = /0?^(13|14|15|18|17)[0-9]{9}/;
               if (loginPattern.test(that.userName)) {
                 that.$store.state.realName.userPhone = true;
@@ -145,40 +157,56 @@
               }
               that.$router.push('/user');
             }
-          }).catch((req) => {
-            this.showError(req.code, req.message)
           })
+//            .catch((req) => {
+//              alert(req.message);
+//              this.showError(req.code, req.message)
+//            })
         }
       },//帐号登录
+//      getUserM() {
+//        this.$http({
+//          url: this.$URL_API + 'account/info',
+//          method: 'GET',
+//          headers: {
+//            'X-Requested-With': 'XMLHttpRequest',
+//            'X-Authorization': 'Bearer ' + this.$store.state.token,
+//            'source': 'WEB',
+//            'Content-Type': 'application/json'
+//          }
+//        }).then((res) => {
+//          if (res.data.code === 200) {
+//
+//          }
+//        })
+//      },
+      getdr(){
+        this.$http({
+          url: this.$URL_API + 'authentication/info',
+          method: 'GET',
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'X-Authorization': 'Bearer ' + this.$store.state.token
+          }
+        }).then((res) => {
+          for (let i = 0; i < res.data.data.length; i++) {
+            if (res.data.data[i].authsEnum === 'ORDINARY_REAL_NAME') {
+              localStorage.setItem('real', 'yes');
+            }//实名
+            if (res.data.data[i].authsEnum === 'MOBILE') {
+              sessionStorage.setItem('MOBILE', 'yes');
+            } //手机
+            if (res.data.data[i].authsEnum === 'EMAIL') {
+              sessionStorage.setItem('EMAIL', 'yes');
+            } //邮箱
+          }
+        })
+      }
     },
+
     computed: {
       loginTrue() {
         return this.$store.state.loginTrue;
-      },
-      getUserM() {
-        let that = this;
-        if (this.$store.state.loginTrue) {
-          that.$http({
-            url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/info',
-//            url: 'http://192.168.1.120:8089/fwex/web/account/info',
-            method: 'GET',
-            headers: {
-              'X-Requested-With': 'XMLHttpRequest',
-              'X-Authorization': 'Bearer ' + that.$store.state.token,
-              'source': 'WEB',
-              'Content-Type': 'application/json'
-            }
-          }).then((res) => {
-            if(res.data.code!==200){
-              this.showError(res.data.code, res.data.message);
-            }
-            if (res.data.code === 200) {
-              that.userLoginName = res.data.data.loginUser;
-            }
-          }).catch((req) => {
-            this.showError(req.code, req.message)
-          })//获取用户信息
-        }
       },
     }
   }
@@ -206,7 +234,7 @@
 
   .login-box-content {
     position: absolute;
-    right: 18%;
+    right: 0;
     width: 28.33rem;
     top: 5.417rem;
     background-color: rgba(0, 0, 0, .6);

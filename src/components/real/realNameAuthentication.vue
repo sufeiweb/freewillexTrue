@@ -69,7 +69,7 @@
         <span>验证码</span>
         <div>
           <div class="input-box">
-            <input type="text" placeholder="验证码" v-model="RYZ" class="RYZ-input"/>
+            <input type="text" placeholder="验证码" v-model="RYZ" class="RYZ-input" maxlength="6"/>
             <span @click="RgetCord()">{{rGetCord}}</span>
           </div>
           <span class="yz-tips"></span>
@@ -130,7 +130,7 @@
       let that = this;
       {
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/bank/all',
+          url: this.$URL_API+'bank/all',
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -293,7 +293,7 @@
           that.$store.state.realNeed.phoneY &&
           that.$store.state.realNeed.checkbox) {
           that.$http({
-            url: 'https://kaifamobile.firstcoinex.com/fwex/web/authentication/realNameAuth',
+            url: this.$URL_API+'authentication/realNameAuth',
             method: 'POST',
             data: {
               country: that.country,
@@ -346,7 +346,7 @@
         let that = this;
         let second = 60;
         let pattern = /0?^(13|14|15|18|17)[0-9]{9}/;
-        let url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/mobile/' + that.RUserPhone;
+        let url = that.$URL_API+'captcha/mobile/' + that.RUserPhone;
         if (that.RUserPhone.length !== 0 && pattern.test(that.RUserPhone)) {
           that.$http.get(url).then((data) => {
             this.showError(data.data.code, data.data.message);

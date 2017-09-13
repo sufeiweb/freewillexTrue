@@ -25,10 +25,10 @@
       <div>
         <span> </span>
         <p class="addCurrencyAdr-yz">
-          <input name="we1" type="radio" id="we11" value="email" checked/>
-          <label for="we11" class="border-color">邮箱验证</label>
-          <input name="we1" type="radio" value="mobile" id="we12"/>
-          <label for="we12">手机验证</label>
+          <input name="we1" type="radio" id="we11" value="emails" v-show="EMAIL"/>
+          <label for="we11" v-show="EMAIL">邮箱验证</label>
+          <input name="we1" type="radio" value="mobiles" id="we12" v-show="MOBILE"/>
+          <label for="we12" v-show="MOBILE">手机验证</label>
         </p>
       </div>
       <div>
@@ -41,7 +41,7 @@
         <span>验证码</span>
         <p>
             <span>
-              <input type="text" placeholder="验证码" v-model="serverYz"/>
+              <input type="text" placeholder="验证码" v-model="serverYz" maxlength="6"/>
               <button @click="getCode($event)">获取验证码</button>
             </span>
           <span class="cash-tishi display-none-tishi">验证码格式输入错误</span>
@@ -67,10 +67,20 @@
         currencyStyle: '',//数字货币币种
         serverYz: '',//验证吗
         capitalPwd: '',//资金密码
-        moe: ''//手机号或邮箱
+        moe: '',//手机号或邮箱
+        EMAIL: false,
+        MOBILE: false,
       }
     },
     mounted() {
+      {
+        if (sessionStorage.getItem('EMAIL')) {
+          this.EMAIL = true;
+        }
+        if (sessionStorage.getItem('MOBILE')) {
+          this.MOBILE = true;
+        }
+      }
       $("input[name='we1']").change(function () {
         $(this).next().addClass('border-color').siblings().removeClass('border-color');
       });
@@ -78,34 +88,48 @@
     },
     methods: {
       bindGet(ev) {
-        ev.target.innerHTML = '处理中...';
-        let yzStyle = $("input[name='we1']:checked").val();
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/digital/bind',
-          method: 'POST',
-          headers: {
+          url: this.$URL_API + 'digital/validate/' + this.$route.params.currency + this.currencyAdr,
+          method:'GET',
+          headers:{
             "X-Requested-With": "XMLHttpRequest",
-            'X-Authorization': 'Bearer ' + this.$store.state.token,
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-          data: {
-            currency: this.$route.params.currency,
-            address: this.currencyAdr,
-            remark: this.tags,
-            capitalPwd: md5(this.capitalPwd),
-            types: yzStyle,
-            captcha: this.serverYz
           }
-        }).then((res) => {
-          this.showError(res.data.code, res.data.message);
-          if (res.data.code === 200) {
-            ev.target.innerHTML = '确认绑定';
-            this.$router.push('/accountManagement')
-          }
-        }).catch((req) => {
-          this.showError(req.code, req.message);
-          ev.target.innerHTML = '确认绑定';
-        })
+        }).then((res)=>{
+            if(res.data.code===200){
+              ev.target.innerHTML = '处理中...';
+              let yzStyle = $("input[name='we1']:checked").val();
+              this.$http({
+                url: this.$URL_API + 'digital/bind',
+                method: 'POST',
+                headers: {
+                  "X-Requested-With": "XMLHttpRequest",
+                  'X-Authorization': 'Bearer ' + this.$store.state.token,
+                  "Content-Type": "application/json;charset=UTF-8",
+                },
+                data: {
+                  currency: this.$route.params.currency,
+                  address: this.currencyAdr,
+                  remark: this.tags,
+                  capitalPwd: md5(this.capitalPwd),
+                  types: yzStyle,
+                  captcha: this.serverYz
+                }
+              }).then((res) => {
+                this.showError(res.data.code, res.data.message);
+                if (res.data.code === 200) {
+                  ev.target.innerHTML = '确认绑定';
+                  this.$router.push('/accountManagement')
+                } else {
+                  ev.target.innerHTML = '确认绑定';
+                }
+              }).catch((req) => {
+                this.showError(req.code, req.message);
+                ev.target.innerHTML = '确认绑定';
+              })
+            }else {
+                this.showError('','地址不合法')
+            }
+        });
       },
       bindClose() {
         this.currencyAdr = '';
@@ -115,31 +139,36 @@
       },
       getCode(ev){
         let yzStyle = $("input[name='we1']:checked").val();
-        this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/' + yzStyle,
-          method: 'GET',
-          headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            'X-Authorization': 'Bearer ' + this.$store.state.token,
-          }
-        }).then((res) => {
-          this.showError(res.data.code, res.data.message);
-          if (res.data.code === 200) {
-            let t = 60;
-            let tt = setInterval(function () {
-              ev.target.innerHTML = --t + 's';
-              ev.target.setAttribute('disabled', true);
-            }, 1000);
-            if (tt <= 0) {
-              ev.target.innerHTML = '获取验证码';
-              ev.target.setAttribute('disabled', false);
-              clearInterval(tt)
+        if (yzStyle) {
+          this.$http({
+            url: this.$URL_API + 'captcha/' + yzStyle,
+            method: 'GET',
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              'X-Authorization': 'Bearer ' + this.$store.state.token,
             }
-          }
-        }).catch((req) => {
-          this.showError(req.code, req.message)
+          }).then((res) => {
+            this.showError(res.data.code, res.data.message);
+            if (res.data.code === 200) {
+              let t = 60;
+              let tt = setInterval(function () {
+                ev.target.innerHTML = --t + 's';
+                ev.target.setAttribute('disabled', true);
+              }, 1000);
+              if (tt <= 0) {
+                ev.target.innerHTML = '获取验证码';
+                ev.target.setAttribute('disabled', false);
+                clearInterval(tt)
+              }
+            }
+          }).catch((req) => {
+            this.showError(req.code, req.message)
 
-        })
+          })
+        } else {
+          this.showError('', '请选择验证方式')
+        }
+
       }
     },
 

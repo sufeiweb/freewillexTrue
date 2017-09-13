@@ -2,14 +2,15 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>freewillex</title>
+  <title>FreeWillex自由意志</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="stylesheet" type="text/css" href="static/iconfont/iconfont.css"/>
+  <link rel="stylesheet" type="text/css" href="static/iconfont1/iconfont.css"/>
   <link rel="stylesheet" type="text/css" href="static/css/base.css"/>
   <script src="static/js/html2canvas.js"></script>
   <script src="static/js/jquery-1.11.3.js"></script>
-  <script src="https://code.highcharts.com/stock/highstock.js"></script>
-  <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+  <!--<script src="https://code.highcharts.com/stock/highstock.js"></script>-->
+  <!--<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>-->
   <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.js"></script>
   <script src="static/js/socket.io-client/socket.io.js"></script>
   <script src="static/js/stomp.min.js"></script>
@@ -17,30 +18,38 @@
   <script src="static/js/jquery-ui-1.9.2.custom.min.js"></script>
   <script src="static/js/jquery.nicescroll.js"></script>
   <script src="static/js/qrcode.min.js"></script>
-    </head>
+  <script src="static/js/jquery.cookie.js"></script>
+  <script src="static/js/testNew.js"></script>
+</head>
 <body>
 <div id="app"></div>
-<script src="https://www.sobot.com/chat/pc/pc.min.js?sysNum=6abf7450830a48529e7d617b5f100d1c" class="customerService"></script>
+<script src="https://www.sobot.com/chat/pc/pc.min.js?sysNum=6abf7450830a48529e7d617b5f100d1c"
+        class="customerService"></script>
 <script>
-  $(function () {
+  if(BrowserDetect.version <= 10 &&BrowserDetect.browser == "Explorer"){
+    alert("IE版本小于10，请更新,若您使用360浏览器，请切换到极速浏览模式");
+  }
+</script>
+<script>
+  $(document).ready(function () {
     $("html").niceScroll({
-      cursorcolor:"#01aaef",
-      cursoropacitymax:1,
-      touchbehavior:false,
-      cursorwidth:"10px",
-      cursorborder:"0",
-      cursorborderradius:"5px",
+      cursorcolor: "#01aaef",
+      cursoropacitymax: 1,
+      touchbehavior: false,
+      cursorwidth: "10px",
+      cursorborder: "0",
+      cursorborderradius: "5px",
+      zIndex: 9999
     })
     $(".dtscoll").niceScroll({
-      cursorcolor:"#01aaef",
-      cursoropacitymax:1,
-      touchbehavior:false,
-      cursorwidth:"10px",
-      cursorborder:"0",
-      cursorborderradius:"5px",
+      cursorcolor: "#000",
+      cursoropacitymax: 1,
+      touchbehavior: false,
+      cursorwidth: "5px",
+      cursorborder: "0",
+      cursorborderradius: "4px",
     })
   })
 </script>
- <script type="text/javascript" src="cordova.js"></script>
 </body>
 </html>

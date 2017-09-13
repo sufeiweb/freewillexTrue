@@ -2,6 +2,7 @@
  * Created by User on 2017/7/17.
  */
 import * as types from './types';
+
 export default {
   showHeader: ({
                  commit, state
@@ -44,13 +45,23 @@ export default {
     commit(types.ERROR_HIDE)
   },
   errorShow1: ({
-                commit, state
-              }) => {
+                 commit, state
+               }) => {
     commit(types.ERROR_SHOW1)
   },
   errorHide1: ({
-                commit, state
-              }) => {
+                 commit, state
+               }) => {
     commit(types.ERROR_HIDE1)
+  },
+  signLogShow: ({
+                  commit, state
+                }) => {
+    commit(types.SING_LOG_SHOW)
+  },
+  signLogHide: ({
+                  commit, state
+                }) => {
+    commit(types.SING_LOG_HIDE)
   }
 }

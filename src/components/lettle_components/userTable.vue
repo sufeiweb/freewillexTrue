@@ -1,10 +1,19 @@
 <template>
   <div class="user-table">
     <table>
-      <caption>
+      <caption class="select-caption">
+
         <div class="table-header">
-          <span>日期</span>
+          <select name="currency-select" v-if="account==='CNY'">
+            <option v-for="(item,index) in AccountZ.CNY" :value="item">{{item}}
+            </option>
+          </select>
+          <select name="currency-select" v-else>
+            <option v-for="(item,index) in AccountZ.BTC" :value="item">{{item}}
+            </option>
+          </select>
           <div class="block">
+            <span>日期</span>
             <el-date-picker
               v-model="value"
               type="daterange"
@@ -23,8 +32,9 @@
       <tbody class="user-table-tbody" v-show="noData">
       <tr v-for="(item,index) in items">
         <td>{{item.times | dateYMDHIS}}</td>
-        <td>{{item.business | AoJ}} / {{item.serial | AoJ}}</td>
-        <td>{{item.balance}} {{item.currency}}</td>
+        <td>{{item.business | AoJ}}</td>
+        <td v-if="item.currency==='CNY'">{{item.balance | float2}} {{item.currency}}</td>
+        <td v-else>{{item.balance | float4}} {{item.currency}}</td>
       </tr>
       </tbody>
       <tbody class="user-table-tbody de-body" v-show="!noData">
@@ -62,15 +72,43 @@
         Account: '',//默认账户
         startDate: '',//开始时间
         endDate: '',//结束时间
+        account: 'CNY',
+        AccountZ: '',
+        da:'CNY'
       }
     },
     mounted(){
-      this.handleCurrentChangeAccountLog(1);
+      let that = this;
+      setTimeout(function () {
+        that.handleCurrentChangeAccountLog(1);
+        that.account = localStorage.getItem('Account');
+      }, 10);
+      this.getAccountCommodity()
+//      if()
+//      window.addEventListener("accountDetails", function (e) {
+//        that.handleCurrentChangeAccountLog(1);
+//      });
+      {
+        $('select[name="currency-select"]').change(function () {
+            that.da=$(this).val();
+          that.handleCurrentChangeAccountLog(1);
+        })
+      }
     },
     methods: {
+      getAccountCommodity(){
+        this.$http({
+          url: this.$URL_API + 'commodity/account',
+          header: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        }).then((res) => {
+          this.AccountZ = res.data.data;
+        })
+      },
       handleCurrentChangeAccountLog(currentPage){
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/capital/serial',
+          url: this.$URL_API + 'capital/serial',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -82,14 +120,14 @@
             pageSize: 10,
             param: {
               commodity: '',
-              legalMoney: '',
-              currency: this.Account,
+              legalMoney: localStorage.getItem('Account'),
+              currency: this.da,
               startTimes: this.startDate,
               endTimes: this.endDate
             }
           }
         }).then((res) => {
-          if(res.data.code!==200){
+          if (res.data.code !== 200) {
             this.showError(res.data.code, res.data.message);
           }
           if (res.data.code === 200) {
@@ -105,6 +143,7 @@
           this.showError(req.code, req.message)
         })
       }
+
     },
     watch: {
       value(newValue, oldValue){
@@ -141,12 +180,18 @@
     align-items: center;
     margin: 1.5rem 0;
     font-size: 1.167rem;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding-right: 4rem;
   }
 
   .table-header span {
     margin-right: 2rem;
+  }
+
+  .table-header select {
+    width: 80px;
+    height: 24px;
+    outline: none;
   }
 
   .user-table table td:nth-of-type(2) {
@@ -200,5 +245,10 @@
   .user-table-footer-page td {
     padding-top: 1.5rem;
     text-align: right !important;
+  }
+
+  .block {
+    display: flex;
+    align-items: center;
   }
 </style>

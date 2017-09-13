@@ -36,7 +36,7 @@
     width: 100%;
     background: #fff;
     margin-left: 1rem;
-    min-height: 613px;
+    min-height: 777px;
     padding: 1rem 1.667rem 1.25rem 1.667rem;
     box-sizing: border-box;
   }

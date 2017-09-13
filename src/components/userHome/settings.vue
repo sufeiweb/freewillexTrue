@@ -129,52 +129,55 @@
     mounted() {
       let that = this;
       this.$http({
-        url: 'https://kaifamobile.firstcoinex.com/fwex/web/authentication/info',
+        url: this.$URL_API + 'authentication/info',
         method: 'GET',
         headers: {
           "X-Requested-With": "XMLHttpRequest",
           'X-Authorization': 'Bearer ' + this.$store.state.token
         }
       }).then((res) => {
-        if(res.data.code!==200){
-          this.showError(res.data.code, res.data.message);
-        }
-        if(res.data.code===200){
-          that.Xiang = 5 - res.data.data.length;
-          if (res.data.data.length <= 2) {
-            that.EXP = '低';
-          } else if (res.data.data.length <= 4) {
-            that.EXP = '中';
-          } else {
-            that.EXP = '高';
-          }
-          $('.setting-safe-view-box i').css({
-            left: 20 * res.data.data.length + '%'
-          });
+        let userLength;
+        if (res.data.code === 200) {
           for (let i = 0; i < res.data.data.length; i++) {
             if (res.data.data[i].authsEnum === 'PASSWORD') {
               that.$store.state.realName.userPsd = true;
               that.loginTime = res.data.data[i].createDate;
-
             }//密码
             if (res.data.data[i].authsEnum === 'ORDINARY_REAL_NAME') {
               that.$store.state.realName.userName = true;
             }//实名
             if (res.data.data[i].authsEnum === 'MOBILE') {
               that.$store.state.realName.userPhone = true;
+              sessionStorage.setItem('MOBILE', 'yes');
               that.iponeNum = res.data.data[i].code;
-            }//手机
+            } //手机
             if (res.data.data[i].authsEnum === 'EMAIL') {
               that.$store.state.realName.userEmail = true;
+              sessionStorage.setItem('EMAIL', 'yes');
               that.emailNum = res.data.data[i].code;
-            }//邮箱
+            } //邮箱
             if (res.data.data[i].authsEnum === 'CAPIT_PASSWORD') {
               that.$store.state.realName.userMoneyPsd = true;
             }//资金密码
+            if (res.data.data[i].authsEnum === 'GESTURE_PASSWORD') {
+              userLength = res.data.data.length - 1;
+            } else {
+              userLength = res.data.data.length;
+            }
           }
+
+          that.Xiang = 5 - userLength;
+          if (userLength <= 2) {
+            that.EXP = '低';
+          } else if (userLength <= 4) {
+            that.EXP = '中';
+          } else {
+            that.EXP = '高';
+          }
+          $('.setting-safe-view-box i').css({
+            left: 20 * userLength + '%'
+          });
         }
-      }).catch((req) => {
-        this.showError(req.code, req.message)
       })
     },
     computed: {
@@ -272,6 +275,7 @@
   .setting-table table tr td {
     padding: 1.667rem;
     border-bottom: 1px solid #e9ecf3;
+    font-size: 14px;
   }
 
   .setting-table table tr td span {

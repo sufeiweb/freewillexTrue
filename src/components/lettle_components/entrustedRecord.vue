@@ -1,6 +1,6 @@
 <template>
   <div class="entrustedRecord">
-    <el-tabs v-model="activeName2" type="card">
+    <el-tabs v-model="activeName2" type="card" @tab-click="accBTN">
       <el-tab-pane label="当前委托" name="first">
         <table class="entrustedRecord-table">
           <thead class="entrustedRecord-table-thead">
@@ -16,15 +16,17 @@
             <td>操作</td>
           </tr>
           </thead>
-          <tbody v-show="noRecord" class="entrustedRecord-table-tbody">
-          <tr v-for="item in contentArr">
+          <tbody v-show="noRecord= (entrust.totalElements>0)" class="entrustedRecord-table-tbody">
+          <tr v-for="item in entrust.content">
             <td>{{item.createDate | dateYMDHIS}}</td>
             <td>{{item.orderType | translate}}</td>
             <td>{{item.cammand | translate}}</td>
             <td>{{item.source}}</td>
             <td>{{item.price | return_}}</td>
-            <td>{{item.amount}}</td>
-            <td>{{item.amount - item.dealVolume}}</td>
+            <td v-if="item.orderType==='MARKET' && item.cammand==='B'">{{item.amount | float2 }}</td>
+            <td v-else>{{item.amount | float4 }}</td>
+            <td v-if="item.orderType==='MARKET' && item.cammand==='B'">{{(item.amount - item.dealVolume) | float2}}</td>
+            <td v-else>{{(item.amount - item.dealVolume) | float4}}</td>
             <td style="color:#01aaef">{{item.orderStatus | translate}}</td>
             <td><a href="javascript:;" :code="item.code" :commodity="item.commodity" style="color:#01aaef"
                    @click="revoke($event)">撤销</a></td>
@@ -45,7 +47,7 @@
                 @current-change="handleCurrentChange"
                 :current-page="currentPage"
                 layout="prev, pager, next"
-                :total="totalNum"
+                :total="(entrust.totalElements ? entrust.totalElements : 10)"
                 class="page-right"></el-pagination>
             </td>
           </tr>
@@ -80,21 +82,22 @@
             <td>状态</td>
           </tr>
           </thead>
-          <tbody v-show="noRecord" class="entrustedRecord-table-tbody">
+          <tbody v-show="noRecord1" class="entrustedRecord-table-tbody">
           <tr v-for="item in contentArrH">
             <td>{{item.createDate | dateYMDHIS}}</td>
             <td>{{item.orderType | translate}}</td>
             <td>{{item.cammand | translate}}</td>
             <td>{{item.source}}</td>
             <td>{{item.price | return_ }}</td>
-            <td>{{item.amount}}</td>
-            <td>{{item.dealPrice}}</td>
-            <td>{{item.dealVolume}}</td>
-            <td>{{item.dealAmount}}</td>
+            <td v-if="item.orderType==='MARKET' && item.cammand==='B'">{{item.amount | float2 }}</td>
+            <td v-else>{{item.amount | float4 }}</td>
+            <td>{{item.dealPrice | float2}}</td>
+            <td>{{item.dealVolume | float4}}</td>
+            <td>{{item.dealAmount | float2}}</td>
             <td>{{item.orderStatus | translate}}</td>
           </tr>
           </tbody>
-          <tbody v-show="!noRecord" class="entrustedRecord-table-tbody tbody-noRecord">
+          <tbody v-show="!noRecord1" class="entrustedRecord-table-tbody tbody-noRecord">
           <tr>
             <td colspan="10">
               <i class="iconfont">&#xe661;</i>
@@ -117,43 +120,65 @@
         </table>
       </el-tab-pane>
     </el-tabs>
+    <a href="javascript:;" class="revokeAll" @click="revokeAll($event)" v-show="revokeAllState=entrust.totalElements>0">全部撤销</a>
   </div>
 </template>
 <script>
-  import Qs from 'qs'
+  import {mapGetters} from 'vuex';
   export default {
     data() {
       return {
         activeName2: 'first',
         noRecord: false,
+        noRecord1: false,
         currentPage: 1,
         totalNum: 10,
         totalNumH: 10,
         contentArr: [],
         contentArrH: [],
-        account: '',//当前账户
+        account: localStorage.getItem('Account'),//当前账户
         currency: '',//当前币种
         timerDT: '',//筛选时间
         startDate: '',
         endDate: '',
+        commodity: '',
+        revokeAllState: false,
+
       };
     },
-    created(){
-      this.getAccount();
-    },
     mounted() {
-      this.handleCurrentChange(1);
-      this.handleCurrentChange1(1);
+      let that = this;
+      window.addEventListener('changeCommodity', function () {
+        that.handleCurrentChange(1);
+        that.handleCurrentChange1(1);
+      })
     },
     methods: {
       //获取当前账户，币种
-      getAccount(){
-        this.account = this.$store.state.Account;
-
+//      unsettledBtn(tab,event){
+//          console.log(tab,event)
+////        this.handleCurrentChange(1);
+//      },
+//      historyBtn(){
+//          alert(2)
+//        this.handleCurrentChange1(1);
+//      },
+      accBTN(name){
+        if (name.name === 'first') {
+          this.handleCurrentChange(1);
+        } else {
+          this.handleCurrentChange1(1);
+        }
+//        console.log(name.name);
+        if (this.noRecord) {
+          this.revokeAllState = name.name === 'first';
+        }
       },
       handleCurrentChange: function (currentPage) {
+//          alert(localStorage.getItem('commodity')+'/woshi dangqianweituo')
+        this.currentPage = currentPage;
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/unsettled',
+          url: this.$URL_API + 'trade/unsettled',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -164,27 +189,25 @@
             pageNo: currentPage - 1,
             pageSize: 10,
             param: {
-              commodity: 'BTCCNY',
+              commodity: localStorage.getItem('commodity'),
+              legalMoney: this.account,
             }
           }
         }).then((res) => {
-          if(res.data.code!==200){
-            this.showError(res.data.code, res.data.message);
-          }
           if (res.data.code === 200) {
-            this.totalNum = res.data.data.totalElements;
-            if (res.data.data.totalElements) {
-              this.noRecord = true;
-            }
-            this.contentArr = res.data.data.content;
+            this.totalNum = res.data.data.totalElements ? res.data.data.totalElements : 10;
+            this.noRecord = res.data.data.totalElements > 0;
+            this.revokeAllState = res.data.data.totalElements > 0;
+            this.$store.state.weiTuo = res.data.data;
+          } else {
+            this.noRecord = false;
           }
-        }).catch((req) => {
-          this.showError(req.code, req.message)
         })
       },//获取当前委托
       handleCurrentChange1: function (currentPage) {
+//        alert(localStorage.getItem('commodity')+'/woshi woshilishiwituo ')
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/history',
+          url: this.$URL_API + 'trade/history',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -195,28 +218,23 @@
             pageNo: currentPage - 1,
             pageSize: 10,
             param: {
+              commodity: localStorage.getItem('commodity'),
               legalMoney: this.account,
               startTimes: this.startDate,
               endTimes: this.endDate
             }
           }
         }).then((res) => {
-            if(res.data.code!==200){
-              this.showError(res.data.code, res.data.message);
-            }
           if (res.data.code === 200) {
             this.totalNumH = res.data.data.totalElements ? res.data.data.totalElements : 10;
-            this.noRecord = res.data.data.totalElements > 0;
+            this.noRecord1 = res.data.data.totalElements > 0;
             this.contentArrH = res.data.data.content;
           }
-        }).catch((req) => {
-          this.showError(req.code, req.message)
-
         })
       },//获取历史委托
       revoke(ev) {
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/cancels/' + ev.target.getAttribute('commodity') + '/' + ev.target.getAttribute('code'),
+          url: this.$URL_API + 'trade/cancels/' + ev.target.getAttribute('commodity') + '/' + ev.target.getAttribute('code'),
           method: 'GET',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -225,12 +243,30 @@
         }).then((res) => {
           this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
-            ev.target.parentNode.parentNode.remove()
+            this.currentPage = 1;
+//            ev.target.parentNode.parentNode.remove()
+//            this.handleCurrentChange(this.currentPage);
           }
         }).catch((req) => {
           this.showError(req.code, req.message)
         })
       },
+
+      revokeAll(){
+        this.$http({
+          url: this.$URL_API + 'trade/cancelsAll/' + localStorage.getItem('commodity'),
+          method: 'GET',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token
+          }
+        }).then((res) => {
+          this.showError(res.data.code, res.data.message);
+          this.totalNum = 10;
+        }).catch((req) => {
+          this.showError(req.code, req.message)
+        })
+      }
     },
     watch: {
       timerDT(newValue, oldValue) {
@@ -240,6 +276,9 @@
         this.endDate = date2.getTime();
         this.handleCurrentChange1(1)
       }
+    },
+    computed: {
+      ...mapGetters(['entrust'])
     }
   };
 </script>
@@ -247,6 +286,15 @@
   .entrustedRecord {
     background: #fff;
     padding: 2rem;
+    position: relative;
+  }
+
+  .revokeAll {
+    position: absolute;
+    top: 35px;
+    right: 65px;
+    font-size: 14px;
+    color: #01aaef;
   }
 
   .el-tab-pane {

@@ -5,6 +5,13 @@
         <div class="content-left-header">
           <router-link to="/businessCNYAccount">CNY专区帐号</router-link>
           |
+
+
+
+
+
+
+
           <router-link to="/businessBTCAccount" class="hover-color-css">BTC专区帐号</router-link>
         </div>
         <div class="recharge-group">
@@ -32,24 +39,16 @@
           </div>
           <transition enter-active-class="animated fadeIn">
             <div class="recharge-group-radio">
-              <input name="select-currencyaaa" type="radio" id="recharge-currency-cny-ltczz11" value="LTC"/>
-              <label for="recharge-currency-cny-ltczz11" class="recharge-group-radio-checked">
-                <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-                <span class="iconFont a3"></span>
-                <span>LTC</span>
-              </label>
-              <input name="select-currencyaaa" type="radio" id="recharge-currency-cny-ethzz11" value="ETH"/>
-              <label for="recharge-currency-cny-ethzz11">
-                <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-                <span class="iconFont a4"></span>
-                <span>ETH</span>
-              </label>
-              <input name="select-currencyaaa" type="radio" id="recharge-currency-cny-etczz11" value="ETC"/>
-              <label for="recharge-currency-cny-etczz11">
-                <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-                <span class="iconFont a5"></span>
-                <span>ETC</span>
-              </label>
+              <section v-for="(item,index) in AccountBTC" v-show="item!=='BTC'">
+                <input name="select-currencyaaa" type="radio" :id='"recharge-currency-cny-ltczz11"+index'
+                       :value="item"/>
+                <label :for='"recharge-currency-cny-ltczz11"+index'
+                       :class="item==='BCC'?'recharge-group-radio-checked':''">
+                  <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
+                  <span class="iconFont" :class='"a"+item'></span>
+                  <span>{{item}}</span>
+                </label>
+              </section>
             </div>
           </transition>
         </div>
@@ -61,17 +60,17 @@
           <transition enter-active-class="animated fadeIn">
             <div v-show="buyOrSell && priceStyle">
               <section>
-                <input type="number" placeholder="买入价" v-model="buyPrice"/>
+                <input type="text" placeholder="买入价" v-model="buyPrice" class="buyPrice-ipt"/>
                 <span>{{accountClass}}</span>
               </section>
               <i class="iconfont">&#xe690;</i>
               <section>
-                <input type="number" placeholder="买入量" v-model="buyNum"/>
+                <input type="text" placeholder="买入量" v-model="buyNum" class="buyNum-ipt"/>
                 <span>{{buyClass}}</span>
               </section>
-              <span>=</span>
+              <span>≈</span>
               <section>
-                <input type="number" placeholder="总额" v-model="buySum"/>
+                <input type="text" placeholder="总额" v-model="buyComP" class="buySum-ipt"/>
                 <span>{{accountClass}}</span>
               </section>
             </div>
@@ -79,17 +78,17 @@
           <transition enter-active-class="animated fadeIn">
             <div v-show="!buyOrSell  && priceStyle">
               <section>
-                <input type="number" placeholder="卖出价" v-model="sellPrice"/>
+                <input type="text" placeholder="卖出价" v-model="sellPrice" class="sellPrice-ipt"/>
                 <span>{{accountClass}}</span>
               </section>
               <i class="iconfont">&#xe690;</i>
               <section>
-                <input type="number" placeholder="卖出量" v-model="sellNum"/>
+                <input type="text" placeholder="卖出量" v-model="sellNum" class="sellNum-ipt"/>
                 <span>{{buyClass}}</span>
               </section>
-              <span>=</span>
+              <span>≈</span>
               <section>
-                <input type="number" placeholder="总额" v-model="sellSum"/>
+                <input type="text" placeholder="总额" v-model="sellComP" class="sellSum-ipt"/>
                 <span>{{accountClass}}</span>
               </section>
             </div>
@@ -97,7 +96,7 @@
           <transition enter-active-class="animated fadeIn">
             <div v-show="buyOrSell  && !priceStyle">
               <div class="shijia-ipt">
-                <input type="number" placeholder="买入额" v-model="buyTotal"/>
+                <input type="text" placeholder="买入额" v-model="buyTotal" class="buyTotal-ipt"/>
                 <span>{{accountClass}}</span>
               </div>
               <em>以市场最优价买入</em>
@@ -106,12 +105,15 @@
           <transition enter-active-class="animated fadeIn">
             <div v-show="!buyOrSell && !priceStyle">
               <div class="shijia-ipt">
-                <input type="number" placeholder="卖出量" v-model="sellTotal"/>
+                <input type="text" placeholder="卖出量" v-model="sellTotal" class="sellTotal-ipt"/>
                 <span>{{buyClass}}</span>
               </div>
               <em>以市场最优价卖出</em>
             </div>
           </transition>
+          <aside class="block" v-show="buyOrSell">
+            <el-slider v-model="value2" @change="changeNumBuyS()" :format-tooltip="formatTooltip"></el-slider>
+          </aside>
           <transition enter-active-class="animated fadeIn">
             <button class="business-cny-buy" v-show="buyOrSell" @click="transaction1($event)">买入</button>
           </transition>
@@ -125,8 +127,13 @@
           <header>
             <span>{{buyClass}}/{{accountClass}}</span>
             <span>|</span>
-            <span>￥{{LatestPrice.price|float2}}</span>
-            <span :class="LatestPrice.price>LatestPrice.beforePrice?'red':'green'">{{((LatestPrice.price-LatestPrice.beforePrice)/LatestPrice.beforePrice) | float2}}%</span>
+
+            <span>฿{{(businessPrice.get(commodity) ? businessPrice.get(commodity).price : 0) | float6}}</span>
+
+            <span
+              v-show="false">￥{{this.$store.state.businessPrice.name}}{{this.newpriceData = (businessPrice.get(commodity) ? businessPrice.get(commodity).price : 0)}}</span>
+
+            <span :class="businessPrice.get(commodity) ? (businessPrice.get(commodity).rising > 0 ?'red':'green') : ''">{{(businessPrice.get(commodity) ? businessPrice.get(commodity).rising * 100 : 0) | float2}}%</span>
           </header>
           <section>
             <span>买卖</span>
@@ -151,15 +158,15 @@
   export default {
     data() {
       return {
-        buyClass: 'LTC',
+        buyClass: 'BCC',
         accountClass: 'BTC',
         buyOrSell: true,
         priceStyle: true,
-        buyPrice: '9563.22',
+        buyPrice: '',
         buyNum: '',
         buySum: '',
         buyTotal: '',
-        sellPrice: '9563.22',
+        sellPrice: '',
         sellNum: '',
         sellSum: '',
         sellTotal: '',
@@ -168,14 +175,24 @@
         types: '',//类型
         price: '',//价格
         amount: '',//数量,
-        shuaxin1: true
+        shuaxin1: true,
+        userMoney: '',//用户资金信息
+        AccountBTC: [],
+        value2: 0
       }
     },
     components: {
       entrustedRecord
     },
+    created(){
+      this.getCommoditBTC();
+
+    },
     mounted() {
       let that = this;
+      localStorage.setItem('Account', this.newAccount);
+      localStorage.setItem('commodity', this.buyClass + that.accountClass);
+      that.sendEvent('changeCommodity', '');
       this.$store.state.Account = this.newAccount;
       {
         $("input[name='select-accountsss']").change(function () {
@@ -186,16 +203,57 @@
           } else {
             that.buyOrSell = false;
           }
-          that.getPanKou();
         })
       }//选择方向
       {
-        $("input[name='select-currencyaaa']").change(function () {
-          that.getPanKou();
-          $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
-          that.buyClass = $(this).val();
-        })
+        setTimeout(function () {
+          $("input[name='select-currencyaaa']").change(function () {
+            that.getPanKou();
+            that.getLaterPrice();
+            $(this).next().addClass('recharge-group-radio-checked').parent().siblings().find('label').removeClass('recharge-group-radio-checked');
+            that.buyClass = $(this).val();
+//            alert($(this).val());
+            localStorage.setItem('commodity', $(this).val() + that.accountClass);
+            that.sendEvent('changeCommodity', '');
+            that.getUserMoney(this.buyClass);
+          })
+        }, 500)
+
       }//选择币种
+      {
+        setTimeout(function () {
+          $('.buy-pankou p').click(function () {
+            that.buyPrice = $(this).find('.dty').html();
+            that.sellPrice = $(this).find('.dty').html();
+          })
+          $('.sell-pankou p').click(function () {
+            that.buyPrice = $(this).find('.dty').html();
+            that.sellPrice = $(this).find('.dty').html();
+          })
+        }, 500)
+      }
+
+      {
+        $('.sellPrice-ipt').blur(function () {
+          that.sellPrice = parseFloat($(this).val()).toFixed(4);
+        })
+        $('.sellNum-ipt').blur(function () {
+          that.sellNum = parseFloat($(this).val()).toFixed(4);
+        })
+        $('.buyPrice-ipt').blur(function () {
+          that.buyPrice = parseFloat($(this).val()).toFixed(4);
+        })
+        $('.buyNum-ipt').blur(function () {
+          that.buyNum = parseFloat($(this).val()).toFixed(4);
+        })
+        $('.buyTotal-ipt').blur(function () {
+          that.buyTotal = parseFloat($(this).val()).toFixed(4);
+        })
+        $('.sellTotal-ipt').blur(function () {
+          that.sellTotal = parseFloat($(this).val()).toFixed(4);
+        })
+      }
+
       {
         $('.buyOrSellStyle a').click(function () {
           $(this).addClass('hover-color-css').siblings().removeClass('hover-color-css');
@@ -207,46 +265,102 @@
         })
       }//限价与市价的选择
       this.getPanKou();
+      this.getLaterPrice();
+      this.getUserMoney(this.buyClass);
 
     },
     methods: {
-      transaction1(ev) {
-        ev.target.innerHTML = '处理中...';
-        this.getTypes();
+      changeNumBuyS(){
+        if (this.priceStyle) {
+          if (this.buyPrice) {
+//            console.log(this.userMoney, 111);
+            this.buyNum = ((this.userMoney * this.value2 / 100) / this.buyPrice).toFixed(4);
+          } else {
+            this.buyPrice = parseFloat(this.newpriceData).toFixed(2);
+          }
+        } else {
+          this.buyTotal = (this.userMoney * this.value2 / 100).toFixed(4);
+        }
+      },
+      formatTooltip(val){
+        return val / 100;
+      },
+      //      获取最新价
+      getLaterPrice(){
         this.getCommodity();
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/trade/entrust',
-          method: 'POST',
+          url: this.$URL_API + 'quotation/offerPrice/' + this.commodity,
+          method: 'GET',
+          herders: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        }).then((res) => {
+          if (res.data.code === 200) {
+            this.$store.state.businessPrice.name = res.data.data.price;
+            this.$store.state.businessPrice.data.set(this.commodity, res.data.data);
+          }
+        })
+      },
+      transaction1(ev) {
+        this.getUserMoney();
+        this.getTypes();
+        this.getCommodity();
+//        if (this.sellComP > this.userMoney) {
+//          this.showError('', '资金不足');
+//          ev.target.innerHTML = this.buyOrSell ? '买入' : '卖出';
+//        } else {
+        if (this.types.indexOf('LIMITED') >= 0 && this.price && this.amount || this.types.indexOf('MARKET') >= 0 && (this.price || this.amount)) {
+          ev.target.innerHTML = '处理中...';
+          this.$http({
+            url: this.$URL_API + 'trade/entrust',
+            method: 'POST',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'X-Authorization': 'Bearer ' + this.$store.state.token,
+              "Content-Type": "application/json;charset=UTF-8"
+            },
+            data: {
+              commodity: this.commodity,
+              types: this.types,
+              price: this.price,
+              amount: this.amount,
+              source: 'WEB'
+            }
+          }).then((res) => {
+            this.showError(res.data.code, res.data.message);
+            if (res.data.code === 200) {
+              ev.target.innerHTML = this.buyOrSell ? '买入' : '卖出';
+              this.shuaxin1 = false;
+            } else {
+              ev.target.innerHTML = this.buyOrSell ? '买入' : '卖出';
+            }
+          }).then(() => {
+            this.shuaxin1 = true;
+          }).catch((req) => {
+            this.showError(req.code, req.message);
+            ev.target.innerHTML = this.buyOrSell ? '买入' : '卖出';
+          })
+        } else {
+          ev.target.innerHTML = this.buyOrSell ? '买入' : '卖出';
+          this.showError('', '请输入完整的价格或数量')
+        }
+      },
+//获取用户资金信息
+      getUserMoney(currency){
+        this.$http({
+          url: this.$URL_API + 'capital/info',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token,
-            "Content-Type": "application/json;charset=UTF-8"
-          },
-          data: {
-            commodity: this.commodity,
-            types: this.types,
-            price: this.price,
-            amount: this.amount,
-            source: 'WEB'
           }
         }).then((res) => {
-          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
-            if (this.buyOrSell) {
-              ev.target.innerHTML = '买入';
-            } else {
-              ev.target.innerHTML = '卖出';
+            for (let i = 0; i < res.data.data.length; i++) {
+              if (res.data.data[i].legalMoney === 'BTC' && res.data.data[i].currency === 'BTC') {
+                this.userMoney = res.data.data[i].amount;
+//                console.log(this.userMoney)
+              }
             }
-            this.shuaxin1 = false;
-          }
-        }).then(() => {
-          this.shuaxin1 = true;
-        }).catch((req) => {
-          this.showError(req.code, req.message);
-          if (this.buyOrSell) {
-            ev.target.innerHTML = '买入';
-          } else {
-            ev.target.innerHTML = '卖出';
           }
         })
       },
@@ -279,18 +393,17 @@
       },
 //      获取交易品种
       getCommodity() {
-        this.commodity = $("input[name='select-currencyaaa']:checked").val() + this.newAccount;
+        this.commodity = this.buyClass + this.newAccount;
       },
       getPanKou(){
         this.getCommodity();
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/quotation/depth/' + this.commodity + '/' + 5,
+          url: this.$URL_API + 'quotation/depth/' + this.commodity + '/' + 5,
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-Authorization': 'Bearer ' + this.$store.state.token,
           }
         }).then((res) => {
-          console.log(res)
 //          this.showError(res.data.code, res.data.message);
           if (res.data.code === 200) {
             this.pushViewB(res.data.data.b);
@@ -307,34 +420,57 @@
         }
         if (num.length < 5) {
           for (let i = 0; i < 5 - num.length; i++) {
-            $('.buy-pankou').append(`<p><span>买${i+1 + num.length}</span><span>--</span><span>--</span></p>`);
+            $('.buy-pankou').append(`<p><span>买${i + 1 + num.length}</span><span>--</span><span>--</span></p>`);
           }
         }
       },
       pushViewS(num){
         $('.sell-pankou').html('');
         for (let i = 0; i < num.length; i++) {
-          $('.sell-pankou').prepend(`<p><span>卖${i + 1}</span><span>${(num[i].price).toFixed(2)}</span><span>${(num[i].vol).toFixed(4)}</span></p>`) ;
+          $('.sell-pankou').prepend(`<p><span>卖${i + 1}</span><span>${(num[num.length - i - 1].price).toFixed(2)}</span><span>${(num[num.length - i - 1].vol).toFixed(4)}</span></p>`);
         }
         if (num.length < 5) {
           for (let i = 0; i < 5 - num.length; i++) {
-            $('.sell-pankou').prepend(`<p><span>卖${i+1 + num.length}</span><span>--</span><span>--</span></p>`);
+            $('.sell-pankou').prepend(`<p><span>卖${i + num.length + 1}</span><span>--</span><span>--</span></p>`);
           }
         }
-      }
+      },
+      getCommoditBTC(){
+        this.$http({
+          url: this.$URL_API + 'commodity/account',
+          method: 'GET',
+          header: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        }).then((res) => {
+          this.AccountBTC = res.data.data.BTC;
+        })
+      },
     },
-    computed:{
-      ...mapGetters(['LatestPrice'])
+    computed: {
+      buyComP() {
+        return this.buySum = ((this.buyPrice ? this.buyPrice : 0) * (this.buyNum ? this.buyNum : 0)).toFixed(8);
+      },
+      sellComP() {
+        return this.sellSum = ((this.sellPrice ? this.sellPrice : 0) * (this.sellNum ? this.sellNum : 0)).toFixed(8);
+      },
+      ...mapGetters(['businessPrice'])
     }
   }
 </script>
 <style scoped>
-  .red{
+  .block {
+    width: 255px;
+  }
+
+  .red {
     color: #cc0000 !important;
   }
-  .green{
+
+  .green {
     color: #00cc00 !important;
   }
+
   .business-home-content {
     display: flex;
     background: #e9ecf3;
@@ -348,21 +484,44 @@
     margin: .5rem
   }
 
-  .recharge-group-radio-checked .a3, .recharge-group-radio-checked .a4, .recharge-group-radio-checked .a5 {
+  .recharge-group-radio-checked .aCNY, .recharge-group-radio-checked .aBCC, .recharge-group-radio-checked .aXRP, .recharge-group-radio-checked .aBTC, .recharge-group-radio-checked .aLTC, .recharge-group-radio-checked .aETH, .recharge-group-radio-checked .aETC {
     background-position: 0;
   }
 
-  .a3 {
+  .aCNY {
+    background: url("../../assets/img/iconPng/CNYzhanghu.png");
+    background-position: -22px;
+
+  }
+
+  .aBCC {
+    background: url("../../assets/img/iconPng/BCC.png");
+    background-position: -22px;
+
+  }
+
+  .aXRP {
+    background: url("../../assets/img/iconPng/ripple.png");
+    background-position: -22px;
+
+  }
+
+  .aBTC {
+    background: url("../../assets/img/iconPng/BTCzhanghu.png");
+    background-position: -22px;
+  }
+
+  .aLTC {
     background: url("../../assets/img/iconPng/ltc.png");
     background-position: -22px;
   }
 
-  .a4 {
+  .aETH {
     background: url("../../assets/img/iconPng/ETH.png");
     background-position: -22px;
   }
 
-  .a5 {
+  .aETC {
     background: url("../../assets/img/iconPng/ETC.png");
     background-position: -22px;
   }
@@ -500,17 +659,17 @@
     font-weight: bold;
   }
 
-  .content-left .recharge-group-radio {
+  .content-left .recharge-group-radio, .content-left .recharge-group-radio section {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
   }
 
-  .content-left .recharge-group-radio > input {
+  .content-left .recharge-group-radio > input, .content-left .recharge-group-radio section > input {
     display: none;
   }
 
-  .content-left .recharge-group-radio > label {
+  .content-left .recharge-group-radio > label, .content-left .recharge-group-radio section > label {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -556,11 +715,11 @@
     background: #63b212;
   }
 
-  .content-left .recharge-group-radio label > i {
+  .content-left .recharge-group-radio label > i, .content-left .recharge-group-radio section label > i {
     margin-right: 1rem;
   }
 
-  .content-left .recharge-group-radio > label > span:nth-of-type(1) {
+  .content-left .recharge-group-radio > label > span:nth-of-type(1), .content-left .recharge-group-radio section > label > span:nth-of-type(1) {
     display: none;
     position: absolute;
     right: -0.8rem;
@@ -570,7 +729,7 @@
     border-radius: 50%;
   }
 
-  .content-left .recharge-group-radio > label > span:nth-of-type(1) > span {
+  .content-left .recharge-group-radio > label > span:nth-of-type(1) > span, .content-left .recharge-group-radio section > label > span:nth-of-type(1) > span {
     border-radius: 50%;
     background: #01aaef;
     color: #fff;

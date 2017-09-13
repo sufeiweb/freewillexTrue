@@ -1,59 +1,36 @@
-var stompClient = null;
-var testData={
-  code:200,
-  data:[]
+var $URL_API = 'https://zhmobile.firstcoinex.com/fwex/web/';
+// var $URL_API = 'https://kaifamobile.firstcoinex.com/fwex/web/';
+var periodTemp = 'MIN1';
+var de = '1m';
+var testData = {
+  code: 200,
+  data: []
 };
-// connect();
-function connect() {
-  var socket = new SockJS('http://192.168.1.48:8089/fwex/endpointSang');
-  stompClient = Stomp.over(socket);
-  stompClient.connect({}, function(frame) {
-    // 行情/
-    // stompClient.subscribe('/market/BTCCNY/kline/min15', function(response) {
-    //   // testData=JSON.parse(response.body);
-    //  var data=JSON.parse(response.body).data;
-    //   for(let i=0;i<data.length;i++){
-    //     testData.data.push([data[i].time,data[i].open,data[i].high,data[i].low,data[i].close,data[i].vol,data[i].amount])
-    //   }
-    // });
-  });
-}
-console.log(testData);
 
-$.ajax({
-  url:'http://192.168.1.48:8089/fwex/web/quotation/kline/BTCCNY/MIN1',
-  method:'GET',
-  headers:{
-    'X-Requested-With':'XMLHttpRequest'
-  },
-  success:function (res) {
-    var data=res.data;
-    for(let i=0;i<data.length;i++){
-      testData.data.push([data[i].time,data[i].open,data[i].high,data[i].low,data[i].close,data[i].vol,data[i].amount])
+window.addEventListener("setItemEvent", function (e) {
+  switch_period('1m');
+  //console.log('切换k线' + e.newValue + '   ' + localStorage.getItem('commodity'));
+
+  GLOBAL_VAR.url = $URL_API + "quotation/kline/" + e.newValue + "/MIN1";
+  ChartManager.getInstance().getChart().setMarketFrom(e.newValue);
+  RequestData();
+
+});
+setInterval(function () {
+  //推送跟本地最后一条数据不一致
+  if (sessionStorage.getItem('quotation') && testData.data.length > 0) {
+    if (sessionStorage.getItem('quotation') != testData.data[testData.data.length - 1][0]) {
+      GLOBAL_VAR.url = $URL_API + "quotation/kline/" + localStorage.getItem('commodity') + "/" + periodTemp;
+      RequestData();
     }
   }
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}, 10 * 1000);
 
 var GLOBAL_VAR = {
   KLineAllData: new Object,
   KLineData: new Object,
   time_type: "line",
-  market_from: 'cnybtc',
+  market_from: 'BTCCNY',
   market_from_name: "freeWillex",
   limit: "1000", // 显示的记录数目
   requestParam: "",
@@ -62,7 +39,7 @@ var GLOBAL_VAR = {
   TimeOutId: null,
   button_down: false,
   init: true,
-  url: "https://www.freewillex.cn/api/market/kLine" // 获取所有数据的地址(ajax)
+  url: $URL_API + "quotation/kline/BTCCNY/MIN1",    // 获取所有数据的地址(ajax)
 };
 var Config = {
   currency: 'CNY',
@@ -2168,7 +2145,7 @@ Chart.prototype.updateDataAndDisplay = function () {
     RequestData(true)
   } else {
     GLOBAL_VAR.requestParam = setHttpRequestParam(GLOBAL_VAR.market_from, GLOBAL_VAR.time_type, null, a.toString());
-    RequestData()
+    // RequestData()
   }
   ChartManager.getInstance().redraw("All", false)
 };
@@ -3162,6 +3139,7 @@ ChartManager.prototype.bindCanvas = function (layer, canvas) {
   if (layer == "main") {
     this._mainCanvas = canvas;
     this._mainContext = canvas.getContext("2d");
+
   } else if (layer == "overlay") {
     this._overlayCanvas = canvas;
     this._overlayContext = canvas.getContext("2d");
@@ -3190,7 +3168,6 @@ ChartManager.prototype.init = function () {
   delete this._areas['frame0.k0.indic1Range'];
   DefaultTemplate.loadTemplate("frame0.k0", "freeWillex");
   this.redraw('All', true);
-  alert(1111);
 };
 ChartManager.prototype.setCurrentDrawingTool = function (paramTool) {
   // "Cursor" // "CrossCursor" // "DrawFibRetrace" // "DrawFibFans"
@@ -3399,6 +3376,7 @@ ChartManager.prototype.setTitle = function (dsName, title) {
   this._titles[dsName] = title;
 };
 ChartManager.prototype.setCurrentDataSource = function (dsName, dsAlias) {
+  //console.log(dsName + ' ' + dsAlias);
   var cached = this.getCachedDataSource(dsAlias);
   if (cached != null) {
     this.setDataSource(dsName, cached, true);
@@ -9020,58 +8998,55 @@ function clear_refresh_counter() {
 }
 
 var RequestData = function (showLoading) {
+  testData.data = [];
   AbortRequest();
   window.clearTimeout(GLOBAL_VAR.TimeOutId);
   if (showLoading == true) {
     $("#chart_loading").addClass("activated");
   }
   $(document).ready(GLOBAL_VAR.G_HTTP_REQUEST = $.ajax({
-    type: "post",
+    type: "GET",
     url: GLOBAL_VAR.url,
-    dataType: 'jsonp',
-    data: GLOBAL_VAR.requestParam,
-    timeout: 30000,
-    created: Date.now(),
     beforeSend: function () {
       this.time = GLOBAL_VAR.time_type;
       this.market = GLOBAL_VAR.market_from;
     },
-    success: function (json) {
+    success: function (res) {
+      testData.data = [];
+      var data = res.data;
+      if (data) {
+        for (let i = 0; i < data.length; i++) {
+          testData.data.push([data[i].time, data[i].open, data[i].high, data[i].low, data[i].close, data[i].vol, data[i].amount])
+        }
+      }
 
-      json = JSON.parse(json);
-      console.log(json);
       //console.log(json);
       if (GLOBAL_VAR.G_HTTP_REQUEST) {
-        if (this.time != GLOBAL_VAR.time_type || this.market != GLOBAL_VAR.market_from) {
-          GLOBAL_VAR.TimeOutId = setTimeout(RequestData, 1000);
-          return;
-        }
-        if (!json) {
-          return;
-        }
         GLOBAL_VAR.market_from_name = "freeWillex";
         var chart = ChartManager.getInstance().getChart();
         chart._contract_unit = 'BTC';
-        chart._money_type = json.code;
-        GLOBAL_VAR.KLineData = eval(json.data);
-        try {
-          var flag = GLOBAL_VAR.chartMgr.updateData("frame0.k0", GLOBAL_VAR.KLineData);
-          if (!flag) {
-            GLOBAL_VAR.requestParam = setHttpRequestParam(GLOBAL_VAR.market_from, GLOBAL_VAR.time_type, GLOBAL_VAR.limit, null);
-            GLOBAL_VAR.TimeOutId = setTimeout(RequestData, 1000);
-            return;
-          }
-          clear_refresh_counter();
-        } catch (err) {
-          if (err == "data error") {
-            GLOBAL_VAR.requestParam = setHttpRequestParam(GLOBAL_VAR.market_from, GLOBAL_VAR.time_type, GLOBAL_VAR.limit, null);
-            GLOBAL_VAR.TimeOutId = setTimeout(RequestData, 1000);
-            return;
-          }
-        }
-        GLOBAL_VAR.TimeOutId = setTimeout(TwoSecondThread, 10 * 1000);
+        chart._money_type = testData.data;
+        GLOBAL_VAR.KLineData = eval(testData.data);
+
+        GLOBAL_VAR.chartMgr.updateData("frame0.k0", GLOBAL_VAR.KLineData);
+        // try {
+        //   var flag = GLOBAL_VAR.chartMgr.updateData("frame0.k0", GLOBAL_VAR.KLineData);
+        //   if (!flag) {
+        //     GLOBAL_VAR.requestParam = setHttpRequestParam(GLOBAL_VAR.market_from, GLOBAL_VAR.time_type, GLOBAL_VAR.limit, null);
+        //     // GLOBAL_VAR.TimeOutId = setTimeout(RequestData, 1000 * 10);
+        //     return;
+        //   }
+        //   clear_refresh_counter();
+        // } catch (err) {
+        //   if (err == "data error") {
+        //     GLOBAL_VAR.requestParam = setHttpRequestParam(GLOBAL_VAR.market_from, GLOBAL_VAR.time_type, GLOBAL_VAR.limit, null);
+        //     // GLOBAL_VAR.TimeOutId = setTimeout(RequestData, 1000 * 10);
+        //     return;
+        //   }
+        // }
+        // GLOBAL_VAR.TimeOutId = setTimeout(TwoSecondThread, 10 * 1000);
         $("#chart_loading").removeClass("activated");
-        ChartManager.getInstance().redraw("All", false)
+        ChartManager.getInstance().redraw("All", true)
       }
     },
     error: function (xhr, textStatus, errorThrown) {
@@ -9080,37 +9055,11 @@ var RequestData = function (showLoading) {
       if (xhr.status == 200 && xhr.readyState == 4) {
         return;
       }
-      GLOBAL_VAR.TimeOutId = setTimeout(function () {
-        RequestData(true)
-      }, 1000)
+      // GLOBAL_VAR.TimeOutId = setTimeout(function () {
+      //   RequestData(true)
+      // }, 1000)
     },
     complete: function () {
-      //alert('complete');
-
-      GLOBAL_VAR.market_from_name = "freeWillex";
-      var chart = ChartManager.getInstance().getChart();
-      chart._contract_unit = 'BTC';
-      chart._money_type = testData.code;
-      GLOBAL_VAR.KLineData = eval(testData.data);
-      try {
-        var flag = GLOBAL_VAR.chartMgr.updateData("frame0.k0", GLOBAL_VAR.KLineData);
-        if (!flag) {
-          GLOBAL_VAR.requestParam = setHttpRequestParam(GLOBAL_VAR.market_from, GLOBAL_VAR.time_type, GLOBAL_VAR.limit, null);
-          GLOBAL_VAR.TimeOutId = setTimeout(RequestData, 1000);
-          return;
-        }
-        clear_refresh_counter();
-      } catch (err) {
-        if (err == "data error") {
-          GLOBAL_VAR.requestParam = setHttpRequestParam(GLOBAL_VAR.market_from, GLOBAL_VAR.time_type, GLOBAL_VAR.limit, null);
-          GLOBAL_VAR.TimeOutId = setTimeout(RequestData, 1000);
-          return;
-        }
-      }
-      GLOBAL_VAR.TimeOutId = setTimeout(TwoSecondThread, 10 * 1000);
-      $("#chart_loading").removeClass("activated");
-      ChartManager.getInstance().redraw("All", false)
-
       GLOBAL_VAR.G_HTTP_REQUEST = null
     }
   }));
@@ -9453,11 +9402,11 @@ function on_size() {
 
 /**
  * 鼠标滑轮时间(大于0向前,小于0向后)
- * @param event
- * @param type
  * @returns {boolean}
+ * @param t
  */
 function mouseWheel(event, type) {
+
   ChartManager.getInstance().scale(type > 0 ? 1 : -1);
   ChartManager.getInstance().redraw("All", true);
   return false
@@ -9585,31 +9534,19 @@ function switch_indic(onOff) {
  */
 var wsInit = 0;
 function switch_period(period) {
-  var periodTemp = GLOBAL_VAR.periodMap[GLOBAL_VAR.tagMapPeriod[period]];
-  if (wsInit > 0) {
-    WS.params['ticker'] = [
-      {"code": CODE, "period": "DAY"}
-    ];
-    periodTemp == "DAY" ? "" : (_.isUndefined(periodTemp) ? (WS.params['ticker']).push({
-      "code": CODE,
-      "period": 'MIN1'
-    }) : (WS.params['ticker']).push({"code": CODE, "period": periodTemp}));
-    WS.socketEmit('request', WS.params)
-  } else {
-    wsInit++;
-  }
+  de = period;
+  periodTemp = GLOBAL_VAR.periodMap[GLOBAL_VAR.tagMapPeriod[period]];
+  GLOBAL_VAR.url = $URL_API + "quotation/kline/" + localStorage.getItem('commodity') + "/" + periodTemp;
+  //that.sendEvent('switchPeriod', periodTemp);
+
   $("#chart_container .chart_toolbar_tabgroup a").removeClass("selected");
-  //$("#chart_toolbar_periods_vert ul a").removeClass("selected");
+
   $("#chart_container .chart_toolbar_tabgroup a").each(function () {
     if ($(this).parent().attr("name") == period) {
       $(this).addClass("selected")
     }
   });
-  /*$("#chart_toolbar_periods_vert ul a").each(function () {
-   if ($(this).parent().attr("name") == period) {
-   $(this).addClass("selected")
-   }
-   });*/
+
   ChartManager.getInstance().showCursor();
   calcPeriodWeight(period);
   if (period == "line") {
@@ -9629,38 +9566,7 @@ function switch_period(period) {
   periodSetting.charts.period = period;// 设置当前周期
   ChartSettings.save();// 保存设置
 }
-//function switch_market_selected(b) {
-//    kline.reset(b);
-//    $(".market_chooser ul a").removeClass("selected");
-//    $(".market_chooser ul a[name='" + b + "']").addClass("selected");
-//    ChartManager.getInstance().getChart()._market_from = b;
-//    var a = ChartSettings.get();
-//    a.charts.market_from = b;
-//    ChartSettings.save()
-//}
-/*function switch_market(b) {
- switch_market_selected(b);
- var a = ChartSettings.get();
- if (a.charts.period == "line") {
- ChartManager.getInstance().getChart().strIsLine = true;
- ChartManager.getInstance().setChartStyle("frame0.k0", "Line")
- } else {
- ChartManager.getInstance().getChart().strIsLine = false;
- ChartManager.getInstance().setChartStyle("frame0.k0", ChartSettings.get().charts.chartStyle)
- }
- ChartManager.getInstance().getChart().setMarketFrom(b)
- }
- function IsSupportedBrowers() {
- function a() {
- var b = document.createElement("canvas");
- return !!(b.getContext && b.getContext("2d"))
- }
 
- if (!a()) {
- return false
- }
- return true
- }*/
 /**
  * 计算周期的权重
  */

@@ -2,7 +2,7 @@
   <footer>
     <div class="footer layout">
       <div class="footer-header">
-        <div class="footer-header-left">
+        <div class="footer-header-left" style="visibility: hidden">
           <i class="iconfont footer-header-left-setting">&#xe6c4;</i>
           <select class="setting-language">
             <option class="setting-language-china">中文</option>
@@ -15,7 +15,7 @@
               <a href="javascript:" class="footer-header-share-weChat">
                 <i class="iconfont font-size-16">&#xe69f;</i>
               </a>
-              <transition enterActiveClass="animated zoomInRight" leaveActiveClass="animated zoomOutDown">
+              <transition enterActiveClass="animated zoomInRight" leaveActiveClass="animated zoomOutRight">
                     <span class="weChatCode" v-show="weChatShow">
                                 <img src="../assets/img/footer/WXcode.jpg" alt="关注微信"/>
                             </span>
@@ -30,7 +30,7 @@
             <li><a href="https://twitter.com/FreeWillex" class="footer-header-share-twitter" target="_blank"><i
               class="iconfont font-size-16">&#xe6a2;</i></a></li>
           </ul>
-          <div class="footer-header-right-sub">
+          <div class="footer-header-right-sub" v-show="false">
             <input type="email" placeholder="输入邮箱，免费订阅！" class="footer-header-right-sub-text"/>
             <a href="javascript:" class="footer-height-right-sub-btn">订阅</a>
           </div>
@@ -50,9 +50,12 @@
             <dt class="footer-center-right-item-title">关于我们</dt>
             <router-link to="/introduction" tag="dd"><a href="javascript:">公司介绍</a></router-link>
             <!--<dd><a href="javascript:;">公司介绍</a></dd>-->
-            <dd><a href="javascript:">联系我们</a></dd>
-            <dd><a href="javascript:">加入我们</a></dd>
-            <dd><a href="javascript:">公告</a></dd>
+            <!--<dd><a href="javascript:">联系我们</a></dd>-->
+            <router-link to="/CallUs" tag="dd"><a href="javascript:">联系我们</a></router-link>
+            <!--<dd><a href="javascript:">加入我们</a></dd>-->
+            <router-link to="/JoinUs" tag="dd"><a href="javascript:">加入我们</a></router-link>
+            <router-link to="/notice/noticeList" tag="dd"><a href="javascript:;">公告</a></router-link>
+            <!--<dd><a href="javascript:">公告</a></dd>-->
           </dl>
           <dl class="footer-center-right-item">
             <dt class="footer-center-right-item-title">法律声明</dt>
@@ -65,9 +68,10 @@
           </dl>
           <dl class="footer-center-right-item">
             <dt class="footer-center-right-item-title">下载</dt>
-            <dd><a href="javascript:">APP</a></dd>
+            <router-link to="/AppDownload" tag="dd"><a href="javascript:;">APP</a></router-link>
+            <!--<dd><a href="javascript:">APP</a></dd>-->
           </dl>
-          <dl class="footer-center-right-item">
+          <dl class="footer-center-right-item" v-show="false">
             <dt class="footer-center-right-item-title">新手</dt>
             <dd><a href="javascript:">常见问题</a></dd>
           </dl>

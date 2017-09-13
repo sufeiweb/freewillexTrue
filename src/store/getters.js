@@ -11,28 +11,43 @@ export default {
   LoginState(state) {
     return state.loginState;
   },
-  ErrorState(state){
+  ErrorState(state) {
     return state.ErrorState;
   },
-  ErrorState1(state){
+  ErrorState1(state) {
     return state.ErrorState1;
   },
-  ErrorMessage(state){
+  ErrorMessage(state) {
     return state.ErrorMessage;
   },
-  LatestPrice(state){
+  LatestPrice(state) {
     return state.LatestPrice;
   },
-  trades(state){
+  trades(state) {
     return state.trades;
   },
-  depth(state){
+  depth(state) {
     return state.depth;
   },
-  Quotation(state){
+  Quotation(state) {
     return state.Quotation;
   },
-  ShowOrHide(state){
+  ShowOrHide(state) {
     return state.ShowOrHide;
+  },
+  chaPrice(state) {
+    return state.chaPrice
+  },
+  entrust(state) {
+    return state.weiTuo;
+  },
+  businessPrice(state) {
+    return state.businessPrice.data;
+  },
+  bankImgUrl(state){
+    return state.bankImgUrl;
+  },
+  signShowOrHide(state){
+    return state.signLogState;
   }
 }

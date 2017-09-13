@@ -23,7 +23,7 @@
         <span>验证码</span>
         <div>
           <div class="bindPhone-input-box">
-            <input type="text" placeholder="验证码" v-model="bindPhoneRYZ" class="bindPhoneRYZ-input"/>
+            <input type="text" placeholder="验证码" v-model="bindPhoneRYZ" class="bindPhoneRYZ-input" maxlength="6"/>
             <a @click="bindPhoneRgetCord()">{{bindPhoneRGetCord}}</a>
           </div>
           <span class="bindPhoneRYZ-tips"></span>
@@ -33,7 +33,7 @@
         <span>手机验证码</span>
         <div>
           <div class="bindPhone-input-box">
-            <input type="text" placeholder="手机验证码" v-model="bindPhoneRCaptcha"/>
+            <input type="text" placeholder="手机验证码" v-model="bindPhoneRCaptcha" maxlength="6"/>
             <button class="bindGetEmailCord">获取验证码</button>
           </div>
           <span class="bindPhoneRCaptcha-tips"></span>
@@ -94,14 +94,15 @@
       } //手机正则验证
       {
         $('.bindGetEmailCord').click(function () {
+          $('.bindGetEmailCord').attr("disabled", true).css("cursor", "default");
           let second = 60;
           let pattern = /0?^(13|14|15|18|17)[0-9]{9}/;
-          let url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/email/' + that.bindPhoneNum;
+          let url = that.$URL_API + 'captcha/email/' + that.bindPhoneNum;
           if (that.bindPhoneNum.length !== 0 && pattern.test(that.bindPhoneNum)) {
             that.$http.get(url).then((res) => {
-              this.showError(res.data.code, res.data.message);
+              that.showError(res.data.code, res.data.message);
               if (res.data.code === 200) {
-                $('.bindGetEmailCord').attr("disabled", true).css("cursor", "default");
+
                 that.timer = setInterval(function () {
                   $('.bindGetEmailCord').html((--second) + 's');
                   if (second <= 0) {
@@ -115,11 +116,15 @@
                   color: 'red',
                   marginLeft: '1.5rem'
                 })
+              } else {
+                $('.bindGetEmailCord').removeAttr("disabled").css("cursor", "pointer");
               }
             }).catch((req) => {
-              this.showError(req.code, req.message)
+              $('.bindGetEmailCord').removeAttr("disabled").css("cursor", "pointer");
+              that.showError(req.code, req.message)
             })
           } else {
+            $('.bindGetEmailCord').removeAttr("disabled").css("cursor", "pointer");
             $('.bindPhoneRCaptcha-tips').html('请核对手机号').css({
               alignSelf: 'flex-start',
               color: 'red',
@@ -146,7 +151,7 @@
         //console.log(that.$store.state.bindPhoneNum.phone, that.$store.state.bindPhoneNum.YZ);
         if (that.$store.state.bindPhoneNum.phone && that.$store.state.bindPhoneNum.YZ) {
           that.$http({
-            url: 'https://kaifamobile.firstcoinex.com/fwex/web/authentication/mobileAuth',
+            url: this.$URL_API + 'authentication/mobileAuth',
             method: 'POST',
             data: {
               mobile: that.bindPhoneNum,
@@ -159,10 +164,12 @@
               "Content-Type": "application/json;charset=UTF-8",
             }
           }).then((res) => {
-            this.showError(res.data.code, res.data.message);
-            that.$router.push('/settings');
+            that.showError(res.data.code, res.data.message);
+            if(res.data.code===200){
+              that.$router.push('/settings');
+            }
           }).catch((req) => {
-            this.showError(req.code, req.message)
+            that.showError(req.code, req.message)
           })
         }
       }

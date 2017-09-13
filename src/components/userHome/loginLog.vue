@@ -59,7 +59,7 @@
     methods: {
       handleCurrentChangeLoginLog(currentPage){
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/logs',
+          url: this.$URL_API+'account/logs',
           method: 'POST',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',

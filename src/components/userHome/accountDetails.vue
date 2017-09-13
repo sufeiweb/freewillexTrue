@@ -5,14 +5,14 @@
         <p>选择账户</p>
       </div>
       <div class="recharge-group-radio">
-        <input name="select-account413" type="radio" id="account-cny453" value="" checked/>
-        <label for="account-cny453" class="recharge-group-radio-checked">
-          <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
-          <span class="iconFont a9"></span>
-          <span> 全部 </span>
-        </label>
-        <input name="select-account413" type="radio" id="account-cny4553" value="CNY"/>
-        <label for="account-cny4553">
+        <!--<input name="select-account413" type="radio" id="account-cny453" value="" checked/>-->
+        <!--<label for="account-cny453" class="recharge-group-radio-checked">-->
+          <!--<span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>-->
+          <!--<span class="iconFont a9"></span>-->
+          <!--<span> 全部 </span>-->
+        <!--</label>-->
+        <input name="select-account413" type="radio" id="account-cny4553" value="CNY" checked/>
+        <label for="account-cny4553"  class="recharge-group-radio-checked">
           <span class=""><img src="../../assets/img/iconPng/jiantou.png"/></span>
           <span class="iconFont a1"></span>
           <span>CNY账户</span>
@@ -25,23 +25,37 @@
         </label>
       </div>
     </div>
-    <userFooter></userFooter>
+    <transition enterActiveClass="animated fadeIn" leaveActiveClass="animated fadeOut">
+      <userFooter v-if="showQ"></userFooter>
+    </transition>
   </div>
 </template>
 <script>
   import userFooter from '../lettle_components/userFooter.vue';
   export default {
+    data(){
+      return {
+        showQ: true
+      }
+    },
     components: {
       userFooter
     },
     mounted() {
       let that = this;
-      this.$store.state.Account = '';
+      localStorage.setItem('Account','CNY');
       {
         {
           $("input[name='select-account413']").change(function () {
+            that.showQ = false;
             $(this).next().addClass('recharge-group-radio-checked').siblings().removeClass('recharge-group-radio-checked');
             that.$store.state.Account = $(this).val();
+            localStorage.setItem('Account', $(this).val());
+            setTimeout(function () {
+              that.showQ = true;
+            }, 100)
+
+//            that.sendEvent('accountDetails','');
           })
         }//选择账户
       }//选择账户

@@ -6,7 +6,7 @@
         <h1>邀请您的亲友可获得免费的比特币</h1>
         <p>亲爱的朋友，只要您将分享链接发送给朋友，或通过邮件邀请他</p>
         <p>每成功邀请一名朋友注册并完成实名认证，即可获得
-<span class="fb">5</span> 元奖励；若他还参与交易(交易额≥1000元)，将再奖您 <span class="fb">10</span> 元！</p>
+          <span class="fb">5</span> 元奖励；若他还参与交易(交易额≥1000元)，将再奖您 <span class="fb">10</span> 元！</p>
       </div>
       <div class="broker-center">
         <div class="broker-center-left">
@@ -17,28 +17,32 @@
           </p>
         </div>
         <div class="broker-center-right">
-          <p>推荐人编号：<span class="shareBrokerId">252525</span></p>
-          <p>
+          <p>推荐人编号：<span class="shareBrokerId">{{recommendCodeNew}}</span></p>
+          <p v-show="false">
             <a href="javascript:;" class="bds_sqq">腾讯QQ</a>
             <a href="javascript:;" class="bds_tsina">新浪微博</a>
             <a href="javascript:;" class="bds_weixin">微信</a>
             <a href="javascript:;" class="bds_fbook">Facebook</a>
             <a href="javascript:;" class="bds_twi">Twitter</a>
           </p>
-          <p><input type="text" value="https://192.168.1.110:3000/broker/register?id=402547" readonly
-                    id="broker-input"/><i
-            class="iconfont">&#xe635;</i><a href="javascript:;" id="brokerBtn" text="复制成功"
-                                            @click="CopyText($event)">复制</a></p>
-          <p><input type="text" placeholder="输入您好友的邮箱"/><a href="javascript:;">邀请</a></p>
-          <p>*多个邮箱请用半角逗号分隔</p>
+          <p class="border-er-box">
+            <input type="text" v-model="brokerUrl" readonly id="broker-input"/>
+            <i class="iconfont borkerERBTN">&#xe635;</i>
+            <a href="javascript:;" id="brokerBtn" text="复制成功" @click="CopyText($event)">复制</a>
+            <span id="borkerER" v-show="ERShow"></span>
+          </p>
+          <!--<p><input type="text" placeholder="输入您好友的邮箱"/><a href="javascript:;">邀请</a></p>-->
+          <!--<p>*多个邮箱请用半角逗号分隔</p>-->
         </div>
       </div>
       <div class="broker-footer">
-        <p>已成功推荐了<span>0</span>人</p>
+        <p>已成功推荐了<span>{{totalNumH}}</span>人</p>
         <p>共获得奖励</p>
         <div class="broker-footer-Q">
-          <p><span>0.00</span>CNY</p>
-          <p><span>0.00000000</span>BTC</p>
+          <p>
+            <span>{{(businessPrice.get(rewardCurrency + 'CNY') ? businessPrice.get(rewardCurrency + 'CNY').price : 0) * (rewardMoney * totalNumH) | float2}}</span>CNY
+          </p>
+          <p><span>{{(rewardMoney * totalNumH) | float8}}</span>{{rewardCurrency}}</p>
         </div>
         <div class="broker-table">
           <a href="javascript:;" @click="tableView=!tableView"><span>推荐奖励明细</span><i
@@ -52,15 +56,15 @@
               <td>获得奖励</td>
             </tr>
             </thead>
-            <tbody v-show="!noCord">
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+            <tbody v-show="noCord">
+            <tr v-for="item in brokerList">
+              <td>{{item.createDate | dateYMDHIS}}</td>
+              <td>{{item.remark}}</td>
+              <td>{{item.activityName}}</td>
+              <td>{{item.amount | float8}}/{{item.currency}}</td>
             </tr>
             </tbody>
-            <tbody class="noRcoed" v-show="noCord">
+            <tbody class="noRcoed" v-show="!noCord">
             <tr>
               <td colspan="4">
                 <i class="iconfont">&#xe661;</i>
@@ -71,7 +75,13 @@
             <tfoot class="table-footer-page">
             <tr>
               <td colspan="4">
-                <el-pagination layout="prev, pager, next" :total="10" class="page-right"></el-pagination>
+                <el-pagination
+                  @current-change="handleCurrentChange"
+                  :current-page="currentPage"
+                  layout="prev, pager, next"
+                  :total="totalNumH"
+                  class="page-right"
+                ></el-pagination>
               </td>
             </tr>
             </tfoot>
@@ -87,19 +97,76 @@
 </template>
 <script>
   import $ from 'jquery';
+  import {mapGetters} from 'vuex';
   export default {
     data() {
       return {
         tableView: false,
-        noCord: true
+        noCord: false,
+        recommendCodeNew: '',
+        brokerUrl: '',
+        totalNumH: 10,
+        currentPage: 1,
+        brokerList: [],
+        rewardMoney: '',
+        rewardCurrency: '',
+        ERShow:false,
       }
     },
     mounted() {
+      //获取邀请码
+      {
+        this.recommendCodeNew = JSON.parse(localStorage.getItem('getU')).recommendCode;
+        let urlBroker = window.location.href;
+//        urlBroker=urlBroker.replace(new RegExp('borker', 'g'),'borkerRegister');
+        this.brokerUrl = urlBroker + 'Register?id=' + this.recommendCodeNew;
+//        console.log(this.brokerUrl);
+      }
+      {
+          let _this=this;
+        $('.borkerERBTN').hover(function () {
+          _this.ERShow=true;
+          _this.QRC('borkerER',_this.brokerUrl)
+        }, function () {
+          _this.ERShow=false;
+          $('#borkerER').html('');
+        });
+      }
+      this.handleCurrentChange(1);
     },
     methods: {
       CopyText(ev){
         this.copy('broker-input', ev.target.getAttribute('text'))
+      },
+      handleCurrentChange(currentPage){
+        this.$http({
+          url: this.$URL_API + 'activity/rewardList',
+          method: 'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Authorization': 'Bearer ' + this.$store.state.token,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          data: {
+            pageNo: currentPage - 1,
+            pageSize: 10,
+            param: {
+              activityCode: 'RECOMMENDER'
+            }
+          }
+        }).then((res) => {
+          if (res.data.code === 200) {
+            this.totalNumH = res.data.data.totalElements ? res.data.data.totalElements : 10;
+            this.brokerList = res.data.data.content;
+            this.noCord = res.data.data.totalElements > 0;
+            this.rewardMoney = res.data.data.content.length ? res.data.data.content[0].amount : 0;
+            this.rewardCurrency = res.data.data.content.length ? res.data.data.content[0].currency : 'BTC';
+          }
+        })
       }
+    },
+    computed: {
+      ...mapGetters(['businessPrice'])
     }
   }
 </script>
@@ -370,6 +437,14 @@
 
   .broker-table table tbody {
     border: 1px solid #dddddd;
+
+  }
+
+  .broker-table table tbody tr:nth-child(odd) {
+    background: #f9f9f9;
+  }
+
+  .broker-table table tbody tr:hover {
     background: #f9f9f9;
   }
 
@@ -398,5 +473,25 @@
 
   .broker-footer-text p:nth-of-type(2) {
     font-size: 3rem;
+  }
+
+  #borkerER {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #000;
+    padding: 5px;
+    background: #fff;
+    position: absolute;
+    top: 40px;
+    right: 35px;
+  }
+
+  .border-er-box {
+    margin-top: 50px;
+    position: relative;
+  }
+
+  .borkerERBTN {
+    cursor: pointer;
   }
 </style>

@@ -48,7 +48,7 @@
         <div>
           <span>验证码</span>
           <p>
-            <input type="text" placeholder="验证码" class="YZ-addBank" v-model="YZ"/>
+            <input type="text" placeholder="验证码" maxlength="6" class="YZ-addBank" v-model="YZ"/>
             <span @click="RgetCord()">{{rGetCord}}</span>
           </p>
           <div class="YZ-addBank-tips"></div>
@@ -58,7 +58,7 @@
         <div>
           <span>手机验证码</span>
           <p>
-            <input type="text" placeholder="手机验证码" class="phoneYZ-addBank" v-model="serverYZ"/>
+            <input type="text" placeholder="手机验证码" class="phoneYZ-addBank" v-model="serverYZ" maxlength="6"/>
             <button class="addBankGetCord" @click="REgetCord()">获取验证码</button>
           </p>
           <div class="phoneYZ-addBank-tips"></div>
@@ -157,7 +157,7 @@
       }//验证码校验
       {
         this.$http({
-          url: 'https://kaifamobile.firstcoinex.com/fwex/web/bank/all',
+          url: this.$URL_API+'bank/all',
           method: 'GET',
           headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -166,8 +166,6 @@
         }).then((res) => {
 //          this.showError(res.data.code, res.data.message);
           that.CBank = res.data.data;
-        }).catch((req) => {
-          this.showError(req.code, req.message)
         })
       }//获取支持银行
     },
@@ -193,7 +191,7 @@
           that.$store.state.addBankCard.YZ &&
           that.$store.state.addBankCard.serverYZ) {
           that.$http({
-            url: 'https://kaifamobile.firstcoinex.com/fwex/web/accountBank/bind',
+            url: that.$URL_API+'accountBank/bind',
             method: 'POST',
             data: {
               bankId: that.RBankVal,
@@ -212,6 +210,8 @@
             if (res.data.code === 200) {
               ev.target.innerHTML = '确认绑定';
               this.$router.push('/accountManagement');
+            }else {
+              ev.target.innerHTML = '确认绑定';
             }
           }).catch((req) => {
             this.showError(req.code, req.message);
@@ -220,15 +220,15 @@
         }
       },
       REgetCord() {
+        $('.addBankGetCord').attr("disabled", true).css("cursor", "default");
         let that = this;
         let second = 60;
         let pattern = /0?^(13|14|15|18|17)[0-9]{9}/;
-        let url = 'https://kaifamobile.firstcoinex.com/fwex/web/captcha/mobile/' + that.phoneNum;
+        let url = that.$URL_API+'captcha/mobile/' + that.phoneNum;
         if (that.phoneNum.length !== 0 && pattern.test(that.phoneNum)) {
           that.$http.get(url).then((data) => {
             this.showError(data.data.code, data.data.message);
             if (data.data.code === 200) {
-              $('.addBankGetCord').attr("disabled", true).css("cursor", "default");
               that.timer = setInterval(function () {
                 $('.addBankGetCord').html((--second) + 's');
                 if (second <= 0) {
@@ -242,11 +242,15 @@
                 color: 'red',
                 marginLeft: '1.5rem'
               })
+            }else {
+              $('.addBankGetCord').removeAttr("disabled").css("cursor", "pointer");
             }
           }).catch((req) => {
+            $('.addBankGetCord').removeAttr("disabled").css("cursor", "pointer");
             this.showError(req.code, req.message);
           })
         } else {
+          $('.addBankGetCord').removeAttr("disabled").css("cursor", "pointer");
           $('.phoneYZ-addBank-tips').html('请核对手机号').css({
             alignSelf: 'flex-start',
             color: 'red',

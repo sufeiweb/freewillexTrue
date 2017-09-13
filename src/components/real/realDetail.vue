@@ -32,43 +32,26 @@
       }
     },
     mounted() {
-      let that = this;
-      that.$http({
-        url: 'https://kaifamobile.firstcoinex.com/fwex/web/account/info',
-        method: 'GET',
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-Authorization': 'Bearer ' + that.$store.state.token
-        }
-      }).then((res) => {
-        if(res.data.code!==200){
-          this.showError(res.data.code, res.data.message);
-        }
-        that.userName = res.data.data.userName;
-        that.userCountry = res.data.data.country;
-      }).catch((req) => {
-        this.showError(req.code, req.message)
-      });
-      that.$http({
-        url: 'https://kaifamobile.firstcoinex.com/fwex/web/authentication/info',
+
+      let res = localStorage.getItem('getU');
+      this.userName = JSON.parse(res).userName;
+      this.userCountry=JSON.parse(res).country;
+
+      this.$http({
+        url: this.$URL_API+'authentication/info',
         method: 'GET',
         headers: {
           "X-Requested-With": "XMLHttpRequest",
-          'X-Authorization': 'Bearer ' + that.$store.state.token
+          'X-Authorization': 'Bearer ' + this.$store.state.token
         }
       }).then((res) => {
-        if(res.data.code!==200){
-          this.showError(res.data.code, res.data.message);
-        }
         if(res.data.code===200){
           for (let i = 0; i < res.data.data.length; i++) {
             if (res.data.data[i].certificateEnum === 'IDCARD') {
-              that.userIdCard = res.data.data[i].code;
+              this.userIdCard = res.data.data[i].code;
             }
           }
         }
-      }).catch((req) => {
-        this.showError(req.code, req.message)
       })
     }
 

@@ -27,17 +27,25 @@
     },
     mounted(){
       this.userNameTK = localStorage.getItem('username') ? localStorage.getItem('username') : '';
+      {
+        $(document).keyup(function () {
+          if (window.event.keyCode === 13) {
+            that.loginStart();
+          }
+        })
+      }
     },
     methods: {
       loginStart() {
         let that = this;
         if (this.userNameTK && this.userPsdTK) {
           that.$http({
-            url: 'https://kaifamobile.firstcoinex.com/fwex/web/auth/login',
+            url: this.$URL_API + 'auth/login',
             method: 'POST',
             data: {
               "loginUser": that.userNameTK,
-              "loginPwd": md5(that.userPsdTK)
+              "loginPwd": md5(that.userPsdTK),
+              "source": 'WEB'
             },
             headers: {
               "X-Requested-With": "XMLHttpRequest",
@@ -47,10 +55,15 @@
             that.showError(data.data.code, data.data.message);
             if (data.data.code === 200) {
               that.$store.dispatch('loginStateTrue');
-              sessionStorage.setItem('token', data.data.data);
+              localStorage.setItem('token', data.data.data);
+              localStorage.setItem('userPsd', md5(that.userPsdTK));
+              localStorage.setItem('userName', that.userNameTK);
+              localStorage.setItem('commodity', 'BTCCNY');
               that.$store.state.loginTrue = true;
               that.$store.state.TKShow = false;
               that.$store.state.token = data.data.data;
+              that.sendEvent('login', '');
+              that.getdr();
             }
           }).catch((req) => {
             that.showError(req.code, req.message);
@@ -60,6 +73,32 @@
       },
       TKShowFalse(){
         this.$store.state.TKShow = false;
+      },
+      getdr(){
+        this.$http({
+          url: this.$URL_API + 'authentication/info',
+          method: 'GET',
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'X-Authorization': 'Bearer ' + this.$store.state.token
+          }
+        }).then((res) => {
+//            console.log(res.data)
+          for (let i = 0; i < res.data.data.length; i++) {
+            if (res.data.data[i].authsEnum === 'ORDINARY_REAL_NAME') {
+                alert('实名');
+              localStorage.setItem('real', 'yes');
+            }//实名
+            if (res.data.data[i].authsEnum === 'MOBILE') {
+              alert('手机');
+              sessionStorage.setItem('MOBILE', 'yes');
+            } //手机
+            if (res.data.data[i].authsEnum === 'EMAIL') {
+              alert('邮箱');
+              sessionStorage.setItem('EMAIL', 'yes');
+            } //邮箱
+          }
+        })
       }
     }
   }
